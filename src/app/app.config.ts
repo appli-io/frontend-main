@@ -24,7 +24,9 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
     ),
     importProvidersFrom(
-      IonicStorageModule.forRoot()
+      IonicStorageModule.forRoot({
+        name: 'wwtDB'
+      })
     ),
 
     // Material Date Adapter
@@ -73,6 +75,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: () => {
         const translocoService = inject(TranslocoService);
         const defaultLang = translocoService.getDefaultLang();
+
         translocoService.setActiveLang(defaultLang);
 
         return () => firstValueFrom(translocoService.load(defaultLang));
@@ -90,7 +93,7 @@ export const appConfig: ApplicationConfig = {
       },
       fuse: {
         layout: 'classy',
-        scheme: 'light',
+        scheme: 'dark',
         screens: {
           sm: '600px',
           md: '960px',

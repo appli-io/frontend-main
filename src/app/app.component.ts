@@ -1,6 +1,6 @@
-import { Component }       from '@angular/core';
-import { RouterOutlet }    from '@angular/router';
-import { DatabaseService } from '../@fuse/services/database';
+import { Component }      from '@angular/core';
+import { RouterOutlet }   from '@angular/router';
+import { StorageService } from '../@fuse/services/storage';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +8,10 @@ import { DatabaseService } from '../@fuse/services/database';
   styleUrls: [ './app.component.scss' ],
   standalone: true,
   imports: [ RouterOutlet ],
-  providers: [ DatabaseService ]
 })
 export class AppComponent {
   /**
    * Constructor
    */
-  constructor(private databaseService: DatabaseService) {
-
-  }
+  constructor(private _storageService: StorageService) {}
 }

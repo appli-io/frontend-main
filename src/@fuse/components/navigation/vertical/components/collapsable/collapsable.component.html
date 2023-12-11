@@ -20,15 +20,15 @@
     <!-- Title & Subtitle -->
     <div class="fuse-vertical-navigation-item-title-wrapper">
       <div class="fuse-vertical-navigation-item-title">
-                <span [ngClass]="item.classes?.title">
-                    {{item.title}}
-                </span>
+        <span *transloco="let t; read: 'menu'" [ngClass]="item.classes?.title">
+            {{t(item.id)}}
+        </span>
       </div>
       <ng-container *ngIf="item.subtitle">
         <div class="fuse-vertical-navigation-item-subtitle">
-                    <span [ngClass]="item.classes?.subtitle">
-                        {{item.subtitle}}
-                    </span>
+          <span [ngClass]="item.classes?.subtitle">
+              {{item.subtitle}}
+          </span>
         </div>
       </ng-container>
     </div>
@@ -48,11 +48,8 @@
     <mat-icon
       [svgIcon]="'heroicons_solid:chevron-right'"
       class="fuse-vertical-navigation-item-arrow icon-size-4"></mat-icon>
-
   </div>
-
 </div>
-
 <div
   *ngIf="!isCollapsed"
   @expandCollapse
@@ -98,9 +95,6 @@
           [item]="item"
           [name]="name"></fuse-vertical-navigation-spacer-item>
       </ng-container>
-
     </ng-container>
-
   </ng-container>
-
 </div>

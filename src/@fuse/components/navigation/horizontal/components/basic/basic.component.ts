@@ -1,4 +1,4 @@
-import { NgClass, NgIf, NgTemplateOutlet }                                                 from '@angular/common';
+import { NgClass, NgIf, NgTemplateOutlet, TitleCasePipe }                                  from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule }                                                                   from '@angular/material/icon';
 import { MatMenuModule }                                                                   from '@angular/material/menu';
@@ -9,13 +9,14 @@ import { FuseNavigationService }                                                
 import { FuseNavigationItem }                                                              from '@fuse/components/navigation/navigation.types';
 import { FuseUtilsService }                                                                from '@fuse/services/utils/utils.service';
 import { Subject, takeUntil }                                                              from 'rxjs';
+import { TranslocoDirective }                                                              from '@ngneat/transloco';
 
 @Component({
   selector: 'fuse-horizontal-navigation-basic-item',
   templateUrl: './basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatMenuModule, MatIconModule ],
+  imports: [ NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatMenuModule, MatIconModule, TranslocoDirective, TitleCasePipe ],
 })
 export class FuseHorizontalNavigationBasicItemComponent implements OnInit, OnDestroy {
   @Input() item: FuseNavigationItem;

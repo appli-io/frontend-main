@@ -4,11 +4,12 @@ import { Storage }    from '@ionic/storage-angular';
 @Injectable({
   providedIn: 'root'
 })
-export class DatabaseService {
+export class StorageService {
   private storage: Storage | null = null;
 
   constructor(private ionicStorage: Storage) {
-    this.init().then(() => console.log('DatabaseService init'));
+    if (this.storage === null)
+      this.init().then(() => console.log('Storage initialized'));
   }
 
   async init() {
@@ -29,5 +30,9 @@ export class DatabaseService {
 
   public async clear(): Promise<void> {
     return this.storage?.clear();
+  }
+
+  public async keys(): Promise<string[]> {
+    return this.storage?.keys();
   }
 }

@@ -1,4 +1,4 @@
-import { NgClass, NgIf, NgTemplateOutlet }                                                 from '@angular/common';
+import { JsonPipe, NgClass, NgIf, NgTemplateOutlet, TitleCasePipe }                        from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule }                                                                   from '@angular/material/icon';
 import { MatTooltipModule }                                                                from '@angular/material/tooltip';
@@ -8,13 +8,14 @@ import { FuseNavigationItem }                                                   
 import { FuseVerticalNavigationComponent }                                                 from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseUtilsService }                                                                from '@fuse/services/utils/utils.service';
 import { Subject, takeUntil }                                                              from 'rxjs';
+import { TranslocoDirective }                                                              from '@ngneat/transloco';
 
 @Component({
   selector: 'fuse-vertical-navigation-basic-item',
   templateUrl: './basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule ],
+  imports: [ NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule, TranslocoDirective, TitleCasePipe, JsonPipe ],
 })
 export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestroy {
   @Input() item: FuseNavigationItem;

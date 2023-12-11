@@ -60,7 +60,7 @@ export const appRoutes: Route[] = [
       layout: 'empty'
     },
     children: [
-      {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
+      {path: 'homs', loadChildren: () => import('app/modules/landing/home/home.routes')},
     ]
   },
 
@@ -74,7 +74,9 @@ export const appRoutes: Route[] = [
       initialData: initialDataResolver
     },
     children: [
+      {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
       {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
+      {path: 'news', loadChildren: () => import('app/modules/admin/news/news.routes')},
     ]
   }
 ];

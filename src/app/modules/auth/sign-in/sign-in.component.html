@@ -19,16 +19,6 @@
 
       <!-- Alert -->
       <fuse-alert
-        [appearance]="'outline'"
-        [showIcon]="false"
-        [type]="'info'"
-        class="mt-8">
-        You are browsing <strong>Fuse Demo</strong>. Click on the "Sign in" button to access the Demo and
-        Documentation.
-      </fuse-alert>
-
-      <!-- Alert -->
-      <fuse-alert
         *ngIf="showAlert"
         [@shake]="alert.type === 'error'"
         [appearance]="'outline'"
@@ -201,9 +191,7 @@
             class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
             src="assets/images/avatars/male-16.jpg">
         </div>
-        <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your
-          turn
-        </div>
+        <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
       </div>
     </div>
   </div>

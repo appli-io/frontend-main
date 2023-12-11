@@ -1,4 +1,25 @@
 {
+  "menu" : {
+    "home" : "Inicio",
+    "news" : "Noticias",
+    "allNews" : "Todas las noticias",
+    "newsByCategory" : "Noticias por categoría",
+    "multimedia" : "Multimedia",
+    "gallery" : "Galería",
+    "videos" : "Videos",
+    "about" : "Acerca de",
+    "contact" : "Contacto",
+    "login" : "Iniciar sesión",
+    "register" : "Registrarse"
+  },
+  "news" : {
+    "all-news" : {
+      "title" : "Todas las noticias",
+      "subtitle" : "Conecta con tu Equipo y la Cultura de la Empresa",
+      "description" : "Sumérgete en las últimas actualizaciones y anuncios internos que impulsan nuestra organización. Desde logros destacados hasta eventos y proyectos, nuestra intranet te mantiene alineado y participativo en la vida cotidiana de nuestra empresa.",
+      "no-content" : "No hay noticias disponibles para mostrar"
+    }
+  },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",
   "Analytics" : "Analítica"

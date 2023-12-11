@@ -13,6 +13,7 @@ import { FuseVerticalNavigationGroupItemComponent }                             
 import { FuseVerticalNavigationSpacerItemComponent }                                                                from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent }                                                                          from '@fuse/components/navigation/vertical/vertical.component';
 import { filter, Subject, takeUntil }                                                                               from 'rxjs';
+import { TranslocoDirective }                                                                                       from '@ngneat/transloco';
 
 @Component({
   selector: 'fuse-vertical-navigation-collapsable-item',
@@ -20,7 +21,7 @@ import { filter, Subject, takeUntil }                                           
   animations: fuseAnimations,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ NgClass, MatTooltipModule, NgIf, MatIconModule, NgFor, FuseVerticalNavigationBasicItemComponent, forwardRef(() => FuseVerticalNavigationCollapsableItemComponent), FuseVerticalNavigationDividerItemComponent, FuseVerticalNavigationGroupItemComponent, FuseVerticalNavigationSpacerItemComponent ],
+  imports: [ NgClass, MatTooltipModule, NgIf, MatIconModule, NgFor, FuseVerticalNavigationBasicItemComponent, forwardRef(() => FuseVerticalNavigationCollapsableItemComponent), FuseVerticalNavigationDividerItemComponent, FuseVerticalNavigationGroupItemComponent, FuseVerticalNavigationSpacerItemComponent, TranslocoDirective ],
 })
 export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, OnDestroy {
   /* eslint-disable @typescript-eslint/naming-convention */
@@ -36,9 +37,6 @@ export class FuseVerticalNavigationCollapsableItemComponent implements OnInit, O
   private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  /**
-   * Constructor
-   */
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _router: Router,

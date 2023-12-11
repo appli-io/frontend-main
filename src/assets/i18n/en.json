@@ -1,4 +1,14 @@
 {
+  "menu" : {
+    "home" : "Home",
+    "news" : "News",
+    "allNews" : "All News",
+    "newsByCategory" : "News by Category",
+    "about" : "About",
+    "contact" : "Contact",
+    "login" : "Login",
+    "register" : "Register"
+  },
   "welcome-back" : "Welcome back",
   "Project" : "Project",
   "Analytics" : "Analytics"

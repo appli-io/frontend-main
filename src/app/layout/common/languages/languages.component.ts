@@ -5,6 +5,7 @@ import { MatMenuModule }                                                        
 import { FuseNavigationService, FuseVerticalNavigationComponent }                                      from '@fuse/components/navigation';
 import { AvailableLangs, TranslocoService }                                                            from '@ngneat/transloco';
 import { take }                                                                                        from 'rxjs';
+import { StorageService }                                                                              from '../../../../@fuse/services/storage/storage.service';
 
 @Component({
   selector: 'languages',
@@ -27,6 +28,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseNavigationService: FuseNavigationService,
     private _translocoService: TranslocoService,
+    private _storageService: StorageService,
   ) {
   }
 
@@ -48,6 +50,14 @@ export class LanguagesComponent implements OnInit, OnDestroy {
 
       // Update the navigation
       this._updateNavigation(activeLang);
+    });
+
+    // Get active lang from storage, if available, and set it
+    this._storageService.get('activeLang').then((lang) => {
+      console.log('Setting active lang from storage: ', lang);
+      if (lang) {
+        this._translocoService.setActiveLang(lang);
+      }
     });
 
     // Set the country iso codes for languages for flags
@@ -74,6 +84,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
    * @param lang
    */
   setActiveLang(lang: string): void {
+    // Set mew active lang in storage
+    this._storageService.set('activeLang', lang).then();
+
     // Set the active lang
     this._translocoService.setActiveLang(lang);
   }

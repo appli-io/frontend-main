@@ -13,12 +13,12 @@ import { FuseAlertComponent, FuseAlertType }                                    
 import { AuthService }                                                                                from 'app/core/auth/auth.service';
 
 @Component({
-  selector: 'auth-sign-in',
+  selector   : 'auth-sign-in',
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
-  animations: fuseAnimations,
-  standalone: true,
-  imports: [ RouterLink, FuseAlertComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule ],
+  animations : fuseAnimations,
+  standalone : true,
+  imports    : [ RouterLink, FuseAlertComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule ],
 })
 export class AuthSignInComponent implements OnInit {
   @ViewChild('signInNgForm') signInNgForm: NgForm;
@@ -41,10 +41,15 @@ export class AuthSignInComponent implements OnInit {
   ngOnInit(): void {
     // Create the form
     this.signInForm = this._formBuilder.group({
-      email: [ 'hughes.brian@company.com', [ Validators.required, Validators.email ] ],
+      email   : [ 'hughes.brian@company.com', [ Validators.required, Validators.email ] ],
       password: [ 'admin', Validators.required ],
       rememberMe: [ '' ],
     });
+
+    const rememberMe = localStorage.getItem('rememberMe');
+    if (rememberMe) {
+      this.signInForm.patchValue({rememberMe});
+    }
   }
 
   signIn(): void {
@@ -61,19 +66,22 @@ export class AuthSignInComponent implements OnInit {
 
     // Sign in
     this._authService.signIn(this.signInForm.value)
-      .subscribe(
-        () => {
+      .subscribe({
+        next : () => {
+          this.saveRememberMe();
+
           // Set the redirect url.
           // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
           // to the correct page after a successful sign in. This way, that url can be set via
-          // routing file and we don't have to touch here.
+          // routing file, and we don't have to touch here.
           const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
           // Navigate to the redirect url
-          this._router.navigateByUrl(redirectURL);
-
+          this._router.navigateByUrl(redirectURL).then();
         },
-        (response) => {
+        error: (response) => {
+          console.log(response);
+
           // Re-enable the form
           this.signInForm.enable();
 
@@ -89,6 +97,14 @@ export class AuthSignInComponent implements OnInit {
           // Show the alert
           this.showAlert = true;
         },
-      );
+      });
+  }
+
+  saveRememberMe(): void {
+    if (this.signInForm.value.rememberMe) {
+      localStorage.setItem('rememberMe', this.signInForm.value.rememberMe);
+    } else {
+      localStorage.removeItem('rememberMe');
+    }
   }
 }

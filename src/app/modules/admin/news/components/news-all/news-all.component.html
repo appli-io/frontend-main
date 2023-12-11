@@ -1,0 +1,116 @@
+<div
+  *transloco="let t; read: 'news.all-news'"
+  cdkScrollable class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto">
+  <!-- Header -->
+  <div class="relative flex-0 py-8 px-4 sm:p-16 overflow-hidden bg-gray-800 dark">
+    <!-- Background -->
+    <!-- Rings -->
+    <svg class="absolute inset-0 pointer-events-none"
+         height="100%" preserveAspectRatio="xMidYMax slice" viewBox="0 0 960 540" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+        <circle cx="196" cy="23" r="234"></circle>
+        <circle cx="790" cy="491" r="234"></circle>
+      </g>
+    </svg>
+    <!-- @formatter:on -->
+    <div class="z-10 relative flex flex-col items-center">
+      <h2 class="text-xl font-semibold">{{t('title') | uppercase}}</h2>
+      <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
+        {{t('subtitle')}}
+      </div>
+      <div class="max-w-2xl mt-6 sm:text-2xl text-center tracking-tight text-secondary">
+        {{t('description')}}
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+      <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
+        <ng-container *ngIf="this.news.length; else noContent">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
+            <ng-container *ngFor="let single_news of news; trackBy: trackByFn">
+              <!-- News -->
+              <div class="flex flex-col h-96 shadow rounded-2xl overflow-hidden bg-card">
+                <div class="flex flex-col p-6">
+                  <div class="flex items-center justify-between">
+                    <!-- News category -->
+                    <ng-container *ngIf="(single_news.category | fuseFindByKey:'slug':categories) as category">
+                      <div
+                        class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                        {{category.name}}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <!-- News title & description -->
+                  <div class="mt-4 text-lg font-medium">{{single_news.headline}}</div>
+                  <div class="mt-0.5 line-clamp-2 text-secondary">{{single_news.abstract}}</div>
+                  <div class="w-12 h-1 my-6 border-t-2"></div>
+                  <!-- News time -->
+                  <div class="flex items-center leading-5 text-md text-secondary">
+                    <mat-icon
+                      [svgIcon]="'heroicons_solid:clock'"
+                      class="icon-size-5 text-hint"></mat-icon>
+                    <div class="ml-1.5">{{single_news.readTime}} minutes</div>
+                  </div>
+                  <!-- News completion -->
+                  <div class="flex items-center mt-2 leading-5 text-md text-secondary">
+                    <mat-icon
+                      [svgIcon]="'heroicons_solid:academic-cap'"
+                      class="icon-size-5 text-hint"></mat-icon>
+                    <ng-container *ngIf="!single_news.isRead">
+                      <div class="ml-1.5">Never read</div>
+                    </ng-container>
+                    <ng-container *ngIf="single_news.isRead">
+                      <div class="ml-1.5">
+                        <span>Already read</span>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <!-- Footer -->
+                <div class="flex flex-col w-full mt-auto">
+                  <!-- News launch button -->
+                  <div class="px-6 py-4 text-right bg-gray-50 dark:bg-transparent">
+                    <a
+                      [routerLink]="[single_news.id]"
+                      mat-stroked-button>
+                          <span class="inline-flex items-center">
+                              <!-- Not started -->
+                              <ng-container *ngIf="!single_news.isRead">
+                                <span>Start</span>
+                              </ng-container>
+                            <!-- Already read -->
+                              <ng-container *ngIf="single_news.isRead">
+                                  <span>Start again</span>
+                              </ng-container>
+
+                              <mat-icon
+                                [svgIcon]="'heroicons_solid:arrow-small-right'"
+                                class="ml-1.5 icon-size-5"></mat-icon>
+                          </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!-- No news -->
+        <ng-template #noContent>
+          <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
+            <mat-icon
+              [svgIcon]="'mat_outline:search_off'"
+              class="icon-size-24"></mat-icon>
+            <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{t('no-content')}}</div>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+
+  </div>
+</div>
