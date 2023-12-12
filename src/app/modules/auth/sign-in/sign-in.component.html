@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
+<div *transloco="let t; read: 'login'" class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0">
   <div
     class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
     <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
@@ -167,15 +167,12 @@
     </svg>
     <!-- @formatter:on -->
     <!-- Content -->
-    <div class="z-10 relative w-full max-w-2xl">
+    <div class="z-10 relative w-full max-w-2xl prose">
       <div class="text-7xl font-bold leading-none text-gray-100">
-        <div>Welcome to</div>
-        <div>our community</div>
+        <div>{{t('welcome-to')}}</div>
+        <div>{{'constant.wwt' | transloco}}</div>
       </div>
-      <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-        Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
-        Join us and start building your application today.
-      </div>
+      <div [innerHtml]="t('welcome-description')" class="mt-6 text-lg tracking-tight leading-6 text-gray-400"></div>
       <div class="flex items-center mt-8">
         <div class="flex flex-0 items-center -space-x-1.5">
           <img

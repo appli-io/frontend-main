@@ -1,4 +1,11 @@
 {
+  "constant" : {
+    "wwt" : "WeWorkTogether"
+  },
+  "login" : {
+    "welcome-to" : "Bienvenido a",
+    "welcome-description" : "Please login to your account."
+  },
   "menu" : {
     "home" : "Inicio",
     "news" : "Noticias",

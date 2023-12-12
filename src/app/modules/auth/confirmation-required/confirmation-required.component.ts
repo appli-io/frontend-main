@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterLink }                   from '@angular/router';
 import { fuseAnimations }               from '@fuse/animations';
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'auth-confirmation-required',
@@ -8,7 +9,7 @@ import { fuseAnimations }               from '@fuse/animations';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations,
   standalone: true,
-  imports: [ RouterLink ],
+  imports: [ RouterLink, TranslocoDirective, TranslocoPipe ],
 })
 export class AuthConfirmationRequiredComponent {
   /**

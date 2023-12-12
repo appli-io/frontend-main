@@ -11,6 +11,7 @@ import { ActivatedRoute, Router, RouterLink }                                   
 import { fuseAnimations }                                                                             from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType }                                                          from '@fuse/components/alert';
 import { AuthService }                                                                                from 'app/core/auth/auth.service';
+import { TranslocoDirective, TranslocoPipe }                                                          from '@ngneat/transloco';
 
 @Component({
   selector   : 'auth-sign-in',
@@ -18,7 +19,7 @@ import { AuthService }                                                          
   encapsulation: ViewEncapsulation.None,
   animations : fuseAnimations,
   standalone : true,
-  imports    : [ RouterLink, FuseAlertComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule ],
+  imports: [ RouterLink, FuseAlertComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, TranslocoDirective, TranslocoPipe ],
 })
 export class AuthSignInComponent implements OnInit {
   @ViewChild('signInNgForm') signInNgForm: NgForm;

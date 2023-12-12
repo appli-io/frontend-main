@@ -21,14 +21,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'allNews',
         title: 'All News',
         type : 'basic',
-        icon : 'heroicons_outline:newspaper',
         link : '/news/all'
       },
       {
         id   : 'newsByCategory',
         title: 'News By Category',
         type : 'basic',
-        icon : 'heroicons_outline:newspaper',
         link : '/news/category'
       },
     ]
@@ -45,14 +43,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'gallery',
         title: 'Gallery',
         type : 'basic',
-        icon : 'heroicons_outline:photo',
         link : '/multimedia/gallery'
       },
       {
         id   : 'videos',
         title: 'Videos',
         type : 'basic',
-        icon : 'heroicons_outline:play-circle',
         link : '/multimedia/videos'
       },
     ]
@@ -96,14 +92,12 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         id   : 'allNews',
         title: 'All News',
         type : 'basic',
-        icon : 'heroicons_outline:newspaper',
         link : '/news/all'
       },
       {
         id   : 'newsByCategory',
         title: 'News By Category',
         type : 'basic',
-        icon : 'heroicons_outline:newspaper',
         link : '/news/category'
       },
     ]
@@ -120,14 +114,12 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         id   : 'gallery',
         title: 'Gallery',
         type : 'basic',
-        icon : 'heroicons_outline:photo',
         link : '/multimedia/gallery'
       },
       {
         id   : 'videos',
         title: 'Videos',
         type : 'basic',
-        icon : 'heroicons_outline:play-circle',
         link : '/multimedia/videos'
       },
     ]
