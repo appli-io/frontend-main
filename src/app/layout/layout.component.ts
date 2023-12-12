@@ -107,7 +107,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     });
 
     // Set the app version
-    this._renderer2.setAttribute(this._document.querySelector('[ng-version]'), 'fuse-version', FUSE_VERSION);
+    this._renderer2.setAttribute(this._document.querySelector('[ng-version]'), 'wwt-version', FUSE_VERSION);
 
     // Set the OS name
     this._renderer2.addClass(this._document.body, this._fusePlatformService.osName);
@@ -160,10 +160,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // So, we get all the paths that matched starting from root all
     // the way to the current activated route, walk through them one
     // by one and change the layout as we find the layout config. This
-    // way, layout configuration can live anywhere within the path and
+    // way, layout configuration can live anywhere within the path, and
     // we won't miss it.
     //
-    // Also, this will allow overriding the layout in any time so we
+    // Also, this will allow overriding the layout in any time, so we
     // can have different layouts for different routes.
     const paths = route.pathFromRoot;
     paths.forEach((path) => {

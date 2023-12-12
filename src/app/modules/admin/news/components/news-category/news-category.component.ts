@@ -5,8 +5,7 @@ import { CommonModule } from '@angular/common';
   selector   : 'app-news-category',
   standalone : true,
   imports    : [ CommonModule ],
-  templateUrl: './news-category.component.html',
-  styleUrl   : './news-category.component.scss'
+  templateUrl: './news-category.component.html'
 })
 export class NewsCategoryComponent {
 

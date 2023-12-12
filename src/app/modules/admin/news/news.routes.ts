@@ -3,20 +3,24 @@ import { NewsComponent } from './news.component';
 
 export default [
   {
-    path     : '',
+    path: '',
     component: NewsComponent,
-    children : [
+    children: [
       {
-        path        : 'all',
+        path: 'all',
         loadChildren: () => import('./components/news-all/news-all.routes')
       },
       {
-        path        : 'category',
+        path: 'category',
         loadChildren: () => import('./components/news-category/news-category.routes')
       },
       {
-        path      : '',
-        pathMatch : 'full',
+        path: ':id-or-slug',
+        loadChildren: () => import('./components/single-news/single-news.routes')
+      },
+      {
+        path: '',
+        pathMatch: 'full',
         redirectTo: 'all'
       }
     ]

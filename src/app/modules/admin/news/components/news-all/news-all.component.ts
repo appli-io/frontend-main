@@ -16,8 +16,7 @@ import { fakerES as faker }   from '@faker-js/faker';
   selector   : 'app-news-all',
   standalone : true,
   imports    : [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink ],
-  templateUrl: './news-all.component.html',
-  styleUrl   : './news-all.component.scss'
+  templateUrl: './news-all.component.html'
 })
 export class NewsAllComponent implements OnInit {
   categories: ICategory[];
