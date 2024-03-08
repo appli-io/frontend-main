@@ -11,11 +11,12 @@ import { BehaviorSubject }    from 'rxjs';
 import { INews }              from '../../domain/interfaces/news.interface';
 import { ICategory }          from '../../domain/interfaces/category.interface';
 import { fakerES as faker }   from '@faker-js/faker';
+import { FuseCardComponent }  from '../../../../../../@fuse/components/card';
 
 @Component({
   selector   : 'app-news-all',
   standalone : true,
-  imports    : [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink ],
+  imports: [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent ],
   templateUrl: './news-all.component.html'
 })
 export class NewsAllComponent implements OnInit {
@@ -27,9 +28,6 @@ export class NewsAllComponent implements OnInit {
   } = {
     hideAlreadyRead$: new BehaviorSubject(false),
   };
-
-  constructor() {
-  }
 
   ngOnInit(): void {
     this.initializeDummyData();
