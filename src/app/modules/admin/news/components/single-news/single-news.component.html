@@ -15,7 +15,7 @@
                 <mat-icon
                   [svgIcon]="'heroicons_mini:chevron-right'"
                   class="icon-size-5 text-secondary"></mat-icon>
-                <span class="ml-1 text-secondary">NEWS_HEADLINE</span>
+                <span [innerHtml]="news.headline" class="ml-1 text-secondary"></span>
               </div>
             </div>
             <div class="flex sm:hidden">
@@ -31,16 +31,12 @@
           </div>
           <!-- Title -->
           <div class="mt-2">
-            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10">
-              NEWS_HEADLINE
-            </h2>
-            <p class="mt-4 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores deleniti dignissimos dolor ducimus eum facere harum, inventore iste, laudantium obcaecati odit pariatur perferendis porro sunt suscipit
-              tenetur
-              ullam unde.</p>
+            <h2 [innerHtml]="news.headline" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+            <p [innerHtml]="news.abstract" class="mt-4 text-justify"></p>
 
             <mat-divider class="my-5"></mat-divider>
 
-            <span>TRANSLATE: "POR": AUTHOR_FULLNAME</span> | <span>TRANSLATE: "PUBLICADO": PUBLISHED_DATE</span>
+            <span>TRANSLATE: "POR": {{ news.createdBy }}</span> | <span>TRANSLATE: "PUBLICADO": {{ news.publishedAt | date: "dd MMMM ',' yyyy ' | ' HH:mm" }}</span>
           </div>
         </div>
         <!-- Actions -->
@@ -72,139 +68,32 @@
     <div class="xl:container">
       <div class="grid grid-cols-12 sm:gap-x-10 p-6 sm:p-10 xl:px-0">
         <!--    Content section -->
-        <div class="col-span-12 lg:col-span-8">
+        <div class="col-span-12 xl:col-span-8">
+          <swiper-container [config]="config" class="w-full mb-4" fmSwiper init="false">
+            <swiper-slide *ngFor="let image of news.images" class="pb-6 self-center">
+              <img
+                [src]="image"
+                alt="Card cover image"
+                class="object-contain max-h-90">
+              <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
+            </swiper-slide>
+          </swiper-container>
           <!-- Image banner -->
-          <div class="relative mb-4 rounded-t-md overflow-hidden">
-            <img
-              alt="Card cover image"
-              class="object-cover"
-              src="https://picsum.photos/1000/500">
-            <!--            <div class="absolute bg-gradient-to-t from-on-accent z-10 w-full h-full left-0 bottom-0"></div>-->
-            <div class="gradient-overlay default hover:opacity-0 transition-all"></div>
-          </div>
+          <!--          <div class="relative mb-4 rounded-t-md overflow-hidden">-->
+          <!--            <img-->
+          <!--              alt="Card cover image"-->
+          <!--              class="object-cover"-->
+          <!--              src="https://picsum.photos/1000/500">-->
+          <!--            &lt;!&ndash;            <div class="absolute bg-gradient-to-t from-on-accent z-10 w-full h-full left-0 bottom-0"></div>&ndash;&gt;-->
+          <!--            <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
+          <!--          </div>-->
 
           <!-- Content -->
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
-          <p class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, aperiam blanditiis earum esse ipsum iure, optio repudiandae tempora tempore totam veritatis vitae! Ad alias aliquid dolorem eligendi laudantium, qui ullam.
-          </p>
+          <p [innerHtml]="news.body" class="text-justify"></p>
         </div>
         <!--    Additional section -->
-        <div class="col-span-12 lg:col-span-4 mb-6 lg:mb-0 lg:sticky lg:top-2 lg:self-start">
-          <h4 class="text-2xl font-bold">Published By:</h4>
+        <div class="col-span-12 xl:col-span-4 mb-6 lg:mb-0 lg:sticky lg:top-2 lg:self-start">
+          <h4 class="text-2xl font-bold mt-4">Published By:</h4>
           <fuse-card class="flex items-center w-full p-6 filter-info mt-2">
             <img
               alt="Card cover image"
@@ -218,7 +107,8 @@
           </fuse-card>
 
           <!-- Comment section -->
-          <fuse-card class="flex flex-col mt-4 max-w-140 h-192 w-full">
+          <h4 class="text-2xl font-bold mt-4">Comments:</h4>
+          <fuse-card class="flex flex-col h-192 w-full mt-2">
             <!-- User comment -->
             <div class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
               <div class="flex items-start">

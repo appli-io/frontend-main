@@ -4,15 +4,18 @@ import { LuxonDateAdapter }                                                     
 import { DateAdapter, MAT_DATE_FORMATS }                                           from '@angular/material/core';
 import { provideAnimations }                                                       from '@angular/platform-browser/animations';
 import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
-import { provideFuse }                                                             from '@fuse';
-import { provideTransloco, TranslocoService }                                      from '@ngneat/transloco';
-import { firstValueFrom }                                                          from 'rxjs';
-import { appRoutes }                                                               from 'app/app.routes';
-import { provideAuth }                                                             from 'app/core/auth/auth.provider';
-import { provideIcons }                                                            from 'app/core/icons/icons.provider';
-import { mockApiServices }                                                         from 'app/mock-api';
-import { TranslocoHttpLoader }                                                     from './core/transloco/transloco.http-loader';
-import { IonicStorageModule }                                                      from '@ionic/storage-angular';
+
+import { provideFuse }                        from '@fuse';
+import { IonicStorageModule }                 from '@ionic/storage-angular';
+import { provideTransloco, TranslocoService } from '@ngneat/transloco';
+import { firstValueFrom }                     from 'rxjs';
+
+import { provideAuth }         from '@core/auth/auth.provider';
+import { provideIcons }        from '@core/icons/icons.provider';
+import { TranslocoHttpLoader } from '@core/transloco/transloco.http-loader';
+import { appRoutes }           from 'app/app.routes';
+import { mockApiServices }     from 'app/mock-api';
+import { StorageService }      from '../@fuse/services/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -74,13 +77,22 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: () => {
         const translocoService = inject(TranslocoService);
-        const defaultLang = translocoService.getDefaultLang();
+        const storageService = inject(StorageService);
 
-        translocoService.setActiveLang(defaultLang);
+        return () => new Promise((resolve, reject) => {
+          storageService.whenReady().then(() => {
+            storageService.get('activeLang').then((defaultLang) => {
+              if (!defaultLang)
+                defaultLang = translocoService.getDefaultLang();
 
-        return () => firstValueFrom(translocoService.load(defaultLang));
+              translocoService.setActiveLang(defaultLang);
+              return firstValueFrom(translocoService.load(defaultLang));
+            });
+          }).then(resolve).catch(reject);
+        });
       },
       multi: true,
+      deps: [ TranslocoService ],
     },
 
     // Fuse

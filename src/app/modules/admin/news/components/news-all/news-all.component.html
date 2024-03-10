@@ -59,8 +59,8 @@
                       class="w-10 h-10 rounded-full"
                       src="https://picsum.photos/64?random={{i}}">
                     <div class="flex flex-col ml-3">
-                      <span class="font-medium leading-none">Galen Lewis</span>
-                      <span class="text-sm text-secondary leading-none mt-1">23 hours ago</span>
+                      <span [innerText]="single_news.createdBy" class="font-medium leading-none"></span>
+                      <span [innerText]="relativeTime(single_news.publishedAt)" class="text-sm text-secondary leading-none mt-1"></span>
                     </div>
                   </div>
                 </div>

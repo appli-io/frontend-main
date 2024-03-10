@@ -7,7 +7,7 @@ export interface INews {
   category?: string;
   isRead?: boolean;
   readTime?: number;
-  image?: string;
+  images?: string[];
   publishedAt?: number;
   updatedAt?: number;
   createdBy?: string;

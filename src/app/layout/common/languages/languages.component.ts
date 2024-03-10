@@ -2,10 +2,11 @@ import { NgFor, NgTemplateOutlet }                                              
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule }                                                                             from '@angular/material/button';
 import { MatMenuModule }                                                                               from '@angular/material/menu';
-import { FuseNavigationService, FuseVerticalNavigationComponent }                                      from '@fuse/components/navigation';
-import { AvailableLangs, TranslocoService }                                                            from '@ngneat/transloco';
-import { take }                                                                                        from 'rxjs';
-import { StorageService }                                                                              from '../../../../@fuse/services/storage/storage.service';
+
+import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
+import { StorageService }                                         from '@fuse/services/storage';
+import { AvailableLangs, TranslocoService }                       from '@ngneat/transloco';
+import { take }                                                   from 'rxjs';
 
 @Component({
   selector: 'languages',
@@ -50,14 +51,9 @@ export class LanguagesComponent implements OnInit, OnDestroy {
 
       // Update the navigation
       this._updateNavigation(activeLang);
-    });
 
-    // Get active lang from storage, if available, and set it
-    this._storageService.get('activeLang').then((lang) => {
-      console.log('Setting active lang from storage: ', lang);
-      if (lang) {
-        this._translocoService.setActiveLang(lang);
-      }
+      // Mark for check
+      this._changeDetectorRef.markForCheck();
     });
 
     // Set the country iso codes for languages for flags
@@ -86,9 +82,11 @@ export class LanguagesComponent implements OnInit, OnDestroy {
   setActiveLang(lang: string): void {
     // Set mew active lang in storage
     this._storageService.set('activeLang', lang).then();
+    console.log('Setting active lang in storage: ', lang);
 
     // Set the active lang
     this._translocoService.setActiveLang(lang);
+    this._updateNavigation(lang);
   }
 
   /**

@@ -1,6 +1,6 @@
-import { Component }      from '@angular/core';
-import { RouterOutlet }   from '@angular/router';
-import { StorageService } from '../@fuse/services/storage';
+import { Component }    from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { register }     from 'swiper/element/bundle';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,13 @@ import { StorageService } from '../@fuse/services/storage';
   styleUrls: [ './app.component.scss' ],
   standalone: true,
   imports: [ RouterOutlet ],
+  providers: [],
 })
 export class AppComponent {
   /**
    * Constructor
    */
-  constructor(private _storageService: StorageService) {}
+  constructor() {
+    register(); // initialize swiper in the project
+  }
 }
