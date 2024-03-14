@@ -12,10 +12,12 @@ export const newsResolver: ResolveFn<INews> = (route: ActivatedRouteSnapshot, st
     body: faker.lorem.paragraphs(50, '<br/>\n'),
     isRead: faker.datatype.boolean(),
     readTime: faker.number.int({min: 1, max: 59}),
-    images: [ faker.image.url({width: 1000, height: 400}), faker.image.url({width: 1000, height: 400}), faker.image.url({
-      width: 400,
-      height: 1000
-    }), faker.image.url() ],
+    images: [
+      faker.image.url({width: 1000, height: 400}),
+      faker.image.url({width: 1000, height: 400}),
+      faker.image.url({width: 400, height: 1000}),
+      faker.image.url()
+    ],
     publishedAt: faker.date.past().getTime(),
     updatedAt: faker.date.past().getTime(),
     createdBy: faker.person.fullName(),

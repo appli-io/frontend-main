@@ -27,6 +27,14 @@
       "no-content" : "No hay noticias disponibles para mostrar"
     }
   },
+  "profile" : {
+    "about-me" : "Acerca de mí",
+    "create-post" : "Crear publicación",
+    "photo" : "Foto",
+    "video" : "Video",
+    "home" : "Inicio",
+    "news" : "Noticias"
+  },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",
   "Analytics" : "Analítica"

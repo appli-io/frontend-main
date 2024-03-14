@@ -5,7 +5,7 @@ import { MatButtonModule }                                                      
 import { MatDividerModule }                                                                                   from '@angular/material/divider';
 import { MatIconModule }                                                                                      from '@angular/material/icon';
 import { MatMenuModule }                                                                                      from '@angular/material/menu';
-import { Router }                                                                                             from '@angular/router';
+import { Router, RouterLink }                                                                                 from '@angular/router';
 import { UserService }                                                                                        from 'app/core/user/user.service';
 import { User }                                                                                               from 'app/core/user/user.types';
 import { Subject, takeUntil }                                                                                 from 'rxjs';
@@ -17,7 +17,7 @@ import { Subject, takeUntil }                                                   
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'user',
   standalone: true,
-  imports: [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule ],
+  imports: [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink ],
 })
 export class UserComponent implements OnInit, OnDestroy {
   /* eslint-disable @typescript-eslint/naming-convention */

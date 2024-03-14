@@ -5,17 +5,18 @@ import { DateAdapter, MAT_DATE_FORMATS }                                        
 import { provideAnimations }                                                       from '@angular/platform-browser/animations';
 import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
 
-import { provideFuse }                        from '@fuse';
 import { IonicStorageModule }                 from '@ionic/storage-angular';
 import { provideTransloco, TranslocoService } from '@ngneat/transloco';
 import { firstValueFrom }                     from 'rxjs';
 
+
 import { provideAuth }         from '@core/auth/auth.provider';
 import { provideIcons }        from '@core/icons/icons.provider';
 import { TranslocoHttpLoader } from '@core/transloco/transloco.http-loader';
+import { provideFuse }         from '@fuse';
+import { StorageService }      from '@fuse/services/storage';
 import { appRoutes }           from 'app/app.routes';
 import { mockApiServices }     from 'app/mock-api';
-import { StorageService }      from '../@fuse/services/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -104,8 +105,8 @@ export const appConfig: ApplicationConfig = {
         services: mockApiServices,
       },
       fuse: {
-        layout: 'classy',
-        scheme: 'dark',
+        layout: 'classic',
+        scheme: 'auto',
         screens: {
           sm: '600px',
           md: '960px',
@@ -117,26 +118,6 @@ export const appConfig: ApplicationConfig = {
           {
             id: 'theme-default',
             name: 'Default',
-          },
-          {
-            id: 'theme-brand',
-            name: 'Brand',
-          },
-          {
-            id: 'theme-teal',
-            name: 'Teal',
-          },
-          {
-            id: 'theme-rose',
-            name: 'Rose',
-          },
-          {
-            id: 'theme-purple',
-            name: 'Purple',
-          },
-          {
-            id: 'theme-amber',
-            name: 'Amber',
           },
         ],
       },

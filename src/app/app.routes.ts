@@ -49,6 +49,21 @@ export const appRoutes: Route[] = [
     ]
   },
 
+  // No company affiliation guard
+  // {
+  //   path: '',
+  //   canActivate: [ HasCompanyAffiliationGuard ],
+  //   canActivateChild: [ HasCompanyAffiliationGuard ],
+  //   component: LayoutComponent,
+  //   data: {
+  //     layout: 'empty'
+  //   },
+  //   children: [
+  //     {path: 'company-affiliation-required', loadChildren: () => import('app/modules/auth/company-affiliation-required/company-affiliation-required.routes')}
+  //   ]
+  // },
+
+
   // Landing routes
   {
     path: '',
@@ -72,6 +87,7 @@ export const appRoutes: Route[] = [
     },
     children: [
       {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
+      {path: 'profile', loadChildren: () => import('app/modules/admin/profile/profile.routes')},
       {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
       {path: 'news', loadChildren: () => import('app/modules/admin/news/news.routes')},
     ]
