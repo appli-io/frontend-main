@@ -31,6 +31,11 @@
     -moz-osx-font-smoothing: auto;
   }
 
+  // remove shadow-box from inputs elements in active state
+  [type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+    box-shadow: none !important;
+  }
+
   /* Font size */
   html {
     font-size: 16px;
