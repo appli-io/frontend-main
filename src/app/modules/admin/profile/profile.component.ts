@@ -27,7 +27,7 @@ export class ProfileComponent {
     console.log(this._user);
   }
 
-  private _user: IUser;
+  private readonly _user: IUser;
 
   get user(): IUser {
     return this._user;

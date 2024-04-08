@@ -2,7 +2,7 @@
   "name" : "we-work-together",
   "version" : "19.0.0",
   "description" : "WeWorkTogether",
-  "author" : "appli.io",
+  "author" : "Synergiq.io",
   "license" : "MIT",
   "private" : true,
   "scripts" : {
@@ -28,7 +28,6 @@
     "@ngneat/transloco" : "6.0.0",
     "apexcharts" : "3.44.0",
     "crypto-js" : "3.3.0",
-    "flowbite" : "^2.3.0",
     "highlight.js" : "11.9.0",
     "lodash-es" : "4.17.21",
     "luxon" : "3.4.4",

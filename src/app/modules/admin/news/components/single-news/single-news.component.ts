@@ -14,12 +14,13 @@ import { A11y, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 import { FuseCardComponent } from '@fuse/components/card';
 import { SwiperDirective }   from '@core/directives/swiper/swiper.directive';
 
-import { INews } from '../../domain/interfaces/news.interface';
+import { INews }              from '../../domain/interfaces/news.interface';
+import { TranslocoDirective } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-single-news',
   standalone: true,
-  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage ],
+  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './single-news.component.html',
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

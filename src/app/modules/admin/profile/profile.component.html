@@ -45,7 +45,7 @@
 
       <!-- Menu -->
       <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
-        <a [innerText]="t('home')" [routerLink]="['./']" class="text-secondary" routerLinkActive="text-white font-medium"></a>
+        <a [innerText]="t('home')" [routerLink]="['./']" class="text-secondary" routerLinkActive="text-default dark:text-white font-medium"></a>
         <a [innerText]="t('news')" [routerLink]="['./']" class="text-secondary"></a>
       </div>
 
@@ -515,7 +515,7 @@
             <img
               class="w-12 min-w-12 h-12 rounded-full mr-4"
               alt="Card cover image"
-              src="assets/images/avatars/brian-hughes.jpg">
+              [src]="user.avatar">
             <div class="sm:hidden">Brian Hughes</div>
           </div>
           <mat-form-field

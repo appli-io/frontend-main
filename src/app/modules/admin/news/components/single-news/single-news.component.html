@@ -1,317 +1,321 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div *transloco="let t; read: 'news'" class="flex flex-col flex-auto min-w-0">
 
   <!-- Header -->
   <div class="bg-card">
-    <div class="xl:container">
-      <div class="flex flex-col sm:flex-row sm:gap-10 sm:items-center sm:justify-between p-6 pb-10 sm:pt-12 xl:px-0">
-        <div class="flex-1 min-w-0">
-          <!-- Breadcrumbs -->
-          <div>
-            <div class="hidden sm:flex flex-wrap items-center font-medium">
-              <div>
-                <a [routerLink]="'./..'" class="whitespace-nowrap text-primary-500">Noticias</a>
-              </div>
-              <div class="flex items-center ml-1 whitespace-nowrap">
-                <mat-icon
-                  [svgIcon]="'heroicons_mini:chevron-right'"
-                  class="icon-size-5 text-secondary"></mat-icon>
-                <span [innerHtml]="news.headline" class="ml-1 text-secondary"></span>
-              </div>
+    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+      <div class="flex-1 min-w-0">
+        <!-- Breadcrumbs -->
+        <div>
+          <div class="hidden sm:flex flex-wrap items-center font-medium">
+            <div>
+              <a [routerLink]="'./..'" class="whitespace-nowrap text-primary-500">Noticias</a>
             </div>
-            <div class="flex sm:hidden">
-              <a
-                [routerLink]="'./..'"
-                class="inline-flex items-center -ml-1.5 text-secondary font-medium">
-                <mat-icon
-                  [svgIcon]="'heroicons_solid:chevron-left'"
-                  class="icon-size-5 text-secondary"></mat-icon>
-                <span class="ml-1">Back</span>
-              </a>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+              <mat-icon
+                [svgIcon]="'heroicons_mini:chevron-right'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span [innerHtml]="news.headline" class="ml-1 text-secondary"></span>
             </div>
           </div>
-          <!-- Title -->
-          <div class="mt-2">
-            <h2 [innerHtml]="news.headline" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
-            <p [innerHtml]="news.abstract" class="mt-4 text-justify"></p>
-
-            <mat-divider class="my-5"></mat-divider>
-
-            <span>TRANSLATE: "POR": {{ news.createdBy }}</span> | <span>TRANSLATE: "PUBLICADO": {{ news.publishedAt | date: "dd MMMM ',' yyyy ' | ' HH:mm" }}</span>
+          <div class="flex sm:hidden">
+            <a
+              [routerLink]="'./..'"
+              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+              <mat-icon
+                [svgIcon]="'heroicons_solid:chevron-left'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span class="ml-1">Back</span>
+            </a>
           </div>
         </div>
-        <!-- Actions -->
-        <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
-          <button mat-stroked-button matTooltip="PENDING_NAME" matTooltipPosition="left">
-            <mat-icon
-              [svgIcon]="'heroicons_mini:pencil-square'"
-              class="icon-size-4"></mat-icon>
-            <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-          </button>
-          <button
-            [color]="'primary'"
-            class=""
-            mat-flat-button
-            matTooltip="PENDING_NAME"
-            matTooltipPosition="left">
-            <mat-icon
-              [svgIcon]="'heroicons_mini:link'"
-              class="icon-size-4"></mat-icon>
-            <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-          </button>
+        <!-- Title -->
+        <div class="mt-2">
+          <h2 [innerHtml]="news.headline" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+          <p [innerHtml]="news.abstract" class="mt-4 text-justify"></p>
+
+          <mat-divider class="my-5"></mat-divider>
+
+          <div class="flex flex-row items-center">
+            <span>{{ t('common.author') }}: </span>
+            <img
+              alt="Card cover image"
+              class="w-8 h-8 mx-3 rounded-full"
+              src="assets/images/avatars/male-04.jpg">
+            <strong [innerText]="news.createdBy"></strong>
+            <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM ',' yyyy ' | ' HH:mm" }}</strong></span>
+          </div>
         </div>
+      </div>
+      <!-- Actions -->
+      <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
+        <button mat-stroked-button matTooltip="PENDING_NAME" matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:pencil-square'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
+        </button>
+        <button
+          [color]="'primary'"
+          class=""
+          mat-flat-button
+          matTooltip="PENDING_NAME"
+          matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:link'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
+        </button>
       </div>
     </div>
   </div>
 
   <!-- Main -->
-  <div class="shadow bg-default dark:bg-transparent">
-    <div class="xl:container">
-      <div class="grid grid-cols-12 sm:gap-x-10 p-6 sm:p-10 xl:px-0">
-        <!--    Content section -->
-        <div class="col-span-12 xl:col-span-8">
-          <swiper-container [config]="config" class="w-full mb-4" fmSwiper init="false">
-            <swiper-slide *ngFor="let image of news.images" class="pb-6 self-center">
-              <img
-                [src]="image"
-                alt="Card cover image"
-                class="object-contain max-h-90">
-              <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
-            </swiper-slide>
-          </swiper-container>
-          <!-- Image banner -->
-          <!--          <div class="relative mb-4 rounded-t-md overflow-hidden">-->
-          <!--            <img-->
-          <!--              alt="Card cover image"-->
-          <!--              class="object-cover"-->
-          <!--              src="https://picsum.photos/1000/500">-->
-          <!--            &lt;!&ndash;            <div class="absolute bg-gradient-to-t from-on-accent z-10 w-full h-full left-0 bottom-0"></div>&ndash;&gt;-->
-          <!--            <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
-          <!--          </div>-->
-
-          <!-- Content -->
-          <p [innerHtml]="news.body" class="text-justify"></p>
-        </div>
-        <!--    Additional section -->
-        <div class="col-span-12 xl:col-span-4 mb-6 lg:mb-0 lg:sticky lg:top-2 lg:self-start">
-          <h4 class="text-2xl font-bold mt-4">Published By:</h4>
-          <fuse-card class="flex items-center w-full p-6 filter-info mt-2">
+  <div class="shadow bg-default dark:bg-transparent flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+    <div class="grid grid-cols-12 sm:gap-x-10 p-6 sm:p-10 xl:px-0">
+      <!--    Content section -->
+      <div class="col-span-12">
+        <swiper-container [config]="config" class="w-full mb-4" fmSwiper init="false">
+          <swiper-slide *ngFor="let image of news.images" class="pb-6 self-center">
             <img
+              [src]="image"
               alt="Card cover image"
-              class="w-16 h-16 mr-6 rounded-full"
-              src="assets/images/avatars/male-04.jpg">
-            <div class="flex flex-col">
-              <div class="text-2xl font-semibold leading-tight">David Villegas</div>
-              <div class="text-md leading-tight text-primary">Head of HR Department</div>
-              <div class="text-md text-secondary mt-2">personal&#64;davidmisael.me</div>
-            </div>
-          </fuse-card>
+              class="object-contain max-h-90">
+            <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
+          </swiper-slide>
+        </swiper-container>
+        <!-- Image banner -->
+        <!--          <div class="relative mb-4 rounded-t-md overflow-hidden">-->
+        <!--            <img-->
+        <!--              alt="Card cover image"-->
+        <!--              class="object-cover"-->
+        <!--              src="https://picsum.photos/1000/500">-->
+        <!--            &lt;!&ndash;            <div class="absolute bg-gradient-to-t from-on-accent z-10 w-full h-full left-0 bottom-0"></div>&ndash;&gt;-->
+        <!--            <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
+        <!--          </div>-->
 
-          <!-- Comment section -->
-          <h4 class="text-2xl font-bold mt-4">Comments:</h4>
-          <fuse-card class="flex flex-col h-192 w-full mt-2">
-            <!-- User comment -->
-            <div class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
-              <div class="flex items-start">
-                <img
-                  alt="Card cover image"
-                  class="w-12 h-12 rounded-full mr-5"
-                  src="assets/images/avatars/brian-hughes.jpg">
-                <mat-form-field
-                  [subscriptSizing]="'dynamic'"
-                  class="w-full">
+        <!-- Content -->
+        <p [innerHtml]="news.body" class="text-justify"></p>
+      </div>
+      <!--    Additional section -->
+      <div class="col-span-12 mt-6">
+        <h4 class="text-2xl font-bold mt-4">{{ t('common.single-news.published-by') }}:</h4>
+        <fuse-card class="flex items-center w-full p-6 filter-info mt-2">
+          <img
+            alt="Card cover image"
+            class="w-16 h-16 mr-6 rounded-full"
+            src="assets/images/avatars/male-04.jpg">
+          <div class="flex flex-col">
+            <div class="text-2xl font-semibold leading-tight">David Misael Villegas Sandoval</div>
+            <!--              <div class="text-md leading-tight text-primary">Head of HR Department</div>-->
+            <!--              <div class="text-md text-secondary mt-2">personal&#64;davidmisael.me</div>-->
+          </div>
+        </fuse-card>
+
+        <!-- Comment section -->
+        <h4 class="text-2xl font-bold mt-4">{{ t('common.single-news.comments') }}:</h4>
+        <fuse-card class="flex flex-col h-192 w-full mt-2">
+          <!-- User comment -->
+          <div class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
+            <div class="flex items-start">
+              <img
+                alt="Card cover image"
+                class="w-12 h-12 rounded-full mr-5"
+                src="assets/images/avatars/brian-hughes.jpg">
+              <mat-form-field
+                [subscriptSizing]="'dynamic'"
+                class="w-full">
                             <textarea
                               [placeholder]="'Write a comment...'"
                               [rows]="3"
                               cdkTextareaAutosize
                               class="leading-normal my-2"
                               matInput></textarea>
-                </mat-form-field>
-              </div>
-              <div class="flex items-center mt-3 ml-auto -mr-3">
-                <button mat-icon-button>
-                  <mat-icon
-                    [svgIcon]="'heroicons_solid:sparkles'"
-                    class="icon-size-5"></mat-icon>
-                </button>
-                <button mat-icon-button>
-                  <mat-icon
-                    [svgIcon]="'heroicons_solid:face-smile'"
-                    class="icon-size-5"></mat-icon>
-                </button>
-                <button mat-icon-button>
-                  <mat-icon
-                    [svgIcon]="'heroicons_solid:photo'"
-                    class="icon-size-5"></mat-icon>
-                </button>
-              </div>
+              </mat-form-field>
             </div>
-            <hr class="border-b mx-4 sm:mx-8 my-0">
-            <!-- Other comments -->
-            <div class="overflow-y-auto">
-              <div class="relative flex flex-col mx-4 sm:mx-8 my-6">
-                <!-- TODO: Use ngFor or @for to display each message -->
-                <div class="flex items-start">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/male-05.jpg">
-                  <div class="flex flex-col mt-0.5">
+            <div class="flex items-center mt-3 ml-auto -mr-3">
+              <button mat-icon-button>
+                <mat-icon
+                  [svgIcon]="'heroicons_solid:sparkles'"
+                  class="icon-size-5"></mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon
+                  [svgIcon]="'heroicons_solid:face-smile'"
+                  class="icon-size-5"></mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon
+                  [svgIcon]="'heroicons_solid:photo'"
+                  class="icon-size-5"></mat-icon>
+              </button>
+            </div>
+          </div>
+          <hr class="border-b mx-4 sm:mx-8 my-0">
+          <!-- Other comments -->
+          <div class="overflow-y-auto">
+            <div class="relative flex flex-col mx-4 sm:mx-8 my-6">
+              <!-- TODO: Use ngFor or @for to display each message -->
+              <div class="flex items-start">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/male-05.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Rutherford Brannan</b> Oh, I’m in.. Let’s arrange a trip for the next weekend if you want!
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>17 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>17 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/female-01.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/female-01.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Caroline Lundu</b> Yes!! Let's talk about it on lunch!
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>15 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>15 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/female-08.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/female-08.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Barbara Cotilla</b> Count me in !!!
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>12 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>12 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/male-11.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/male-11.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Alan Marti</b> The color of the sky doesn’t look natural at all, do you really think this is natural? I’d say Photoshop!
                                     Your trip isn't going to worth it since you won't be seeing this exact sky.
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>24 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>24 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/female-01.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/female-01.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Caroline Lundu</b> Hey, Alan! You must be fun at parties!
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>22 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>22 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/male-11.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/male-11.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Alan Marti</b> Caroline, I'm telling the truth, and if you cannot stand the truth, maybe we shouldn't be friends anymore...
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>20 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>20 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/female-01.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/female-01.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Caroline Lundu</b> Dude! Relax! I'm just messing with you...
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>18 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>18 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8 ml-12">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/male-11.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8 ml-12">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/male-11.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Alan Marti</b> Sorry! I had a bad morning, let's talk about this in couple hours, I need to relax a bit :(
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>16 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>16 min</span>
                   </div>
                 </div>
-                <div class="flex items-start mt-8">
-                  <img
-                    alt="Card cover image"
-                    class="w-8 h-8 rounded-full mr-4"
-                    src="assets/images/avatars/female-05.jpg">
-                  <div class="flex flex-col mt-0.5">
+              </div>
+              <div class="flex items-start mt-8">
+                <img
+                  alt="Card cover image"
+                  class="w-8 h-8 rounded-full mr-4"
+                  src="assets/images/avatars/female-05.jpg">
+                <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Marleah Eagleston</b> Count me in, too!
                                 </span>
-                    <div class="flex items-center text-sm text-secondary mt-2">
-                      <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                      <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                      <span class="mr-2">&bull;</span>
-                      <span>34 min</span>
-                    </div>
+                  <div class="flex items-center text-sm text-secondary mt-2">
+                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                    <span class="mr-2">&bull;</span>
+                    <span>34 min</span>
                   </div>
                 </div>
               </div>
             </div>
-          </fuse-card>
-        </div>
-
+          </div>
+        </fuse-card>
       </div>
+
     </div>
   </div>
 </div>
