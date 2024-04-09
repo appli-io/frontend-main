@@ -1,14 +1,18 @@
+import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
+import { IUser }         from '@modules/admin/profile/interfaces/user.interface';
+
 export interface INews {
   id?: string;
   headline?: string;
   slug?: string;
   abstract?: string;
   body?: string;
-  category?: string;
-  isRead?: boolean;
-  readTime?: number;
   images?: string[];
-  publishedAt?: number;
-  updatedAt?: number;
-  createdBy?: string;
+  portraitImage?: string;
+  isDeleted?: boolean;
+  publishedAt?: Date;
+  updatedAt?: Date;
+
+  category?: Partial<INewsCategory>;
+  createdBy?: Partial<IUser>;
 }

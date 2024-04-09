@@ -9,19 +9,34 @@ import { MatInputModule }                                                       
 import { MatProgressSpinnerModule }                                                                   from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink }                                                         from '@angular/router';
 
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+
+import { AuthService }                       from '@core/auth/auth.service';
 import { fuseAnimations }                    from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 
-import { AuthService }                       from 'app/core/auth/auth.service';
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
-  selector   : 'auth-sign-in',
+  selector  : 'auth-sign-in',
   templateUrl: './sign-in.component.html',
   encapsulation: ViewEncapsulation.None,
-  animations : fuseAnimations,
-  standalone : true,
-  imports: [ RouterLink, FuseAlertComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, TranslocoDirective, TranslocoPipe ],
+  animations: fuseAnimations,
+  standalone: true,
+  imports   : [
+    FormsModule,
+    FuseAlertComponent,
+    NgIf,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslocoDirective,
+    TranslocoPipe
+  ],
 })
 export class AuthSignInComponent implements OnInit {
   @ViewChild('signInNgForm') signInNgForm: NgForm;
@@ -44,8 +59,8 @@ export class AuthSignInComponent implements OnInit {
   ngOnInit(): void {
     // Create the form
     this.signInForm = this._formBuilder.group({
-      email   : [ 'hughes.brian@company.com', [ Validators.required, Validators.email ] ],
-      password: [ 'admin', Validators.required ],
+      email   : [ null, [ Validators.required, Validators.email ] ],
+      password: [ null, Validators.required ],
       rememberMe: [ '' ],
     });
 
@@ -68,9 +83,12 @@ export class AuthSignInComponent implements OnInit {
     this.showAlert = false;
 
     // Sign in
-    this._authService.signIn(this.signInForm.value)
+    this._authService.signIn({
+      emailOrUsername: this.signInForm.value.email,
+      password       : this.signInForm.value.password,
+    })
       .subscribe({
-        next : () => {
+        next: () => {
           this.saveRememberMe();
 
           // Set the redirect url.

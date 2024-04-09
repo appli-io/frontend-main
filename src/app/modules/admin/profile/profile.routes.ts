@@ -1,16 +1,16 @@
 import { Routes }           from '@angular/router';
 import { ProfileComponent } from '@modules/admin/profile/profile.component';
-import { userResolver }     from '@modules/admin/profile/resolver/user.resolver';
+import { profileResolver }  from '@modules/admin/profile/resolver/profile.resolver';
 
 export default [
   {
     path: '',
     component: ProfileComponent,
-    resolve: {resolvedUser: userResolver}
+    resolve: {resolvedUser: profileResolver}
   },
   {
     path: ':id',
     component: ProfileComponent,
-    resolve: {resolvedUser: userResolver}
+    resolve: {resolvedUser: profileResolver}
   }
 ] as Routes;

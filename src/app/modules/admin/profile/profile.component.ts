@@ -22,12 +22,12 @@ import { TranslocoDirective }                                    from '@ngneat/t
   imports: [ RouterLink, FuseCardComponent, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, TextFieldModule, MatDividerModule, MatTooltipModule, NgClass, TranslocoDirective, RouterLinkActive ],
 })
 export class ProfileComponent {
+  private readonly _user: IUser;
+
   constructor(private _route: ActivatedRoute) {
     this._user = this._route.snapshot.data.resolvedUser;
     console.log(this._user);
   }
-
-  private readonly _user: IUser;
 
   get user(): IUser {
     return this._user;

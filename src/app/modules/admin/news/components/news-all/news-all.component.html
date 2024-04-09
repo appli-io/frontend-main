@@ -25,62 +25,64 @@
   </div>
   <div class="flex flex-col flex-auto min-w-0">
 
-    <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
-
-      <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
-        <ng-container *ngIf="this.news.length; else noContent">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
-            <ng-container *ngFor="let single_news of news; trackBy: trackByFn; index as i">
-              <fuse-card class="flex flex-col max-w-80 w-full relative">
-                <a
-                  [color]="'primary'"
-                  [routerLink]="['/news', single_news.slug]"
-                  class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
-                  mat-button>
-                  Read More
-                </a>
-                <div class="relative">
-                  <img
-                    alt="Card cover image"
-                    class="h-50 object-cover"
-                    src="https://picsum.photos/500/300?random={{i}}">
-                  <div class="gradient-overlay"></div>
-                </div>
-                <div class="m-8 -mt-8 z-10">
-                  <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ single_news.category | uppercase }}</div>
-                  <div [title]="single_news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ single_news.headline }}</div>
-                  <div class="mt-2 text-secondary line-clamp-2">{{ single_news.abstract }}</div>
-                  <div class="w-12 h-1 my-6 border-t-2"></div>
-                  <!-- Publisher info -->
-                  <div class="flex items-center mt-6">
+    <ng-container *ngIf="(newsList$ | async) as pageNews; else loading">
+      <!-- Main -->
+      <div class="flex-auto p-6 sm:p-10">
+        <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
+          <ng-container *ngIf="pageNews.content.length; else noContent">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
+              <ng-container *ngFor="let single_news of pageNews.content; trackBy: trackByFn; index as i">
+                <fuse-card class="flex flex-col max-w-80 w-full relative">
+                  <a
+                    [color]="'primary'"
+                    [routerLink]="['/news', single_news.slug]"
+                    class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
+                    mat-button>
+                    Read More
+                  </a>
+                  <div class="relative">
                     <img
                       alt="Card cover image"
-                      class="w-10 h-10 rounded-full"
-                      src="https://picsum.photos/64?random={{i}}">
-                    <div class="flex flex-col ml-3">
-                      <span [innerText]="single_news.createdBy" class="font-medium leading-none"></span>
-                      <span [innerText]="relativeTime(single_news.publishedAt)" class="text-sm text-secondary leading-none mt-1"></span>
+                      class="h-50 object-cover"
+                      src="https://picsum.photos/500/300?random={{i}}">
+                    <div class="gradient-overlay"></div>
+                  </div>
+                  <div class="m-8 -mt-8 z-10">
+                    <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ single_news.category.name | uppercase }}</div>
+                    <div [title]="single_news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ single_news.headline }}</div>
+                    <div class="mt-2 text-secondary line-clamp-2">{{ single_news.abstract }}</div>
+                    <div class="w-12 h-1 my-6 border-t-2"></div>
+                    <!-- Publisher info -->
+                    <div class="flex items-center mt-6">
+                      <img
+                        alt="Card cover image"
+                        class="w-10 h-10 rounded-full"
+                        src="https://picsum.photos/64?random={{i}}">
+                      <div class="flex flex-col ml-3">
+                        <span [innerText]="single_news.createdBy" class="font-medium leading-none"></span>
+                        <span [innerText]="relativeTime(single_news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </fuse-card>
-            </ng-container>
-          </div>
-        </ng-container>
+                </fuse-card>
+              </ng-container>
+            </div>
+          </ng-container>
 
-        <!-- No news -->
-        <ng-template #noContent>
-          <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
-            <mat-icon
-              [svgIcon]="'mat_outline:search_off'"
-              class="icon-size-24"></mat-icon>
-            <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
-          </div>
-        </ng-template>
+          <!-- No news -->
+          <ng-template #noContent>
+            <div class="flex flex-auto flex-col items-center justify-center bg-gray-100 dark:bg-transparent">
+              <mat-icon
+                [svgIcon]="'mat_outline:search_off'"
+                class="icon-size-24"></mat-icon>
+              <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+            </div>
+          </ng-template>
+        </div>
       </div>
-
-    </div>
-
+    </ng-container>
+    <ng-template #loading>
+      Loading...
+    </ng-template>
   </div>
 </div>

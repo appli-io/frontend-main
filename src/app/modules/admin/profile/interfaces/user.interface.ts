@@ -1,10 +1,11 @@
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
   username: string;
   email: string;
   avatar: string;
-  portrait: string;
-  position: string;
   location: string;
+  position: string;
+  settings: Record<string, any>;
+  portrait: string;
 }

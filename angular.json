@@ -94,7 +94,7 @@
           "configurations" : {
             "production" : {
               "buildTarget" : "fuse:build:production",
-              "proxyConfig" : "proxy.conf.json"
+              "proxyConfig" : "proxy.conf.prod.json"
             },
             "development" : {
               "buildTarget" : "fuse:build:development",

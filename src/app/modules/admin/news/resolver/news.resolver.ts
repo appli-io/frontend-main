@@ -4,22 +4,28 @@ import { INews }                                                  from '../domai
 
 export const newsResolver: ResolveFn<INews> = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   return {
-    id: faker.string.uuid(),
-    headline: faker.lorem.lines(1),
-    slug: faker.lorem.slug(7),
-    abstract: faker.lorem.lines(2),
-    category: faker.lorem.slug(2),
-    body: faker.lorem.paragraphs(50, '<br/>\n'),
-    isRead: faker.datatype.boolean(),
-    readTime: faker.number.int({min: 1, max: 59}),
-    images: [
-      faker.image.url({width: 1000, height: 400}),
-      faker.image.url({width: 1000, height: 400}),
-      faker.image.url({width: 400, height: 1000}),
-      faker.image.url()
-    ],
-    publishedAt: faker.date.past().getTime(),
-    updatedAt: faker.date.past().getTime(),
-    createdBy: faker.person.fullName(),
-  } as INews;
+    id           : faker.datatype.uuid(),
+    headline     : faker.lorem.sentence(),
+    slug         : faker.lorem.slug(),
+    abstract     : faker.lorem.paragraph(),
+    body         : faker.lorem.paragraphs(),
+    images       : [ faker.image.imageUrl() ],
+    portraitImage: faker.image.imageUrl(),
+    isDeleted    : faker.datatype.boolean(),
+    publishedAt  : faker.date.past(),
+    updatedAt    : faker.date.recent(),
+    category     : {
+      id  : faker.datatype.uuid(),
+      name: faker.lorem.words(),
+      slug: faker.lorem.slug()
+    },
+    createdBy    : {
+      id       : faker.datatype.number(),
+      email    : faker.internet.email(),
+      username : faker.internet.userName(),
+      firstName: faker.name.firstName(),
+      lastName : faker.name.lastName(),
+      avatar   : faker.image.avatar()
+    }
+  };
 };
