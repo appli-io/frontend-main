@@ -40,8 +40,8 @@
             <img
               alt="Card cover image"
               class="w-8 h-8 mx-3 rounded-full"
-              src="assets/images/avatars/male-04.jpg">
-            <strong [innerText]="news.createdBy"></strong>
+              [src]="news.createdBy.avatar">
+            <strong [innerText]="news.createdBy.name"></strong>
             <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM ',' yyyy ' | ' HH:mm" }}</strong></span>
           </div>
         </div>
@@ -83,16 +83,6 @@
             <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
           </swiper-slide>
         </swiper-container>
-        <!-- Image banner -->
-        <!--          <div class="relative mb-4 rounded-t-md overflow-hidden">-->
-        <!--            <img-->
-        <!--              alt="Card cover image"-->
-        <!--              class="object-cover"-->
-        <!--              src="https://picsum.photos/1000/500">-->
-        <!--            &lt;!&ndash;            <div class="absolute bg-gradient-to-t from-on-accent z-10 w-full h-full left-0 bottom-0"></div>&ndash;&gt;-->
-        <!--            <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
-        <!--          </div>-->
-
         <!-- Content -->
         <p [innerHtml]="news.body" class="text-justify"></p>
       </div>

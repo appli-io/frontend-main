@@ -10,7 +10,7 @@ import { Pageable } from '@core/interfaces/pageable';
 import { INews } from './domain/interfaces/news.interface';
 
 const DEFAULT_PAGEABLE = {
-  page: 0,
+  page: 1,
   size: 10,
 };
 
@@ -35,11 +35,10 @@ export class NewsService {
   getNews({query, pageable}: { query?: any, pageable?: Partial<Pageable> }): Observable<Page<any>> {
     if (!pageable) pageable = DEFAULT_PAGEABLE;
 
-    const params: HttpParams = new HttpParams();
+    let params: HttpParams = new HttpParams();
 
-    if (query) Object.keys(query).forEach((key: string) => params.append(key, query[key]));
-    params.append('page', pageable.page);
-    params.append('size', pageable.size);
+    if (query) Object.keys(query).forEach((key: string) => params = params.append(key, query[key]));
+    params = params.append('page', pageable.page).append('size', pageable.size);
 
     const headers = {};
 
