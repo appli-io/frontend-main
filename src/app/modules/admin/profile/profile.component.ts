@@ -1,5 +1,5 @@
 import { TextFieldModule }                                       from '@angular/cdk/text-field';
-import { NgClass }                                               from '@angular/common';
+import { NgClass, NgIf }                                         from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule }                                       from '@angular/material/button';
 import { MatDividerModule }                                      from '@angular/material/divider';
@@ -19,7 +19,7 @@ import { TranslocoDirective }                                    from '@ngneat/t
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ RouterLink, FuseCardComponent, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, TextFieldModule, MatDividerModule, MatTooltipModule, NgClass, TranslocoDirective, RouterLinkActive ],
+  imports: [ RouterLink, FuseCardComponent, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, TextFieldModule, MatDividerModule, MatTooltipModule, NgClass, TranslocoDirective, RouterLinkActive, NgIf ],
 })
 export class ProfileComponent {
   private readonly _user: IUser;

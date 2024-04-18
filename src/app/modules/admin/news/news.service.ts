@@ -3,11 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
-import { Api }      from '@core/interfaces/api';
-import { Page }     from '@core/interfaces/page';
-import { Pageable } from '@core/interfaces/pageable';
+import { Api }  from '@core/interfaces/api';
+import { Page } from '@core/interfaces/page';
 
-import { INews } from './domain/interfaces/news.interface';
+import { INews }         from './domain/interfaces/news.interface';
+import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
 
 const DEFAULT_PAGEABLE = {
   page: 1,
@@ -16,6 +16,8 @@ const DEFAULT_PAGEABLE = {
 
 @Injectable({providedIn: 'root'})
 export class NewsService {
+  private _newsQueryParams: string;
+
   constructor(private readonly _httpClient: HttpClient) { }
 
   private _news: BehaviorSubject<Page<INews>> = new BehaviorSubject(null);
@@ -32,20 +34,22 @@ export class NewsService {
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
 
-  getNews({query, pageable}: { query?: any, pageable?: Partial<Pageable> }): Observable<Page<any>> {
-    if (!pageable) pageable = DEFAULT_PAGEABLE;
+  getNews({query = {}, pageable = DEFAULT_PAGEABLE}): Observable<Page<any>> {
+    let params = new HttpParams();
+    const queryKey = JSON.stringify({query, pageable});
 
-    let params: HttpParams = new HttpParams();
+    if (this._newsQueryParams === queryKey) return;
 
-    if (query) Object.keys(query).forEach((key: string) => params = params.append(key, query[key]));
+    this._newsQueryParams = queryKey;
+
+    Object.keys(query).forEach(key => {
+      params = params.append(key, query[key]);
+    });
     params = params.append('page', pageable.page).append('size', pageable.size);
 
-    const headers = {};
+    const headers = {'x-company-id': 'b1391dde-fd51-4378-8ee7-707130c4cb32'};
 
-    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
-
-    // fetch news and map it from Api to Page level
-    return this._httpClient.get<Api<Page<any>>>('api/news', {params: params, headers}).pipe(
+    return this._httpClient.get<Api<Page<any>>>('api/news', {params, headers}).pipe(
       map(({content}) => {
         const pageNews: Page<INews> = {
           ...content,
@@ -55,10 +59,46 @@ export class NewsService {
             updatedAt  : new Date(updatedAt),
           })),
         };
-
         this._news.next(pageNews);
         return pageNews;
       })
+    );
+  }
+
+  getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
+    const headers = {};
+
+    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
+
+    return this._httpClient.get<Api<INews>>(`api/news/${ idOrSlug }`, {headers}).pipe(
+      map(({content}) => {
+        const {publishedAt, updatedAt, ...news} = content;
+        return {
+          ...news,
+          publishedAt: new Date(publishedAt),
+          updatedAt  : new Date(updatedAt),
+        };
+      })
+    );
+  }
+
+  getCategories(): Observable<any> {
+    const headers = {};
+
+    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
+
+    return this._httpClient.get<Api<INewsCategory[]>>(`api/news-category`, {headers}).pipe(
+      map(({content}) => content)
+    );
+  }
+
+  getHighlightedNews(): Observable<INews[]> {
+    const headers = {};
+
+    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
+
+    return this._httpClient.get<Api<INews[]>>(`api/news/highlighted`, {headers}).pipe(
+      map(({content}) => content)
     );
   }
 }

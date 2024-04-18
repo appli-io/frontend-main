@@ -2,10 +2,16 @@ import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular
 import { inject }                                                 from '@angular/core';
 import { NewsService }                                            from '@modules/admin/news/news.service';
 
-export const newsResolver: ResolveFn<any> = (
+export const allNewsResolver: ResolveFn<any> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot,
-  newsService: NewsService = inject(NewsService)
+  newsService = inject(NewsService)
 ) => {
-  return newsService.getNewsByIdOrSlug(route.params.idOrSlug);
+  const queryParams = route.queryParams;
+  const pageable = {
+    page: queryParams.page || 1,
+    size: queryParams.size || 10,
+  };
+
+  return newsService.getNews({query: queryParams, pageable});
 };

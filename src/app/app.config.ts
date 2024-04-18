@@ -39,15 +39,15 @@ export const appConfig: ApplicationConfig = {
       useClass: LuxonDateAdapter,
     },
     {
-      provide: MAT_DATE_FORMATS,
+      provide : MAT_DATE_FORMATS,
       useValue: {
-        parse: {
+        parse  : {
           dateInput: 'D',
         },
         display: {
-          dateInput: 'DDD',
+          dateInput     : 'DDD',
           monthYearLabel: 'LLL yyyy',
-          dateA11yLabel: 'DD',
+          dateA11yLabel : 'DD',
           monthYearA11yLabel: 'LLLL yyyy',
         },
       },
@@ -66,34 +66,32 @@ export const appConfig: ApplicationConfig = {
             label: 'Spanish',
           },
         ],
-        defaultLang: 'en',
-        fallbackLang: 'en',
+        defaultLang   : 'en',
+        fallbackLang  : 'en',
         reRenderOnLangChange: true,
-        prodMode: true,
+        prodMode      : true,
       },
       loader: TranslocoHttpLoader,
     }),
     {
       // Preload the default language before the app starts to prevent empty/jumping content
-      provide: APP_INITIALIZER,
+      provide   : APP_INITIALIZER,
       useFactory: () => {
         const translocoService = inject(TranslocoService);
         const storageService = inject(StorageService);
 
-        return () => new Promise((resolve, reject) => {
-          storageService.whenReady().then(() => {
-            storageService.get('activeLang').then((defaultLang) => {
-              if (!defaultLang)
-                defaultLang = translocoService.getDefaultLang();
+        return () => storageService.whenReady().then(() => {
+          storageService.get('activeLang').then((defaultLang) => {
+            if (!defaultLang)
+              defaultLang = translocoService.getDefaultLang();
 
-              translocoService.setActiveLang(defaultLang);
-              return firstValueFrom(translocoService.load(defaultLang));
-            });
-          }).then(resolve).catch(reject);
+            translocoService.setActiveLang(defaultLang);
+            return firstValueFrom(translocoService.load(defaultLang));
+          });
         });
       },
-      multi: true,
-      deps: [ TranslocoService ],
+      multi     : true,
+      deps      : [ TranslocoService ],
     },
 
     // Fuse
@@ -104,7 +102,7 @@ export const appConfig: ApplicationConfig = {
         delay: 0,
         services: mockApiServices,
       },
-      fuse: {
+      fuse   : {
         layout: 'classic',
         scheme: 'auto',
         screens: {
@@ -113,11 +111,31 @@ export const appConfig: ApplicationConfig = {
           lg: '1280px',
           xl: '1440px',
         },
-        theme: 'theme-default',
+        theme : 'theme-default',
         themes: [
           {
             id: 'theme-default',
             name: 'Default',
+          },
+          {
+            id  : 'theme-brand',
+            name: 'Brand',
+          },
+          {
+            id  : 'theme-teal',
+            name: 'Teal',
+          },
+          {
+            id  : 'theme-rose',
+            name: 'Rose',
+          },
+          {
+            id  : 'theme-purple',
+            name: 'Purple',
+          },
+          {
+            id  : 'theme-amber',
+            name: 'Amber',
           },
         ],
       },

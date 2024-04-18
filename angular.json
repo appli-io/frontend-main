@@ -32,6 +32,7 @@
               "crypto-js/hmac-sha256",
               "crypto-js/enc-base64",
               "flat",
+              "quill-delta",
               "quill"
             ],
             "assets" : [
@@ -132,7 +133,7 @@
       }
     }
   },
-  "cli": {
-    "analytics": "8a169303-b7ae-4474-bb59-f4f79f30af2c"
+  "cli" : {
+    "analytics" : "8a169303-b7ae-4474-bb59-f4f79f30af2c"
   }
 }

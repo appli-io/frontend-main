@@ -9,6 +9,7 @@ import { Router, RouterLink }                                                   
 import { UserService }                                                                                        from 'app/core/user/user.service';
 import { User }                                                                                               from 'app/core/user/user.types';
 import { Subject, takeUntil }                                                                                 from 'rxjs';
+import { IUser }                                                                                              from '@modules/admin/profile/interfaces/user.interface';
 
 @Component({
   selector: 'user',
@@ -25,7 +26,7 @@ export class UserComponent implements OnInit, OnDestroy {
   /* eslint-enable @typescript-eslint/naming-convention */
 
   @Input() showAvatar: boolean = true;
-  user: User;
+  user: IUser;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -86,7 +87,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this._userService.update({
       ...this.user,
       status,
-    }).subscribe();
+    } as IUser).subscribe();
   }
 
   /**

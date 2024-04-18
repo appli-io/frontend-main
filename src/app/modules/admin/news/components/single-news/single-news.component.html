@@ -42,7 +42,7 @@
               class="w-8 h-8 mx-3 rounded-full"
               [src]="news.createdBy.avatar">
             <strong [innerText]="news.createdBy.name"></strong>
-            <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM ',' yyyy ' | ' HH:mm" }}</strong></span>
+            <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
           </div>
         </div>
       </div>
@@ -88,34 +88,33 @@
       </div>
       <!--    Additional section -->
       <div class="col-span-12 mt-6">
-        <h4 class="text-2xl font-bold mt-4">{{ t('common.single-news.published-by') }}:</h4>
+        <h4 class="text-2xl font-bold mt-4">{{ t('single-news.published-by') }}:</h4>
         <fuse-card class="flex items-center w-full p-6 filter-info mt-2">
           <img
             alt="Card cover image"
             class="w-16 h-16 mr-6 rounded-full"
-            src="assets/images/avatars/male-04.jpg">
+            [src]="news.createdBy.avatar">
           <div class="flex flex-col">
-            <div class="text-2xl font-semibold leading-tight">David Misael Villegas Sandoval</div>
-            <!--              <div class="text-md leading-tight text-primary">Head of HR Department</div>-->
-            <!--              <div class="text-md text-secondary mt-2">personal&#64;davidmisael.me</div>-->
+            <div [innerText]="news.createdBy.name" class="text-2xl font-semibold leading-tight"></div>
           </div>
         </fuse-card>
 
         <!-- Comment section -->
-        <h4 class="text-2xl font-bold mt-4">{{ t('common.single-news.comments') }}:</h4>
-        <fuse-card class="flex flex-col h-192 w-full mt-2">
+        <h4 class="text-2xl font-bold mt-4">{{ t('single-news.comments') }}:</h4>
+        <fuse-card class="flex flex-col max-h-192 w-full mt-2">
           <!-- User comment -->
-          <div class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
+          <div *ngIf="(userService.user$ | async) as user" class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
             <div class="flex items-start">
               <img
                 alt="Card cover image"
                 class="w-12 h-12 rounded-full mr-5"
-                src="assets/images/avatars/brian-hughes.jpg">
+                [src]="user?.avatar"
+                [title]="user?.name">
               <mat-form-field
                 [subscriptSizing]="'dynamic'"
                 class="w-full">
                             <textarea
-                              [placeholder]="'Write a comment...'"
+                              [placeholder]="t('single-news.write-comment')"
                               [rows]="3"
                               cdkTextareaAutosize
                               class="leading-normal my-2"
@@ -177,127 +176,6 @@
                     <span class="mr-2 cursor-pointer hover:underline">Reply</span>
                     <span class="mr-2">&bull;</span>
                     <span>15 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8 ml-12">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/female-08.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Barbara Cotilla</b> Count me in !!!
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>12 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/male-11.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Alan Marti</b> The color of the sky doesn’t look natural at all, do you really think this is natural? I’d say Photoshop!
-                                    Your trip isn't going to worth it since you won't be seeing this exact sky.
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>24 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8 ml-12">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/female-01.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Caroline Lundu</b> Hey, Alan! You must be fun at parties!
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>22 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8 ml-12">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/male-11.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Alan Marti</b> Caroline, I'm telling the truth, and if you cannot stand the truth, maybe we shouldn't be friends anymore...
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>20 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8 ml-12">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/female-01.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Caroline Lundu</b> Dude! Relax! I'm just messing with you...
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>18 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8 ml-12">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/male-11.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Alan Marti</b> Sorry! I had a bad morning, let's talk about this in couple hours, I need to relax a bit :(
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>16 min</span>
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-start mt-8">
-                <img
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full mr-4"
-                  src="assets/images/avatars/female-05.jpg">
-                <div class="flex flex-col mt-0.5">
-                                <span>
-                                    <b>Marleah Eagleston</b> Count me in, too!
-                                </span>
-                  <div class="flex items-center text-sm text-secondary mt-2">
-                    <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                    <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                    <span class="mr-2">&bull;</span>
-                    <span>34 min</span>
                   </div>
                 </div>
               </div>

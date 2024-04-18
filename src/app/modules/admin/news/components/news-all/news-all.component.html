@@ -1,6 +1,6 @@
 <div
   *transloco="let t; read: 'news.all-news'"
-  cdkScrollable class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto">
+  class="flex flex-col min-w-0 w-full">
   <!-- Header -->
   <div class="relative flex-0 py-8 px-4 sm:p-16 overflow-hidden bg-gray-800 dark">
     <!-- Background -->
@@ -23,19 +23,54 @@
       </div>
     </div>
   </div>
+
+  <!-- Categories -->
   <div class="flex flex-col flex-auto min-w-0">
+    @if (categories && categories.length > 1) {
+      <div class="flex flex-col items-center justify-center w-full p-6 sm:p-10 bg-gray-100 dark:bg-transparent">
+        <div class="text-2xl font-semibold tracking-tight text-secondary flex items-center" (click)="categoriesExpanded = !categoriesExpanded">
+          {{ t('categories') }}
+          <mat-icon [svgIcon]="categoriesExpanded ? 'mat_outline:expand_less' : 'mat_outline:expand_more'"></mat-icon>
+        </div>
+        <div class="animated-box" @fadeIn @fadeOut *ngIf="categoriesExpanded">
+          <div class="animated-box-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+            <ng-container *ngFor="let category of categories; trackBy: trackByFn;">
+              <fuse-card
+                class="flex flex-col max-w-80 w-full relative cursor-pointer"
+                [routerLink]="['/news']"
+                [queryParams]="category.slug === 'all' ? null : { category: category.slug }"
+                [queryParamsHandling]="'merge'"
+                (click)="categoriesExpanded = false"
+              >
+                <div class="relative">
+                  <img
+                    alt="Card cover image"
+                    class="h-40 object-cover"
+                    src="https://picsum.photos/500/300?random={{category.slug}}">
+                  <div class="gradient-overlay"></div>
+                </div>
+                <div class="m-8 -mt-8 z-10">
+                  <div class="text-md font-semibold leading-none tracking-wide text-primary dark:text-primary-400 mb-2">{{ category.name | uppercase }}</div>
+                  <div class="text-2xl font-semibold leading-tight line-clamp-2" [matTooltip]="category.description" [matTooltipPosition]="'below'">{{ category.description }}</div>
+                </div>
+              </fuse-card>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    }
 
     <ng-container *ngIf="(newsList$ | async) as pageNews; else loading">
       <!-- Main -->
       <div class="flex-auto p-6 sm:p-10">
-        <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
+        <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto">
           <ng-container *ngIf="pageNews.content.length; else noContent">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 sm:mt-10">
-              <ng-container *ngFor="let single_news of pageNews.content; trackBy: trackByFn; index as i">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+              @for (single_news of pageNews.content; track single_news.id) {
                 <fuse-card class="flex flex-col max-w-80 w-full relative">
                   <a
                     [color]="'primary'"
-                    [routerLink]="['/news', single_news.slug]"
+                    [routerLink]="['/news', 'read', single_news.slug]"
                     class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
                     mat-button>
                     Read More
@@ -44,7 +79,7 @@
                     <img
                       alt="Card cover image"
                       class="h-50 object-cover"
-                      src="https://picsum.photos/500/300?random={{i}}">
+                      src="https://picsum.photos/500/300?random={{$index}}">
                     <div class="gradient-overlay"></div>
                   </div>
                   <div class="m-8 -mt-8 z-10">
@@ -65,7 +100,7 @@
                     </div>
                   </div>
                 </fuse-card>
-              </ng-container>
+              }
             </div>
           </ng-container>
 

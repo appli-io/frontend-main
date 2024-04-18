@@ -15,7 +15,7 @@ export default [
         loadChildren: () => import('./components/news-category/news-category.routes')
       },
       {
-        path: ':id-or-slug',
+        path: 'read',
         loadChildren: () => import('./components/single-news/single-news.routes')
       },
       {

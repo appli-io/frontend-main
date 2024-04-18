@@ -2,7 +2,8 @@ import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angul
 import { inject }                                                   from '@angular/core';
 import { AuthService }                                              from 'app/core/auth/auth.service';
 import { AuthUtils }                                                from 'app/core/auth/auth.utils';
-import { catchError, Observable, throwError }                       from 'rxjs';
+import { catchError, Observable, switchMap, throwError }            from 'rxjs';
+import { UserService }                                              from '@core/user/user.service';
 
 /**
  * Intercept
@@ -12,6 +13,7 @@ import { catchError, Observable, throwError }                       from 'rxjs';
  */
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
+  const userService = inject(UserService);
 
   // Clone the request object
   let newReq = req.clone();
@@ -33,16 +35,24 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
   // Response
   return next(newReq).pipe(
     catchError((error) => {
-      // Catch "401 Unauthorized" responses
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        // Sign out
-        authService.signOut();
-
-        // Reload the app
-        location.reload();
+        return authService.signInUsingToken().pipe(
+          switchMap(() => {
+            const retryReq = req.clone({
+              headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken),
+            });
+            return next(retryReq);
+          }),
+          catchError((refreshError) => {
+            if (refreshError instanceof HttpErrorResponse && refreshError.status === 401) {
+              authService.signOut();
+              location.reload();
+            }
+            return throwError(refreshError);
+          })
+        );
       }
-
       return throwError(error);
-    }),
+    })
   );
 };

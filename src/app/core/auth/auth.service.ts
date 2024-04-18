@@ -1,8 +1,10 @@
-import { HttpClient }                                        from '@angular/common/http';
-import { inject, Injectable }                                from '@angular/core';
-import { AuthUtils }                                         from 'app/core/auth/auth.utils';
-import { UserService }                                       from 'app/core/user/user.service';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { HttpClient }                                                  from '@angular/common/http';
+import { inject, Injectable }                                          from '@angular/core';
+import { AuthUtils }                                                   from 'app/core/auth/auth.utils';
+import { UserService }                                                 from 'app/core/user/user.service';
+import { catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { Api }                                                         from '@core/interfaces/api';
+import { ICompany }                                                    from '@core/domain/interfaces/company.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -10,9 +12,19 @@ export class AuthService {
   private _httpClient = inject(HttpClient);
   private _userService = inject(UserService);
 
+  private _activeCompany: ICompany = undefined;
+
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
   // -----------------------------------------------------------------------------------------------------
+
+  get activeCompany(): ICompany {
+    return this._activeCompany;
+  }
+
+  set activeCompany(company: ICompany) {
+    this._activeCompany = company;
+  }
 
   get accessToken(): string {
     return localStorage.getItem('accessToken') ?? '';
@@ -53,8 +65,6 @@ export class AuthService {
    * @param credentials
    */
   signIn(credentials: { emailOrUsername: string; password: string }): Observable<any> {
-    console.log(credentials);
-
     // Throw error, if the user is already logged in
     if (this._authenticated) {
       return throwError('User is already logged in.');
@@ -70,6 +80,7 @@ export class AuthService {
 
         // Store the user on the user service
         this._userService.user = response.user;
+        this.activeCompany = response.company;
 
         // Return a new observable with the response
         return of(response);
@@ -105,6 +116,7 @@ export class AuthService {
 
           // Store the user on the user service
           this._userService.user = response.user;
+          this.activeCompany = response.company;
 
           // Return true
           return of(true);
@@ -168,4 +180,33 @@ export class AuthService {
     // If the access token exists, and it didn't expire, sign in using it
     return this.signInUsingToken();
   }
+
+  /**
+   * Set active company, by saving active company in the localStorage in the following structure:
+   * ``` json
+   * [
+   *  {
+   *    userId: 1,
+   *    companyId: 'uuid_value'
+   *  }
+   * ]
+   * ```
+   *
+   * @param companyId
+   */
+  setActiveCompany(companyId: string): Observable<any> {
+    return this._httpClient.post<any>('api/auth/active-company', {companyId})
+      .pipe(tap((response) => {
+        this.accessToken = response.accessToken;
+        this._userService.user = response.user;
+        this.activeCompany = response.company;
+      }));
+  }
+
+  /**
+   * Validate if user is member of the company
+   */
+  isUserInCompany = (companyId: string): Observable<boolean> =>
+    this._httpClient.get<Api<boolean>>(`api/company-user/${ companyId }/validate-user`)
+      .pipe(map(({content}) => content));
 }

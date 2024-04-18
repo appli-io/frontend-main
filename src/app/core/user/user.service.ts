@@ -1,12 +1,15 @@
-import { HttpClient }                          from '@angular/common/http';
-import { inject, Injectable }                  from '@angular/core';
-import { User }                                from 'app/core/user/user.types';
+import { HttpClient }         from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+
 import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { IUser }                               from '@modules/admin/profile/interfaces/user.interface';
+import { Api }                                 from '@core/interfaces/api';
+import { ICompany }                            from '@core/domain/interfaces/company.interface';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
   private _httpClient = inject(HttpClient);
-  private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
+  private _user: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
@@ -17,13 +20,17 @@ export class UserService {
    *
    * @param value
    */
-  set user(value: User) {
+  set user(value: IUser) {
     // Store the value
     this._user.next(value);
   }
 
-  get user$(): Observable<User> {
+  get user$(): Observable<IUser> {
     return this._user.asObservable();
+  }
+
+  get assignedCompanies$(): Observable<Partial<ICompany>[]> {
+    return this.user$.pipe(map((user) => user?.assignedCompanies || []));
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -33,11 +40,12 @@ export class UserService {
   /**
    * Get the current signed-in user data
    */
-  get(): Observable<User> {
-    return this._httpClient.get<User>('api/common/user').pipe(
+  get(): Observable<IUser> {
+    return this._httpClient.get<Api<IUser>>('api/auth/me').pipe(
+      map(({content}) => content),
       tap((user) => {
         this._user.next(user);
-      }),
+      })
     );
   }
 
@@ -46,8 +54,8 @@ export class UserService {
    *
    * @param user
    */
-  update(user: User): Observable<any> {
-    return this._httpClient.patch<User>('api/common/user', {user}).pipe(
+  update(user: IUser): Observable<any> {
+    return this._httpClient.patch<IUser>('api/common/user', {user}).pipe(
       map((response) => {
         this._user.next(response);
       }),

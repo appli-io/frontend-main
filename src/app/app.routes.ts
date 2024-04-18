@@ -7,7 +7,7 @@ import { LayoutComponent }     from 'app/layout/layout.component';
 export const appRoutes: Route[] = [
 
   // Redirect empty path to '/example'
-  {path: '', pathMatch: 'full', redirectTo: 'example'},
+  // {path: '', pathMatch: 'full', redirectTo: 'home'},
 
   // Redirect signed-in user to the '/example'
   //
@@ -86,7 +86,7 @@ export const appRoutes: Route[] = [
       initialData: initialDataResolver
     },
     children: [
-      {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
+      {path: '', loadChildren: () => import('app/modules/admin/home/home.routes')},
       {path: 'profile', loadChildren: () => import('app/modules/admin/profile/profile.routes')},
       {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
       {path: 'news', loadChildren: () => import('app/modules/admin/news/news.routes')},

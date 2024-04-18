@@ -1,0 +1,71 @@
+<!-- Button -->
+<button
+  [matMenuTriggerFor]="companySelectorMenu"
+  mat-button>
+  <ng-container *ngTemplateOutlet="companyTemplateFull; context: {$implicit: authService.activeCompany}"></ng-container>
+</button>
+
+<!-- Language menu -->
+<mat-menu
+  #companySelectorMenu="matMenu"
+  [xPosition]="'before'">
+  @for (company of userService.assignedCompanies$ | async; track company.id) {
+    <button
+      (click)="setActiveCompany(company.id)"
+      [disabled]="company.id === authService.activeCompany?.id"
+      mat-menu-item>
+        <span class="flex items-center">
+            <ng-container *ngTemplateOutlet="companyTemplate; context: {$implicit: company}"></ng-container>
+            <span class="ml-3">{{ company.name }}</span>
+        </span>
+    </button>
+  }
+  @if ((userService.assignedCompanies$ | async).length === 0) {
+    <button
+      mat-menu-item
+      disabled>
+      <span class="flex items-center">
+        <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+        <span class="ml-3">No companies</span>
+      </span>
+    </button>
+  }
+</mat-menu>
+
+<ng-template
+  #companyTemplateFull
+  let-company>
+    <span class="flex items-center">
+      <span class="relative w-6 rounded-sm overflow-hidden">
+        <span class="absolute inset-0 drop-shadow"></span>
+        <img
+          *ngIf="company?.logo; else emptyLogo"
+          [alt]="company"
+          [src]="company?.logo"
+          class="w-full">
+
+        <ng-template #emptyLogo>
+          <mat-icon [svgIcon]="'heroicons_outline:building-office-2'"></mat-icon>
+        </ng-template>
+      </span>
+      <span class="ml-3">{{ company?.name || 'Sin compañía activa' }}</span>
+    </span>
+</ng-template>
+
+<!-- Flag image template -->
+<ng-template
+  #companyTemplate
+  let-company>
+    <span class="relative w-6 rounded-sm overflow-hidden">
+      <span class="absolute inset-0 drop-shadow"></span>
+      <img
+        *ngIf="company?.logo; else emptyLogo"
+        [alt]="company"
+        [src]="company?.logo"
+        class="w-full">
+
+      <ng-template #emptyLogo>
+        <mat-icon [svgIcon]="'heroicons_outline:building-office-2'"></mat-icon>
+      </ng-template>
+    </span>
+</ng-template>

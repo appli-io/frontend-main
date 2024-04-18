@@ -16,28 +16,29 @@ import { SwiperDirective }   from '@core/directives/swiper/swiper.directive';
 
 import { INews }              from '../../domain/interfaces/news.interface';
 import { TranslocoDirective } from '@ngneat/transloco';
+import { UserService }        from '@core/user/user.service';
 
 @Component({
-  selector: 'app-single-news',
-  standalone: true,
-  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective ],
+  selector   : 'app-single-news',
+  standalone : true,
+  imports    : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './single-news.component.html',
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SingleNewsComponent {
   news: INews;
 
   public config: SwiperOptions = {
-    modules: [ Navigation, Pagination, A11y, Mousewheel ],
-    autoHeight: false,
-    spaceBetween: 20,
-    navigation: true,
-    loop: true,
-    pagination: {clickable: true, dynamicBullets: true},
+    modules      : [ Navigation, Pagination, A11y, Mousewheel ],
+    autoHeight   : false,
+    spaceBetween : 20,
+    navigation   : true,
+    loop         : true,
+    pagination   : {clickable: true, dynamicBullets: true},
     slidesPerView: 1,
     centeredSlides: true,
-    breakpoints: {
+    breakpoints  : {
       400: {
         slidesPerView: 1,
         centeredSlides: true
@@ -46,8 +47,10 @@ export class SingleNewsComponent {
   };
 
   // in the constructor, get object news from resolver
-  constructor(private route: ActivatedRoute) {
-    this.news = this.route.snapshot.data.resolvedNews;
-    console.log(this.news);
+  constructor(
+    private readonly route: ActivatedRoute,
+    public readonly userService: UserService
+  ) {
+    this.news = this.route.snapshot.data.news;
   }
 }

@@ -19,6 +19,6 @@ export const initialDataResolver = () => {
     messagesService.getAll(),
     notificationsService.getAll(),
     quickChatService.getChats(),
-    shortcutsService.getAll(),
+    shortcutsService.getAll()
   ]);
 };
