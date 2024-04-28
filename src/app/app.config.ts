@@ -1,9 +1,9 @@
-import { provideHttpClient }                                                       from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, inject }         from '@angular/core';
-import { LuxonDateAdapter }                                                        from '@angular/material-luxon-adapter';
-import { DateAdapter, MAT_DATE_FORMATS }                                           from '@angular/material/core';
-import { provideAnimations }                                                       from '@angular/platform-browser/animations';
-import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
+import { provideHttpClient }                                                                            from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, inject }                              from '@angular/core';
+import { LuxonDateAdapter }                                                                             from '@angular/material-luxon-adapter';
+import { DateAdapter, MAT_DATE_FORMATS }                                                                from '@angular/material/core';
+import { provideAnimations }                                                                            from '@angular/platform-browser/animations';
+import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 
 import { IonicStorageModule }                 from '@ionic/storage-angular';
 import { provideTransloco, TranslocoService } from '@ngneat/transloco';
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes,
       withPreloading(PreloadAllModules),
       withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
+      withViewTransitions()
     ),
     importProvidersFrom(
       IonicStorageModule.forRoot({

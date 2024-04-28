@@ -8,15 +8,15 @@ import { MatInputModule }                                       from '@angular/m
 import { MatTooltipModule }                                     from '@angular/material/tooltip';
 import { ActivatedRoute, RouterLink }                           from '@angular/router';
 
+import { TranslocoDirective }                       from '@ngneat/transloco';
 import { SwiperOptions }                            from 'swiper/types';
 import { A11y, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 
 import { FuseCardComponent } from '@fuse/components/card';
 import { SwiperDirective }   from '@core/directives/swiper/swiper.directive';
+import { UserService }       from '@core/user/user.service';
 
-import { INews }              from '../../domain/interfaces/news.interface';
-import { TranslocoDirective } from '@ngneat/transloco';
-import { UserService }        from '@core/user/user.service';
+import { INews } from '../../domain/interfaces/news.interface';
 
 @Component({
   selector   : 'app-single-news',
