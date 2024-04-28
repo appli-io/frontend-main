@@ -36,17 +36,16 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
   return next(newReq).pipe(
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        return authService.signInUsingToken().pipe(
+        if (authService.accessToken) return authService.signInUsingToken().pipe(
           switchMap(() => {
             const retryReq = req.clone({
-              headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken),
+              headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken)
             });
             return next(retryReq);
           }),
           catchError((refreshError) => {
             if (refreshError instanceof HttpErrorResponse && refreshError.status === 401) {
-              authService.signOut();
-              location.reload();
+              authService.signOut().then(() => location.reload());
             }
             return throwError(refreshError);
           })

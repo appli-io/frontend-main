@@ -1,10 +1,10 @@
-import { HttpClient }                                                  from '@angular/common/http';
-import { inject, Injectable }                                          from '@angular/core';
-import { AuthUtils }                                                   from 'app/core/auth/auth.utils';
-import { UserService }                                                 from 'app/core/user/user.service';
-import { catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { Api }                                                         from '@core/interfaces/api';
-import { ICompany }                                                    from '@core/domain/interfaces/company.interface';
+import { HttpClient }                                                                 from '@angular/common/http';
+import { inject, Injectable }                                                         from '@angular/core';
+import { AuthUtils }                                                                  from 'app/core/auth/auth.utils';
+import { UserService }                                                                from 'app/core/user/user.service';
+import { catchError, lastValueFrom, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { Api }                                                                        from '@core/interfaces/api';
+import { ICompany }                                                                   from '@core/domain/interfaces/company.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -127,7 +127,10 @@ export class AuthService {
   /**
    * Sign out
    */
-  signOut(): Observable<any> {
+  async signOut() {
+    // Remove session from backend and blacklist the token
+    await lastValueFrom(this._httpClient.post('api/auth/sign-out', {}));
+
     // Remove the access token from the local storage
     localStorage.removeItem('accessToken');
 
@@ -135,7 +138,7 @@ export class AuthService {
     this._authenticated = false;
 
     // Return the observable
-    return of(true);
+    return true;
   }
 
   /**
@@ -144,7 +147,13 @@ export class AuthService {
    * @param user
    */
   signUp(user: { name: string; email: string; password: string; company: string }): Observable<any> {
-    return this._httpClient.post('api/auth/sign-up', user);
+    const post = {
+      name     : user.name,
+      email    : user.email,
+      password1: user.password,
+      password2: user.password,
+    };
+    return this._httpClient.post('api/auth/sign-up', post);
   }
 
   /**
