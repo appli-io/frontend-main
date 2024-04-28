@@ -19,7 +19,7 @@ export const HasCompanyAffiliationGuard: CanActivateFn | CanActivateChildFn = (r
       }
       return inject(UserService).user$.pipe(
         switchMap((user) => {
-          if (!user.email) {
+          if (!user.assignedCompanies) {
             return of(false);
           }
           return of(true);
