@@ -33,4 +33,4 @@ COPY --from=build /app/dist/my-app /usr/share/nginx/html
 
 EXPOSE 80
 #CMD ["nginx", "-g", "daemon off;"]
-CMD ["sh", "-c", "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "envsubst < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
