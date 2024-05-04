@@ -3,24 +3,20 @@ FROM node:20-alpine as build
 
 WORKDIR /app
 
-# Instalar pnpm
-RUN npm install -g pnpm
+COPY package.json package-lock.yaml ./
 
-# Copiar archivos de configuración de pnpm y archivos de proyecto
-COPY pnpm-lock.yaml ./
-COPY package.json ./
+RUN npm install
 
-# Instalar dependencias usando pnpm
-RUN pnpm install
-
-# Copiar el resto de los archivos del proyecto
 COPY . .
 
-# Construir la aplicación
-RUN pnpm run build
+RUN npm cache clean --force
+
+RUN npm run build
 
 # Stage 2: Serve the app with nginx
 FROM nginx:alpine
+
+ENV NODE_ENV production
 
 # Remove the default server definition
 RUN rm /etc/nginx/conf.d/default.conf
