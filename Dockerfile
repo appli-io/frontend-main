@@ -3,9 +3,9 @@ FROM node:20-alpine as build
 
 WORKDIR /app
 
-COPY package.json package-lock.yaml ./
+COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
