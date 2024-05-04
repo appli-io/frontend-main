@@ -29,7 +29,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy build output from the 'build' stage
-COPY --from=build /app/dist/my-app /usr/share/nginx/html
+COPY --from=build /app/dist/fuse /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
