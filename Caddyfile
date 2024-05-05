@@ -36,14 +36,14 @@
 	try_files {path} /index.html
 
 	# set redirects on /api calls to the backend
-	handle /api/* {
-    reverse_proxy {$BACKEND_URL}
-  }
+	#handle /api/* {
+  #  reverse_proxy {$BACKEND_URL}
+  #}
 
-	handle {
-      root * /var/www/html
-      try_files {path} /index.html
-      file_server
-  }
+	#handle {
+  #    root * /var/www/html
+  #    try_files {path} /index.html
+  #    file_server
+  #}
 
 }
