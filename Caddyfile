@@ -15,13 +15,10 @@
 
 # site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
-  header {
-      Access-Control-Allow-Origin *
-      Access-Control-Allow-Credentials true
-      Access-Control-Allow-Methods *
-      Access-Control-Allow-Headers *
-      defer
-  }
+  @origin header Origin *
+  header @origin Access-Control-Allow-Origin "*"
+  header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+  header @origin Allow "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
 
 	# access logs
 	log {
