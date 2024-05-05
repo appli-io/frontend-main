@@ -37,7 +37,7 @@
 
 	# set redirects on /api calls to the backend
 	handle /api/* {
-    reverse_proxy {$BACKEND_URL}
+    reverse_proxy viaduct.proxy.rlwy.net:53743
   }
 
 	#handle {
