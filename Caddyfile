@@ -29,7 +29,7 @@
 	}
 
 	handle /api/* {
-    reverse_proxy /api/* http://viaduct.proxy.rlwy.net:53743
+    reverse_proxy /api/* https://wwt-auth-production.up.railway.app
   }
 
 	# health check for railway
