@@ -29,7 +29,7 @@
 	}
 
 	handle /api/* {
-    reverse_proxy /api/* https://wwt-auth-production.up.railway.app
+    reverse_proxy * https://wwt-auth-production.up.railway.app
   }
 
 	# health check for railway
