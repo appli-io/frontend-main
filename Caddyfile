@@ -41,13 +41,11 @@
 	try_files {path} /index.html
 
 	# set redirects on /api calls to the backend
-	handle /api/* {
-	  @origin header Origin *
-  	header @origin Access-Control-Allow-Origin "*"
-  	header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-  	header @origin Allow "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-    reverse_proxy viaduct.proxy.rlwy.net:53743
-  }
+	#handle /api/* {
+  #  reverse_proxy viaduct.proxy.rlwy.net:53743
+  #}
+
+  reverse_proxy /api/* viaduct.proxy.rlwy.net:53743
 
 	#handle {
   #    root * /var/www/html
