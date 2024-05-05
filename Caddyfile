@@ -41,16 +41,8 @@
 	try_files {path} /index.html
 
 	# set redirects on /api calls to the backend
-	#handle /api/* {
-  #  reverse_proxy viaduct.proxy.rlwy.net:53743
-  #}
-
-  reverse_proxy /api/* viaduct.proxy.rlwy.net:53743
-
-	#handle {
-  #    root * /var/www/html
-  #    try_files {path} /index.html
-  #    file_server
-  #}
+	handle /api/* {
+    reverse_proxy http://viaduct.proxy.rlwy.net:53743
+  }
 
 }
