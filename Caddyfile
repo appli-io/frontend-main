@@ -15,15 +15,22 @@
 
 # site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
-  @origin header Origin *
-  header @origin Access-Control-Allow-Origin "*"
-  header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-  header @origin Allow "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+  header {
+      Access-Control-Allow-Origin *
+      Access-Control-Allow-Credentials true
+      Access-Control-Allow-Methods *
+      Access-Control-Allow-Headers *
+      defer
+  }
 
 	# access logs
 	log {
 		format json # set access log format to json mode
 	}
+
+	handle /api/* {
+    reverse_proxy /api/* http://viaduct.proxy.rlwy.net:53743
+  }
 
 	# health check for railway
 	rewrite /health /*
@@ -39,10 +46,5 @@
 
 	# if path doesn't exist, redirect it to 'index.html' for client side routing
 	try_files {path} /index.html
-
-	# set redirects on /api calls to the backend
-	handle /api/* {
-    reverse_proxy http://viaduct.proxy.rlwy.net:53743
-  }
 
 }
