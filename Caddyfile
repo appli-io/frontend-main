@@ -25,7 +25,7 @@
 		format json # set access log format to json mode
 	}
 
-  reverse_proxy /api/* wwt-auth.railway.internal
+  reverse_proxy /api/* wwt-auth.railway.internal:8080
 
 
 	# health check for railway
