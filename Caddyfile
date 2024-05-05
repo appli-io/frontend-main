@@ -25,9 +25,8 @@
 		format json # set access log format to json mode
 	}
 
-	handle /api/* {
-    reverse_proxy https://wwt-auth-production.up.railway.app
-  }
+  reverse_proxy /api/* wwt-auth-production.up.railway.app
+
 
 	# health check for railway
 	rewrite /health /*
