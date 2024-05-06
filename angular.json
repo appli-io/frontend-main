@@ -65,7 +65,7 @@
               "budgets" : [
                 {
                   "type" : "initial",
-                  "maximumWarning" : "3mb",
+                  "maximumWarning" : "4mb",
                   "maximumError" : "5mb"
                 },
                 {
@@ -82,24 +82,27 @@
               "vendorChunk" : true,
               "extractLicenses" : false,
               "sourceMap" : true,
-              "namedChunks" : true
+              "namedChunks" : true,
+              "fileReplacements" : [
+                {
+                  "replace" : "src/environments/environment.ts",
+                  "with" : "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration" : "production"
         },
         "serve" : {
           "builder" : "@angular-devkit/build-angular:dev-server",
-          "options" : {
-            "proxyConfig" : "proxy.conf.json"
-          },
           "configurations" : {
             "production" : {
-              "buildTarget" : "fuse:build:production",
-              "proxyConfig" : "proxy.conf.prod.json"
+              "hmr" : true,
+              "buildTarget" : "fuse:build:production"
             },
             "development" : {
-              "buildTarget" : "fuse:build:development",
-              "proxyConfig" : "proxy.conf.json"
+              "hmr" : true,
+              "buildTarget" : "fuse:build:development"
             }
           },
           "defaultConfiguration" : "development"

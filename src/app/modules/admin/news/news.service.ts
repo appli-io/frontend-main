@@ -3,11 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
-import { Api }  from '@core/interfaces/api';
-import { Page } from '@core/interfaces/page';
-
-import { INews }         from './domain/interfaces/news.interface';
+import { Api }           from '@core/interfaces/api';
+import { Page }          from '@core/interfaces/page';
 import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
+
+import { INews }       from './domain/interfaces/news.interface';
+import { environment } from 'environments/environment';
 
 const DEFAULT_PAGEABLE = {
   page: 1,
@@ -16,6 +17,7 @@ const DEFAULT_PAGEABLE = {
 
 @Injectable({providedIn: 'root'})
 export class NewsService {
+  private _backendUrl = environment.BACKEND_URL;
   private _newsQueryParams: string;
 
   constructor(private readonly _httpClient: HttpClient) { }
@@ -70,7 +72,7 @@ export class NewsService {
 
     headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
 
-    return this._httpClient.get<Api<INews>>(`api/news/${ idOrSlug }`, {headers}).pipe(
+    return this._httpClient.get<Api<INews>>(this._backendUrl + `api/news/${ idOrSlug }`, {headers}).pipe(
       map(({content}) => {
         const {publishedAt, updatedAt, ...news} = content;
         return {
@@ -87,7 +89,7 @@ export class NewsService {
 
     headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
 
-    return this._httpClient.get<Api<INewsCategory[]>>(`api/news-category`, {headers}).pipe(
+    return this._httpClient.get<Api<INewsCategory[]>>(this._backendUrl + `api/news-category`, {headers}).pipe(
       map(({content}) => content)
     );
   }
@@ -97,7 +99,7 @@ export class NewsService {
 
     headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
 
-    return this._httpClient.get<Api<INews[]>>(`api/news/highlighted`, {headers}).pipe(
+    return this._httpClient.get<Api<INews[]>>(this._backendUrl + `api/news/highlighted`, {headers}).pipe(
       map(({content}) => content)
     );
   }

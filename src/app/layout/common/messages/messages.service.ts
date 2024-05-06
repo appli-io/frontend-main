@@ -5,6 +5,7 @@ import { map, Observable, ReplaySubject, switchMap, take, tap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class MessagesService {
+  //TODO: private _backendUrl = environment.BACKEND_URL;
   private _messages: ReplaySubject<Message[]> = new ReplaySubject<Message[]>(1);
 
   /**

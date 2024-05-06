@@ -5,9 +5,11 @@ import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { IUser }                               from '@modules/admin/profile/interfaces/user.interface';
 import { Api }                                 from '@core/interfaces/api';
 import { ICompany }                            from '@core/domain/interfaces/company.interface';
+import { environment }                         from 'environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
+  private _backendUrl = environment.BACKEND_URL;
   private _httpClient = inject(HttpClient);
   private _user: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
 
@@ -41,7 +43,7 @@ export class UserService {
    * Get the current signed-in user data
    */
   get(): Observable<IUser> {
-    return this._httpClient.get<Api<IUser>>('api/auth/me').pipe(
+    return this._httpClient.get<Api<IUser>>(this._backendUrl + 'api/auth/me').pipe(
       map(({content}) => content),
       tap((user) => {
         this._user.next(user);
@@ -55,7 +57,7 @@ export class UserService {
    * @param user
    */
   update(user: IUser): Observable<any> {
-    return this._httpClient.patch<IUser>('api/common/user', {user}).pipe(
+    return this._httpClient.patch<IUser>(this._backendUrl + 'api/common/user', {user}).pipe(
       map((response) => {
         this._user.next(response);
       }),

@@ -94,7 +94,6 @@ export const appConfig: ApplicationConfig = {
       multi     : true,
       deps      : [ TranslocoService ],
     },
-
     // Fuse
     provideAuth(),
     provideIcons(),

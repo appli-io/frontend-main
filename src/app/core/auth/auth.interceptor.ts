@@ -3,7 +3,6 @@ import { inject }                                                   from '@angul
 import { AuthService }                                              from 'app/core/auth/auth.service';
 import { AuthUtils }                                                from 'app/core/auth/auth.utils';
 import { catchError, Observable, switchMap, throwError }            from 'rxjs';
-import { UserService }                                              from '@core/user/user.service';
 
 /**
  * Intercept
@@ -13,7 +12,6 @@ import { UserService }                                              from '@core/
  */
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
-  const userService = inject(UserService);
 
   // Clone the request object
   let newReq = req.clone();
