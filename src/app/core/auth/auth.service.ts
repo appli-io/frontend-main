@@ -99,11 +99,12 @@ export class AuthService {
     // Sign in using the token
     return this._httpClient.post(this._backendUrl + 'api/auth/refresh-access', {})
       .pipe(
-        catchError(async () => {
-          await this.signOut();
-          this._authenticated = false;
-          location.reload();
-
+        catchError((err) => {
+          if (err.status !== 401) {
+            localStorage.removeItem('accessToken');
+            this._authenticated = false;
+            location.reload();
+          }
           return of(false);
         }),
         switchMap((response: any) => {
