@@ -49,9 +49,7 @@ export class NewsService {
     });
     params = params.append('page', pageable.page).append('size', pageable.size);
 
-    const headers = {'x-company-id': 'b1391dde-fd51-4378-8ee7-707130c4cb32'};
-
-    return this._httpClient.get<Api<Page<any>>>('api/news', {params, headers}).pipe(
+    return this._httpClient.get<Api<Page<any>>>('api/news', {params}).pipe(
       map(({content}) => {
         const pageNews: Page<INews> = {
           ...content,
@@ -70,8 +68,6 @@ export class NewsService {
   getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
     const headers = {};
 
-    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
-
     return this._httpClient.get<Api<INews>>(this._backendUrl + `api/news/${ idOrSlug }`, {headers}).pipe(
       map(({content}) => {
         const {publishedAt, updatedAt, ...news} = content;
@@ -87,8 +83,6 @@ export class NewsService {
   getCategories(): Observable<any> {
     const headers = {};
 
-    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
-
     return this._httpClient.get<Api<INewsCategory[]>>(this._backendUrl + `api/news-category`, {headers}).pipe(
       map(({content}) => content)
     );
@@ -96,8 +90,6 @@ export class NewsService {
 
   getHighlightedNews(): Observable<INews[]> {
     const headers = {};
-
-    headers['x-company-id'] = 'b1391dde-fd51-4378-8ee7-707130c4cb32';
 
     return this._httpClient.get<Api<INews[]>>(this._backendUrl + `api/news/highlighted`, {headers}).pipe(
       map(({content}) => content)
