@@ -95,14 +95,18 @@
         },
         "serve" : {
           "builder" : "@angular-devkit/build-angular:dev-server",
+          "options" : {
+            "proxyConfig" : "proxy.conf.json"
+          },
           "configurations" : {
             "production" : {
-              "hmr" : true,
-              "buildTarget" : "fuse:build:production"
+              "buildTarget" : "fuse:build:production",
+              "proxyConfig" : "proxy.conf.prod.json"
             },
             "development" : {
               "hmr" : true,
-              "buildTarget" : "fuse:build:development"
+              "buildTarget" : "fuse:build:development",
+              "proxyConfig" : "proxy.conf.json"
             }
           },
           "defaultConfiguration" : "development"
