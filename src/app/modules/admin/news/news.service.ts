@@ -7,8 +7,7 @@ import { Api }           from '@core/interfaces/api';
 import { Page }          from '@core/interfaces/page';
 import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
 
-import { INews }       from './domain/interfaces/news.interface';
-import { environment } from 'environments/environment';
+import { INews } from './domain/interfaces/news.interface';
 
 const DEFAULT_PAGEABLE = {
   page: 1,
@@ -17,7 +16,7 @@ const DEFAULT_PAGEABLE = {
 
 @Injectable({providedIn: 'root'})
 export class NewsService {
-  private _backendUrl = environment.BACKEND_URL;
+  // private _backendUrl = environment.BACKEND_URL;
   private _newsQueryParams: string;
 
   constructor(private readonly _httpClient: HttpClient) { }
@@ -68,7 +67,7 @@ export class NewsService {
   getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
     const headers = {};
 
-    return this._httpClient.get<Api<INews>>(this._backendUrl + `api/news/${ idOrSlug }`, {headers}).pipe(
+    return this._httpClient.get<Api<INews>>(`api/news/${ idOrSlug }`, {headers}).pipe(
       map(({content}) => {
         const {publishedAt, updatedAt, ...news} = content;
         return {
@@ -83,7 +82,7 @@ export class NewsService {
   getCategories(): Observable<any> {
     const headers = {};
 
-    return this._httpClient.get<Api<INewsCategory[]>>(this._backendUrl + `api/news-category`, {headers}).pipe(
+    return this._httpClient.get<Api<INewsCategory[]>>(`api/news-category`, {headers}).pipe(
       map(({content}) => content)
     );
   }
@@ -91,7 +90,7 @@ export class NewsService {
   getHighlightedNews(): Observable<INews[]> {
     const headers = {};
 
-    return this._httpClient.get<Api<INews[]>>(this._backendUrl + `api/news/highlighted`, {headers}).pipe(
+    return this._httpClient.get<Api<INews[]>>(`api/news/highlighted`, {headers}).pipe(
       map(({content}) => content)
     );
   }

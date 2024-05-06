@@ -47,9 +47,8 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             return next(retryReq);
           }),
           catchError((refreshError) => {
-            if (refreshError instanceof HttpErrorResponse && refreshError.status === 401) {
-              authService.signOut().then(() => location.reload());
-            }
+            if (refreshError instanceof HttpErrorResponse && refreshError.status === 401)
+              return throwError(() => authService.signOut().then(() => location.reload()));
             return throwError(refreshError);
           })
         );

@@ -14,6 +14,6 @@ export class ProfileService {
   constructor(private readonly _httpClient: HttpClient) {}
 
   getProfile(userId: number): Observable<Api<IUser>> {
-    return this._httpClient.get<Api<IUser>>(this._backendUrl + `api/users/${ userId }`);
+    return this._httpClient.get<Api<IUser>>(`api/users/${ userId }`);
   }
 }

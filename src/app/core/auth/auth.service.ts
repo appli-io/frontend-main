@@ -49,7 +49,7 @@ export class AuthService {
    * @param email
    */
   forgotPassword(email: string): Observable<any> {
-    return this._httpClient.post(this._backendUrl + 'api/auth/forgot-password', email);
+    return this._httpClient.post('api/auth/forgot-password', email);
   }
 
   /**
@@ -58,7 +58,7 @@ export class AuthService {
    * @param password
    */
   resetPassword(password: string): Observable<any> {
-    return this._httpClient.post(this._backendUrl + 'api/auth/reset-password', password);
+    return this._httpClient.post('api/auth/reset-password', password);
   }
 
   /**
@@ -74,7 +74,7 @@ export class AuthService {
 
     localStorage.removeItem('accessToken');
 
-    return this._httpClient.post(this._backendUrl + 'api/auth/sign-in', credentials).pipe(
+    return this._httpClient.post('api/auth/sign-in', credentials).pipe(
       switchMap((response: any) => {
         // Store the access token in the local storage
         this.accessToken = response.accessToken;
@@ -97,7 +97,7 @@ export class AuthService {
    */
   signInUsingToken(): Observable<any> {
     // Sign in using the token
-    return this._httpClient.post(this._backendUrl + 'api/auth/refresh-access', {})
+    return this._httpClient.post('api/auth/refresh-access', {})
       .pipe(
         catchError((err) => {
           if (err.status !== 401) {
@@ -137,7 +137,7 @@ export class AuthService {
    */
   async signOut() {
     // Remove session from backend and blacklist the token
-    await lastValueFrom(this._httpClient.post(this._backendUrl + 'api/auth/sign-out', {}));
+    await lastValueFrom(this._httpClient.post('api/auth/sign-out', {}));
 
     // Remove the access token from the local storage
     localStorage.removeItem('accessToken');
@@ -161,7 +161,7 @@ export class AuthService {
       password1: user.password,
       password2: user.password,
     };
-    return this._httpClient.post(this._backendUrl + 'api/auth/sign-up', post);
+    return this._httpClient.post('api/auth/sign-up', post);
   }
 
   /**
@@ -170,7 +170,7 @@ export class AuthService {
    * @param credentials
    */
   unlockSession(credentials: { email: string; password: string }): Observable<any> {
-    return this._httpClient.post(this._backendUrl + 'api/auth/unlock-session', credentials);
+    return this._httpClient.post('api/auth/unlock-session', credentials);
   }
 
   /**
@@ -212,7 +212,7 @@ export class AuthService {
    * @param companyId
    */
   setActiveCompany(companyId: string): Observable<any> {
-    return this._httpClient.post<any>(this._backendUrl + 'api/auth/active-company', {companyId})
+    return this._httpClient.post<any>('api/auth/active-company', {companyId})
       .pipe(tap((response) => {
         this.accessToken = response.accessToken;
         this._userService.user = response.user;
