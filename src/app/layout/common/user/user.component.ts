@@ -10,6 +10,7 @@ import { UserService }                                                          
 import { User }                                                                                               from 'app/core/user/user.types';
 import { Subject, takeUntil }                                                                                 from 'rxjs';
 import { IUser }                                                                                              from '@modules/admin/profile/interfaces/user.interface';
+import { TranslocoDirective }                                                                                 from '@ngneat/transloco';
 
 @Component({
   selector: 'user',
@@ -18,7 +19,7 @@ import { IUser }                                                                
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'user',
   standalone: true,
-  imports: [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink ],
+  imports: [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink, TranslocoDirective ],
 })
 export class UserComponent implements OnInit, OnDestroy {
   /* eslint-disable @typescript-eslint/naming-convention */

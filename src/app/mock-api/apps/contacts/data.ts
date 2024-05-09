@@ -1805,8 +1805,8 @@ export const contacts = [
     ],
     phoneNumbers: [
       {
-        country: 'sx',
-        phoneNumber: '881 472 3113',
+        country    : 'cl',
+        phoneNumber: '986242247',
         label: 'Mobile',
       },
       {

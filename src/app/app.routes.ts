@@ -16,14 +16,14 @@ export const appRoutes: Route[] = [
 
   // Auth routes for guests
   {
-    path: '',
+    path       : '',
     canActivate: [ NoAuthGuard ],
     canActivateChild: [ NoAuthGuard ],
-    component: LayoutComponent,
-    data: {
+    component  : LayoutComponent,
+    data       : {
       layout: 'empty'
     },
-    children: [
+    children   : [
       {path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.routes')},
       {path: 'confirm/:token', loadChildren: () => import('app/modules/auth/confirm/confirm.routes')},
       {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes')},
@@ -35,14 +35,14 @@ export const appRoutes: Route[] = [
 
   // Auth routes for authenticated users
   {
-    path: '',
+    path       : '',
     canActivate: [ AuthGuard ],
     canActivateChild: [ AuthGuard ],
-    component: LayoutComponent,
-    data: {
+    component  : LayoutComponent,
+    data       : {
       layout: 'empty'
     },
-    children: [
+    children   : [
       {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.routes')},
       {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.routes')}
     ]
@@ -65,9 +65,9 @@ export const appRoutes: Route[] = [
 
   // Landing routes
   {
-    path: '',
+    path    : '',
     component: LayoutComponent,
-    data: {
+    data    : {
       layout: 'empty'
     },
     children: [
@@ -77,18 +77,25 @@ export const appRoutes: Route[] = [
 
   // Admin routes
   {
-    path: '',
+    path       : '',
     canActivate: [ AuthGuard ],
     canActivateChild: [ AuthGuard ],
-    component: LayoutComponent,
-    resolve: {
+    component  : LayoutComponent,
+    resolve    : {
       initialData: initialDataResolver
     },
-    children: [
+    children   : [
       {path: 'home', loadChildren: () => import('app/modules/admin/home/home.routes')},
       {path: 'profile', loadChildren: () => import('app/modules/admin/profile/profile.routes')},
       {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
       {path: 'news', loadChildren: () => import('app/modules/admin/news/news.routes')},
+      {
+        path    : 'apps',
+        children: [
+          {path: 'contacts', loadChildren: () => import('app/modules/admin/contacts/contacts.routes')},
+          {path: '', redirectTo: '/home', pathMatch: 'full'}
+        ]
+      }
     ]
   }
 ];

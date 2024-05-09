@@ -2,6 +2,13 @@
   "constant" : {
     "wwt" : "WeWorkTogether"
   },
+  "global" : {
+    "signed-in-as" : "Conectado como",
+    "profile" : "Perfil",
+    "settings" : "Configuración",
+    "status" : "Estado",
+    "sign-out" : "Cerrar sesión"
+  },
   "login" : {
     "welcome-to" : "Bienvenido a",
     "welcome-description" : "Donde cada clic acerca más a tu equipo y cada inicio de sesión ilumina tu espacio de trabajo. ¿Listo para tejer la colaboración en tu día a día? Regístrate o inicia sesión, ¡y transformemos el 'yo' en 'nosotros'!<br><blockquote><p>La unidad es la fuerza... cuando hay trabajo en equipo y colaboración, se pueden lograr cosas maravillosas. - Mattie Stepanek</p><blockquote>"
