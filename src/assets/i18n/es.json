@@ -1,13 +1,20 @@
 {
-  "constant" : {
-    "wwt" : "WeWorkTogether"
-  },
   "global" : {
+    "wwt" : "WeWorkTogether",
     "signed-in-as" : "Conectado como",
     "profile" : "Perfil",
     "settings" : "Configuración",
     "status" : "Estado",
     "sign-out" : "Cerrar sesión"
+  },
+  "features" : {
+    "home" : "Inicio",
+    "profile" : "Perfil",
+    "news" : "Noticias",
+    "multimedia" : "Multimedia",
+    "apps" : {
+      "contacts" : "Contactos"
+    }
   },
   "login" : {
     "welcome-to" : "Bienvenido a",
@@ -25,6 +32,17 @@
     "contact" : "Contacto",
     "login" : "Iniciar sesión",
     "register" : "Registrarse"
+  },
+  "home" : {
+    "shortcuts" : {
+      "title" : "Accesos directos",
+      "description" : "Accede rápidamente a tus aplicaciones favoritas",
+      "apps" : {
+        "contacts" : "Contactos",
+        "analytics" : "Analítica",
+        "projects" : "Proyectos"
+      }
+    }
   },
   "news" : {
     "common" : {

@@ -22,9 +22,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
   activeLang: string;
   flagCodes: any;
 
-  /**
-   * Constructor
-   */
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseNavigationService: FuseNavigationService,
@@ -33,13 +30,6 @@ export class LanguagesComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
     // Get the available languages from transloco
     this.availableLangs = this._translocoService.getAvailableLangs();
@@ -63,51 +53,22 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     };
   }
 
-  /**
-   * On destroy
-   */
   ngOnDestroy(): void {
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Set the active lang
-   *
-   * @param lang
-   */
   setActiveLang(lang: string): void {
     // Set mew active lang in storage
     this._storageService.set('activeLang', lang).then();
-    console.log('Setting active lang in storage: ', lang);
 
     // Set the active lang
     this._translocoService.setActiveLang(lang);
     this._updateNavigation(lang);
   }
 
-  /**
-   * Track by function for ngFor loops
-   *
-   * @param index
-   * @param item
-   */
   trackByFn(index: number, item: any): any {
     return item.id || index;
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Private methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Update the navigation
-   *
-   * @param lang
-   * @private
-   */
   private _updateNavigation(lang: string): void {
     // For the demonstration purposes, we will only update the Dashboard names
     // from the navigation but you can do a full swap and change the entire

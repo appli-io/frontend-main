@@ -28,12 +28,12 @@ import {
   RouterLink,
   RouterOutlet
 }                                                                       from '@angular/router';
-import { FuseMediaWatcherService }                                      from '@fuse/services/media-watcher';
-import { ContactsService }                                              from '../contacts.service';
+import { FuseMediaWatcherService }                                      from '../../../../../../@fuse/services/media-watcher';
+import { ContactsService }                                              from '../../contacts.service';
 import {
   Contact,
   Country
-}                                                                       from '../contacts.types';
+}                                                                       from '../../contacts.types';
 import { filter, fromEvent, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({

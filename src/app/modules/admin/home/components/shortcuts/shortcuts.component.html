@@ -1,0 +1,13 @@
+<ng-container *transloco="let t">
+  <h2 [innerText]="t('home.shortcuts.title')"></h2>
+  <p [innerText]="t('home.shortcuts.description')"></p>
+
+  <!-- Horizontal 4 column grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <ng-container *ngFor="let shortcut of shortcuts">
+      <div class="bg-white shadow-md rounded-lg p-4">
+        <h3 [innerText]="t(shortcut.title)" class="text-lg font-semibold mb-2"></h3>
+        <p [innerText]="t(shortcut.description)" class="text-gray-600"></p>
+      </div>
+    </ng-container>
+</ng-container>
