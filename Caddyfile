@@ -1,43 +1,43 @@
 # global options
 {
-	admin off # theres no need for the admin api in railway's environment
-	persist_config off # storage isn't persistent anyway
-	auto_https off # railway handles https for us, this would cause issues if left enabled
-	# runtime logs
-	log {
-		format json # set runtime log format to json mode
-	}
-	# server options
-	servers {
-		trusted_proxies static private_ranges # trust railway's proxy
-	}
+    admin off # no se necesita la API de administración en el entorno de Railway
+    persist_config off # el almacenamiento no es persistente de todos modos
+    auto_https off # Railway maneja https por nosotros, esto causaría problemas si se deja habilitado
+    # runtime logs
+    log {
+        format json # establecer el formato de registro en modo json
+    }
+    # server options
+    servers {
+        trusted_proxies static private_ranges # confiar en el proxy de Railway
+    }
 }
 
-# site block, listens on the $PORT environment variable, automatically assigned by railway
+# site block, escucha en la variable de entorno $PORT, asignada automáticamente por Railway
 :{$PORT} {
-	# access logs
-	log {
-		format json # set access log format to json mode
-		output stdout
-	}
-
-	# Handle API requests
-  handle /api/* {
-    reverse_proxy wwt-auth:8080 {
-      transport http {
-          versions h1c
-      }
+    # access logs
+    log {
+        format json # establecer el formato de registro de acceso en modo json
+        output stdout
     }
-  }
 
-  # Health check for Railway
-  respond /health 200
+    # Manejar solicitudes de API
+    handle /api/* {
+        reverse_proxy wwt-auth:8080 {
+            transport http {
+                versions h1c
+            }
+        }
+    }
 
-  # Handle frontend requests
-  handle {
-    root * /srv
-    encode gzip
-    file_server
-    try_files {path} /index.html
-  }
+    # Health check para Railway
+    respond /health 200
+
+    # Manejar solicitudes del frontend
+    handle {
+        root * /dist
+        encode gzip
+        file_server
+        try_files {path} /index.html
+    }
 }
