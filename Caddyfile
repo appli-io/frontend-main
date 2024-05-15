@@ -20,10 +20,16 @@
 		format json # set access log format to json mode
 	}
 
-	reverse_proxy /api/* http://wwt-auth:8080 {
+  @api path /api/* # define a path matcher for the api
+	reverse_proxy @api http://wwt-auth:8080 {
     transport http {
       versions h1c
     }
+    header_up Host {upstream_hostport}
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-For {remote}
+    header_up X-Forwarded-Port {server_port}
+    header_up X-Forwarded-Proto {scheme}
   }
 
 	# health check for railway
