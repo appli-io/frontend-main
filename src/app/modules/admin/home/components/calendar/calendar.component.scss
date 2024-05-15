@@ -1,0 +1,35 @@
+// Themes
+@import 'vanilla-calendar-pro/build/vanilla-calendar.layout.min.css';
+@import 'vanilla-calendar-pro/build/themes/light.min.css';
+@import 'vanilla-calendar-pro/build/themes/dark.min.css';
+
+@supports (width: max-content) and (height: max-content) {
+  .vanilla-calendar {
+    height: max-content;
+    width: max-content;
+  }
+}
+
+.vanilla-calendar {
+  padding: 2rem;
+  min-width: unset;
+  width: 100%;
+  height: 380px;
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  border-radius: .75rem;
+  opacity: 1;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  transition-duration: .15s;
+
+  &__day {
+    width: 100%;
+    height: 100%;
+  }
+}
+

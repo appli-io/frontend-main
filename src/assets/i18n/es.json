@@ -40,8 +40,20 @@
       "apps" : {
         "contacts" : "Contactos",
         "analytics" : "Analítica",
-        "projects" : "Proyectos"
+        "projects" : "Proyectos",
+        "news" : "Noticias",
+        "profile" : "Perfil",
+        "mail" : "Correo",
+        "calendar" : "Calendario",
+        "to-do" : "Tareas",
+        "security" : "Seguridad"
       }
+    },
+    "calendar" : {
+      "title" : "Calendario",
+      "monthly-calendar" : "Calendario mensual",
+      "list" : "Lista de eventos",
+      "description" : "Mantente al tanto de tus próximos eventos y reuniones"
     }
   },
   "news" : {

@@ -1,0 +1,45 @@
+<div *transloco="let t" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full min-w-0 py-4">
+  <div class="flex flex-col flex-auto col-span-1">
+    <div class="flex items-start justify-between">
+      <h2 class="text-lg font-medium tracking-tight leading-6 truncate">{{ t('home.calendar.monthly-calendar') }}</h2>
+    </div>
+    <div class="mt-4 border rounded-2xl overflow-hidden flex items-center">
+      <!-- Calendar -->
+      <div id="activity-calendar"></div>
+      <!--      <mwl-calendar-month-view-->
+      <!--        [cellTemplate]="customCellTemplate"-->
+      <!--        [locale]="'es'"-->
+      <!--        [weekStartsOn]="1"-->
+      <!--        [viewDate]="viewDate">-->
+      <!--      </mwl-calendar-month-view>-->
+    </div>
+  </div>
+
+  <!-- Events list -->
+  <div class="flex flex-col flex-auto col-span-2">
+    <div class="flex items-start justify-between">
+      <!-- Format date as 01-12-2024 -->
+      <div class="text-lg font-medium tracking-tight leading-6 truncate">{{ t('home.calendar.list') }} <i class="font-thin text-secondary">({{ selectedDate | date:'dd-MM-yyyy' }})</i></div>
+    </div>
+    <div class="mt-4">
+      <!-- Events list -->
+      <div class="flex flex-col space-y-4">
+        <div class="flex items-center space-x-2 border border-primary px-4 py-2 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
+          <div class="w-4 h-4 rounded-full bg-primary mr-4"></div>
+          <div class="flex flex-col">
+            <h6 class="text-lg leading-none">Event title</h6>
+            <span class="text-secondary font-medium text-md">10:00 - 12:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
+    <div (click)="debugge(day)" class="cal-cell-top">
+      <span *ngIf="day.badgeTotal > 0" class="cal-day-badge">{{ day.badgeTotal }}</span>
+      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <!--  <small style="margin: 5px">There are {{ day.events.length }} events on this day</small>-->
+  </ng-template>
+</div>

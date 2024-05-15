@@ -1,6 +1,6 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div *transloco="let t" class="flex flex-col flex-auto min-w-0 gap-y-5">
   <!-- Header -->
-  <div class="bg-card">
+  <div class="bg-card border-b">
     <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
       <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
         <!-- Avatar and name -->
@@ -11,9 +11,7 @@
               [src]="user?.avatar" class="w-full h-full object-cover">
           </div>
           <div class="flex flex-col min-w-0 ml-4">
-            <ng-container *transloco="let t">
-              <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{ t('welcome-back') }}, {{ user?.name.split(' ')[0] || 'unknown' }}!</div>
-            </ng-container>
+            <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{ t('welcome-back') }}, {{ user?.name.split(' ')[0] || 'unknown' }}!</div>
           </div>
         </div>
         <!-- Actions -->
@@ -28,34 +26,11 @@
           </button>
         </div>
       </div>
-      <!-- Company selector -->
-      <div
-        [matMenuTriggerFor]="companyMenuSelector"
-        class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
-        matRipple>
-        <div class="flex items-center">
-          <div class="overflow-hidden">
-            <div class="font-medium leading-6 truncate">{{ selectedCompany.name }}</div>
-          </div>
-          <div class="flex items-center justify-center pl-2">
-            <mat-icon
-              [svgIcon]="'heroicons_mini:chevron-down'"
-              class="icon-size-5"></mat-icon>
-          </div>
-        </div>
-        <mat-menu
-          #companyMenuSelector="matMenu"
-          [xPosition]="'before'">
-          @for (company of assignedCompanies; track company.id) {
-            <button mat-menu-item (click)="selectedCompany = company" [innerText]="company.name"></button>
-          }
-        </mat-menu>
-      </div>
     </div>
   </div>
 
   <!-- Content -->
-  <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+  <section class="flex-auto -mt-px pt-4 sm:pt-6">
     <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
       <!-- News slider -->
       <swiper-container [config]="config" class="w-full mb-4" fmSwiper>
@@ -166,9 +141,45 @@
         <!--            </div>-->
         <!--          </div>-->
         <!--        </div>-->
+
       </div>
+
+      <!-- Shortcuts | TODO: Make it dynamic, loading from backend -->
+      <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="mb-6">
+          <h2 class="text-3xl font-bold text-accent mb-2">{{ t('home.shortcuts.title') }}</h2>
+          <p class="text-lg text-secondary">{{ t('home.shortcuts.description') }}</p>
+        </div>
+        @defer (on viewport) {
+          <home-shortcuts></home-shortcuts>
+        } @placeholder (minimum 2s) {
+          <!-- TODO: Add ngx skeleton <https://github.com/willmendesneto/ngx-skeleton-loader> -->
+            <!-- Angular material loader -->
+          <div class="flex flex-col space-y-4">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        }
+      </div>
+
     </div>
-  </div>
+  </section>
+
+  <!-- Calendar -->
+  <section class="bg-card border-t flex-auto -mt-px pt-4 sm:pt-6">
+    <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+      <h2 class="text-3xl font-bold dark:text-on-accent mb-2">{{ t('home.calendar.title') }}</h2>
+
+      <!-- Angular calendar -->
+      @defer (on viewport) {
+        <home-calendar></home-calendar>
+      } @placeholder {
+        <!-- Angular material loader -->
+        <div class="flex flex-col space-y-4">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      }
+    </div>
+  </section>
 </div>
 
 <ng-template #economicIndicatorsFailed>

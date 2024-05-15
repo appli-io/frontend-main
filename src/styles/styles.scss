@@ -23,3 +23,77 @@ swiper-slide {
   display: flex;
   justify-content: center;
 }
+
+.cal-month-view {
+  background-color: var(--fuse-bg-app-bar);
+
+  // Capitalize header days names
+  & .cal-cell {
+    text-transform: capitalize;
+  }
+
+  & .cal-day-number {
+    font-weight: 600;
+  }
+
+  & .cal-days {
+    // just top border
+    border-top: 1px solid var(--fuse-divider);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+
+    // Remove last week bottom border
+    & > div:last-child > .cal-cell-row {
+      border-bottom: none;
+    }
+  }
+
+  .cal-cell-row {
+    // Hover over the month view week row
+    &:hover {
+      background-color: var(--fuse-primary-50);
+
+      .dark & {
+        background-color: rgba(var(--fuse-on-primary-50-rgb), 0.1);
+      }
+    }
+
+    // Hover on a specific day cell or when the day cell is open/selected
+    & .cal-cell:hover, .cal-month-view .cal-cell.cal-has-events.cal-open {
+      background-color: rgba(var(--fuse-on-primary-50-rgb), 0.4);
+    }
+
+    & .cal-day-cell {
+      min-height: unset;
+
+      &:hover * {
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+
+    // Light
+    & .cal-today {
+      background-color: var(--fuse-primary-100);
+    }
+
+    // Dark
+    .dark & .cal-today {
+      background-color: var(--fuse-primary-800);
+    }
+  }
+
+  // Change colors of non selected weekend days
+  & .cal-day-cell.cal-weekend .cal-day-number {
+    color: var(--fuse-warn-600);
+  }
+
+  & .cal-day-cell.cal-weekend.cal-today .cal-day-number {
+    color: var(--fuse-warn-700);
+  }
+
+  & .cal-day-cell.cal-weekend.cal-out-month .cal-day-number {
+    color: var(--fuse-warn-500);
+  }
+}

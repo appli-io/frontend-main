@@ -1,13 +1,15 @@
 import { provideHttpClient }                                                                            from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, inject }                              from '@angular/core';
-import { LuxonDateAdapter }                                                                             from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS }                                                                from '@angular/material/core';
+import { LuxonDateAdapter }                                                                             from '@angular/material-luxon-adapter';
 import { provideAnimations }                                                                            from '@angular/platform-browser/animations';
 import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 
-import { IonicStorageModule }                 from '@ionic/storage-angular';
-import { provideTransloco, TranslocoService } from '@ngneat/transloco';
-import { firstValueFrom }                     from 'rxjs';
+import { IonicStorageModule }                                 from '@ionic/storage-angular';
+import { provideTransloco, TranslocoService }                 from '@ngneat/transloco';
+import { CalendarCommonModule, DateAdapter as DateAdapterAC } from 'angular-calendar';
+import { adapterFactory }                                     from 'angular-calendar/date-adapters/date-fns';
+import { firstValueFrom }                                     from 'rxjs';
 
 
 import { provideAuth }         from '@core/auth/auth.provider';
@@ -31,6 +33,10 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       IonicStorageModule.forRoot({
         name: 'wwtDB'
+      }),
+      CalendarCommonModule.forRoot({
+        provide   : DateAdapterAC,
+        useFactory: adapterFactory
       })
     ),
 
@@ -67,8 +73,8 @@ export const appConfig: ApplicationConfig = {
             label: 'Spanish',
           },
         ],
-        defaultLang   : 'en',
-        fallbackLang  : 'en',
+        defaultLang   : 'es',
+        fallbackLang  : 'es',
         reRenderOnLangChange: true,
         prodMode      : true,
       },

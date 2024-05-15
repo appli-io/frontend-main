@@ -1,3 +1,4 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/appli-io/frontend-main/badge)](https://www.codefactor.io/repository/github/appli-io/frontend-main)
 # [Project Name]
 
 ## Table of contents
