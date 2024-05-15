@@ -15,30 +15,19 @@
 
 # site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
-  # enable CORS
-  @origin header Origin *
-  header @origin Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length, Cache-Control, X-Requested-With, X-Forwarded-For, X-Forwarded-Proto, X-Forwarded-Host, X-Forwarded-Port"
-  header @origin Access-Control-Allow-Credentials "true"
-  header @origin Access-Control-Expose-Headers "Authorization"
-  header @origin Access-Control-Max-Age "86400"
-  header @origin Access-Control-Allow-Origin "*"
-  header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-  header @origin Allow "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
-  header @origin Vary "Origin"
-
 	# access logs
 	log {
 		format json # set access log format to json mode
 	}
 
-	reverse_proxy /api/* wwt-auth:8080 {
+	reverse_proxy /api/* http://wwt-auth:8080 {
     transport http {
       versions h1c
     }
   }
 
 	# health check for railway
-	rewrite /health /*
+	respond /health 200
 
 	# serve from the set folder
 	root * /dist
