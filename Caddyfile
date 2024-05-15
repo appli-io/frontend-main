@@ -18,32 +18,31 @@
 	# access logs
 	log {
 		format json # set access log format to json mode
+		output stdout
 	}
 
-  @api path /api/* # define a path matcher for the api
-	reverse_proxy @api http://wwt-auth:8080 {
-    transport http {
-      versions h1c
+	# Handle API requests
+  handle /api/* {
+    reverse_proxy wwt-auth:8080 {
+      transport http {
+          versions h1c
+      }
+      header_up Host {upstream_hostport}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Port {server_port}
+      header_up X-Forwarded-Proto {scheme}
     }
-    header_up Host {upstream_hostport}
-    header_up X-Real-IP {remote}
-    header_up X-Forwarded-For {remote}
-    header_up X-Forwarded-Port {server_port}
-    header_up X-Forwarded-Proto {scheme}
   }
 
-	# health check for railway
-	respond /health 200
+  # Health check for Railway
+  respond /health 200
 
-	# serve from the set folder
-	root * /dist
-
-	# enable gzipping responses
-	encode gzip
-
-	# serve files
-	file_server
-
-	# if path doesn't exist, redirect it to 'index.html' for client side routing
-	try_files {path} /index.html
+  # Handle frontend requests
+  handle {
+    root * /srv
+    encode gzip
+    file_server
+    try_files {path} /index.html
+  }
 }
