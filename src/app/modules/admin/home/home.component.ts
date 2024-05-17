@@ -59,7 +59,7 @@ export class HomeComponent implements AfterViewInit {
       type : 'loop',
       gap  : '5rem',
       focus: 'center',
-      // autoplay    : true,
+      autoplay: true,
       pagination  : true,
       lazyLoad    : 'nearby',
       pauseOnHover: true,
