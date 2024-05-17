@@ -91,7 +91,14 @@ export class NewsService {
     const headers = {};
 
     return this._httpClient.get<Api<INews[]>>(`api/news/highlighted`, {headers}).pipe(
-      map(({content}) => content)
+      map(({content}) => content),
+      map((newsList) => {
+        return newsList.map(({publishedAt, updatedAt, ...news}) => ({
+          ...news,
+          publishedAt: new Date(publishedAt),
+          updatedAt  : new Date(updatedAt),
+        }));
+      })
     );
   }
 }

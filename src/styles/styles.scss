@@ -97,3 +97,19 @@ swiper-slide {
     color: var(--fuse-warn-500);
   }
 }
+
+// Splide slider override
+.splide__slide {
+  & > * {
+    transition: transform 0.5s;
+  }
+
+  &.is-active > fuse-card {
+    transform: scale(1);
+  }
+
+  &:not(.is-active) > fuse-card {
+    opacity: .9;
+    transform: scale(0.8);
+  }
+}
