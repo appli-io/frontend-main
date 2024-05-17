@@ -7,19 +7,18 @@ import { MatIconModule }                                                        
 import { MatMenuModule }                                                                                      from '@angular/material/menu';
 import { Router, RouterLink }                                                                                 from '@angular/router';
 import { UserService }                                                                                        from 'app/core/user/user.service';
-import { User }                                                                                               from 'app/core/user/user.types';
 import { Subject, takeUntil }                                                                                 from 'rxjs';
 import { IUser }                                                                                              from '@modules/admin/profile/interfaces/user.interface';
 import { TranslocoDirective }                                                                                 from '@ngneat/transloco';
 
 @Component({
-  selector: 'user',
-  templateUrl: './user.component.html',
+  selector     : 'user',
+  templateUrl  : './user.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'user',
-  standalone: true,
-  imports: [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink, TranslocoDirective ],
+  exportAs     : 'user',
+  standalone   : true,
+  imports      : [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink, TranslocoDirective ],
 })
 export class UserComponent implements OnInit, OnDestroy {
   /* eslint-disable @typescript-eslint/naming-convention */
@@ -52,7 +51,7 @@ export class UserComponent implements OnInit, OnDestroy {
     // Subscribe to user changes
     this._userService.user$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((user: User) => {
+      .subscribe((user: IUser) => {
         this.user = user;
 
         // Mark for check

@@ -10,7 +10,6 @@ import { FuseMediaWatcherService }                                from '@fuse/se
 import { NavigationService }                                      from 'app/core/navigation/navigation.service';
 import { Navigation }                                             from 'app/core/navigation/navigation.types';
 import { UserService }                                            from 'app/core/user/user.service';
-import { User }                                                   from 'app/core/user/user.types';
 import { LanguagesComponent }                                     from 'app/layout/common/languages/languages.component';
 import { MessagesComponent }                                      from 'app/layout/common/messages/messages.component';
 import { NotificationsComponent }                                 from 'app/layout/common/notifications/notifications.component';
@@ -19,18 +18,19 @@ import { SearchComponent }                                        from 'app/layo
 import { ShortcutsComponent }                                     from 'app/layout/common/shortcuts/shortcuts.component';
 import { UserComponent }                                          from 'app/layout/common/user/user.component';
 import { Subject, takeUntil }                                     from 'rxjs';
+import { IUser }                                                  from '@modules/admin/profile/interfaces/user.interface';
 
 @Component({
-  selector: 'futuristic-layout',
+  selector   : 'futuristic-layout',
   templateUrl: './futuristic.component.html',
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [ FuseLoadingBarComponent, FuseVerticalNavigationComponent, UserComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, NotificationsComponent, NgIf, RouterOutlet, QuickChatComponent ],
+  standalone : true,
+  imports    : [ FuseLoadingBarComponent, FuseVerticalNavigationComponent, UserComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, NotificationsComponent, NgIf, RouterOutlet, QuickChatComponent ],
 })
 export class FuturisticLayoutComponent implements OnInit, OnDestroy {
   isScreenSmall: boolean;
   navigation: Navigation;
-  user: User;
+  user: IUser;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   /**
@@ -75,7 +75,7 @@ export class FuturisticLayoutComponent implements OnInit, OnDestroy {
     // Subscribe to the user service
     this._userService.user$
       .pipe((takeUntil(this._unsubscribeAll)))
-      .subscribe((user: User) => {
+      .subscribe((user: IUser) => {
         this.user = user;
       });
 

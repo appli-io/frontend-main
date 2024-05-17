@@ -26,7 +26,6 @@ export class ProfileComponent {
 
   constructor(private _route: ActivatedRoute) {
     this._user = this._route.snapshot.data.resolvedUser;
-    console.log(this._user);
   }
 
   get user(): IUser {

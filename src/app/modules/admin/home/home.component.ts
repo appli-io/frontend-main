@@ -1,7 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
-import { MatIcon }                                              from '@angular/material/icon';
-import { MatAnchor, MatButton }                                 from '@angular/material/button';
-import { ActivatedRoute, RouterLink }                           from '@angular/router';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
+import { MatIcon }                                                             from '@angular/material/icon';
+import { MatAnchor, MatButton }                                                from '@angular/material/button';
+import { ActivatedRoute, RouterLink }                                          from '@angular/router';
 
 import { TranslocoDirective }                       from '@ngneat/transloco';
 import { A11y, Mousewheel, Navigation, Pagination } from 'swiper/modules';
@@ -16,6 +16,7 @@ import { IEconomicIndicator }           from '@modules/admin/home/interface/econ
 import { ShortcutsComponent }           from '@modules/admin/home/components/shortcuts/shortcuts.component';
 import { MatProgressBar }               from '@angular/material/progress-bar';
 import { CalendarComponent }            from '@modules/admin/home/components/calendar/calendar.component';
+import Splide                           from '@splidejs/splide';
 
 @Component({
   selector     : 'home',
@@ -39,20 +40,22 @@ import { CalendarComponent }            from '@modules/admin/home/components/cal
     CalendarComponent
   ],
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   user: IUser;
   highlightedNews: INews[];
   economicIndicators: IEconomicIndicator;
 
 
   config: SwiperOptions = {
-    modules      : [ Navigation, Pagination, A11y, Mousewheel ],
-    autoHeight   : false,
-    navigation   : true,
-    loop         : true,
-    pagination   : {clickable: true, dynamicBullets: true},
-    slidesPerView: 1
-
+    modules       : [ Navigation, Pagination, A11y, Mousewheel ],
+    autoHeight    : false,
+    centeredSlides: true,
+    navigation    : true,
+    loop          : true,
+    pagination    : {clickable: true, dynamicBullets: true},
+    freeMode      : true,
+    spaceBetween  : 40,
+    slidesPerView : 3
   };
 
   constructor(private readonly route: ActivatedRoute) {
@@ -60,5 +63,13 @@ export class HomeComponent {
     this.user = route.snapshot.data.user;
     this.highlightedNews = route.snapshot.data.highlightedNews;
     this.economicIndicators = route.snapshot.data.economicIndicators;
+  }
+
+  ngAfterViewInit() {
+    new Splide('.splide', {
+      type : 'loop',
+      gap  : '5rem',
+      focus: 'center',
+    }).mount();
   }
 }

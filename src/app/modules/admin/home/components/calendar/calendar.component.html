@@ -34,12 +34,4 @@
       </div>
     </div>
   </div>
-
-  <ng-template #customCellTemplate let-day="day" let-locale="locale">
-    <div (click)="debugge(day)" class="cal-cell-top">
-      <span *ngIf="day.badgeTotal > 0" class="cal-day-badge">{{ day.badgeTotal }}</span>
-      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-    </div>
-    <!--  <small style="margin: 5px">There are {{ day.events.length }} events on this day</small>-->
-  </ng-template>
 </div>

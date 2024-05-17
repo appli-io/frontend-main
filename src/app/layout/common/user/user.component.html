@@ -6,7 +6,7 @@
     <span class="relative">
         <img
           *ngIf="showAvatar && user?.avatar"
-          [src]="user?.avatar"
+          [src]="user.avatar.url"
           class="w-7 h-7 rounded-full">
         <mat-icon
           *ngIf="!showAvatar || !user?.avatar"

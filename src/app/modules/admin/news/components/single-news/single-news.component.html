@@ -40,7 +40,7 @@
             <img
               alt="Card cover image"
               class="w-8 h-8 mx-3 rounded-full"
-              [src]="news.createdBy.avatar">
+              [src]="news.createdBy?.avatar?.url">
             <strong [innerText]="news.createdBy.name"></strong>
             <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
           </div>
@@ -93,7 +93,7 @@
           <img
             alt="Card cover image"
             class="w-16 h-16 mr-6 rounded-full"
-            [src]="news.createdBy.avatar">
+            [src]="news.createdBy?.avatar?.url">
           <div class="flex flex-col">
             <div [innerText]="news.createdBy.name" class="text-2xl font-semibold leading-tight"></div>
           </div>
@@ -108,7 +108,7 @@
               <img
                 alt="Card cover image"
                 class="w-12 h-12 rounded-full mr-5"
-                [src]="user?.avatar"
+                [src]="user?.avatar?.url"
                 [title]="user?.name">
               <mat-form-field
                 [subscriptSizing]="'dynamic'"

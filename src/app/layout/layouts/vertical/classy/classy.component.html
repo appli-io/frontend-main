@@ -28,7 +28,7 @@
       <div class="relative w-24 h-24">
         <img
           *ngIf="user?.avatar"
-          [src]="user?.avatar"
+          [src]="user.avatar.url"
           alt="User avatar"
           class="w-full h-full rounded-full">
         <mat-icon
