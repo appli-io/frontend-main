@@ -1,14 +1,15 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
-import { CommonModule, NgOptimizedImage }                       from '@angular/common';
-import { CdkScrollable }                                        from '@angular/cdk/overlay';
-import { MatButtonModule }                                      from '@angular/material/button';
-import { MatDividerModule }                                     from '@angular/material/divider';
-import { MatIconModule }                                        from '@angular/material/icon';
-import { MatInputModule }                                       from '@angular/material/input';
-import { MatTooltipModule }                                     from '@angular/material/tooltip';
-import { ActivatedRoute, RouterLink }                           from '@angular/router';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ViewEncapsulation } from '@angular/core';
+import { CommonModule, NgOptimizedImage }                                                 from '@angular/common';
+import { CdkScrollable }                                                                  from '@angular/cdk/overlay';
+import { MatButtonModule }                                                                from '@angular/material/button';
+import { MatDividerModule }                                                               from '@angular/material/divider';
+import { MatIconModule }                                                                  from '@angular/material/icon';
+import { MatInputModule }                                                                 from '@angular/material/input';
+import { MatTooltipModule }                                                               from '@angular/material/tooltip';
+import { ActivatedRoute, RouterLink }                                                     from '@angular/router';
 
 import { TranslocoDirective }                       from '@ngneat/transloco';
+import { LightgalleryModule }                       from 'lightgallery/angular';
 import { SwiperOptions }                            from 'swiper/types';
 import { A11y, Mousewheel, Navigation, Pagination } from 'swiper/modules';
 
@@ -16,18 +17,23 @@ import { FuseCardComponent } from '@fuse/components/card';
 import { SwiperDirective }   from '@core/directives/swiper/swiper.directive';
 import { UserService }       from '@core/user/user.service';
 
-import { INews } from '../../domain/interfaces/news.interface';
+import { INews }        from '../../domain/interfaces/news.interface';
+import { LightGallery } from 'lightgallery/lightgallery';
+import lightGallery     from 'lightgallery';
 
 @Component({
   selector   : 'app-single-news',
   standalone : true,
-  imports    : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective ],
+  imports    : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './single-news.component.html',
   schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class SingleNewsComponent {
+export class SingleNewsComponent implements AfterViewInit {
+  @ViewChild('lightGallery') lightGallery;
+  inlineGallery: LightGallery;
   news: INews;
+  settings = {};
 
   public config: SwiperOptions = {
     modules      : [ Navigation, Pagination, A11y, Mousewheel ],
@@ -52,5 +58,41 @@ export class SingleNewsComponent {
     public readonly userService: UserService
   ) {
     this.news = this.route.snapshot.data.news;
+  }
+
+  ngAfterViewInit() {
+    console.log(this.lightGallery);
+    const lgContainer = this.lightGallery._elementRef.nativeElement;
+
+    this.inlineGallery = lightGallery(lgContainer, {
+      loop      : true,
+      actualSize: true,
+      dynamic   : true,
+      // Turn off hash plugin in case if you are using it
+      // as we don't want to change the url on slide change
+      hash: false,
+      // Do not allow users to close the gallery
+      closable        : true,
+      appendSubHtmlTo : '.lg-item',
+      dynamicEl       : [
+        ...this.news.images.map((image) => ({
+          src    : image.file.url,
+          thumb  : image.file.url,
+          subHtml: `<div class="lightGallery-captions">
+                <h4>${ image.name }</h4>
+                <p>Description of the slide 1</p>
+            </div>`
+        }))
+      ],
+      autoplay        : true,
+      autoplayControls: true
+    });
+
+
+  }
+
+  openGallery(index) {
+    console.log(index);
+    this.inlineGallery.openGallery(index);
   }
 }

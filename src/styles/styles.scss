@@ -101,7 +101,7 @@ swiper-slide {
 // Splide slider override
 .splide__slide {
   & > * {
-    transition: transform 0.5s;
+    transition: transform 0.5s, opacity 0.5s;
   }
 
   &.is-active > fuse-card {
@@ -109,7 +109,11 @@ swiper-slide {
   }
 
   &:not(.is-active) > fuse-card {
-    opacity: .9;
+    opacity: .7;
     transform: scale(0.8);
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }

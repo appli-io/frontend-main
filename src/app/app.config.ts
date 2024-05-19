@@ -19,6 +19,7 @@ import { provideFuse }         from '@fuse';
 import { StorageService }      from '@fuse/services/storage';
 import { appRoutes }           from 'app/app.routes';
 import { mockApiServices }     from 'app/mock-api';
+import { LightgalleryModule }  from 'lightgallery/angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -37,7 +38,8 @@ export const appConfig: ApplicationConfig = {
       CalendarCommonModule.forRoot({
         provide   : DateAdapterAC,
         useFactory: adapterFactory
-      })
+      }),
+      LightgalleryModule
     ),
 
     // Material Date Adapter

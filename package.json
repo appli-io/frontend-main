@@ -33,6 +33,7 @@
     "crypto-js" : "4.2.0",
     "date-fns" : "^3.6.0",
     "highlight.js" : "11.9.0",
+    "lightgallery" : "^2.7.2",
     "lodash-es" : "4.17.21",
     "luxon" : "3.4.4",
     "ng-apexcharts" : "1.9.0",
