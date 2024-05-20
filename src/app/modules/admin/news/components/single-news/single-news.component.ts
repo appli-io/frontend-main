@@ -38,10 +38,9 @@ export class SingleNewsComponent implements AfterViewInit {
   public config: SwiperOptions = {
     modules      : [ Navigation, Pagination, A11y, Mousewheel ],
     autoHeight   : false,
-    spaceBetween : 20,
     navigation   : true,
     loop         : true,
-    pagination   : {clickable: true, dynamicBullets: true},
+    pagination   : {clickable: false, dynamicBullets: true},
     slidesPerView: 1,
     centeredSlides: true,
     breakpoints  : {
@@ -74,21 +73,34 @@ export class SingleNewsComponent implements AfterViewInit {
       // Do not allow users to close the gallery
       closable        : true,
       appendSubHtmlTo : '.lg-item',
-      dynamicEl       : [
-        ...this.news.images.map((image) => ({
+      dynamicEl       : [],
+      autoplay        : true,
+      autoplayControls: true
+    });
+
+    if (this.news.portraitImage)
+      this.inlineGallery.galleryItems.push({
+        src     : this.news.portraitImage.file.url,
+        thumb   : this.news.portraitImage.file.url,
+        download: this.news.portraitImage.name,
+        subHtml : `<div class="lightGallery-captions">
+                <h4>${ this.news.portraitImage.name }</h4>
+<!--                <p>Description of the slide 1</p>-->
+            </div>`
+      });
+
+    if (this.news.images?.length > 0)
+      this.inlineGallery.galleryItems.push(
+        ...this.news.images?.map((image) => ({
           src    : image.file.url,
           thumb  : image.file.url,
+          download: image.name,
           subHtml: `<div class="lightGallery-captions">
                 <h4>${ image.name }</h4>
                 <p>Description of the slide 1</p>
             </div>`
         }))
-      ],
-      autoplay        : true,
-      autoplayControls: true
-    });
-
-
+      );
   }
 
   openGallery(index) {

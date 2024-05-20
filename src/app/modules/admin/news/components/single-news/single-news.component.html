@@ -1,8 +1,13 @@
 <div *transloco="let t; read: 'news'" class="flex flex-col flex-auto min-w-0">
 
   <!-- Header -->
-  <div class="bg-card">
-    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+  <div
+    [class.bg-card]="!news.portraitImage"
+    [class.bg-overlay]="news.portraitImage?.file?.url"
+    [style.background-image]="news.portraitImage?.file?.url? 'url(' + news.portraitImage.file.url + ')' : ''"
+    class="bg-cover"
+  >
+    <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
       <div class="flex-1 min-w-0">
         <!-- Breadcrumbs -->
         <div>
@@ -78,10 +83,19 @@
         </lightgallery>
 
         <swiper-container [config]="config" class="w-full mb-4" fmSwiper>
+          @if (news.portraitImage?.file?.url) {
+            <swiper-slide>
+              <img
+                (click)="openGallery(0)"
+                [src]="news.portraitImage.file.url"
+                alt="Card cover image"
+                class="object-contain max-h-90 max-w-3/4">
+            </swiper-slide>
+          }
           @for (image of news.images; track image.file.name) {
             <swiper-slide class="pb-6 self-center">
               <img
-                (click)="openGallery($index)"
+                (click)="openGallery(news.portraitImage?.file?.url ? $index + 1 : $index)"
                 [src]="image.file.url"
                 alt="Card cover image"
                 class="object-contain max-h-90 max-w-3/4">
