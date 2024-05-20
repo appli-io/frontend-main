@@ -63,23 +63,10 @@ export class SingleNewsComponent implements AfterViewInit {
     console.log(this.lightGallery);
     const lgContainer = this.lightGallery._elementRef.nativeElement;
 
-    this.inlineGallery = lightGallery(lgContainer, {
-      loop      : true,
-      actualSize: true,
-      dynamic   : true,
-      // Turn off hash plugin in case if you are using it
-      // as we don't want to change the url on slide change
-      hash: false,
-      // Do not allow users to close the gallery
-      closable        : true,
-      appendSubHtmlTo : '.lg-item',
-      dynamicEl       : [],
-      autoplay        : true,
-      autoplayControls: true
-    });
+    const items = [];
 
     if (this.news.portraitImage)
-      this.inlineGallery.galleryItems.push({
+      items.push({
         src     : this.news.portraitImage.file.url,
         thumb   : this.news.portraitImage.file.url,
         download: this.news.portraitImage.name,
@@ -90,7 +77,7 @@ export class SingleNewsComponent implements AfterViewInit {
       });
 
     if (this.news.images?.length > 0)
-      this.inlineGallery.galleryItems.push(
+      items.push(
         ...this.news.images?.map((image) => ({
           src    : image.file.url,
           thumb  : image.file.url,
@@ -101,10 +88,24 @@ export class SingleNewsComponent implements AfterViewInit {
             </div>`
         }))
       );
+
+    this.inlineGallery = lightGallery(lgContainer, {
+      loop      : true,
+      actualSize: true,
+      dynamic   : true,
+      // Turn off hash plugin in case if you are using it
+      // as we don't want to change the url on slide change
+      hash: false,
+      // Do not allow users to close the gallery
+      closable        : true,
+      appendSubHtmlTo : '.lg-item',
+      dynamicEl       : [ ...items ],
+      autoplay        : true,
+      autoplayControls: true
+    });
   }
 
   openGallery(index) {
-    console.log(index);
     this.inlineGallery.openGallery(index);
   }
 }

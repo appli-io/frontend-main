@@ -8,8 +8,8 @@ export interface INews {
   slug?: string;
   abstract?: string;
   body?: string;
-  images?: INewsImage[];
-  portraitImage?: INewsImage;
+  images?: IImage[];
+  portraitImage?: IImage;
   isDeleted?: boolean;
   publishedAt?: Date;
   updatedAt?: Date;
@@ -18,7 +18,7 @@ export interface INews {
   createdBy?: Partial<IUser>;
 }
 
-export interface INewsImage {
+export interface IImage {
   name: string,
   filepath: string,
   contentType: string,

@@ -2,6 +2,7 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+@import './custom/patterns';
 
 .gradient-overlay {
   --gradient-color: var(--fuse-bg-dialog-rgb);
@@ -19,6 +20,14 @@
 }
 
 .bg {
+  &-pattern {
+    @apply magicpattern;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: repeat;
+  }
   &-overlay {
     position: relative;
 
@@ -29,11 +38,16 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(255, 255, 255, 0.7);
       z-index: 1;
+    }
+
+    .dark &:before {
+      background-color: rgba(0, 0, 0, 0.5) !important;
     }
   }
 }
+
 
 swiper-slide {
   //background: red
