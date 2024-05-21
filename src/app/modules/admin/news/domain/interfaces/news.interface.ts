@@ -1,6 +1,5 @@
 import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
 import { IUser }         from '@modules/admin/profile/interfaces/user.interface';
-import { IFile }         from '@core/interfaces/file';
 
 export interface INews {
   id?: string;
@@ -22,5 +21,5 @@ export interface IImage {
   name: string,
   filepath: string,
   contentType: string,
-  file?: IFile
+  file?: string
 }

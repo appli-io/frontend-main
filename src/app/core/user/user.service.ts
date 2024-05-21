@@ -1,11 +1,10 @@
 import { HttpClient }         from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
-import { IUser }                               from '@modules/admin/profile/interfaces/user.interface';
-import { Api }                                 from '@core/interfaces/api';
-import { ICompany }                            from '@core/domain/interfaces/company.interface';
-import { environment }                         from 'environments/environment';
+import { map, Observable, ReplaySubject } from 'rxjs';
+import { IUser }                          from '@modules/admin/profile/interfaces/user.interface';
+import { ICompany }                       from '@core/domain/interfaces/company.interface';
+import { environment }                    from 'environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -33,22 +32,6 @@ export class UserService {
 
   get assignedCompanies$(): Observable<Partial<ICompany>[]> {
     return this.user$.pipe(map((user) => user?.assignedCompanies || []));
-  }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Get the current signed-in user data
-   */
-  get(): Observable<IUser> {
-    return this._httpClient.get<Api<IUser>>(this._backendUrl + 'api/auth/me').pipe(
-      map(({content}) => content),
-      tap((user) => {
-        this._user.next(user);
-      })
-    );
   }
 
   /**

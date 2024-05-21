@@ -67,8 +67,8 @@ export class SingleNewsComponent implements AfterViewInit {
 
     if (this.news.portraitImage)
       items.push({
-        src     : this.news.portraitImage.file.url,
-        thumb   : this.news.portraitImage.file.url,
+        src  : this.news.portraitImage.file,
+        thumb: this.news.portraitImage.file,
         download: this.news.portraitImage.name,
         subHtml : `<div class="lightGallery-captions">
                 <h4>${ this.news.portraitImage.name }</h4>
@@ -79,8 +79,8 @@ export class SingleNewsComponent implements AfterViewInit {
     if (this.news.images?.length > 0)
       items.push(
         ...this.news.images?.map((image) => ({
-          src    : image.file.url,
-          thumb  : image.file.url,
+          src  : image.file,
+          thumb: image.file,
           download: image.name,
           subHtml: `<div class="lightGallery-captions">
                 <h4>${ image.name }</h4>

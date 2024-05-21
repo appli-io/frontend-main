@@ -92,7 +92,7 @@
                       <img
                         alt="Card cover image"
                         class="w-10 h-10 rounded-full"
-                        [src]="single_news.createdBy?.avatar?.url">
+                        [src]="single_news.createdBy?.avatar">
                       <div class="flex flex-col ml-3">
                         <span [innerText]="single_news.createdBy.name" class="font-medium leading-none"></span>
                         <span [innerText]="relativeTime(single_news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>

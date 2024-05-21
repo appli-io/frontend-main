@@ -39,9 +39,9 @@
       <span class="relative w-6 rounded-sm overflow-hidden">
         <span class="absolute inset-0 drop-shadow"></span>
         <img
-          *ngIf="company?.logo?.file?.url; else emptyLogo"
+          *ngIf="company?.logo?.file; else emptyLogo"
           [alt]="company"
-          [src]="company.logo.file.url"
+          [src]="company.logo.file"
           class="w-full">
 
         <ng-template #emptyLogo>
@@ -59,9 +59,9 @@
     <span class="relative w-6 rounded-sm overflow-hidden">
       <span class="absolute inset-0 drop-shadow"></span>
       <img
-        *ngIf="company?.logo?.file?.url; else emptyLogo"
+        *ngIf="company?.logo?.file; else emptyLogo"
         [alt]="company"
-        [src]="company.logo.file.url"
+        [src]="company.logo.file"
         class="w-full">
 
       <ng-template #emptyLogo>

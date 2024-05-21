@@ -18,7 +18,7 @@
       <div class="-mt-26 lg:-mt-22 rounded-full">
         <img
           [alt]="user?.name"
-          [src]="user?.avatar?.url"
+          [src]="user?.avatar"
           class="w-32 h-32 rounded-full ring-4 ring-bg-card">
       </div>
 
@@ -459,8 +459,8 @@
         <div class="flex flex-col sm:flex-row items-start mt-8">
           <div class="flex items-center mb-6 sm:mb-0">
             <img
-              *ngIf="user?.avatar?.url"
-              [src]="user.avatar.url"
+              *ngIf="user?.avatar"
+              [src]="user.avatar"
               alt="Card cover image"
               class="w-12 min-w-12 h-12 rounded-full mr-4">
             <div class="sm:hidden">Brian Hughes</div>
