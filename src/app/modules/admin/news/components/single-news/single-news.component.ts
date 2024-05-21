@@ -72,7 +72,6 @@ export class SingleNewsComponent implements AfterViewInit {
         download: this.news.portraitImage.name,
         subHtml : `<div class="lightGallery-captions">
                 <h4>${ this.news.portraitImage.name }</h4>
-<!--                <p>Description of the slide 1</p>-->
             </div>`
       });
 
