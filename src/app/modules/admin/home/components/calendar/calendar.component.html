@@ -21,17 +21,19 @@
       <!-- Format date as 01-12-2024 -->
       <div class="text-lg font-medium tracking-tight leading-6 truncate">{{ t('home.calendar.list') }} <i class="font-thin text-secondary">({{ selectedDate | date:'dd-MM-yyyy' }})</i></div>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 flex flex-col gap-y-4">
       <!-- Events list -->
-      <div class="flex flex-col space-y-4">
-        <div class="flex items-center space-x-2 border border-primary px-4 py-2 rounded-lg hover:shadow-md transition-shadow cursor-pointer">
-          <div class="w-4 h-4 rounded-full bg-primary mr-4"></div>
-          <div class="flex flex-col">
-            <h6 class="text-lg leading-none">Event title</h6>
-            <span class="text-secondary font-medium text-md">10:00 - 12:00</span>
+      @for (event of filteredEvents; track event.id) {
+        <div class="flex flex-col space-y-4">
+          <div class="flex items-center space-x-2 border px-4 py-2 rounded-lg hover:shadow-md transition-shadow cursor-pointer" [style.border-color]="event.color.primary">
+            <div class="w-4 h-4 rounded-full mr-4" [style.background-color]="event.color.primary"></div>
+            <div class="flex flex-col">
+              <h6 class="text-lg leading-none">{{ event.title }}</h6>
+              <span class="text-secondary font-medium text-md">{{ event.allDay ? t('home.calendar.common.all-day') : event.start | date:'HH:mm' }} - {{ event.end | date:'HH:mm' }}</span>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>
