@@ -27,8 +27,8 @@
     <div class="flex flex-col items-center w-full p-4">
       <div class="relative w-24 h-24">
         <img
-          *ngIf="user?.avatar"
-          [src]="user.avatar"
+          *ngIf="user?.avatar?.fileUrl"
+          [src]="user.avatar.fileUrl"
           alt="User avatar"
           class="w-full h-full rounded-full">
         <mat-icon

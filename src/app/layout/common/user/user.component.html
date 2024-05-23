@@ -5,8 +5,8 @@
     mat-icon-button>
     <span class="relative">
         <img
-          *ngIf="showAvatar && user?.avatar"
-          [src]="user.avatar"
+          *ngIf="showAvatar && user?.avatar?.fileUrl"
+          [src]="user.avatar.fileUrl"
           class="w-7 h-7 rounded-full">
         <mat-icon
           *ngIf="!showAvatar || !user?.avatar"

@@ -3,8 +3,8 @@
   <!-- Header -->
   <div
     [class.bg-card]="!news.portraitImage"
-    [class.bg-overlay]="news.portraitImage?.file"
-    [style.background-image]="news.portraitImage?.file? 'url(' + news.portraitImage.file + ')' : ''"
+    [class.bg-overlay]="news.portraitImage?.fileUrl"
+    [style.background-image]="news.portraitImage?.fileUrl? 'url(' + news.portraitImage.fileUrl + ')' : ''"
     class="bg-cover"
   >
     <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
@@ -45,7 +45,7 @@
             <img
               alt="Card cover image"
               class="w-8 h-8 mx-3 rounded-full"
-              [src]="news.createdBy?.avatar">
+              [src]="news.createdBy?.avatar?.fileUrl">
             <strong [innerText]="news.createdBy.name"></strong>
             <span class="ml-4">{{ t('common.published') }}: <strong>{{ news.publishedAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
           </div>
@@ -83,11 +83,11 @@
         </lightgallery>
 
         <swiper-container [config]="config" class="w-full mb-4" fmSwiper>
-          @if (news.portraitImage?.file) {
+          @if (news.portraitImage?.fileUrl) {
             <swiper-slide>
               <img
                 (click)="openGallery(0)"
-                [src]="news.portraitImage.file"
+                [src]="news.portraitImage.fileUrl"
                 alt="Card cover image"
                 class="object-contain max-h-90 max-w-3/4">
             </swiper-slide>
@@ -95,8 +95,8 @@
           @for (image of news.images; track image.name) {
             <swiper-slide class="pb-6 self-center">
               <img
-                (click)="openGallery(news.portraitImage?.file ? $index + 1 : $index)"
-                [src]="image.file"
+                (click)="openGallery(news.portraitImage?.fileUrl ? $index + 1 : $index)"
+                [src]="image.fileUrl"
                 alt="Card cover image"
                 class="object-contain max-h-90 max-w-3/4">
               <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
@@ -113,7 +113,7 @@
           <img
             alt="Card cover image"
             class="w-16 h-16 mr-6 rounded-full"
-            [src]="news.createdBy?.avatar">
+            [src]="news.createdBy?.avatar?.fileUrl">
           <div class="flex flex-col">
             <div [innerText]="news.createdBy.name" class="text-2xl font-semibold leading-tight"></div>
           </div>
@@ -128,7 +128,7 @@
               <img
                 alt="Card cover image"
                 class="w-12 h-12 rounded-full mr-5"
-                [src]="user?.avatar"
+                [src]="user?.avatar?.fileUrl"
                 [title]="user?.name">
               <mat-form-field
                 [subscriptSizing]="'dynamic'"
