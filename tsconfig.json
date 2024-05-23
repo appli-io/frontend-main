@@ -24,8 +24,8 @@
       "@modules/*" : [
         "app/modules/*"
       ],
-      "@spartan-ng/ui-skeleton-helm" : [
-        ".\\src/libs/ui/ui-skeleton-helm/src/index.ts"
+      "@libs/*" : [
+        "libs/*"
       ]
     }
   },

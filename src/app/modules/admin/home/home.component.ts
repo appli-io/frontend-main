@@ -16,7 +16,7 @@ import { MatProgressBar }                              from '@angular/material/p
 import { CalendarComponent }                           from '@modules/admin/home/components/calendar/calendar.component';
 import Splide                                          from '@splidejs/splide';
 import { relativeTime }                                from '@core/utils';
-import { HlmSkeletonComponent }                        from '../../../../libs/ui/ui-skeleton-helm/src';
+import { HlmSkeletonComponent }                        from '@libs/ui/ui-skeleton-helm/src';
 
 @Component({
   selector     : 'home',
