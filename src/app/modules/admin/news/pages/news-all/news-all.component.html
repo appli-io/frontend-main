@@ -6,8 +6,8 @@
     [title]="t('title')"
   ></news-list-header>
 
-  <!-- Categories -->
   <div class="flex flex-col flex-auto min-w-0">
+    <!-- Categories -->
     @if (categories && categories.length > 1) {
       <div class="flex flex-col items-center justify-center w-full p-6 sm:p-10 bg-gray-100 dark:bg-transparent">
         <div class="text-2xl font-semibold tracking-tight text-secondary flex items-center" (click)="categoriesExpanded = !categoriesExpanded">
@@ -16,27 +16,9 @@
         </div>
         <div class="animated-box" @fadeIn @fadeOut *ngIf="categoriesExpanded">
           <div class="animated-box-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
-            <ng-container *ngFor="let category of categories; trackBy: trackByFn;">
-              <fuse-card
-                class="flex flex-col max-w-80 w-full relative cursor-pointer"
-                [routerLink]="['/news']"
-                [queryParams]="category.slug === 'all' ? null : { category: category.slug }"
-                [queryParamsHandling]="'merge'"
-                (click)="categoriesExpanded = false"
-              >
-                <div class="relative">
-                  <img
-                    alt="Card cover image"
-                    class="h-40 object-cover"
-                    src="https://picsum.photos/500/300?random={{category.slug}}">
-                  <div class="gradient-overlay"></div>
-                </div>
-                <div class="m-8 -mt-8 z-10">
-                  <div class="text-md font-semibold leading-none tracking-wide text-primary dark:text-primary-400 mb-2">{{ category.name | uppercase }}</div>
-                  <div class="text-2xl font-semibold leading-tight line-clamp-2" [matTooltip]="category.description" [matTooltipPosition]="'below'">{{ category.description }}</div>
-                </div>
-              </fuse-card>
-            </ng-container>
+            @for (category of categories; track category.id) {
+              <news-category-card [category]="category" [index]="$index" (onClick)="categoriesExpanded = false"></news-category-card>
+            }
           </div>
         </div>
       </div>
@@ -49,39 +31,7 @@
           <ng-container *ngIf="pageNews.content.length; else noContent">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
               @for (single_news of pageNews.content; track single_news.id) {
-                <fuse-card class="flex flex-col max-w-80 w-full relative">
-                  <a
-                    [color]="'primary'"
-                    [routerLink]="['/news', 'read', single_news.slug]"
-                    class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
-                    mat-button>
-                    Read More
-                  </a>
-                  <div class="relative">
-                    <img
-                      alt="Card cover image"
-                      class="h-50 object-cover"
-                      src="https://picsum.photos/500/300?random={{$index}}">
-                    <div class="gradient-overlay"></div>
-                  </div>
-                  <div class="m-8 -mt-8 z-10">
-                    <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ single_news.category.name | uppercase }}</div>
-                    <div [title]="single_news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ single_news.headline }}</div>
-                    <div class="mt-2 text-secondary line-clamp-2">{{ single_news.abstract }}</div>
-                    <div class="w-12 h-1 my-6 border-t-2"></div>
-                    <!-- Publisher info -->
-                    <div class="flex items-center mt-6">
-                      <img
-                        alt="Card cover image"
-                        class="w-10 h-10 rounded-full"
-                        [src]="single_news.createdBy?.avatar?.fileUrl">
-                      <div class="flex flex-col ml-3">
-                        <span [innerText]="single_news.createdBy.name" class="font-medium leading-none"></span>
-                        <span [innerText]="relativeTime(single_news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
-                      </div>
-                    </div>
-                  </div>
-                </fuse-card>
+                <news-card [news]="single_news" [index]="$index" [actionText]="t('read-more')"></news-card>
               }
             </div>
           </ng-container>

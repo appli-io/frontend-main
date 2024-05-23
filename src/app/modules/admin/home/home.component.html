@@ -169,9 +169,11 @@
           <home-shortcuts></home-shortcuts>
         } @placeholder (minimum 2s) {
           <!-- TODO: Add ngx skeleton <https://github.com/willmendesneto/ngx-skeleton-loader> -->
-            <!-- Angular material loader -->
-          <div class="flex flex-col space-y-4">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <skeleton class='h-15 w-full bg-card'/>
+            <skeleton class='h-15 w-full bg-card'/>
+            <skeleton class='h-15 w-full bg-card'/>
+            <skeleton class='h-15 w-full bg-card'/>
           </div>
         }
       </div>

@@ -70,7 +70,8 @@
       "subtitle" : "Conecta con tu Equipo y la Cultura de la Empresa",
       "description" : "Sumérgete en las últimas actualizaciones y anuncios internos que impulsan nuestra organización. Desde logros destacados hasta eventos y proyectos, nuestra intranet te mantiene alineado y participativo en la vida cotidiana de nuestra empresa.",
       "no-content" : "No hay noticias disponibles para mostrar",
-      "categories" : "Categorías"
+      "categories" : "Categorías",
+      "read-more" : "Ver más"
     },
     "single-news" : {
       "title" : "Noticia",
@@ -86,7 +87,8 @@
       "subtitle" : "Mantente Informado con Noticias Externas",
       "description" : "Accede a las noticias más relevantes y actualizadas de Radio Bío Bío. Este servicio externo mejora la comunicación y el acceso a la información, manteniéndote al tanto de los eventos nacionales e internacionales que pueden impactar nuestro entorno laboral y social.",
       "no-content" : "No hay noticias disponibles para mostrar en este momento",
-      "categories" : "Categorías"
+      "categories" : "Categorías",
+      "read-more" : "Ir a"
     }
   },
   "profile" : {

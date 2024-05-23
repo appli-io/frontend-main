@@ -19,8 +19,7 @@ export class ShortcutsComponent {
       {id: 'calendar', svgIcon: 'heroicons_solid:calendar', link: '/apps/calendar', useRouter: true},
       {id: 'mail', svgIcon: 'heroicons_solid:mail', link: 'https://google.com', useRouter: false},
       {id: 'security', svgIcon: 'heroicons_solid:key', link: '/apps/security', useRouter: true},
-      {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true},
-      {id: 'to-do', svgIcon: 'heroicons_solid:rectangle-stack', link: '/apps/todo', useRouter: true},
+      {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true}
     ];
   }
 }

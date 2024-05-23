@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave" : false,
   "compilerOptions" : {
@@ -24,6 +23,9 @@
       ],
       "@modules/*" : [
         "app/modules/*"
+      ],
+      "@spartan-ng/ui-skeleton-helm" : [
+        ".\\src/libs/ui/ui-skeleton-helm/src/index.ts"
       ]
     }
   },

@@ -1,18 +1,11 @@
-<div *transloco="let t" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full min-w-0 py-4">
+<div *transloco="let t" class="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-x-6 w-full min-w-0 py-4">
   <div class="flex flex-col flex-auto col-span-1">
     <div class="flex items-start justify-between">
       <h2 class="text-lg font-medium tracking-tight leading-6 truncate">{{ t('home.calendar.monthly-calendar') }}</h2>
     </div>
-    <div class="mt-4 border rounded-2xl overflow-hidden flex items-center">
-      <!-- Calendar -->
-      <div id="activity-calendar"></div>
-      <!--      <mwl-calendar-month-view-->
-      <!--        [cellTemplate]="customCellTemplate"-->
-      <!--        [locale]="'es'"-->
-      <!--        [weekStartsOn]="1"-->
-      <!--        [viewDate]="viewDate">-->
-      <!--      </mwl-calendar-month-view>-->
-    </div>
+
+    <!-- Calendar -->
+    <div class="mt-4" id="activity-calendar"></div>
   </div>
 
   <!-- Events list -->

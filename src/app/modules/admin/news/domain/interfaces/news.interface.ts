@@ -15,6 +15,8 @@ export interface INews {
 
   category?: Partial<INewsCategory>;
   createdBy?: Partial<IUser>;
+
+  custom: Record<string, any>;
 }
 
 export interface IImage {
