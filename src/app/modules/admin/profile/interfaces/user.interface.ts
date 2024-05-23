@@ -2,7 +2,7 @@ import { ICompany } from '@core/domain/interfaces/company.interface';
 import { IImage }   from '@modules/admin/news/domain/interfaces/news.interface';
 
 export interface IUser {
-  id?: number;
+  id?: string;
   name?: string;
   username?: string;
   email?: string;

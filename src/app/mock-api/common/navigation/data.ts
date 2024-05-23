@@ -29,6 +29,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         link : '/news/category'
       },
+      {
+        id   : 'bio-bio',
+        title: 'Radio Bío Bío',
+        type : 'basic',
+        link : '/news/bio-bio'
+      },
     ]
   },
   // Multimedia (gallery and videos)

@@ -13,7 +13,7 @@ export class ProfileService {
 
   constructor(private readonly _httpClient: HttpClient) {}
 
-  getProfile(userId: number): Observable<Api<IUser>> {
+  getProfile(userId: string): Observable<Api<IUser>> {
     return this._httpClient.get<Api<IUser>>(`api/users/${ userId }`);
   }
 }

@@ -30,7 +30,7 @@ import lightGallery     from 'lightgallery';
   schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SingleNewsComponent implements AfterViewInit {
-  @ViewChild('lightGallery') lightGallery;
+  @ViewChild('lightGallery') lightGallery: { _elementRef: { nativeElement: any; }; };
   inlineGallery: LightGallery;
   news: INews;
   settings = {};
@@ -51,7 +51,6 @@ export class SingleNewsComponent implements AfterViewInit {
     }
   };
 
-  // in the constructor, get object news from resolver
   constructor(
     private readonly route: ActivatedRoute,
     public readonly userService: UserService

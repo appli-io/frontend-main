@@ -8,15 +8,19 @@ export default [
     children: [
       {
         path: 'all',
-        loadChildren: () => import('./components/news-all/news-all.routes')
+        loadChildren: () => import('./pages/news-all/news-all.routes')
       },
       {
         path: 'category',
-        loadChildren: () => import('./components/news-category/news-category.routes')
+        loadChildren: () => import('./pages/news-category/news-category.routes')
       },
       {
         path: 'read',
-        loadChildren: () => import('./components/single-news/single-news.routes')
+        loadChildren: () => import('./pages/single-news/single-news.routes')
+      },
+      {
+        path        : 'bio-bio',
+        loadChildren: () => import('./pages/external-biobio/external-biobio.routes')
       },
       {
         path: '',

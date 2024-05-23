@@ -10,7 +10,7 @@ import { ProfileService } from '@modules/admin/profile/profile.service';
 export const profileResolver: ResolveFn<any> = (route, state) => {
   const _userService = inject(UserService);
   const _profileService = inject(ProfileService);
-  const userId: number | undefined = route.params?.id;
+  const userId: string | undefined = route.params?.id;
 
   if (userId) {
     return _profileService.getProfile(userId).pipe(

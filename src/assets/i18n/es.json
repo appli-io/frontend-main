@@ -25,6 +25,7 @@
     "news" : "Noticias",
     "allNews" : "Todas las noticias",
     "newsByCategory" : "Noticias por categoría",
+    "bio-bio" : "Radio Bío Bío",
     "multimedia" : "Multimedia",
     "gallery" : "Galería",
     "videos" : "Videos",
@@ -79,6 +80,13 @@
       "published-by" : "Publicado por",
       "comments" : "Comentarios",
       "write-comment" : "Escribe un comentario..."
+    },
+    "bio-bio" : {
+      "title" : "Noticias de Radio Bío Bío",
+      "subtitle" : "Mantente Informado con Noticias Externas",
+      "description" : "Accede a las noticias más relevantes y actualizadas de Radio Bío Bío. Este servicio externo mejora la comunicación y el acceso a la información, manteniéndote al tanto de los eventos nacionales e internacionales que pueden impactar nuestro entorno laboral y social.",
+      "no-content" : "No hay noticias disponibles para mostrar en este momento",
+      "categories" : "Categorías"
     }
   },
   "profile" : {

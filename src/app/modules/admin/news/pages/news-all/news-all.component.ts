@@ -17,12 +17,13 @@ import { FuseFindByKeyPipe } from '@fuse/pipes/find-by-key/find-by-key.pipe';
 import { NewsService }       from '@modules/admin/news/news.service';
 import { INewsCategory }     from '@modules/admin/news/domain/interfaces/category.interface';
 
-import { INews } from '../../domain/interfaces/news.interface';
+import { INews }                   from '../../domain/interfaces/news.interface';
+import { NewsListHeaderComponent } from '@modules/admin/news/components/news-list-header/news-list-header.component';
 
 @Component({
   selector   : 'app-news-all',
   standalone : true,
-  imports    : [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent, AsyncPipe ],
+  imports: [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent, AsyncPipe, NewsListHeaderComponent ],
   templateUrl: './news-all.component.html',
   animations : fuseAnimations
 })
