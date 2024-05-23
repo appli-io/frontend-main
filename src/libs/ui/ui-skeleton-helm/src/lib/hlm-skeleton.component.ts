@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { hlm }                        from '@spartan-ng/ui-core';
 import type { ClassValue }            from 'clsx';
+import { hlm }                        from '@libs/ui/utils/utils';
 
 @Component({
   selector  : 'skeleton',
