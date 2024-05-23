@@ -21,7 +21,7 @@ export class ExternalBiobioComponent implements OnInit {
   constructor(private readonly _httpClient: HttpClient) {}
 
   async ngOnInit() {
-    const response = await lastValueFrom(this._httpClient.get<IBioBioNews[]>('https://www.biobiochile.cl/static/news.json'));
+    const response = await lastValueFrom(this._httpClient.get<IBioBioNews[]>('api/biobio'));
 
     response.map(bbn => {
       this.news.push({
