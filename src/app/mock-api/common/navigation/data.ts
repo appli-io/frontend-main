@@ -43,19 +43,18 @@ export const defaultNavigation: FuseNavigationItem[] = [
     title   : 'Multimedia',
     type    : 'collapsable',
     icon    : 'heroicons_outline:photo',
-    link    : '/multimedia',
     children: [
       {
         id   : 'gallery',
         title: 'Gallery',
         type : 'basic',
-        link : '/multimedia/gallery'
+        link: '/apps/albums'
       },
       {
         id   : 'videos',
         title: 'Videos',
         type : 'basic',
-        link : '/multimedia/videos'
+        link: '/apps/videos'
       },
     ]
   },

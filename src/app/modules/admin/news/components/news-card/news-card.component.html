@@ -1,38 +1,44 @@
 <fuse-card class="group flex flex-col max-w-80 w-full relative">
+  <mat-icon *ngIf="!useRouter && externalLogo" [svgIcon]="'radio_bio_bio'" class="absolute top-8 left-8 z-10 bg-white rounded-full p-[5px] w-8 h-8"></mat-icon>
   <a
     *ngIf="useRouter"
     [routerLink]="['/news', 'read', news.slug]"
+    [matTooltip]="actionText"
     class="
-      absolute px-3 py-1 top-2 right-2 z-10
+      absolute rounded-full m-0 w-[unset] top-8 right-8 z-10 flex items-center justify-center
       bg-dialog group-hover:bg-opacity-100
       text-white group-hover:text-primary-500 bg-opacity-50 dark:text-primary-500 dark:group-hover:text-white
       transition duration-300 ease-in-out
     "
-    mat-button>
-    {{ actionText }}
+  >
+    <mat-icon
+      [svgIcon]="'heroicons_mini:arrow-right'"
+      class="
+          min-w-[unset] min-h-[unset] w-8 h-8 p-1.5
+          text-white group-hover:text-primary-500 dark:text-primary-500 dark:group-hover:text-white
+          transition duration-300 ease-in-out
+        "
+    ></mat-icon>
   </a>
   <a
     *ngIf="!useRouter"
     [href]="news.custom.url"
+    [matTooltip]="actionText"
     class="
-      absolute px-3 py-1 top-2 right-2 z-10
+      absolute rounded-full m-0 w-[unset] top-8 right-8 z-10 flex items-center justify-center
       bg-dialog group-hover:bg-opacity-100
       text-white group-hover:text-primary-500 bg-opacity-50 dark:text-primary-500 dark:group-hover:text-white
       transition duration-300 ease-in-out
     "
-    mat-button
     target="_blank">
-    <span class="flex items-center">
-      {{ actionText }}
       <mat-icon
         [svgIcon]="'heroicons_mini:arrow-top-right-on-square'"
         class="
-          ml-1 min-w-[unset] min-h-[unset] w-[20px] h-[20px]
+          min-w-[unset] min-h-[unset] w-8 h-8 p-1.5
           text-white group-hover:text-primary-500 dark:text-primary-500 dark:group-hover:text-white
           transition duration-300 ease-in-out
         "
       ></mat-icon>
-    </span>
   </a>
   <div class="relative">
     <img
@@ -43,20 +49,20 @@
   </div>
   <div class="m-8 -mt-8 z-10">
     <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ news.category.name | uppercase }}</div>
-    <div [title]="news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
-    <div class="mt-2 text-secondary line-clamp-2">{{ news.abstract }}</div>
+    <div [title]="news.headline" class="text-xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
+    <div [matTooltip]="news.abstract" class="mt-2 text-secondary line-clamp-4">{{ news.abstract }}</div>
     <div class="w-12 h-1 my-6 border-t-2"></div>
     <!-- Publisher info -->
     <div class="flex items-center mt-6">
       <img
         *ngIf="news.createdBy?.avatar?.fileUrl"
         [src]="news.createdBy?.avatar?.fileUrl"
-        alt="Card cover image"
+        alt="News card cover image"
         class="w-10 h-10 rounded-full">
       <mat-icon
         *ngIf="!news.createdBy?.avatar?.fileUrl"
-        [svgIcon]="'heroicons_outline:user-circle'"
-        class="w-10 h-10 rounded-full"></mat-icon>
+        [svgIcon]="externalLogo || 'heroicons_outline:user-circle'"
+        class="w-10 h-10 rounded-full p-1.5"></mat-icon>
       <div class="flex flex-col ml-3">
         <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
         <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>

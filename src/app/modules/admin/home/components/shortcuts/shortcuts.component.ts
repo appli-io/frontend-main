@@ -1,9 +1,11 @@
-import { Component }                        from '@angular/core';
-import { TranslocoDirective }               from '@ngneat/transloco';
 import { JsonPipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component }                        from '@angular/core';
 import { MatIcon }                          from '@angular/material/icon';
 import { RouterLink }                       from '@angular/router';
-import { Shortcut }                         from '@modules/admin/home/components/shortcuts/shortcut.type';
+
+import { TranslocoDirective } from '@ngneat/transloco';
+
+import { Shortcut } from '@modules/admin/home/components/shortcuts/shortcut.type';
 
 @Component({
   selector   : 'home-shortcuts',

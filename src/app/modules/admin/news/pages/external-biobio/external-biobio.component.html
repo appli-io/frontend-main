@@ -13,7 +13,7 @@
         <ng-container *ngIf="newsList; else noContent">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
             @for (single_news of newsList; track single_news.id) {
-              <news-card [news]="single_news" [index]="$index" [useRouter]="false" [actionText]="t('read-more')"></news-card>
+              <news-card [news]="single_news" [index]="$index" [useRouter]="false" [actionText]="t('read-more')" [externalLogo]="'radio_bio_bio'"></news-card>
             }
           </div>
         </ng-container>

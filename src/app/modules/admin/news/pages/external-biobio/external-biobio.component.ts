@@ -1,14 +1,16 @@
-import { Component, OnInit }       from '@angular/core';
-import { HttpClient }              from '@angular/common/http';
-import { lastValueFrom }           from 'rxjs';
-import { INews }                   from '@modules/admin/news/domain/interfaces/news.interface';
-import { IBioBioNews }             from '@modules/admin/news/domain/interfaces/biobio-news.interface';
-import { TranslocoDirective }      from '@ngneat/transloco';
-import { NewsListHeaderComponent } from '@modules/admin/news/components/news-list-header/news-list-header.component';
-import { MatIcon }                 from '@angular/material/icon';
-import { NewsCardComponent }       from '@modules/admin/news/components/news-card/news-card.component';
+import { Component, OnInit } from '@angular/core';
+import { NgIf }              from '@angular/common';
+import { HttpClient }        from '@angular/common/http';
+import { MatIcon }           from '@angular/material/icon';
+
+import { TranslocoDirective } from '@ngneat/transloco';
+import { lastValueFrom }      from 'rxjs';
+
 import { Api }                     from '@core/interfaces/api';
-import { NgIf }                    from '@angular/common';
+import { NewsCardComponent }       from '@modules/admin/news/components/news-card/news-card.component';
+import { NewsListHeaderComponent } from '@modules/admin/news/components/news-list-header/news-list-header.component';
+import { IBioBioNews }             from '@modules/admin/news/domain/interfaces/biobio-news.interface';
+import { INews }                   from '@modules/admin/news/domain/interfaces/news.interface';
 
 @Component({
   selector   : 'external-biobio',

@@ -93,6 +93,7 @@ export const appRoutes: Route[] = [
         path    : 'apps',
         children: [
           {path: 'contacts', loadChildren: () => import('app/modules/admin/contacts/contacts.routes')},
+          {path: 'albums', loadChildren: () => import('app/modules/admin/media/albums/albums.routes')},
           {path: '', redirectTo: '/home', pathMatch: 'full'}
         ]
       }

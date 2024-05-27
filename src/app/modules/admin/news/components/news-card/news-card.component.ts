@@ -6,17 +6,19 @@ import { RouterLink }          from '@angular/router';
 import { relativeTime }        from '@core/utils';
 import { INews }               from '@modules/admin/news/domain/interfaces/news.interface';
 import { MatIcon }             from '@angular/material/icon';
+import { MatTooltip }          from '@angular/material/tooltip';
 
 @Component({
   selector   : 'news-card',
   standalone : true,
-  imports    : [
+  imports: [
     FuseCardComponent,
     MatAnchor,
     UpperCasePipe,
     RouterLink,
     NgIf,
-    MatIcon
+    MatIcon,
+    MatTooltip
   ],
   templateUrl: './news-card.component.html'
 })
@@ -25,6 +27,7 @@ export class NewsCardComponent {
   @Input() actionText: string;
   @Input() news: INews;
   @Input() index: number;
+  @Input() externalLogo: string;
 
   protected readonly relativeTime = relativeTime;
 }

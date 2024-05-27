@@ -19,5 +19,6 @@ export class IconsService {
     matIconRegistry.addSvgIconSetInNamespace('heroicons_outline', domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/heroicons-outline.svg'));
     matIconRegistry.addSvgIconSetInNamespace('heroicons_solid', domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/heroicons-solid.svg'));
     matIconRegistry.addSvgIconSetInNamespace('heroicons_mini', domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/heroicons-mini.svg'));
+    matIconRegistry.addSvgIcon('radio_bio_bio', domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/external/radio-bio-bio.svg'));
   }
 }
