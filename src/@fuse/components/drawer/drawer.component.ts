@@ -29,6 +29,12 @@ import { FuseUtilsService }                                   from '@fuse/servic
   standalone : true,
 })
 export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
+  // @formatter:off
+  private _elementRef = inject(ElementRef);
+  private _renderer2 = inject(Renderer2);
+  private _fuseDrawerService = inject(FuseDrawerService);
+  private _fuseUtilsService = inject(FuseUtilsService);
+
   /* eslint-disable @typescript-eslint/naming-convention */
   static ngAcceptInputType_fixed: BooleanInput;
   static ngAcceptInputType_opened: BooleanInput;
@@ -51,10 +57,6 @@ export class FuseDrawerComponent implements OnChanges, OnInit, OnDestroy {
   @Input() opened: boolean = false;
   @Input() position: FuseDrawerPosition = 'left';
   @Input() transparentOverlay: boolean = false;
-  private _elementRef = inject(ElementRef);
-  private _renderer2 = inject(Renderer2);
-  private _fuseDrawerService = inject(FuseDrawerService);
-  private _fuseUtilsService = inject(FuseUtilsService);
 
   private _animationsEnabled: boolean = false;
 

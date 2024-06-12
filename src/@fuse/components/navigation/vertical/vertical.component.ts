@@ -96,6 +96,12 @@ export class FuseVerticalNavigationComponent
   private _animationBuilder = inject(AnimationBuilder);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _document = inject(DOCUMENT);
+  private _elementRef = inject(ElementRef);
+  private _fuseNavigationService = inject(FuseNavigationService);
+  private _fuseUtilsService = inject(FuseUtilsService);
+  private _renderer2 = inject(Renderer2);
+  private _router = inject(Router);
+  private _scrollStrategyOptions = inject(ScrollStrategyOptions);
 
   @Input() appearance: FuseVerticalNavigationAppearance = 'default';
   @Input() autoCollapse: boolean = true;
@@ -106,14 +112,8 @@ export class FuseVerticalNavigationComponent
   @Input() opened: boolean = true;
   @Input() position: FuseVerticalNavigationPosition = 'left';
   @Input() transparentOverlay: boolean = false;
-  private _elementRef = inject(ElementRef);
-  private _renderer2 = inject(Renderer2);
-  private _router = inject(Router);
-  private _scrollStrategyOptions = inject(ScrollStrategyOptions);
-  private _fuseNavigationService = inject(FuseNavigationService);
 
   activeAsideItemId: string | null = null;
-  private _fuseUtilsService = inject(FuseUtilsService);
   @ViewChild('navigationContent') private _navigationContentEl: ElementRef;
   onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   private _animationsEnabled: boolean = false;
