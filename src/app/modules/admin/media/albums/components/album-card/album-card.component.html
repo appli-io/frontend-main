@@ -1,0 +1,22 @@
+<div class="flex flex-col shadow rounded-2xl overflow-hidden cursor-pointer bg-card">
+  <!-- Image -->
+  <ng-container *ngIf="album.coverThumbnail">
+    <img
+      [src]="album.coverThumbnail"
+      class="w-full object-cover">
+  </ng-container>
+  <div class="flex flex-auto flex-col p-6 space-y-4">
+    <!-- Title -->
+    <ng-container *ngIf="album.name">
+      <div class="font-semibold line-clamp-3">
+        {{ album.name }}
+      </div>
+    </ng-container>
+    <!-- Content -->
+    <ng-container *ngIf="album.description">
+      <div [class.text-xl]="album.description.length < 70">
+        {{ album.description }}
+      </div>
+    </ng-container>
+  </div>
+</div>
