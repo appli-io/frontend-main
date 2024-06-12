@@ -1,6 +1,6 @@
-import { Overlay, OverlayRef }                              from '@angular/cdk/overlay';
-import { TemplatePortal }                                   from '@angular/cdk/portal';
-import { DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Overlay, OverlayRef }                 from '@angular/cdk/overlay';
+import { TemplatePortal }                      from '@angular/cdk/portal';
+import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,24 +10,32 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation
-}                                                           from '@angular/core';
-import { MatButton, MatButtonModule }                       from '@angular/material/button';
-import { MatIconModule }                                    from '@angular/material/icon';
-import { MatTooltipModule }                                 from '@angular/material/tooltip';
-import { RouterLink }                                       from '@angular/router';
-import { MessagesService }                                  from 'app/layout/common/messages/messages.service';
-import { Message }                                          from 'app/layout/common/messages/messages.types';
-import { Subject, takeUntil }                               from 'rxjs';
+  ViewEncapsulation,
+}                                              from '@angular/core';
+import { MatButton, MatButtonModule }          from '@angular/material/button';
+import { MatIconModule }                       from '@angular/material/icon';
+import { MatTooltipModule }                    from '@angular/material/tooltip';
+import { RouterLink }                          from '@angular/router';
+import { MessagesService }                     from 'app/layout/common/messages/messages.service';
+import { Message }                             from 'app/layout/common/messages/messages.types';
+import { Subject, takeUntil }                  from 'rxjs';
 
 @Component({
-  selector: 'messages',
-  templateUrl: './messages.component.html',
+  selector     : 'messages',
+  templateUrl  : './messages.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'messages',
-  standalone: true,
-  imports: [ MatButtonModule, NgIf, MatIconModule, MatTooltipModule, NgFor, NgClass, NgTemplateOutlet, RouterLink, DatePipe ],
+  exportAs     : 'messages',
+  standalone   : true,
+  imports      : [
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    NgClass,
+    NgTemplateOutlet,
+    RouterLink,
+    DatePipe,
+  ],
 })
 export class MessagesComponent implements OnInit, OnDestroy {
   messages: Message[];
@@ -44,9 +52,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _messagesService: MessagesService,
     private _overlay: Overlay,
-    private _viewContainerRef: ViewContainerRef,
-  ) {
-  }
+    private _viewContainerRef: ViewContainerRef
+  ) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -104,7 +111,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
     }
 
     // Attach the portal to the overlay
-    this._overlayRef.attach(new TemplatePortal(this._messagesPanel, this._viewContainerRef));
+    this._overlayRef.attach(
+      new TemplatePortal(this._messagesPanel, this._viewContainerRef)
+    );
   }
 
   /**
@@ -161,11 +170,14 @@ export class MessagesComponent implements OnInit, OnDestroy {
   private _createOverlay(): void {
     // Create the overlay
     this._overlayRef = this._overlay.create({
-      hasBackdrop: true,
-      backdropClass: 'fuse-backdrop-on-mobile',
-      scrollStrategy: this._overlay.scrollStrategies.block(),
-      positionStrategy: this._overlay.position()
-        .flexibleConnectedTo(this._messagesOrigin._elementRef.nativeElement)
+      hasBackdrop     : true,
+      backdropClass   : 'fuse-backdrop-on-mobile',
+      scrollStrategy  : this._overlay.scrollStrategies.block(),
+      positionStrategy: this._overlay
+        .position()
+        .flexibleConnectedTo(
+          this._messagesOrigin._elementRef.nativeElement
+        )
         .withLockedPosition(true)
         .withPush(true)
         .withPositions([
@@ -211,7 +223,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     let count = 0;
 
     if (this.messages && this.messages.length) {
-      count = this.messages.filter(message => !message.read).length;
+      count = this.messages.filter((message) => !message.read).length;
     }
 
     this.unreadCount = count;

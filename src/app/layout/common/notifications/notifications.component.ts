@@ -1,6 +1,6 @@
-import { Overlay, OverlayRef }                              from '@angular/cdk/overlay';
-import { TemplatePortal }                                   from '@angular/cdk/portal';
-import { DatePipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Overlay, OverlayRef }                 from '@angular/cdk/overlay';
+import { TemplatePortal }                      from '@angular/cdk/portal';
+import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,30 +10,39 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
-  ViewEncapsulation
-}                                                           from '@angular/core';
-import { MatButton, MatButtonModule }                       from '@angular/material/button';
-import { MatIconModule }                                    from '@angular/material/icon';
-import { MatTooltipModule }                                 from '@angular/material/tooltip';
-import { RouterLink }                                       from '@angular/router';
-import { NotificationsService }                             from 'app/layout/common/notifications/notifications.service';
-import { Notification }                                     from 'app/layout/common/notifications/notifications.types';
-import { Subject, takeUntil }                               from 'rxjs';
+  ViewEncapsulation,
+}                                              from '@angular/core';
+import { MatButton, MatButtonModule }          from '@angular/material/button';
+import { MatIconModule }                       from '@angular/material/icon';
+import { MatTooltipModule }                    from '@angular/material/tooltip';
+import { RouterLink }                          from '@angular/router';
+import { NotificationsService }                from 'app/layout/common/notifications/notifications.service';
+import { Notification }                        from 'app/layout/common/notifications/notifications.types';
+import { Subject, takeUntil }                  from 'rxjs';
 
 @Component({
-  selector: 'notifications',
-  templateUrl: './notifications.component.html',
+  selector     : 'notifications',
+  templateUrl  : './notifications.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'notifications',
-  standalone: true,
-  imports: [ MatButtonModule, NgIf, MatIconModule, MatTooltipModule, NgFor, NgClass, NgTemplateOutlet, RouterLink, DatePipe ],
+  exportAs     : 'notifications',
+  standalone   : true,
+  imports      : [
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    NgClass,
+    NgTemplateOutlet,
+    RouterLink,
+    DatePipe,
+  ],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
   notifications: Notification[];
   unreadCount: number = 0;
   @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
-  @ViewChild('notificationsPanel') private _notificationsPanel: TemplateRef<any>;
+  @ViewChild('notificationsPanel')
+  private _notificationsPanel: TemplateRef<any>;
   private _overlayRef: OverlayRef;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -44,9 +53,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _notificationsService: NotificationsService,
     private _overlay: Overlay,
-    private _viewContainerRef: ViewContainerRef,
-  ) {
-  }
+    private _viewContainerRef: ViewContainerRef
+  ) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -104,7 +112,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     // Attach the portal to the overlay
-    this._overlayRef.attach(new TemplatePortal(this._notificationsPanel, this._viewContainerRef));
+    this._overlayRef.attach(
+      new TemplatePortal(this._notificationsPanel, this._viewContainerRef)
+    );
   }
 
   /**
@@ -130,7 +140,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     notification.read = !notification.read;
 
     // Update the notification
-    this._notificationsService.update(notification.id, notification).subscribe();
+    this._notificationsService
+      .update(notification.id, notification)
+      .subscribe();
   }
 
   /**
@@ -161,11 +173,14 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   private _createOverlay(): void {
     // Create the overlay
     this._overlayRef = this._overlay.create({
-      hasBackdrop: true,
-      backdropClass: 'fuse-backdrop-on-mobile',
-      scrollStrategy: this._overlay.scrollStrategies.block(),
-      positionStrategy: this._overlay.position()
-        .flexibleConnectedTo(this._notificationsOrigin._elementRef.nativeElement)
+      hasBackdrop     : true,
+      backdropClass   : 'fuse-backdrop-on-mobile',
+      scrollStrategy  : this._overlay.scrollStrategies.block(),
+      positionStrategy: this._overlay
+        .position()
+        .flexibleConnectedTo(
+          this._notificationsOrigin._elementRef.nativeElement
+        )
         .withLockedPosition(true)
         .withPush(true)
         .withPositions([
@@ -211,7 +226,9 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     let count = 0;
 
     if (this.notifications && this.notifications.length) {
-      count = this.notifications.filter(notification => !notification.read).length;
+      count = this.notifications.filter(
+        (notification) => !notification.read
+      ).length;
     }
 
     this.unreadCount = count;

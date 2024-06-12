@@ -1,100 +1,105 @@
 <div
   [class.fuse-vertical-navigation-item-has-subtitle]="!!item.subtitle"
   [ngClass]="item.classes?.wrapper"
-  class="fuse-vertical-navigation-item-wrapper">
-
+  class="fuse-vertical-navigation-item-wrapper"
+>
   <div
     (click)="toggleCollapsable()"
     [matTooltip]="item.tooltip || ''"
-    [ngClass]="{'fuse-vertical-navigation-item-disabled': item.disabled}"
-    class="fuse-vertical-navigation-item">
-
+    [ngClass]="{ 'fuse-vertical-navigation-item-disabled': item.disabled }"
+    class="fuse-vertical-navigation-item"
+  >
     <!-- Icon -->
-    <ng-container *ngIf="item.icon">
+    @if (item.icon) {
       <mat-icon
+        class="fuse-vertical-navigation-item-icon"
         [ngClass]="item.classes?.icon"
         [svgIcon]="item.icon"
-        class="fuse-vertical-navigation-item-icon"></mat-icon>
-    </ng-container>
+      ></mat-icon>
+    }
 
     <!-- Title & Subtitle -->
     <div class="fuse-vertical-navigation-item-title-wrapper">
       <div class="fuse-vertical-navigation-item-title">
         <span *transloco="let t; read: 'menu'" [ngClass]="item.classes?.title">
-            {{t(item.id)}}
+          {{ t(item.id) }}
         </span>
       </div>
-      <ng-container *ngIf="item.subtitle">
+      @if (item.subtitle) {
         <div class="fuse-vertical-navigation-item-subtitle">
           <span [ngClass]="item.classes?.subtitle">
-              {{item.subtitle}}
-          </span>
+      {{ item.subtitle }}
+      </span>
         </div>
-      </ng-container>
+      }
     </div>
 
     <!-- Badge -->
-    <ng-container *ngIf="item.badge">
+    @if (item.badge) {
       <div class="fuse-vertical-navigation-item-badge">
         <div
+          class="fuse-vertical-navigation-item-badge-content"
           [ngClass]="item.badge.classes"
-          class="fuse-vertical-navigation-item-badge-content">
-          {{item.badge.title}}
+        >
+          {{ item.badge.title }}
         </div>
       </div>
-    </ng-container>
+    }
 
     <!-- Arrow -->
     <mat-icon
       [svgIcon]="'heroicons_solid:chevron-right'"
-      class="fuse-vertical-navigation-item-arrow icon-size-4"></mat-icon>
+      class="fuse-vertical-navigation-item-arrow icon-size-4"
+    ></mat-icon>
   </div>
 </div>
-<div
-  *ngIf="!isCollapsed"
-  @expandCollapse
-  class="fuse-vertical-navigation-item-children">
 
-  <ng-container *ngFor="let item of item.children; trackBy: trackByFn">
+@if (!isCollapsed) {
+  <div class="fuse-vertical-navigation-item-children" @expandCollapse>
+    @for (item of item.children; track trackByFn($index, item)) {
+      <!-- Skip the hidden items -->
+      @if ((item.hidden && !item.hidden(item)) || !item.hidden) {
+        <!-- Basic -->
+        @if (item.type === 'basic') {
+          <fuse-vertical-navigation-basic-item
+            [item]="item"
+            [name]="name"
+          ></fuse-vertical-navigation-basic-item>
+        }
 
-    <!-- Skip the hidden items -->
-    <ng-container *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden">
+        <!-- Collapsable -->
+        @if (item.type === 'collapsable') {
+          <fuse-vertical-navigation-collapsable-item
+            [autoCollapse]="autoCollapse"
+            [item]="item"
+            [name]="name"
+          ></fuse-vertical-navigation-collapsable-item>
+        }
 
-      <!-- Basic -->
-      <ng-container *ngIf="item.type === 'basic'">
-        <fuse-vertical-navigation-basic-item
-          [item]="item"
-          [name]="name"></fuse-vertical-navigation-basic-item>
-      </ng-container>
+        <!-- Divider -->
+        @if (item.type === 'divider') {
+          <fuse-vertical-navigation-divider-item
+            [item]="item"
+            [name]="name"
+          ></fuse-vertical-navigation-divider-item>
+        }
 
-      <!-- Collapsable -->
-      <ng-container *ngIf="item.type === 'collapsable'">
-        <fuse-vertical-navigation-collapsable-item
-          [autoCollapse]="autoCollapse"
-          [item]="item"
-          [name]="name"></fuse-vertical-navigation-collapsable-item>
-      </ng-container>
+        <!-- Group -->
+        @if (item.type === 'group') {
+          <fuse-vertical-navigation-group-item
+            [item]="item"
+            [name]="name"
+          ></fuse-vertical-navigation-group-item>
+        }
 
-      <!-- Divider -->
-      <ng-container *ngIf="item.type === 'divider'">
-        <fuse-vertical-navigation-divider-item
-          [item]="item"
-          [name]="name"></fuse-vertical-navigation-divider-item>
-      </ng-container>
-
-      <!-- Group -->
-      <ng-container *ngIf="item.type === 'group'">
-        <fuse-vertical-navigation-group-item
-          [item]="item"
-          [name]="name"></fuse-vertical-navigation-group-item>
-      </ng-container>
-
-      <!-- Spacer -->
-      <ng-container *ngIf="item.type === 'spacer'">
-        <fuse-vertical-navigation-spacer-item
-          [item]="item"
-          [name]="name"></fuse-vertical-navigation-spacer-item>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</div>
+        <!-- Spacer -->
+        @if (item.type === 'spacer') {
+          <fuse-vertical-navigation-spacer-item
+            [item]="item"
+            [name]="name"
+          ></fuse-vertical-navigation-spacer-item>
+        }
+      }
+    }
+  </div>
+}

@@ -8,9 +8,9 @@ import { merge }                           from 'lodash-es';
 export class FuseConfirmationService {
   private _matDialog: MatDialog = inject(MatDialog);
   private _defaultConfig: FuseConfirmationConfig = {
-    title: 'Confirm action',
+    title  : 'Confirm action',
     message: 'Are you sure you want to confirm this action?',
-    icon: {
+    icon   : {
       show: true,
       name: 'heroicons_outline:exclamation-triangle',
       color: 'warn',
@@ -21,7 +21,7 @@ export class FuseConfirmationService {
         label: 'Confirm',
         color: 'warn',
       },
-      cancel: {
+      cancel : {
         show: true,
         label: 'Cancel',
       },
@@ -29,25 +29,21 @@ export class FuseConfirmationService {
     dismissible: false,
   };
 
-  /**
-   * Constructor
-   */
-  constructor() {
-  }
-
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
 
-  open(config: FuseConfirmationConfig = {}): MatDialogRef<FuseConfirmationDialogComponent> {
+  open(
+    config: FuseConfirmationConfig = {}
+  ): MatDialogRef<FuseConfirmationDialogComponent> {
     // Merge the user config with the default config
     const userConfig = merge({}, this._defaultConfig, config);
 
     // Open the dialog
     return this._matDialog.open(FuseConfirmationDialogComponent, {
-      autoFocus: false,
+      autoFocus : false,
       disableClose: !userConfig.dismissible,
-      data: userConfig,
+      data      : userConfig,
       panelClass: 'fuse-confirmation-dialog-panel',
     });
   }

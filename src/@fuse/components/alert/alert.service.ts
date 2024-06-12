@@ -3,14 +3,11 @@ import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FuseAlertService {
-  private readonly _onDismiss: ReplaySubject<string> = new ReplaySubject<string>(1);
-  private readonly _onShow: ReplaySubject<string> = new ReplaySubject<string>(1);
-
-  /**
-   * Constructor
-   */
-  constructor() {
-  }
+  private readonly _onDismiss: ReplaySubject<string> =
+    new ReplaySubject<string>(1);
+  private readonly _onShow: ReplaySubject<string> = new ReplaySubject<string>(
+    1
+  );
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
@@ -63,5 +60,4 @@ export class FuseAlertService {
     // Execute the observable
     this._onShow.next(name);
   }
-
 }

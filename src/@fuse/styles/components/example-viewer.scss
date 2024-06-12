@@ -6,7 +6,7 @@
   flex-direction: column;
   margin: 32px 0;
   overflow: hidden;
-  @apply rounded-2xl shadow bg-card;
+  @apply bg-card rounded-2xl shadow;
 
   .title {
     display: flex;

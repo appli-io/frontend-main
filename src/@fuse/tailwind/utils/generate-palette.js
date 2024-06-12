@@ -34,14 +34,18 @@ const generatePalette = (config) => {
   // assign the values
   if (_.isPlainObject(config)) {
     if (!chroma.valid(config[500])) {
-      throw new Error('You must have a 500 hue in your palette configuration! Make sure the main color of your palette is marked as 500.');
+      throw new Error(
+        'You must have a 500 hue in your palette configuration! Make sure the main color of your palette is marked as 500.'
+      );
     }
 
     // Remove everything that is not a hue/color entry
     config = _.pick(config, Object.keys(palette));
 
     // Merge the values
-    _.mergeWith(palette, config, (objValue, srcValue) => chroma.valid(srcValue) ? srcValue : null);
+    _.mergeWith(palette, config, (objValue, srcValue) =>
+      chroma.valid(srcValue) ? srcValue : null
+    );
   }
 
   // Prepare the colors array
@@ -52,16 +56,18 @@ const generatePalette = (config) => {
   // than using pure white and pure black. This will stop
   // in between colors' hue values to slipping into the grays.
   colors.unshift(
-    chroma.scale(['white', palette[500]])
+    chroma
+      .scale(['white', palette[500]])
       .domain([0, 1])
       .mode('lrgb')
-      .colors(50)[1],
+      .colors(50)[1]
   );
   colors.push(
-    chroma.scale(['black', palette[500]])
+    chroma
+      .scale(['black', palette[500]])
       .domain([0, 1])
       .mode('lrgb')
-      .colors(10)[1],
+      .colors(10)[1]
   );
 
   // Prepare the domains array
@@ -74,9 +80,7 @@ const generatePalette = (config) => {
   ];
 
   // Generate the color scale
-  const scale = chroma.scale(colors)
-    .domain(domain)
-    .mode('lrgb');
+  const scale = chroma.scale(colors).domain(domain).mode('lrgb');
 
   // Build and return the final palette
   return {

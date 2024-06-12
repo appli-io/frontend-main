@@ -6,12 +6,6 @@ export class FuseNavigationService {
   private _componentRegistry: Map<string, any> = new Map<string, any>();
   private _navigationStore: Map<string, FuseNavigationItem[]> = new Map<string, any>();
 
-  /**
-   * Constructor
-   */
-  constructor() {
-  }
-
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------

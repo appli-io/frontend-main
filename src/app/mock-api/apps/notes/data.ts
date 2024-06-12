@@ -52,7 +52,7 @@ export const notes = [
     title: '',
     content: 'Send the photos of last summer to John',
     tasks: null,
-    image: 'assets/images/cards/14-640x480.jpg',
+    image: 'images/cards/14-640x480.jpg',
     reminder: null,
     labels: [
       'bbc73458-940b-421c-8d5f-8dcd23a9b0d6',
@@ -251,7 +251,7 @@ export const notes = [
     title: 'Plan the road trip',
     content: '',
     tasks: null,
-    image: 'assets/images/cards/17-640x480.jpg',
+    image: 'images/cards/17-640x480.jpg',
     reminder: null,
     labels: [
       '2dc11344-3507-48e0-83d6-1c047107f052',

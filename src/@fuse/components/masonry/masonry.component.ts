@@ -1,28 +1,21 @@
-import { NgTemplateOutlet }                                                                          from '@angular/common';
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { fuseAnimations }                                                                            from '@fuse/animations';
-import { FuseMediaWatcherService }                                                                   from '@fuse/services/media-watcher';
+import { NgTemplateOutlet }                                                                           from '@angular/common';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation, } from '@angular/core';
+import { fuseAnimations }                                                                             from '@fuse/animations';
 
 @Component({
-  selector: 'fuse-masonry',
+  selector   : 'fuse-masonry',
   templateUrl: './masonry.component.html',
   encapsulation: ViewEncapsulation.None,
-  animations: fuseAnimations,
-  exportAs: 'fuseMasonry',
-  standalone: true,
-  imports: [ NgTemplateOutlet ],
+  animations : fuseAnimations,
+  exportAs   : 'fuseMasonry',
+  standalone : true,
+  imports    : [ NgTemplateOutlet ],
 })
 export class FuseMasonryComponent implements OnChanges, AfterViewInit {
   @Input() columnsTemplate: TemplateRef<any>;
   @Input() columns: number;
   @Input() items: any[] = [];
   distributedColumns: any[] = [];
-
-  /**
-   * Constructor
-   */
-  constructor(private _fuseMediaWatcherService: FuseMediaWatcherService) {
-  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -70,7 +63,9 @@ export class FuseMasonryComponent implements OnChanges, AfterViewInit {
     }
 
     // Prepare the distributed columns array
-    this.distributedColumns = Array.from(Array(this.columns), item => ({items: []}));
+    this.distributedColumns = Array.from(Array(this.columns), (item) => ({
+      items: [],
+    }));
 
     // Distribute the items to columns
     for (let i = 0; i < this.items.length; i++) {

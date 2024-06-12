@@ -4,21 +4,22 @@
     [matMenuTriggerFor]="userActions"
     mat-icon-button>
     <span class="relative">
-        <img
-          *ngIf="showAvatar && user?.avatar?.fileUrl"
-          [src]="user.avatar.fileUrl"
-          class="w-7 h-7 rounded-full">
-        <mat-icon
-          *ngIf="!showAvatar || !user?.avatar"
-          [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span
-          [ngClass]="{'mr-px mb-px': !showAvatar || !user?.avatar,
-                          'bg-green-500': user?.status === 'online',
-                          'bg-amber-500': user?.status === 'away',
-                          'bg-red-500': user?.status === 'busy',
-                          'bg-gray-400': user?.status === 'not-visible'}"
-          class="absolute right-0 bottom-0 w-2 h-2 rounded-full"
-        ></span>
+        @if (showAvatar && user.avatar?.fileUrl) {
+          <img class="h-7 w-7 rounded-full" [src]="user.avatar.fileUrl"/>
+        }
+      @if (!showAvatar || !user.avatar) {
+        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+      }
+      <span
+        [ngClass]="{
+                'mb-px mr-px': !showAvatar || !user.avatar,
+                'bg-green-500': user.status === 'online',
+                'bg-amber-500': user.status === 'away',
+                'bg-red-500': user.status === 'busy',
+                'bg-gray-400': user.status === 'not-visible',
+            }"
+        class="absolute bottom-0 right-0 h-2 w-2 rounded-full"
+      ></span>
     </span>
   </button>
 

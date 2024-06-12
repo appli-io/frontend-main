@@ -452,7 +452,7 @@ export const guideContent = `
 
 <h3>Header Level 3</h3>
 
-<img src="assets/images/pages/help-center/image-1.jpg">
+<img src="images/pages/help-center/image-1.jpg">
 <p class="text-secondary">
     <em>Nullam sagittis nulla in diam finibus, sed pharetra velit vestibulum. Suspendisse euismod in urna eu posuere.</em>
 </p>

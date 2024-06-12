@@ -1,6 +1,6 @@
-import { Overlay }                                                                  from '@angular/cdk/overlay';
-import { NgClass, NgFor, NgIf, NgTemplateOutlet }                                   from '@angular/common';
-import { HttpClient }                                                               from '@angular/common/http';
+import { Overlay }                                                                   from '@angular/cdk/overlay';
+import { NgClass, NgTemplateOutlet }                                                 from '@angular/common';
+import { HttpClient }                                                                from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -15,28 +15,40 @@ import {
   Renderer2,
   SimpleChanges,
   ViewChild,
-  ViewEncapsulation
-}                                                                                   from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl }                     from '@angular/forms';
-import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY, MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule }                                                          from '@angular/material/button';
-import { MatOptionModule }                                                          from '@angular/material/core';
-import { MatFormFieldModule }                                                       from '@angular/material/form-field';
-import { MatIconModule }                                                            from '@angular/material/icon';
-import { MatInputModule }                                                           from '@angular/material/input';
-import { RouterLink }                                                               from '@angular/router';
-import { fuseAnimations }                                                           from '@fuse/animations/public-api';
-import { debounceTime, filter, map, Subject, takeUntil }                            from 'rxjs';
+  ViewEncapsulation,
+}                                                                                    from '@angular/core';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, }                     from '@angular/forms';
+import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY, MatAutocomplete, MatAutocompleteModule, } from '@angular/material/autocomplete';
+import { MatButtonModule }                                                           from '@angular/material/button';
+import { MatOptionModule }                                                           from '@angular/material/core';
+import { MatFormFieldModule }                                                        from '@angular/material/form-field';
+import { MatIconModule }                                                             from '@angular/material/icon';
+import { MatInputModule }                                                            from '@angular/material/input';
+import { RouterLink }                                                                from '@angular/router';
+import { fuseAnimations }                                                            from '@fuse/animations/public-api';
+import { debounceTime, filter, map, Subject, takeUntil }                             from 'rxjs';
 
 @Component({
-  selector: 'search',
+  selector   : 'search',
   templateUrl: './search.component.html',
   encapsulation: ViewEncapsulation.None,
-  exportAs: 'fuseSearch',
-  animations: fuseAnimations,
-  standalone: true,
-  imports: [ NgIf, MatButtonModule, MatIconModule, FormsModule, MatAutocompleteModule, ReactiveFormsModule, MatOptionModule, NgFor, RouterLink, NgTemplateOutlet, MatFormFieldModule, MatInputModule, NgClass ],
-  providers: [
+  exportAs   : 'fuseSearch',
+  animations : fuseAnimations,
+  standalone : true,
+  imports    : [
+    MatButtonModule,
+    MatIconModule,
+    FormsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatOptionModule,
+    RouterLink,
+    NgTemplateOutlet,
+    MatFormFieldModule,
+    MatInputModule,
+    NgClass,
+  ],
+  providers  : [
     {
       provide: MAT_AUTOCOMPLETE_SCROLL_STRATEGY,
       useFactory: () => {
@@ -63,9 +75,8 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     private _elementRef: ElementRef,
     private _httpClient: HttpClient,
-    private _renderer2: Renderer2,
-  ) {
-  }
+    private _renderer2: Renderer2
+  ) {}
 
   private _matAutocomplete: MatAutocomplete;
 
@@ -90,7 +101,7 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     return {
       'search-appearance-bar': this.appearance === 'bar',
       'search-appearance-basic': this.appearance === 'basic',
-      'search-opened': this.opened,
+      'search-opened'        : this.opened,
     };
   }
 
@@ -152,10 +163,11 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
         }),
         // Filter out undefined/null/false statements and also
         // filter out the values that are smaller than minLength
-        filter(value => value && value.length >= this.minLength),
+        filter((value) => value && value.length >= this.minLength)
       )
       .subscribe((value) => {
-        this._httpClient.post('api/common/search', {query: value})
+        this._httpClient
+          .post('api/common/search', {query: value})
           .subscribe((resultSets: any) => {
             // Store the result sets
             this.resultSets = resultSets;

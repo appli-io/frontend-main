@@ -1,6 +1,6 @@
-import { ScrollStrategy, ScrollStrategyOptions }                      from '@angular/cdk/overlay';
-import { TextFieldModule }                                            from '@angular/cdk/text-field';
-import { DatePipe, DOCUMENT, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { ScrollStrategy, ScrollStrategyOptions }         from '@angular/cdk/overlay';
+import { TextFieldModule }                               from '@angular/cdk/text-field';
+import { DatePipe, DOCUMENT, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -13,25 +13,35 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
-  ViewEncapsulation
-}                                                                     from '@angular/core';
-import { MatButtonModule }                                            from '@angular/material/button';
-import { MatFormFieldModule }                                         from '@angular/material/form-field';
-import { MatIconModule }                                              from '@angular/material/icon';
-import { MatInputModule }                                             from '@angular/material/input';
-import { FuseScrollbarDirective }                                     from '@fuse/directives/scrollbar';
-import { QuickChatService }                                           from 'app/layout/common/quick-chat/quick-chat.service';
-import { Chat }                                                       from 'app/layout/common/quick-chat/quick-chat.types';
-import { Subject, takeUntil }                                         from 'rxjs';
+  ViewEncapsulation,
+}                                                        from '@angular/core';
+import { MatButtonModule }                               from '@angular/material/button';
+import { MatFormFieldModule }                            from '@angular/material/form-field';
+import { MatIconModule }                                 from '@angular/material/icon';
+import { MatInputModule }                                from '@angular/material/input';
+import { FuseScrollbarDirective }                        from '@fuse/directives/scrollbar';
+import { QuickChatService }                              from 'app/layout/common/quick-chat/quick-chat.service';
+import { Chat }                                          from 'app/layout/common/quick-chat/quick-chat.types';
+import { Subject, takeUntil }                            from 'rxjs';
 
 @Component({
-  selector: 'quick-chat',
+  selector   : 'quick-chat',
   templateUrl: './quick-chat.component.html',
-  styleUrls: [ './quick-chat.component.scss' ],
+  styleUrls  : [ './quick-chat.component.scss' ],
   encapsulation: ViewEncapsulation.None,
-  exportAs: 'quickChat',
-  standalone: true,
-  imports: [ NgClass, NgIf, MatIconModule, MatButtonModule, FuseScrollbarDirective, NgFor, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe ],
+  exportAs   : 'quickChat',
+  standalone : true,
+  imports    : [
+    NgClass,
+    MatIconModule,
+    MatButtonModule,
+    FuseScrollbarDirective,
+    NgTemplateOutlet,
+    MatFormFieldModule,
+    MatInputModule,
+    TextFieldModule,
+    DatePipe,
+  ],
 })
 export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('messageInput') messageInput: ElementRef;
@@ -40,7 +50,8 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
   opened: boolean = false;
   selectedChat: Chat;
   private _mutationObserver: MutationObserver;
-  private _scrollStrategy: ScrollStrategy = this._scrollStrategyOptions.block();
+  private _scrollStrategy: ScrollStrategy =
+    this._scrollStrategyOptions.block();
   private _overlay: HTMLElement;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -53,9 +64,8 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private _renderer2: Renderer2,
     private _ngZone: NgZone,
     private _quickChatService: QuickChatService,
-    private _scrollStrategyOptions: ScrollStrategyOptions,
-  ) {
-  }
+    private _scrollStrategyOptions: ScrollStrategyOptions
+  ) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Decorated methods
@@ -114,11 +124,23 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
       mutations.forEach((mutation) => {
         const mutationTarget = mutation.target as HTMLElement;
         if (mutation.attributeName === 'class') {
-          if (mutationTarget.classList.contains('cdk-global-scrollblock')) {
+          if (
+            mutationTarget.classList.contains(
+              'cdk-global-scrollblock'
+            )
+          ) {
             const top = parseInt(mutationTarget.style.top, 10);
-            this._renderer2.setStyle(this._elementRef.nativeElement, 'margin-top', `${ Math.abs(top) }px`);
+            this._renderer2.setStyle(
+              this._elementRef.nativeElement,
+              'margin-top',
+              `${ Math.abs(top) }px`
+            );
           } else {
-            this._renderer2.setStyle(this._elementRef.nativeElement, 'margin-top', null);
+            this._renderer2.setStyle(
+              this._elementRef.nativeElement,
+              'margin-top',
+              null
+            );
           }
         }
       });
@@ -250,7 +272,10 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this._overlay.classList.add('quick-chat-overlay');
 
     // Append the backdrop to the parent of the panel
-    this._renderer2.appendChild(this._elementRef.nativeElement.parentElement, this._overlay);
+    this._renderer2.appendChild(
+      this._elementRef.nativeElement.parentElement,
+      this._overlay
+    );
 
     // Enable block scroll strategy
     this._scrollStrategy.enable();

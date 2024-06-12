@@ -30,7 +30,7 @@
 
       .ql-picker-options {
         z-index: 10 !important;
-        @apply border-gray-300 bg-card;
+        @apply bg-card border-gray-300;
 
         .dark & {
           @apply border-gray-500;

@@ -1,10 +1,7 @@
 const plugin = require('tailwindcss/plugin');
 
 module.exports = plugin(
-  ({
-     matchUtilities,
-     theme,
-   }) => {
+  ({matchUtilities, theme}) => {
     matchUtilities(
       {
         'icon-size': (value) => ({

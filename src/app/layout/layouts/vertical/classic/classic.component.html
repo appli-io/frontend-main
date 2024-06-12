@@ -16,12 +16,12 @@
       <img
         alt="Logo image"
         class="dark:hidden w-30"
-        src="assets/images/logo/logo-text.svg">
+        src="images/logo/logo-text.svg">
       <!-- Dark version -->
       <img
         alt="Logo image"
         class="hidden dark:flex w-30"
-        src="assets/images/logo/logo-text-on-dark.svg">
+        src="images/logo/logo-text-on-dark.svg">
     </div>
   </ng-container>
 </fuse-vertical-navigation>
@@ -61,7 +61,9 @@
   <div class="flex flex-col flex-auto bg-pattern">
     <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
          Otherwise, layout changes won't be registered and the view won't be updated! -->
-    <router-outlet *ngIf="true"></router-outlet>
+    @if (true) {
+      <router-outlet></router-outlet>
+    }
   </div>
 
   <!-- Footer -->

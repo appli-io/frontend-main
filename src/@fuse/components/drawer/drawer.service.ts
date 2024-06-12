@@ -3,13 +3,10 @@ import { FuseDrawerComponent } from '@fuse/components/drawer/drawer.component';
 
 @Injectable({providedIn: 'root'})
 export class FuseDrawerService {
-  private _componentRegistry: Map<string, FuseDrawerComponent> = new Map<string, FuseDrawerComponent>();
-
-  /**
-   * Constructor
-   */
-  constructor() {
-  }
+  private _componentRegistry: Map<string, FuseDrawerComponent> = new Map<
+    string,
+    FuseDrawerComponent
+  >();
 
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods

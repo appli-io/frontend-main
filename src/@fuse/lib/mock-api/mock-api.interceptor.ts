@@ -1,18 +1,21 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
-import { inject }                                                                 from '@angular/core';
-import { FUSE_MOCK_API_DEFAULT_DELAY }                                            from '@fuse/lib/mock-api/mock-api.constants';
-import { FuseMockApiService }                                                     from '@fuse/lib/mock-api/mock-api.service';
-import { delay, Observable, of, switchMap, throwError }                           from 'rxjs';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse, } from '@angular/common/http';
+import { inject }                                                                  from '@angular/core';
+import { FUSE_MOCK_API_DEFAULT_DELAY }                                             from '@fuse/lib/mock-api/mock-api.constants';
+import { FuseMockApiService }                                                      from '@fuse/lib/mock-api/mock-api.service';
+import { delay, Observable, of, switchMap, throwError }                            from 'rxjs';
 
-export const mockApiInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+export const mockApiInterceptor = (
+  request: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
   const defaultDelay = inject(FUSE_MOCK_API_DEFAULT_DELAY);
   const fuseMockApiService = inject(FuseMockApiService);
 
   // Try to get the request handler
-  const {
-    handler,
-    urlParams,
-  } = fuseMockApiService.findHandler(request.method.toUpperCase(), request.url);
+  const {handler, urlParams} = fuseMockApiService.findHandler(
+    request.method.toUpperCase(),
+    request.url
+  );
 
   // Pass through if the request handler does not exist
   if (!handler) {
@@ -33,7 +36,7 @@ export const mockApiInterceptor = (request: HttpRequest<unknown>, next: HttpHand
       // throw an error response
       if (!response) {
         response = new HttpErrorResponse({
-          error: 'NOT FOUND',
+          error : 'NOT FOUND',
           status: 404,
           statusText: 'NOT FOUND',
         });
@@ -51,7 +54,7 @@ export const mockApiInterceptor = (request: HttpRequest<unknown>, next: HttpHand
       // return a success response
       if (data.status >= 200 && data.status < 300) {
         response = new HttpResponse({
-          body: data.body,
+          body  : data.body,
           status: data.status,
           statusText: 'OK',
         });
@@ -62,11 +65,12 @@ export const mockApiInterceptor = (request: HttpRequest<unknown>, next: HttpHand
       // For other status codes,
       // throw an error response
       response = new HttpErrorResponse({
-        error: data.body.error,
+        error : data.body.error,
         status: data.status,
         statusText: 'ERROR',
       });
 
       return throwError(response);
-    }));
+    })
+  );
 };

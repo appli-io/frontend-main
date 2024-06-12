@@ -15,7 +15,7 @@
       <div class="flex items-center justify-center">
         <img
           class="w-8"
-          src="assets/images/logo/logo.svg">
+          src="images/logo/logo.svg">
       </div>
       <!-- Components -->
       <div class="flex items-center ml-auto">
@@ -26,15 +26,19 @@
     <!-- User -->
     <div class="flex flex-col items-center w-full p-4">
       <div class="relative w-24 h-24">
-        <img
-          *ngIf="user?.avatar?.fileUrl"
-          [src]="user.avatar.fileUrl"
-          alt="User avatar"
-          class="w-full h-full rounded-full">
-        <mat-icon
-          *ngIf="!user?.avatar"
-          [svgIcon]="'heroicons_solid:user-circle'"
-          class="icon-size-24"></mat-icon>
+        @if (user.avatar) {
+          <img
+            class="h-full w-full rounded-full"
+            [src]="user.avatar"
+            alt="User avatar"
+          />
+        }
+        @if (!user.avatar) {
+          <mat-icon
+            class="icon-size-24"
+            [svgIcon]="'heroicons_solid:user-circle'"
+          ></mat-icon>
+        }
       </div>
       <div class="flex flex-col items-center justify-center w-full mt-6">
         <div
@@ -53,7 +57,7 @@
     <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
       <img
         class="max-w-36"
-        src="assets/images/logo/logo-text-on-dark.svg">
+        src="images/logo/logo-text-on-dark.svg">
     </div>
   </ng-container>
 </fuse-vertical-navigation>
@@ -90,7 +94,9 @@
   <div class="flex flex-col flex-auto">
     <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
          Otherwise, layout changes won't be registered and the view won't be updated! -->
-    <router-outlet *ngIf="true"></router-outlet>
+    @if (true) {
+      <router-outlet></router-outlet>
+    }
   </div>
 
   <!-- Footer -->

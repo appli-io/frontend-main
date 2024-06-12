@@ -15,7 +15,7 @@ export const notifications = [
   },
   {
     id: '6e3e97e5-effc-4fb7-b730-52a151f0b641',
-    image: 'assets/images/avatars/male-04.jpg',
+    image: 'images/avatars/male-04.jpg',
     description: '<strong>Leo Gill</strong> added you to <em>Top Secret Project</em> group and assigned you as a <em>Project Manager</em>',
     time: now.minus({minute: 50}).toISO(), // 50 minutes ago
     read: true,
@@ -44,7 +44,7 @@ export const notifications = [
   },
   {
     id: 'ef7b95a7-8e8b-4616-9619-130d9533add9',
-    image: 'assets/images/avatars/male-06.jpg',
+    image: 'images/avatars/male-06.jpg',
     description: '<strong>Roger Murray</strong> accepted your friend request',
     time: now.minus({hour: 7}).toISO(), // 7 hours ago
     read: true,
@@ -53,7 +53,7 @@ export const notifications = [
   },
   {
     id: 'eb8aa470-635e-461d-88e1-23d9ea2a5665',
-    image: 'assets/images/avatars/female-04.jpg',
+    image: 'images/avatars/female-04.jpg',
     description: '<strong>Sophie Stone</strong> sent you a direct message',
     time: now.minus({hour: 9}).toISO(), // 9 hours ago
     read: true,

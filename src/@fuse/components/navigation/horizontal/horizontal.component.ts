@@ -1,54 +1,50 @@
-import { NgFor, NgIf }                                 from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
-  ViewEncapsulation
+  ViewEncapsulation,
 }                                                      from '@angular/core';
 import { fuseAnimations }                              from '@fuse/animations';
 import { FuseNavigationService }                       from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem }                          from '@fuse/components/navigation/navigation.types';
 import { FuseUtilsService }                            from '@fuse/services/utils/utils.service';
-import {
-  ReplaySubject,
-  Subject
-}                                                      from 'rxjs';
+import { ReplaySubject, Subject }                      from 'rxjs';
 import { FuseHorizontalNavigationBasicItemComponent }  from './components/basic/basic.component';
 import { FuseHorizontalNavigationBranchItemComponent } from './components/branch/branch.component';
 import { FuseHorizontalNavigationSpacerItemComponent } from './components/spacer/spacer.component';
 
 @Component({
-  selector: 'fuse-horizontal-navigation',
-  templateUrl: './horizontal.component.html',
-  styleUrls: [ './horizontal.component.scss' ],
-  animations: fuseAnimations,
+  selector     : 'fuse-horizontal-navigation',
+  templateUrl  : './horizontal.component.html',
+  styleUrls    : [ './horizontal.component.scss' ],
+  animations   : fuseAnimations,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'fuseHorizontalNavigation',
-  standalone: true,
-  imports: [ NgFor, NgIf, FuseHorizontalNavigationBasicItemComponent, FuseHorizontalNavigationBranchItemComponent, FuseHorizontalNavigationSpacerItemComponent ],
+  exportAs     : 'fuseHorizontalNavigation',
+  standalone   : true,
+  imports      : [
+    FuseHorizontalNavigationBasicItemComponent,
+    FuseHorizontalNavigationBranchItemComponent,
+    FuseHorizontalNavigationSpacerItemComponent,
+  ],
 })
-export class FuseHorizontalNavigationComponent implements OnChanges, OnInit, OnDestroy {
+export class FuseHorizontalNavigationComponent
+  implements OnChanges, OnInit, OnDestroy {
+  private _changeDetectorRef = inject(ChangeDetectorRef);
+  private _fuseNavigationService = inject(FuseNavigationService);
+  private _fuseUtilsService = inject(FuseUtilsService);
+
   @Input() name: string = this._fuseUtilsService.randomId();
   @Input() navigation: FuseNavigationItem[];
 
   onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-  /**
-   * Constructor
-   */
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _fuseNavigationService: FuseNavigationService,
-    private _fuseUtilsService: FuseUtilsService,
-  ) {
-  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks

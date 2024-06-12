@@ -1,15 +1,14 @@
-import { NgIf }                                    from '@angular/common';
 import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet }                            from '@angular/router';
 import { FuseLoadingBarComponent }                 from '@fuse/components/loading-bar';
 import { Subject }                                 from 'rxjs';
 
 @Component({
-  selector: 'empty-layout',
+  selector   : 'empty-layout',
   templateUrl: './empty.component.html',
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [ FuseLoadingBarComponent, NgIf, RouterOutlet ],
+  standalone : true,
+  imports    : [ FuseLoadingBarComponent, RouterOutlet ],
 })
 export class EmptyLayoutComponent implements OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -17,8 +16,7 @@ export class EmptyLayoutComponent implements OnDestroy {
   /**
    * Constructor
    */
-  constructor() {
-  }
+  constructor() {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks

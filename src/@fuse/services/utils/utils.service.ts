@@ -3,12 +3,6 @@ import { IsActiveMatchOptions } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class FuseUtilsService {
-  /**
-   * Constructor
-   */
-  constructor() {
-  }
-
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
   // -----------------------------------------------------------------------------------------------------
@@ -18,8 +12,8 @@ export class FuseUtilsService {
    */
   get exactMatchOptions(): IsActiveMatchOptions {
     return {
-      paths: 'exact',
-      fragment: 'ignored',
+      paths      : 'exact',
+      fragment   : 'ignored',
       matrixParams: 'ignored',
       queryParams: 'exact',
     };
@@ -30,8 +24,8 @@ export class FuseUtilsService {
    */
   get subsetMatchOptions(): IsActiveMatchOptions {
     return {
-      paths: 'subset',
-      fragment: 'ignored',
+      paths      : 'subset',
+      fragment   : 'ignored',
       matrixParams: 'ignored',
       queryParams: 'subset',
     };
@@ -47,7 +41,8 @@ export class FuseUtilsService {
    * @param length
    */
   randomId(length: number = 10): string {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let name = '';
 
     for (let i = 0; i < 10; i++) {

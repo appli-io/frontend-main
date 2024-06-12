@@ -1,29 +1,42 @@
-import { NgIf }                                                   from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation }        from '@angular/core';
-import { MatButtonModule }                                        from '@angular/material/button';
-import { MatIconModule }                                          from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterOutlet }                   from '@angular/router';
-import { FuseFullscreenComponent }                                from '@fuse/components/fullscreen';
-import { FuseLoadingBarComponent }                                from '@fuse/components/loading-bar';
-import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
-import { FuseMediaWatcherService }                                from '@fuse/services/media-watcher';
-import { NavigationService }                                      from 'app/core/navigation/navigation.service';
-import { Navigation }                                             from 'app/core/navigation/navigation.types';
-import { LanguagesComponent }                                     from 'app/layout/common/languages/languages.component';
-import { MessagesComponent }                                      from 'app/layout/common/messages/messages.component';
-import { NotificationsComponent }                                 from 'app/layout/common/notifications/notifications.component';
-import { QuickChatComponent }                                     from 'app/layout/common/quick-chat/quick-chat.component';
-import { SearchComponent }                                        from 'app/layout/common/search/search.component';
-import { ShortcutsComponent }                                     from 'app/layout/common/shortcuts/shortcuts.component';
-import { UserComponent }                                          from 'app/layout/common/user/user.component';
-import { Subject, takeUntil }                                     from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewEncapsulation }         from '@angular/core';
+import { MatButtonModule }                                         from '@angular/material/button';
+import { MatIconModule }                                           from '@angular/material/icon';
+import { ActivatedRoute, Router, RouterOutlet }                    from '@angular/router';
+import { FuseFullscreenComponent }                                 from '@fuse/components/fullscreen';
+import { FuseLoadingBarComponent }                                 from '@fuse/components/loading-bar';
+import { FuseNavigationService, FuseVerticalNavigationComponent, } from '@fuse/components/navigation';
+import { FuseMediaWatcherService }                                 from '@fuse/services/media-watcher';
+import { NavigationService }                                       from 'app/core/navigation/navigation.service';
+import { Navigation }                                              from 'app/core/navigation/navigation.types';
+import { LanguagesComponent }                                      from 'app/layout/common/languages/languages.component';
+import { MessagesComponent }                                       from 'app/layout/common/messages/messages.component';
+import { NotificationsComponent }                                  from 'app/layout/common/notifications/notifications.component';
+import { QuickChatComponent }                                      from 'app/layout/common/quick-chat/quick-chat.component';
+import { SearchComponent }                                         from 'app/layout/common/search/search.component';
+import { ShortcutsComponent }                                      from 'app/layout/common/shortcuts/shortcuts.component';
+import { UserComponent }                                           from 'app/layout/common/user/user.component';
+import { Subject, takeUntil }                                      from 'rxjs';
 
 @Component({
-  selector: 'dense-layout',
+  selector   : 'dense-layout',
   templateUrl: './dense.component.html',
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [ FuseLoadingBarComponent, FuseVerticalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, ShortcutsComponent, MessagesComponent, NotificationsComponent, UserComponent, NgIf, RouterOutlet, QuickChatComponent ],
+  standalone : true,
+  imports    : [
+    FuseLoadingBarComponent,
+    FuseVerticalNavigationComponent,
+    MatButtonModule,
+    MatIconModule,
+    LanguagesComponent,
+    FuseFullscreenComponent,
+    SearchComponent,
+    ShortcutsComponent,
+    MessagesComponent,
+    NotificationsComponent,
+    UserComponent,
+    RouterOutlet,
+    QuickChatComponent,
+  ],
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy {
   isScreenSmall: boolean;
@@ -39,9 +52,8 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _navigationService: NavigationService,
     private _fuseMediaWatcherService: FuseMediaWatcherService,
-    private _fuseNavigationService: FuseNavigationService,
-  ) {
-  }
+    private _fuseNavigationService: FuseNavigationService
+  ) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
@@ -77,7 +89,9 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
         this.isScreenSmall = !matchingAliases.includes('md');
 
         // Change the navigation appearance
-        this.navigationAppearance = this.isScreenSmall ? 'default' : 'dense';
+        this.navigationAppearance = this.isScreenSmall
+          ? 'default'
+          : 'dense';
       });
   }
 
@@ -101,7 +115,10 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
    */
   toggleNavigation(name: string): void {
     // Get the navigation
-    const navigation = this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(name);
+    const navigation =
+      this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
+        name
+      );
 
     if (navigation) {
       // Toggle the opened status
@@ -113,6 +130,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
    * Toggle the navigation appearance
    */
   toggleNavigationAppearance(): void {
-    this.navigationAppearance = (this.navigationAppearance === 'default' ? 'dense' : 'default');
+    this.navigationAppearance =
+      this.navigationAppearance === 'default' ? 'dense' : 'default';
   }
 }

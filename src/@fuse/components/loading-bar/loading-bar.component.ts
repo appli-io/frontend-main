@@ -1,31 +1,27 @@
-import { coerceBooleanProperty }                                                            from '@angular/cdk/coercion';
-import { NgIf }                                                                             from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { MatProgressBarModule }                                                             from '@angular/material/progress-bar';
-import { FuseLoadingService }                                                               from '@fuse/services/loading';
-import { Subject, takeUntil }                                                               from 'rxjs';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation, } from '@angular/core';
+import { MatProgressBarModule }                                                                      from '@angular/material/progress-bar';
+import { FuseLoadingService }                                                                        from '@fuse/services/loading';
+import { Subject, takeUntil }                                                                        from 'rxjs';
 
 @Component({
-  selector: 'fuse-loading-bar',
+  selector   : 'fuse-loading-bar',
   templateUrl: './loading-bar.component.html',
-  styleUrls: [ './loading-bar.component.scss' ],
+  styleUrls  : [ './loading-bar.component.scss' ],
   encapsulation: ViewEncapsulation.None,
-  exportAs: 'fuseLoadingBar',
-  standalone: true,
-  imports: [ NgIf, MatProgressBarModule ],
+  exportAs   : 'fuseLoadingBar',
+  standalone : true,
+  imports    : [ MatProgressBarModule ],
 })
 export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
+  private _fuseLoadingService = inject(FuseLoadingService);
+
   @Input() autoMode: boolean = true;
   mode: 'determinate' | 'indeterminate';
   progress: number = 0;
   show: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-  /**
-   * Constructor
-   */
-  constructor(private _fuseLoadingService: FuseLoadingService) {
-  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -40,7 +36,9 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
     // Auto mode
     if ('autoMode' in changes) {
       // Set the auto mode in the service
-      this._fuseLoadingService.setAutoMode(coerceBooleanProperty(changes.autoMode.currentValue));
+      this._fuseLoadingService.setAutoMode(
+        coerceBooleanProperty(changes.autoMode.currentValue)
+      );
     }
   }
 
@@ -66,7 +64,6 @@ export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
       .subscribe((value) => {
         this.show = value;
       });
-
   }
 
   /**
