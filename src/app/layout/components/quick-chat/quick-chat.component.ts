@@ -20,8 +20,8 @@ import { MatFormFieldModule }                            from '@angular/material
 import { MatIconModule }                                 from '@angular/material/icon';
 import { MatInputModule }                                from '@angular/material/input';
 import { FuseScrollbarDirective }                        from '@fuse/directives/scrollbar';
-import { QuickChatService }                              from 'app/layout/common/quick-chat/quick-chat.service';
-import { Chat }                                          from 'app/layout/common/quick-chat/quick-chat.types';
+import { QuickChatService }                              from 'app/layout/components/quick-chat/quick-chat.service';
+import { Chat }                                          from 'app/layout/components/quick-chat/quick-chat.types';
 import { Subject, takeUntil }                            from 'rxjs';
 
 @Component({

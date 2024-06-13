@@ -7,6 +7,7 @@ export interface IAlbum {
   description: string;
   cover: IImage;
   coverThumbnail: IImage;
+  imagesCount: number;
   createdBy: IUser;
   createdAt: Date;
   updatedAt: Date;

@@ -1,6 +1,6 @@
 import { HttpClient }                                           from '@angular/common/http';
 import { Injectable }                                           from '@angular/core';
-import { Notification }                                         from 'app/layout/common/notifications/notifications.types';
+import { Notification }                                         from 'app/layout/components/notifications/notifications.types';
 import { map, Observable, ReplaySubject, switchMap, take, tap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})

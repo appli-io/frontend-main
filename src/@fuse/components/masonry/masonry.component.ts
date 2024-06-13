@@ -56,20 +56,27 @@ export class FuseMasonryComponent implements OnChanges, AfterViewInit {
    * Distribute items into columns
    */
   private _distributeItems(): void {
-    // Return an empty array if there are no items
-    if (this.items.length === 0) {
+    if (!this.columns || this.columns <= 0) {
+      console.error('Invalid number of columns:', this.columns);
       this.distributedColumns = [];
       return;
     }
 
-    // Prepare the distributed columns array
-    this.distributedColumns = Array.from(Array(this.columns), (item) => ({
-      items: [],
+    if (!this.items || this.items.length === 0) {
+      console.warn('No items to distribute.');
+      this.distributedColumns = [];
+      return;
+    }
+
+    this.distributedColumns = Array.from({length: this.columns}, () => ({
+      items: []
     }));
 
-    // Distribute the items to columns
     for (let i = 0; i < this.items.length; i++) {
-      this.distributedColumns[i % this.columns].items.push(this.items[i]);
+      const columnIndex = i % this.columns;
+      this.distributedColumns[columnIndex].items.push(this.items[i]);
     }
+
+    console.log('Distributed items:', this.distributedColumns);
   }
 }

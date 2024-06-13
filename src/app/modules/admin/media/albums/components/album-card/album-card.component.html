@@ -1,11 +1,25 @@
-<div class="flex flex-col shadow rounded-2xl overflow-hidden cursor-pointer bg-card">
+<div class="relative flex flex-col cursor-pointer scale-100 md:scale-[0.95] hover:scale-100 transition-transform duration-100 ease-in">
   <!-- Image -->
   <ng-container *ngIf="album.coverThumbnail">
-    <img
-      [src]="album.coverThumbnail"
-      class="w-full object-cover">
+    <div class="relative">
+      <img
+        [src]="album.coverThumbnail.fileUrl"
+        class="w-full object-cover rounded-2xl">
+      <div class="flex flex-col gap-y-2 absolute bottom-2 left-2">
+        <!-- Images count -->
+        <span class="self-start bg-gray-100 text-gray-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-gray-700/50 dark:text-white flex items-center">
+          <mat-icon [svgIcon]="'heroicons_mini:photo'" class="mr-2 w-[18px] min-w-[unset] dark:text-white"></mat-icon>
+          {{ album.imagesCount }}
+        </span>
+        <!-- Created at -->
+        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-gray-700/50 dark:text-white flex items-center">
+          <mat-icon [svgIcon]="'heroicons_mini:calendar'" class="mr-2 w-[18px] min-w-[unset] dark:text-white"></mat-icon>
+          {{ album.createdAt | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+    </div>
   </ng-container>
-  <div class="flex flex-auto flex-col p-6 space-y-4">
+  <div class="flex flex-auto flex-col py-6 space-y-4">
     <!-- Title -->
     <ng-container *ngIf="album.name">
       <div class="font-semibold line-clamp-3">
@@ -14,9 +28,20 @@
     </ng-container>
     <!-- Content -->
     <ng-container *ngIf="album.description">
-      <div [class.text-xl]="album.description.length < 70">
+      <p [class.text-xl]="album.description.length < 70" class="text-hint">
         {{ album.description }}
-      </div>
+      </p>
     </ng-container>
+    <div class="flex flex-row">
+      <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-gray-700/50 dark:text-white flex items-center">
+        <mat-icon [svgIcon]="'heroicons_mini:photo'" class="mr-2 w-[18px] min-w-[unset] dark:text-white"></mat-icon>
+        {{ album.imagesCount }}
+      </span>
+      <!-- Created at -->
+      <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-1.5 py-0.5 rounded dark:bg-gray-700/50 dark:text-white flex items-center">
+        <mat-icon [svgIcon]="'heroicons_mini:calendar'" class="mr-2 w-[18px] min-w-[unset] dark:text-white"></mat-icon>
+        {{ album.createdAt | date: 'dd/MM/yyyy' }}
+      </span>
+    </div>
   </div>
 </div>
