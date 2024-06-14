@@ -8,14 +8,14 @@ export default [
     children: [
       {
         path         : '',
-        loadComponent: () => import('./pages/albums-list/albums-list.component').then(m => m.AlbumsListComponent)
+        loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
       },
       {
         path         : ':id',
         resolve      : {
           album: albumResolver
         },
-        loadComponent: () => import('./pages/albums-detail/albums-detail.component').then(m => m.AlbumsDetailComponent)
+        loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
       }
     ]
   }

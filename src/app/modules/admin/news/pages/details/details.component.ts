@@ -26,10 +26,10 @@ import lightGallery     from 'lightgallery';
   standalone : true,
   imports    : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule ],
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './single-news.component.html',
+  templateUrl: './details.component.html',
   schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class SingleNewsComponent implements AfterViewInit {
+export class DetailsComponent implements AfterViewInit {
   @ViewChild('lightGallery') lightGallery: { _elementRef: { nativeElement: any; }; };
   inlineGallery: LightGallery;
   news: INews;

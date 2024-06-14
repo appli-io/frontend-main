@@ -7,8 +7,8 @@ export default [
     component: NewsComponent,
     children: [
       {
-        path: 'all',
-        loadChildren: () => import('./pages/news-all/news-all.routes')
+        path        : '',
+        loadChildren: () => import('./pages/list/news-all.routes')
       },
       {
         path: 'category',
@@ -16,16 +16,16 @@ export default [
       },
       {
         path: 'read',
-        loadChildren: () => import('./pages/single-news/single-news.routes')
+        loadChildren: () => import('./pages/details/single-news.routes')
       },
       {
         path        : 'bio-bio',
         loadChildren: () => import('./pages/external-biobio/external-biobio.routes')
       },
       {
-        path: '',
+        path      : '**',
         pathMatch: 'full',
-        redirectTo: 'all'
+        redirectTo: ''
       }
     ]
   }

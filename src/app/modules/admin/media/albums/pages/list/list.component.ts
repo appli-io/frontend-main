@@ -23,9 +23,9 @@ import { AlbumService }            from '@modules/admin/media/albums/album.servi
   standalone : true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports        : [ TranslocoDirective, PageHeaderComponent, FuseCardComponent, MatIconButton, MatIcon, MatAnchor, RouterLink, AlbumCardComponent, AsyncPipe, JsonPipe, FuseMasonryComponent, HlmSkeletonComponent ],
-  templateUrl: './albums-list.component.html'
+  templateUrl: './list.component.html'
 })
-export class AlbumsListComponent extends SubComponent implements OnInit {
+export class ListComponent extends SubComponent implements OnInit {
   albums$: BehaviorSubject<IAlbum[]>;
   columns: number = 4;
   protected readonly trackByFn = trackByFn;

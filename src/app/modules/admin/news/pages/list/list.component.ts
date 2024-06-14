@@ -25,10 +25,10 @@ import { NewsCategoryCardComponent } from '@modules/admin/news/components/news-c
   selector   : 'app-news-all',
   standalone : true,
   imports: [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent, AsyncPipe, NewsListHeaderComponent, NewsCardComponent, NewsCategoryCardComponent ],
-  templateUrl: './news-all.component.html',
+  templateUrl: './list.component.html',
   animations : fuseAnimations
 })
-export class NewsAllComponent implements OnInit {
+export class ListComponent implements OnInit {
   categories: INewsCategory[];
   newsList$: Observable<Page<INews>>;
 

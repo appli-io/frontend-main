@@ -4,6 +4,8 @@ import { DatePipe, NgIf }                                                 from '
 import { TranslocoDirective }                                             from '@ngneat/transloco';
 import VanillaCalendar                                                    from 'vanilla-calendar-pro';
 import { FormatDateString, IOptions, IVanillaCalendar }                   from 'vanilla-calendar-pro/types';
+import { MatDialog }                                                      from '@angular/material/dialog';
+import { EventModalComponent }                                            from '@modules/admin/home/entry-components/event-modal/event-modal.component';
 
 @Component({
   selector     : 'home-calendar',
@@ -203,7 +205,8 @@ export class CalendarComponent implements AfterViewInit {
   filteredEvents: CalendarEvent[] = [];
 
   constructor(
-    private readonly _changeDetectorRef: ChangeDetectorRef
+    private readonly _changeDetectorRef: ChangeDetectorRef,
+    private _matDialog: MatDialog,
   ) {}
 
   ngAfterViewInit(): void {
@@ -225,6 +228,14 @@ export class CalendarComponent implements AfterViewInit {
     calendar.init();
   }
 
+  openEventDetail(event: CalendarEvent): void {
+    console.log(event);
+    this._matDialog.open(EventModalComponent, {
+      autoFocus: false,
+      data     : {event}
+    });
+  }
+
   clickDay(e: MouseEvent, self: VanillaCalendar): void {
     this.filteredEvents = [];
 
@@ -243,7 +254,6 @@ export class CalendarComponent implements AfterViewInit {
       return eventDate === selectedDateString;
     });
   }
-
 
   getDays(day: number, date: FormatDateString, HTMLElement: HTMLElement, HTMLButtonElement: HTMLButtonElement, self: IVanillaCalendar) {
     HTMLButtonElement.style.flexDirection = 'column';

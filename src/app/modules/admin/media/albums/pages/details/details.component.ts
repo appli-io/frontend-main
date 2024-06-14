@@ -37,9 +37,9 @@ import { takeUntilDestroyed }                                                   
     ImgLoaderDirective,
     LightgalleryModule
   ],
-  templateUrl    : './albums-detail.component.html'
+  templateUrl: './details.component.html'
 })
-export class AlbumsDetailComponent implements AfterViewInit {
+export class DetailsComponent implements AfterViewInit {
   @ViewChild('lightGallery') lightGallery: { _elementRef: { nativeElement: any } };
   inlineGallery: LightGallery;
   public readonly route = inject(ActivatedRoute);
@@ -56,38 +56,23 @@ export class AlbumsDetailComponent implements AfterViewInit {
     this._fuseMediaWatcherService.onMediaChange$
       .pipe(takeUntilDestroyed())
       .subscribe(({matchingAliases}) => {
-        console.log(matchingAliases, this.columns);
+        let tempColumns = this.columns;
 
-        // Set the masonry columns
-        //
-        // This if block structured in a way so that only the
-        // biggest matching alias will be used to set the column
-        // count.
         if (matchingAliases.includes('xl')) {
-          if (this.columns !== 4) {
-            this.columns = 4;
-            this._cdr.detectChanges();
-          }
+          tempColumns = 4;
         } else if (matchingAliases.includes('lg')) {
-          if (this.columns !== 4) {
-            this.columns = 4;
-            this._cdr.detectChanges();
-          }
+          tempColumns = 4;
         } else if (matchingAliases.includes('md')) {
-          if (this.columns !== 3) {
-            this.columns = 3;
-            this._cdr.detectChanges();
-          }
+          tempColumns = 3;
         } else if (matchingAliases.includes('sm')) {
-          if (this.columns !== 2) {
-            this.columns = 2;
-            this._cdr.detectChanges();
-          }
+          tempColumns = 2;
         } else {
-          if (this.columns !== 1) {
-            this.columns = 1;
-            this._cdr.detectChanges();
-          }
+          tempColumns = 1;
+        }
+
+        if (this.columns !== tempColumns) {
+          this.columns = tempColumns;
+          this._cdr.detectChanges();
         }
       });
   }
