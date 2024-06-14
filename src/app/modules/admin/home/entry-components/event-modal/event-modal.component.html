@@ -1,21 +1,27 @@
 <div class="-m-6 flex flex-auto flex-col md:w-160 md:min-w-160">
   <div class="m-4">
     <!-- Google Map -->
-    <google-map
-
+    <google-map 
+    height="500px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="click($event)"
+    (mapClick)="addMarker($event)"
+    mapId="f9fde58250b04ee8"
     >
+    @for (position of markerPositions; track position) {
+      <map-advanced-marker [position]="position" />
+    }
 
+
+    <map-info-window>texto</map-info-window>
     </google-map>
+  
     <!-- Actions -->
     <div class="mt-4 flex items-center justify-end">
       <!-- Save -->
-      <button
-        (click)="closeDialog()"
-        [color]="'accent'"
-        mat-flat-button
-      >
-        Close
-      </button>
+      <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Close</button>
     </div>
   </div>
 </div>
