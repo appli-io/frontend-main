@@ -130,7 +130,6 @@ export class AlbumsDetailComponent implements AfterViewInit {
       closable        : true,
       appendSubHtmlTo : '.lg-item',
       dynamicEl       : [ ...items ],
-      autoplay        : true,
       autoplayControls: true,
       plugins         : [ lgZoom, lgAutoplay ]
     });
