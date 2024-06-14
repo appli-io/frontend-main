@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { IAlbum }           from '@modules/admin/media/albums/interfaces/album.interface';
-import { DatePipe, NgIf }   from '@angular/common';
-import { MatIcon }          from '@angular/material/icon';
-import { MatBadge }         from '@angular/material/badge';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { DatePipe, NgIf }                            from '@angular/common';
+import { MatIcon }                                   from '@angular/material/icon';
+import { MatBadge }                                  from '@angular/material/badge';
+
+import { IAlbum }             from '@modules/admin/media/albums/interfaces/album.interface';
+import { ImgLoaderDirective } from '@layout/directives/img-loader.directive';
 
 @Component({
   selector   : 'album-card',
@@ -11,9 +13,11 @@ import { MatBadge }         from '@angular/material/badge';
     NgIf,
     MatIcon,
     MatBadge,
-    DatePipe
+    DatePipe,
+    ImgLoaderDirective
   ],
-  templateUrl: './album-card.component.html'
+  templateUrl: './album-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumCardComponent {
   @Input() album: IAlbum;

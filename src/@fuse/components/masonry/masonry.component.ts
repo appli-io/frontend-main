@@ -1,4 +1,4 @@
-import { NgTemplateOutlet }                                                                           from '@angular/common';
+import { NgClass, NgTemplateOutlet }                                                                  from '@angular/common';
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, TemplateRef, ViewEncapsulation, } from '@angular/core';
 import { fuseAnimations }                                                                             from '@fuse/animations';
 
@@ -9,12 +9,13 @@ import { fuseAnimations }                                                       
   animations : fuseAnimations,
   exportAs   : 'fuseMasonry',
   standalone : true,
-  imports    : [ NgTemplateOutlet ],
+  imports    : [ NgTemplateOutlet, NgClass ],
 })
 export class FuseMasonryComponent implements OnChanges, AfterViewInit {
   @Input() columnsTemplate: TemplateRef<any>;
   @Input() columns: number;
   @Input() items: any[] = [];
+  @Input() containerClasses: string[] = [];
   distributedColumns: any[] = [];
 
   // -----------------------------------------------------------------------------------------------------
@@ -76,7 +77,5 @@ export class FuseMasonryComponent implements OnChanges, AfterViewInit {
       const columnIndex = i % this.columns;
       this.distributedColumns[columnIndex].items.push(this.items[i]);
     }
-
-    console.log('Distributed items:', this.distributedColumns);
   }
 }

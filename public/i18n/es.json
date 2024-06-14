@@ -106,7 +106,15 @@
     "subtitle" : "Explora y Conecta con los Recuerdos de Nuestra Empresa",
     "description" : "Explora álbumes temáticos de fotos subidas por nuestra empresa, que reflejan los momentos importantes y eventos especiales. Desde reuniones de equipo hasta celebraciones corporativas, nuestros álbumes te permiten descubrir y conectarte con los recuerdos visuales que destacan nuestra cultura y nuestros logros. Interactúa y comenta para mantenerte involucrado con la vida de nuestra organización.",
     "photos" : "Fotos",
-    "view-album" : "Ver álbum"
+    "view-album" : "Ver álbum",
+    "detail" : {
+      "photos" : "Fotos",
+      "created-by" : "Creado por",
+      "created-at" : "Creado el",
+      "no-content" : "No hay fotos disponibles para mostrar en este álbum",
+      "comments" : "Comentarios",
+      "write-comment" : "Escribe un comentario..."
+    }
   },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",

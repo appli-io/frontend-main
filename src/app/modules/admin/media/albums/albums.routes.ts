@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { Routes }        from '@angular/router';
+import { albumResolver } from '@modules/admin/media/albums/resolvers/album.resolver';
 
 export default [
   {
@@ -8,6 +9,13 @@ export default [
       {
         path         : '',
         loadComponent: () => import('./pages/albums-list/albums-list.component').then(m => m.AlbumsListComponent)
+      },
+      {
+        path         : ':id',
+        resolve      : {
+          album: albumResolver
+        },
+        loadComponent: () => import('./pages/albums-detail/albums-detail.component').then(m => m.AlbumsDetailComponent)
       }
     ]
   }

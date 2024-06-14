@@ -27,6 +27,9 @@
       ],
       "@libs/*" : [
         "libs/*"
+      ],
+      "@layout/*" : [
+        "app/layout/*"
       ]
     }
   },

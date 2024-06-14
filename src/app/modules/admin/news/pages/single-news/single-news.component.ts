@@ -59,7 +59,6 @@ export class SingleNewsComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.lightGallery);
     const lgContainer = this.lightGallery._elementRef.nativeElement;
 
     const items = [];

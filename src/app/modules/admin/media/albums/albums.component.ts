@@ -1,5 +1,5 @@
-import { Component }    from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterOutlet }                       from '@angular/router';
 
 @Component({
   selector   : 'app-albums',
@@ -7,7 +7,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     RouterOutlet
   ],
-  templateUrl: './albums.component.html'
+  templateUrl    : './albums.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumsComponent {
 

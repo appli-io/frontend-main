@@ -1,34 +1,68 @@
-import { Component }                from '@angular/core';
-import { TranslocoDirective }       from '@ngneat/transloco';
-import { PageHeaderComponent }      from '../../../../../../layout/components/page-header/page-header.component';
-import { FuseCardComponent }        from '@fuse/components/card';
-import { MatAnchor, MatIconButton } from '@angular/material/button';
-import { MatIcon }                  from '@angular/material/icon';
-import { RouterLink }               from '@angular/router';
-import { IAlbum }                   from '@modules/admin/media/albums/interfaces/album.interface';
-import { AlbumCardComponent }       from '@modules/admin/media/albums/components/album-card/album-card.component';
-import { BehaviorSubject }          from 'rxjs';
-import { AlbumService }             from '@modules/admin/media/albums/album.service';
-import { AsyncPipe, JsonPipe }      from '@angular/common';
-import { FuseMasonryComponent }     from '../../../../../../../@fuse/components/masonry';
-import { trackByFn }                from '@libs/ui/utils/utils';
-import { HlmSkeletonComponent }     from '@libs/ui/ui-skeleton-helm/src';
+import { AsyncPipe, JsonPipe }                                           from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { RouterLink }                                                    from '@angular/router';
+import { MatAnchor, MatIconButton }                                      from '@angular/material/button';
+import { MatIcon }                                                       from '@angular/material/icon';
+
+import { TranslocoDirective }         from '@ngneat/transloco';
+import { BehaviorSubject, takeUntil } from 'rxjs';
+
+import { FuseCardComponent }       from '@fuse/components/card';
+import { FuseMasonryComponent }    from '@fuse/components/masonry';
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
+import { SubComponent }            from '@layout/components/sub-component/sub-component';
+import { trackByFn }               from '@libs/ui/utils/utils';
+import { HlmSkeletonComponent }    from '@libs/ui/ui-skeleton-helm/src';
+import { IAlbum }                  from '@modules/admin/media/albums/interfaces/album.interface';
+import { AlbumCardComponent }      from '@modules/admin/media/albums/components/album-card/album-card.component';
+import { AlbumService }            from '@modules/admin/media/albums/album.service';
 
 @Component({
   selector   : 'app-albums-list',
   standalone : true,
-  imports: [ TranslocoDirective, PageHeaderComponent, FuseCardComponent, MatIconButton, MatIcon, MatAnchor, RouterLink, AlbumCardComponent, AsyncPipe, JsonPipe, FuseMasonryComponent, HlmSkeletonComponent ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports        : [ TranslocoDirective, PageHeaderComponent, FuseCardComponent, MatIconButton, MatIcon, MatAnchor, RouterLink, AlbumCardComponent, AsyncPipe, JsonPipe, FuseMasonryComponent, HlmSkeletonComponent ],
   templateUrl: './albums-list.component.html'
 })
-export class AlbumsListComponent {
+export class AlbumsListComponent extends SubComponent implements OnInit {
   albums$: BehaviorSubject<IAlbum[]>;
+  columns: number = 4;
   protected readonly trackByFn = trackByFn;
 
-  constructor(private readonly _albumService: AlbumService) {
+  constructor(
+    private readonly _cdr: ChangeDetectorRef,
+    private readonly _albumService: AlbumService,
+    private readonly _fuseMediaWatcherService: FuseMediaWatcherService
+  ) {
+    super();
     this.albums$ = this._albumService.albums$;
   }
 
-  emit(event: any) {
-    console.log(event);
+  ngOnInit() {
+    this._fuseMediaWatcherService.onMediaChange$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(({matchingAliases}) => {
+        console.log(matchingAliases, this.columns);
+
+        // Set the masonry columns
+        //
+        // This if block structured in a way so that only the
+        // biggest matching alias will be used to set the column
+        // count.
+        if (matchingAliases.includes('xl')) {
+          this.columns = 3;
+        } else if (matchingAliases.includes('lg')) {
+          this.columns = 3;
+        } else if (matchingAliases.includes('md')) {
+          this.columns = 3;
+        } else if (matchingAliases.includes('sm')) {
+          this.columns = 2;
+        } else {
+          this.columns = 1;
+        }
+
+        this._cdr.detectChanges();
+      });
   }
 }

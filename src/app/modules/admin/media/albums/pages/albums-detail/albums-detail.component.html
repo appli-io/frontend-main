@@ -1,1 +1,115 @@
-<p>albums-detail works!</p>
+<lightgallery #lightGallery [settings]="settings"></lightgallery>
+<div *transloco="let t; read: 'albums.detail'" class="flex flex-col flex-auto min-w-0">
+
+  <!-- Header -->
+  <div
+    [class.bg-card]="!album.cover.fileUrl"
+    [class.bg-overlay]="album.cover?.fileUrl"
+    [style.background-image]="album.cover?.fileUrl? 'url(' + album.cover.fileUrl + ')' : ''"
+    class="bg-cover bg-center resize-y overflow-auto min-h-[250px]"
+  >
+    <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
+      <div class="flex-1 min-w-0">
+        <!-- Breadcrumbs -->
+        <div>
+          <div class="hidden sm:flex flex-wrap items-center font-medium">
+            <div>
+              <a [routerLink]="'/apps/albums'" class="whitespace-nowrap text-primary-500">Álbums</a>
+            </div>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+              <mat-icon
+                [svgIcon]="'heroicons_mini:chevron-right'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span [innerHtml]="album.name" class="ml-1 text-secondary"></span>
+            </div>
+          </div>
+          <div class="flex sm:hidden">
+            <a
+              [routerLink]="'./..'"
+              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+              <mat-icon
+                [svgIcon]="'heroicons_solid:chevron-left'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span class="ml-1">Back</span>
+            </a>
+          </div>
+        </div>
+        <!-- Title -->
+        <div class="mt-2">
+          <h2 [innerHtml]="album.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+          @if (album.description) {
+            <p [innerHtml]="album.description" class="mt-4 text-justify"></p>
+          }
+
+          <mat-divider class="my-5"></mat-divider>
+
+          <div class="flex flex-row items-center">
+            <span>{{ t('created-by') }}: </span>
+            <img
+              [src]="album.createdBy?.avatar?.fileUrl"
+              alt="Card cover image"
+              class="w-8 h-8 mx-3 rounded-full">
+            <strong [innerText]="album.createdBy.name"></strong>
+            <span class="ml-4">{{ t('created-at') }}: <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
+          </div>
+        </div>
+      </div>
+      <!-- Actions -->
+      <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
+        <button (click)="selectedImage(undefined)" mat-stroked-button matTooltip="Ver portada" matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:cursor-arrow-rays'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">Ver portada</span>
+        </button>
+        <button
+          [color]="'primary'"
+          class=""
+          mat-flat-button
+          matTooltip="PENDING_NAME"
+          matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:link'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="shadow bg-default dark:bg-transparent flex flex-col justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+    <h2 class="text-2xl font-bold">{{ t('photos') }}</h2>
+    @if (album.images) {
+      @if (album.images.length > 0) {
+        <fuse-masonry
+          [items]="$any(album.images)"
+          [columns]="columns"
+          [columnsTemplate]="albumImageColumnTemplate"
+          [containerClasses]="['gap-x-8']"
+          class="mt-4"
+        ></fuse-masonry>
+      } @else {
+        <div class="flex flex-auto flex-col items-center bg-gray-100 dark:bg-transparent">
+          <img src="images/undraw/empty.svg" alt="empty content" class="max-w-xs">
+          <div class="mt-6 text-lg text-center font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<ng-template #albumImageColumnTemplate let-columns>
+  @for (column of columns; track trackByFn($index, column)) {
+    <div class="flex-1 w-full space-y-8">
+      @for (albumImage of $any(column.items); track trackByFn($index, albumImage)) {
+        <img
+          ImgLoader
+          (click)="selectedImage(albumImage)"
+          [src]="albumImage.thumbnail.fileUrl"
+          class="w-full object-cover rounded-2xl sm:hover:scale-110 transition-transform duration-100 ease-in"
+        >
+      }
+    </div>
+  }
+</ng-template>

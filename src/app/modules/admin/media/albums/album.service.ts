@@ -1,8 +1,10 @@
-import { Injectable }             from '@angular/core';
-import { HttpClient }             from '@angular/common/http';
-import { BehaviorSubject, delay } from 'rxjs';
-import { IAlbum }                 from '@modules/admin/media/albums/interfaces/album.interface';
-import { Api }                    from '@core/interfaces/api';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { BehaviorSubject, map } from 'rxjs';
+
+import { Api }    from '@core/interfaces/api';
+import { IAlbum } from '@modules/admin/media/albums/interfaces/album.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +18,13 @@ export class AlbumService {
 
   public getAlbums(): void {
     this._httpClient.get<Api<IAlbum[]>>('api/albums')
-      .pipe(delay(10000))
       .subscribe(api => {
         this.albums$.next(api.content);
       });
+  }
+
+  public getAlbum(id: string) {
+    return this._httpClient.get<Api<IAlbum>>(`api/albums/${ id }`)
+      .pipe(map(api => api.content));
   }
 }
