@@ -1,0 +1,12 @@
+<div class="event-card">
+  <div class="timeline">
+    <div [class.hidden]="first" class="line"></div>
+    <div class="circle"></div>
+    <div [class.hidden]="last" class="line"></div>
+  </div>
+  <div class="event-details">
+    <div class="time">{{ event.start | date: 'shortTime' }}</div>
+    <div class="title">{{ event.title }}</div>
+    <div *ngIf="event.end" class="duration">{{ duration }}</div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+/* event-card.component.css */
+.event-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30px;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: #ff6f61;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.line {
+  width: 2px;
+  background-color: #ddd;
+  flex-grow: 1;
+}
+
+.line.hidden {
+  visibility: hidden;
+}
+
+.event-details {
+  padding-left: 10px;
+  flex-grow: 1;
+}
+
+.time {
+  font-weight: bold;
+}
+
+.title {
+  margin-top: 5px;
+}
+
+.duration {
+  margin-top: 5px;
+  color: #888;
+}

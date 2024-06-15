@@ -16,7 +16,7 @@ FROM caddy:alpine
 
 ENV NODE_ENV production
 
-COPY --from=build /app/dist/fuse /dist
+COPY --from=build /app/dist/fuse/browser /dist
 
 COPY Caddyfile /etc/caddy/Caddyfile
 
