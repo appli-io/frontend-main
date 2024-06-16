@@ -1,8 +1,8 @@
 <div class="event-card">
   <div class="timeline">
-    <div [class.hidden]="first" class="line"></div>
+    <div [class.hidden]="first" class="line top bg-gray-500"></div>
     <div class="circle"></div>
-    <div [class.hidden]="last" class="line"></div>
+    <div [class.hidden]="last" class="line bottom bg-gray-500"></div>
   </div>
   <div class="event-details">
     <div class="time">{{ event.start | date: 'shortTime' }}</div>

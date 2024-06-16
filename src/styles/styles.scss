@@ -29,6 +29,7 @@
     background-repeat: repeat;
     background-attachment: fixed;
   }
+
   &-overlay {
     position: relative;
 
@@ -147,5 +148,24 @@ swiper-slide {
     &:hover {
       opacity: 1;
     }
+  }
+}
+
+// mat-dialog
+.dialog-mobile-fullscreen {
+  @media (max-width: 959px) {
+    overflow: hidden;
+    width: 91vw !important;
+    height: 95vh !important;
+    max-width: 91vw !important;
+
+    & .mat-mdc-dialog-container {
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+
+    //& .mat-mdc-dialog-surface {
+    //  border-radius: 0 !important;
+    //}
   }
 }

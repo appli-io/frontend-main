@@ -1,27 +1,36 @@
-<div class="-m-6 flex flex-auto flex-col md:w-160 md:min-w-160">
-  <div class="m-4">
+<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160">
+  <!-- Header -->
+  <div class="flex-0 mb-4 flex items-center">
+    <h2 class="text-lg font-medium tracking-tight leading-6 truncate flex-1">Detalle de actividad</h2>
+    <button (click)="closeDialog()" class="flex-0" mat-icon-button>
+      <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1">
     <!-- Google Map -->
-    <google-map 
-    height="500px"
-    width="100%"
-    [center]="center"
-    [zoom]="zoom"
-    (mapClick)="click($event)"
-    (mapClick)="addMarker($event)"
-    mapId="f9fde58250b04ee8"
+    <google-map
+      (mapClick)="click($event)"
+      (mapClick)="addMarker($event)"
+      [center]="center"
+      [zoom]="zoom"
+      height="500px"
+      mapId="f9fde58250b04ee8"
+      width="100%"
     >
-    @for (position of markerPositions; track position) {
-      <map-advanced-marker [position]="position" />
-    }
+      @for (position of markerPositions; track position) {
+        <map-advanced-marker [position]="position"/>
+      }
 
 
-    <map-info-window>texto</map-info-window>
+      <map-info-window>texto</map-info-window>
     </google-map>
-  
-    <!-- Actions -->
-    <div class="mt-4 flex items-center justify-end">
-      <!-- Save -->
-      <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Close</button>
-    </div>
+  </div>
+
+  <!-- Footer - Actions -->
+  <div class="mt-4 flex items-center justify-end flex-0">
+    <!-- Save -->
+    <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Close</button>
   </div>
 </div>

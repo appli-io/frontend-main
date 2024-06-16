@@ -6,16 +6,18 @@ import VanillaCalendar                                                    from '
 import { FormatDateString, IOptions, IVanillaCalendar }                   from 'vanilla-calendar-pro/types';
 import { MatDialog }                                                      from '@angular/material/dialog';
 import { EventModalComponent }                                            from '@modules/admin/home/entry-components/event-modal/event-modal.component';
+import { EventCardComponent }                                             from '@modules/admin/home/components/event-card/event-card.component';
 
 @Component({
   selector     : 'home-calendar',
   standalone   : true,
-  imports      : [
+  imports: [
     CalendarMonthModule,
     CalendarCommonModule,
     NgIf,
     TranslocoDirective,
-    DatePipe
+    DatePipe,
+    EventCardComponent
   ],
   templateUrl  : './calendar.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -232,6 +234,8 @@ export class CalendarComponent implements AfterViewInit {
     console.log(event);
     this._matDialog.open(EventModalComponent, {
       autoFocus: false,
+      panelClass       : [ 'dialog-mobile-fullscreen' ],
+      closeOnNavigation: true,
       data     : {event}
     });
   }
