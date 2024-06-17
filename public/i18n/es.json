@@ -14,7 +14,8 @@
     "multimedia" : "Multimedia",
     "apps" : {
       "contacts" : "Contactos",
-      "gallery" : "Galería"
+      "gallery" : "Galería",
+      "task" : "Tareas"
     }
   },
   "login" : {
@@ -27,8 +28,10 @@
     "allNews" : "Todas las noticias",
     "newsByCategory" : "Noticias por categoría",
     "bio-bio" : "Radio Bío Bío",
+    "apps" : "Aplicaciones",
     "multimedia" : "Multimedia",
     "gallery" : "Galería",
+    "scrumboards" : "Tablero de scrum",
     "videos" : "Videos",
     "about" : "Acerca de",
     "contact" : "Contacto",
@@ -43,6 +46,8 @@
         "contacts" : "Contactos",
         "analytics" : "Analítica",
         "projects" : "Proyectos",
+        "tasks" : "Tareas",
+        "scrumboards" : "Tablero de scrum",
         "news" : "Noticias",
         "profile" : "Perfil",
         "mail" : "Correo",

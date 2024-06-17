@@ -3,11 +3,11 @@ import { NewsComponent } from './news.component';
 
 export default [
   {
-    path: '',
+    path    : '',
     component: NewsComponent,
     children: [
       {
-        path        : '',
+        path: 'all',
         loadChildren: () => import('./pages/list/news-all.routes')
       },
       {

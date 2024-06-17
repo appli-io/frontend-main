@@ -1,0 +1,147 @@
+<div
+  class="-m-6 flex max-h-160 flex-auto flex-col overflow-y-auto md:w-160 md:min-w-160"
+>
+  <!-- Header -->
+  <div
+    class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5"
+  >
+    <div class="text-lg font-medium">Card</div>
+    <button (click)="matDialogRef.close()" [tabIndex]="-1" mat-icon-button>
+      <mat-icon
+        [svgIcon]="'heroicons_outline:x-mark'"
+        class="text-current"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <!-- Card form -->
+  <form
+    [formGroup]="cardForm"
+    class="flex w-full flex-0 flex-col items-start space-y-6 overflow-y-auto p-6 sm:p-8"
+  >
+    <!-- Title -->
+    <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
+      <mat-label>Title</mat-label>
+      <textarea
+        [cdkAutosizeMinRows]="1"
+        [formControlName]="'title'"
+        [rows]="1"
+        cdkTextareaAutosize
+        matInput
+      >
+            </textarea>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea
+        [cdkAutosizeMinRows]="1"
+        [formControlName]="'description'"
+        [rows]="1"
+        cdkTextareaAutosize
+        matInput
+      >
+            </textarea>
+    </mat-form-field>
+
+    <!-- Due date -->
+    <div>
+      <div class="font-medium">Due date</div>
+      <div
+        (click)="dueDatePicker.open()"
+        [ngClass]="{
+                    'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300':
+                        !card.dueDate,
+                    'bg-green-200 text-green-800 dark:bg-green-500 dark:text-green-100':
+                        card.dueDate && !isOverdue(card.dueDate),
+                    'bg-red-200 text-red-800 dark:bg-red-500 dark:text-red-100':
+                        card.dueDate && isOverdue(card.dueDate),
+                }"
+        class="relative mt-1.5 flex cursor-pointer items-center rounded-full px-4 leading-9"
+      >
+        <mat-icon
+          [svgIcon]="'heroicons_solid:calendar'"
+          class="text-current icon-size-5"
+        ></mat-icon>
+        <span class="ml-2 text-md font-medium">
+                    @if (card.dueDate) {
+                      {{ card.dueDate | date: 'longDate' }}
+                    }
+          @if (!card.dueDate) {
+            Not set
+          }
+                </span>
+        <mat-form-field
+          [subscriptSizing]="'dynamic'"
+          class="fuse-mat-dense pointer-events-none invisible absolute inset-0 -mt-2.5 opacity-0"
+        >
+          <input
+            [formControlName]="'dueDate'"
+            [matDatepicker]="dueDatePicker"
+            matInput
+          />
+          <mat-datepicker #dueDatePicker>
+            <mat-datepicker-actions>
+              <button
+                (click)="cardForm.get('dueDate').setValue(null)"
+                mat-button
+                matDatepickerCancel
+              >
+                Clear
+              </button>
+              <button
+                [color]="'primary'"
+                mat-flat-button
+                matDatepickerApply
+              >
+                Select
+              </button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Labels -->
+    <div class="w-full">
+      <div class="font-medium">Labels</div>
+      <div
+        class="mt-1 overflow-hidden rounded-md border border-gray-300 shadow-sm"
+      >
+        <!-- Header -->
+        <div class="mx-3 my-2 flex items-center">
+          <div class="flex min-w-0 flex-auto items-center">
+            <mat-icon
+              [svgIcon]="'heroicons_solid:magnifying-glass'"
+              class="icon-size-5"
+            ></mat-icon>
+            <input
+              (input)="filterLabels($event)"
+              (keydown)="filterLabelsInputKeyDown($event)"
+              [maxLength]="50"
+              class="ml-2 min-w-0 border-0 py-1"
+              placeholder="Enter label name"
+              type="text"
+            />
+          </div>
+        </div>
+        <!-- Available labels -->
+        <div class="max-h-40 overflow-y-auto border-t leading-none">
+          <!-- Labels -->
+          @for (label of filteredLabels;
+            track trackByFn($index, label)) {
+            <mat-checkbox
+              class="flex h-10 min-h-10 items-center pl-1 pr-4"
+              [color]="'primary'"
+              [checked]="hasLabel(label)"
+              (change)="toggleProductTag(label, $event)"
+            >
+              {{ label.title }}
+            </mat-checkbox>
+          }
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

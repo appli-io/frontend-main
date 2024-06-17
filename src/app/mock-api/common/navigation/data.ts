@@ -37,12 +37,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
       },
     ]
   },
-  // Multimedia (gallery and videos)
   {
-    id      : 'multimedia',
-    title   : 'Multimedia',
+    id      : 'apps',
+    title   : 'Applications',
     type    : 'collapsable',
-    icon    : 'heroicons_outline:photo',
+    icon    : 'heroicons_outline:squares-2x2',
+    link    : '/apps',
     children: [
       {
         id   : 'gallery',
@@ -51,13 +51,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/apps/albums'
       },
       {
-        id   : 'videos',
-        title: 'Videos',
+        id   : 'scrumboards',
+        title: 'Scrum boards',
         type : 'basic',
-        link: '/apps/videos'
-      },
+        link : '/apps/scrumboards'
+      }
     ]
-  },
+  }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
   {
