@@ -1,3 +1,5 @@
+import { IImage } from '@modules/admin/news/domain/interfaces/news.interface';
+
 export interface IBoard {
   id?: string | null;
   title: string;
@@ -29,9 +31,9 @@ export interface ICard {
 }
 
 export interface IMember {
-  id?: string | null;
+  id?: string;
   name: string;
-  avatar?: string | null;
+  avatar?: IImage;
 }
 
 export interface ILabel {

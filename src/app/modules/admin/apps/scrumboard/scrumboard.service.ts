@@ -56,7 +56,7 @@ export class ScrumboardService {
    * Get boards
    */
   getBoards(): Observable<Board[]> {
-    return this._httpClient.get<Api<Board[]>>('api/scrumboard/boards').pipe(
+    return this._httpClient.get<Api<Board[]>>('api/scrumboard/board').pipe(
       map((response) => response.content),
       map((response) => response.map((item) => new Board(item))),
       tap((boards) => this._boards.next(boards))
@@ -70,7 +70,7 @@ export class ScrumboardService {
    */
   getBoard(id: string): Observable<Board> {
     return this._httpClient
-      .get<Api<Board>>('api/scrumboard/boards/' + id)
+      .get<Api<Board>>('api/scrumboard/board/' + id)
       .pipe(
         map((response) => response.content),
         map((response) => new Board(response)),
@@ -182,8 +182,9 @@ export class ScrumboardService {
    */
   createList(list: List): Observable<List> {
     return this._httpClient
-      .post<List>('api/apps/scrumboard/board/list', {list})
+      .post<Api<List>>('api/scrumboard/list', list)
       .pipe(
+        map((response) => response.content),
         map((response) => new List(response)),
         tap((newList) => {
           // Get the board value
@@ -208,8 +209,9 @@ export class ScrumboardService {
    */
   updateList(list: List): Observable<List> {
     return this._httpClient
-      .patch<List>('api/scrumboard/board/list', {list})
+      .patch<Api<List>>('api/scrumboard/board/list', list)
       .pipe(
+        map((response) => response.content),
         map((response) => new List(response)),
         tap((updatedList) => {
           // Get the board value
@@ -239,8 +241,9 @@ export class ScrumboardService {
    */
   updateLists(lists: List[]): Observable<List[]> {
     return this._httpClient
-      .patch<List[]>('api/scrumboard/lists', {lists})
+      .patch<Api<List[]>>('api/scrumboard/list', lists)
       .pipe(
+        map((response) => response.content),
         map((response) => response.map((item) => new List(item))),
         tap((updatedLists) => {
           // Get the board value
@@ -273,7 +276,7 @@ export class ScrumboardService {
    */
   deleteList(id: string): Observable<boolean> {
     return this._httpClient
-      .delete<boolean>('api/scrumboard/lists', {
+      .delete<boolean>('api/scrumboard/list', {
         params: {id},
       })
       .pipe(
@@ -335,8 +338,9 @@ export class ScrumboardService {
    */
   createCard(card: Card): Observable<Card> {
     return this._httpClient
-      .put<Card>('api/scrumboard/card', {card})
+      .post<Api<Card>>('api/scrumboard/card', card)
       .pipe(
+        map((response) => response.content),
         map((response) => new Card(response)),
         tap((newCard) => {
           // Get the board value
@@ -369,11 +373,9 @@ export class ScrumboardService {
       take(1),
       switchMap((board) =>
         this._httpClient
-          .patch<Card>('api/scrumboard/cards', {
-            id,
-            card,
-          })
+          .patch<Api<Card>>('api/scrumboard/card/' + id, card)
           .pipe(
+            map((response) => response.content),
             map((updatedCard) => {
               // Find the card and update it
               board.lists.forEach((listItem) => {
@@ -407,7 +409,7 @@ export class ScrumboardService {
    */
   updateCards(cards: Card[]): Observable<Card[]> {
     return this._httpClient
-      .patch<Card[]>('api/scrumboard/cards', {cards})
+      .patch<Card[]>('api/scrumboard/card', {cards})
       .pipe(
         map((response) => response.map((item) => new Card(item))),
         tap((updatedCards) => {

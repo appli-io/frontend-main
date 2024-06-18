@@ -7,6 +7,7 @@ import { Board }                                                                
 import { ScrumboardService }                                                                            from 'app/modules/admin/apps/scrumboard/scrumboard.service';
 import { DateTime }                                                                                     from 'luxon';
 import { Subject, takeUntil }                                                                           from 'rxjs';
+import { MatTooltip }                                                                                   from '@angular/material/tooltip';
 
 @Component({
   selector       : 'scrumboard-boards',
@@ -14,7 +15,7 @@ import { Subject, takeUntil }                                                   
   encapsulation  : ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone     : true,
-  imports        : [ CdkScrollable, RouterLink, MatIconModule ],
+  imports: [ CdkScrollable, RouterLink, MatIconModule, MatTooltip ],
 })
 export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
   boards: Board[];

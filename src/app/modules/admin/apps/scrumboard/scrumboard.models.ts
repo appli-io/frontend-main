@@ -1,4 +1,5 @@
 import { IBoard, ICard, ILabel, IList, IMember, } from 'app/modules/admin/apps/scrumboard/scrumboard.types';
+import { IImage }                                 from '@modules/admin/news/domain/interfaces/news.interface';
 
 // -----------------------------------------------------------------------------------------------------
 // @ Board
@@ -106,6 +107,7 @@ export class Card implements Required<ICard> {
   description: string | null;
   labels: Label[];
   dueDate: string | null;
+  coverImage: string | null;
 
   /**
    * Constructor
@@ -136,16 +138,14 @@ export class Card implements Required<ICard> {
 // -----------------------------------------------------------------------------------------------------
 // @ Member
 // -----------------------------------------------------------------------------------------------------
-export class Member implements Required<IMember> {
-  id: string | null;
+export class Member implements IMember {
+  id: string;
   name: string;
-  avatar: string | null;
+  avatar?: IImage;
+  position?: string;
 
-  /**
-   * Constructor
-   */
   constructor(member: IMember) {
-    this.id = member.id || null;
+    this.id = member.id;
     this.name = member.name;
     this.avatar = member.avatar || null;
   }

@@ -1,6 +1,5 @@
 <div [class.h-15]="!formVisible" class="mt-11 w-64 px-2 py-2.5">
-  <div
-    class="relative flex h-full w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-700"
+  <div class="relative flex h-full w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-700"
   >
     <button
       (click)="toggleFormVisibility()"
@@ -9,17 +8,10 @@
       disableRipple
       mat-button
     >
-      <mat-icon
-        [svgIcon]="'heroicons_outline:plus-circle'"
-        class="icon-size-5"
-      ></mat-icon>
+      <mat-icon [svgIcon]="'heroicons_outline:plus-circle'" class="icon-size-5"></mat-icon>
       <span class="text-secondary ml-2">{{ buttonTitle }}</span>
     </button>
-    <form
-      [formGroup]="form"
-      [ngClass]="{ 'opacity-0': !formVisible }"
-      class="flex w-full flex-col items-start p-3"
-    >
+    <form [formGroup]="form" [ngClass]="{ 'opacity-0': !formVisible }" class="flex w-full flex-col items-start p-3">
       <input
         #titleInput
         (keydown.enter)="save()"

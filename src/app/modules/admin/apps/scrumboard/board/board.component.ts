@@ -271,7 +271,7 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
     const updated = this._calculatePositions(event);
 
     // Update the cards
-    this._scrumboardService.updateCards(updated).subscribe();
+    this._scrumboardService.updateCard(updated[0].id, updated[0]).subscribe();
   }
 
   /**
