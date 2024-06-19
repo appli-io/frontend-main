@@ -104,6 +104,10 @@ export const appRoutes: Route[] = [
           {
             path        : 'users',
             loadChildren: () => import('app/modules/admin/admin/users/users.routes')
+          },
+          {
+            path        : 'events',
+            loadChildren: () => import('app/modules/admin/admin/events/events.routes')
           }
         ]
       }

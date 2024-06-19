@@ -73,6 +73,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/admin/users'
       },
       {
+        id   : 'admin.events',
+        title: 'Events',
+        type : 'basic',
+        link : '/admin/events'
+      },
+      {
         id   : 'admin.roles',
         title: 'Roles',
         type : 'basic',

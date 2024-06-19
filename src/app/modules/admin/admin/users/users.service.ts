@@ -1,9 +1,11 @@
-import { Injectable }                            from '@angular/core';
-import { HttpClient }                            from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { Api }                                   from '@core/interfaces/api';
-import { CompanyUser }                           from '@modules/admin/admin/users/model/company-user.model';
-import { Page }                                  from '@core/interfaces/page';
+
+import { Api }         from '@core/interfaces/api';
+import { Page }        from '@core/interfaces/page';
+import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
 
 @Injectable({
   providedIn: 'root'
