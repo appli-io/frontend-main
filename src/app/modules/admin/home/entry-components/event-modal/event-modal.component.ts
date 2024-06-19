@@ -12,9 +12,10 @@ import { MatIcon }                                from '@angular/material/icon';
   templateUrl: './event-modal.component.html',
 })
 export class EventModalComponent implements OnInit {
-  //TODO: lat-lng change to dinamyc
-  zoom = 15;
-  center: google.maps.LatLngLiteral = {lat: -36.9358114, lng: -73.018882};
+  neededMaps: boolean = false;
+  markers: google.maps.LatLngLiteral[] = [];
+  zoom: number = 15;
+  center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     mapTypeId  : 'hybrid',
     zoomControl: false,
@@ -23,7 +24,6 @@ export class EventModalComponent implements OnInit {
     maxZoom    : 15,
     minZoom    : 8,
   };
-  markerPositions: google.maps.LatLngLiteral[] = [ {lat: -36.9358114, lng: -73.018882} ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private _data: { event: IEvent },
@@ -31,13 +31,17 @@ export class EventModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this._data);
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-    });
+    console.log('Evento en el modal: ',this._data);
+    if(this._data.event.url?.some((url) => url.platform === 'maps')){
+      this.neededMaps = true;
+      this._data.event.url.forEach((url) => {
+        if(url.platform === 'maps'){
+          this.center = {lat: url.latitude, lng: url.longitude};
+          this.markers.push({lat: url.latitude, lng: url.longitude});
+        }
+      });
+    }
+    console.log('Markers: ',this.markers);
   }
 
 
@@ -51,10 +55,6 @@ export class EventModalComponent implements OnInit {
 
   click(event: google.maps.MapMouseEvent) {
     console.log(event.latLng.toJSON());
-  }
-
-  addMarker(event: google.maps.MapMouseEvent) {
-    this.markerPositions.push(event.latLng.toJSON());
   }
 
   closeDialog(): void {

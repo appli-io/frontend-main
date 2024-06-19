@@ -10,22 +10,15 @@
   <!-- Content -->
   <div class="flex-1">
     <!-- Google Map -->
-    <google-map
-      (mapClick)="click($event)"
-      (mapClick)="addMarker($event)"
-      [center]="center"
-      [zoom]="zoom"
-      height="500px"
-      mapId="f9fde58250b04ee8"
-      width="100%"
-    >
-      @for (position of markerPositions; track position) {
-        <map-advanced-marker [position]="position"/>
+    @if(neededMaps) {
+    <google-map (mapClick)="click($event)" [center]="center" [zoom]="zoom" height="500px" mapId="f9fde58250b04ee8" width="100%">
+      @for (position of markers; track position) {
+      <map-advanced-marker [position]="position" />
       }
-
 
       <map-info-window>texto</map-info-window>
     </google-map>
+    }
   </div>
 
   <!-- Footer - Actions -->

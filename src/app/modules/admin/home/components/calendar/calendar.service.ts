@@ -12,7 +12,7 @@ export class CalendarService {
   constructor(private _http: HttpClient) { }
 
   getEvents() {
-    return this._http.get<Api<IEvent[]>>('api/events')
+    return this._http.get<Api<IEvent[]>>('api/event')
       .pipe(map(response => response.content));
   }
 }
