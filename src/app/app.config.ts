@@ -9,6 +9,8 @@ import { IonicStorageModule }                                 from '@ionic/stora
 import { provideTransloco, TranslocoService }                 from '@ngneat/transloco';
 import { CalendarCommonModule, DateAdapter as DateAdapterAC } from 'angular-calendar';
 import { adapterFactory }                                     from 'angular-calendar/date-adapters/date-fns';
+import { LightgalleryModule }                                 from 'lightgallery/angular';
+import { SocketIoConfig, SocketIoModule }                     from 'ngx-socket-io';
 import { firstValueFrom }                                     from 'rxjs';
 
 
@@ -19,7 +21,14 @@ import { provideFuse }         from '@fuse';
 import { StorageService }      from '@fuse/services/storage';
 import { appRoutes }           from 'app/app.routes';
 import { mockApiServices }     from 'app/mock-api';
-import { LightgalleryModule }  from 'lightgallery/angular';
+
+const config: SocketIoConfig = {
+  url    : 'localhost:5000/ws/board',
+  options: {
+    autoConnect: false,
+    transports : [ 'websocket' ]
+  }
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,6 +41,7 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions()
     ),
     importProvidersFrom(
+      SocketIoModule.forRoot(config),
       IonicStorageModule.forRoot({
         name: 'wwtDB'
       }),

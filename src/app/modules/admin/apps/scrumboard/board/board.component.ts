@@ -14,7 +14,7 @@ import { UntypedFormBuilder, UntypedFormGroup }                                 
 import { MatButtonModule }                                                                              from '@angular/material/button';
 import { MatIconModule }                                                                                from '@angular/material/icon';
 import { MatMenuModule }                                                                                from '@angular/material/menu';
-import { RouterLink, RouterOutlet }                                                                     from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet }                                                     from '@angular/router';
 import { FuseConfirmationService }                                                                      from '@fuse/services/confirmation';
 import {
   Board,
@@ -26,6 +26,8 @@ import { DateTime }                                                             
 import { Subject, takeUntil }                                                                           from 'rxjs';
 import { ScrumboardBoardAddCardComponent }                                                              from './add-card/add-card.component';
 import { ScrumboardBoardAddListComponent }                                                              from './add-list/add-list.component';
+import { WebsocketService }                                                                             from '@modules/admin/apps/scrumboard/websocket.service';
+import { takeUntilDestroyed }                                                                           from '@angular/core/rxjs-interop';
 
 @Component({
   selector       : 'scrumboard-board',
@@ -68,8 +70,25 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
     private _changeDetectorRef: ChangeDetectorRef,
     private _formBuilder: UntypedFormBuilder,
     private _fuseConfirmationService: FuseConfirmationService,
-    private _scrumboardService: ScrumboardService
-  ) {}
+    private _scrumboardService: ScrumboardService,
+    private _wsService: WebsocketService,
+    private readonly _route: ActivatedRoute
+  ) {
+    this.subscribeToBoardJoined();
+
+    // Connect to the websocket
+    this._wsService.connect();
+
+    // Join the board
+    this._wsService.joinBoard(this._route.snapshot.params.boardId);
+
+    // Subscribe to the card updated event
+    this._wsService.cardUpdated
+      .pipe(takeUntilDestroyed())
+      .subscribe(card => {
+        console.log('cardUpdated', card);
+      });
+  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -102,6 +121,8 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
+
+    this._wsService.disconnect();
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -294,6 +315,17 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
    */
   trackByFn(index: number, item: any): any {
     return item.id || index;
+  }
+
+  /**
+   * Subscribe to the board joined event
+   */
+  subscribeToBoardJoined(): void {
+    // this._wsService.boardJoined
+    //   .pipe(takeUntilDestroyed())
+    //   .subscribe(data => {
+    //   console.log('boardJoined', data);
+    // });
   }
 
   // -----------------------------------------------------------------------------------------------------

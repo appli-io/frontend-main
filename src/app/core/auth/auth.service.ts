@@ -5,11 +5,9 @@ import { UserService }                                                          
 import { catchError, lastValueFrom, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { Api }                                                                        from '@core/interfaces/api';
 import { ICompany }                                                                   from '@core/domain/interfaces/company.interface';
-import { environment }                                                                from 'environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  private _backendUrl = environment.BACKEND_URL;
   private _authenticated: boolean = false;
   private _httpClient = inject(HttpClient);
   private _userService = inject(UserService);
