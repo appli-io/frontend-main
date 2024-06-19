@@ -57,6 +57,35 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/apps/scrumboards'
       }
     ]
+  },
+  // admin panel
+  {
+    id      : 'admin.title',
+    title   : 'Admin Panel',
+    type    : 'collapsable',
+    icon    : 'heroicons_outline:cog',
+    link    : '/admin',
+    children: [
+      {
+        id   : 'admin.users',
+        title: 'Users',
+        type : 'basic',
+        link : '/admin/users'
+      },
+      {
+        id   : 'admin.roles',
+        title: 'Roles',
+        type : 'basic',
+        link : '/admin/roles'
+      },
+      {
+        id   : 'admin.permissions',
+        title: 'Permissions',
+        type : 'basic',
+        link : '/admin/permissions'
+      },
+    ]
+
   }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

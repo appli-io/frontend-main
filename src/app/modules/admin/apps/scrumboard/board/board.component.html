@@ -40,7 +40,7 @@
       class="flex"
     >
       <!-- Group all cdkDropList's after this point together so that the cards can be transferred between lists -->
-      <div cdkDropListGroup class="flex items-start">
+      <div cdkDropListGroup class="flex items-start space-x-8">
         <!-- List -->
         @for (list of board.lists; track trackByFn($index, list)) {
           <div
