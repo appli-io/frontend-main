@@ -7,9 +7,7 @@ import { Api }         from '@core/interfaces/api';
 import { Page }        from '@core/interfaces/page';
 import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class UsersService {
   private _companyMembers: BehaviorSubject<CompanyUser[]> = new BehaviorSubject(null);
 
