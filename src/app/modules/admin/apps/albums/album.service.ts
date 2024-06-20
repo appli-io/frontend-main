@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map } from 'rxjs';
 
 import { Api }    from '@core/interfaces/api';
-import { IAlbum } from '@modules/admin/media/albums/interfaces/album.interface';
+import { IAlbum } from '@modules/admin/apps/albums/interfaces/album.interface';
 
 @Injectable({
   providedIn: 'root'

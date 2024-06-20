@@ -28,7 +28,7 @@ import {
   RouterLink,
   RouterOutlet
 }                                                                       from '@angular/router';
-import { FuseMediaWatcherService }                                      from '../../../../../../@fuse/services/media-watcher';
+import { FuseMediaWatcherService }                                      from '../../../../../../../@fuse/services/media-watcher';
 import { ContactsService }                                              from '../../contacts.service';
 import {
   Contact,

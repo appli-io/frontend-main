@@ -1,6 +1,6 @@
 import { IImage }      from '@modules/admin/news/domain/interfaces/news.interface';
 import { IUser }       from '@modules/admin/profile/interfaces/user.interface';
-import { IAlbumImage } from '@modules/admin/media/albums/interfaces/album-image.interface';
+import { IAlbumImage } from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
 export interface IAlbum {
   id: string;

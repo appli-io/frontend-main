@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@an
 
 import { catchError, throwError } from 'rxjs';
 
-import { ContactsDetailsComponent } from '@modules/admin/contacts/pages/details/details.component';
-import { ContactsListComponent }    from '@modules/admin/contacts/pages/list/list.component';
+import { ContactsDetailsComponent } from '@modules/admin/apps/contacts/pages/details/details.component';
+import { ContactsListComponent }    from '@modules/admin/apps/contacts/pages/list/list.component';
 import { ContactsComponent }        from './contacts.component';
 import { ContactsService }          from './contacts.service';
 

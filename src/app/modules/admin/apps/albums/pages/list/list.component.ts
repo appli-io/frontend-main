@@ -7,16 +7,16 @@ import { MatIcon }                                                       from '@
 import { TranslocoDirective }         from '@ngneat/transloco';
 import { BehaviorSubject, takeUntil } from 'rxjs';
 
-import { FuseCardComponent }       from '@fuse/components/card';
-import { FuseMasonryComponent }    from '@fuse/components/masonry';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { FuseCardComponent }       from '../../../../../../../@fuse/components/card';
+import { FuseMasonryComponent }    from '../../../../../../../@fuse/components/masonry';
+import { FuseMediaWatcherService } from '../../../../../../../@fuse/services/media-watcher';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
 import { SubComponent }            from '@layout/components/sub-component/sub-component';
 import { trackByFn }               from '@libs/ui/utils/utils';
 import { HlmSkeletonComponent }    from '@libs/ui/ui-skeleton-helm/src';
-import { IAlbum }                  from '@modules/admin/media/albums/interfaces/album.interface';
-import { AlbumCardComponent }      from '@modules/admin/media/albums/components/album-card/album-card.component';
-import { AlbumService }            from '@modules/admin/media/albums/album.service';
+import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
+import { AlbumCardComponent }      from '@modules/admin/apps/albums/components/album-card/album-card.component';
+import { AlbumService }            from '@modules/admin/apps/albums/album.service';
 
 @Component({
   selector   : 'app-albums-list',

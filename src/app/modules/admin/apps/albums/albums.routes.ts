@@ -1,5 +1,5 @@
 import { Routes }        from '@angular/router';
-import { albumResolver } from '@modules/admin/media/albums/resolvers/album.resolver';
+import { albumResolver } from '@modules/admin/apps/albums/resolvers/album.resolver';
 
 export default [
   {

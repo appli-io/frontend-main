@@ -87,13 +87,12 @@ export const appRoutes: Route[] = [
     children   : [
       {path: 'home', loadChildren: () => import('app/modules/admin/home/home.routes')},
       {path: 'profile', loadChildren: () => import('app/modules/admin/profile/profile.routes')},
-      {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
       {path: 'news', loadChildren: () => import('app/modules/admin/news/news.routes')},
       {
         path    : 'apps',
         children: [
-          {path: 'contacts', loadChildren: () => import('app/modules/admin/contacts/contacts.routes')},
-          {path: 'albums', loadChildren: () => import('app/modules/admin/media/albums/albums.routes')},
+          {path: 'contacts', loadChildren: () => import('@modules/admin/apps/contacts/contacts.routes')},
+          {path: 'albums', loadChildren: () => import('@modules/admin/apps/albums/albums.routes')},
           {path: 'scrumboards', loadChildren: () => import('app/modules/admin/apps/scrumboard/scrumboard.routes')},
           {path: '', redirectTo: '/home', pathMatch: 'full'}
         ]
@@ -101,14 +100,8 @@ export const appRoutes: Route[] = [
       {
         path    : 'admin',
         children: [
-          {
-            path        : 'users',
-            loadChildren: () => import('app/modules/admin/admin/users/users.routes')
-          },
-          {
-            path        : 'events',
-            loadChildren: () => import('app/modules/admin/admin/events/events.routes')
-          }
+          {path: 'users', loadChildren: () => import('app/modules/admin/admin/users/users.routes')},
+          {path: 'events', loadChildren: () => import('app/modules/admin/admin/events/events.routes')}
         ]
       }
     ]

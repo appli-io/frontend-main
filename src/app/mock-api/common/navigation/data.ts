@@ -21,40 +21,52 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'allNews',
         title: 'All News',
         type : 'basic',
-        link : '/news/all'
+        link: '/news/all',
+        icon: 'heroicons_outline:newspaper'
       },
       {
         id   : 'newsByCategory',
         title: 'News By Category',
         type : 'basic',
-        link : '/news/category'
+        link: '/news/category',
+        icon: 'heroicons_outline:document-text'
       },
       {
         id   : 'bio-bio',
         title: 'Radio Bío Bío',
         type : 'basic',
-        link : '/news/bio-bio'
+        link: '/news/bio-bio',
+        icon: 'heroicons_outline:microphone'
       },
     ]
   },
   {
-    id      : 'apps',
+    id      : 'apps.title',
     title   : 'Applications',
     type    : 'collapsable',
     icon    : 'heroicons_outline:squares-2x2',
     link    : '/apps',
     children: [
       {
-        id   : 'gallery',
+        id  : 'apps.gallery',
         title: 'Gallery',
         type : 'basic',
-        link: '/apps/albums'
+        link: '/apps/albums',
+        icon: 'heroicons_outline:photo'
       },
       {
-        id   : 'scrumboards',
+        id   : 'apps.contacts',
+        title: 'Contacts',
+        type : 'basic',
+        link : '/apps/contacts',
+        icon : 'heroicons_outline:user-group'
+      },
+      {
+        id  : 'apps.scrumboards',
         title: 'Scrum boards',
         type : 'basic',
-        link : '/apps/scrumboards'
+        link: '/apps/scrumboards',
+        icon: 'heroicons_outline:queue-list'
       }
     ]
   },
@@ -70,28 +82,31 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'admin.users',
         title: 'Users',
         type : 'basic',
-        link : '/admin/users'
+        link: '/admin/users',
+        icon: 'heroicons_outline:user-group'
       },
       {
         id   : 'admin.events',
         title: 'Events',
         type : 'basic',
-        link : '/admin/events'
+        link: '/admin/events',
+        icon: 'heroicons_outline:calendar'
       },
       {
         id   : 'admin.roles',
         title: 'Roles',
         type : 'basic',
-        link : '/admin/roles'
+        link: '/admin/roles',
+        icon: 'heroicons_outline:key'
       },
       {
         id   : 'admin.permissions',
         title: 'Permissions',
         type : 'basic',
-        link : '/admin/permissions'
+        link: '/admin/permissions',
+        icon: 'heroicons_outline:shield-check'
       },
     ]
-
   }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

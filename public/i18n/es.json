@@ -28,15 +28,13 @@
     "allNews" : "Todas las noticias",
     "newsByCategory" : "Noticias por categoría",
     "bio-bio" : "Radio Bío Bío",
-    "apps" : "Aplicaciones",
-    "multimedia" : "Multimedia",
-    "gallery" : "Galería",
-    "scrumboards" : "Tablero de scrum",
+    "apps" : {
+      "title" : "Aplicaciones",
+      "contacts" : "Contactos",
+      "gallery" : "Galería",
+      "scrumboards" : "Tablero de scrum"
+    },
     "videos" : "Videos",
-    "about" : "Acerca de",
-    "contact" : "Contacto",
-    "login" : "Iniciar sesión",
-    "register" : "Registrarse",
     "admin" : {
       "title" : "Administrador",
       "users" : "Usuarios",
