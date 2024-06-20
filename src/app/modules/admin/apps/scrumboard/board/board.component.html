@@ -40,13 +40,12 @@
       class="flex"
     >
       <!-- Group all cdkDropList's after this point together so that the cards can be transferred between lists -->
-      <div cdkDropListGroup class="flex items-start space-x-8">
+      <div cdkDropListGroup class="flex items-start space-x-4">
         <!-- List -->
         @for (list of board.lists; track trackByFn($index, list)) {
           <div
             class="bg-default w-72 flex-0 rounded-2xl p-2"
             cdkDrag
-            [cdkDragLockAxis]="'x'"
           >
             <div
               class="flex items-center justify-between"
@@ -73,34 +72,15 @@
                   mat-icon-button
                   [matMenuTriggerFor]="listMenu"
                 >
-                  <mat-icon
-                    class="icon-size-5"
-                    [svgIcon]="
-                                            'heroicons_solid:ellipsis-vertical'
-                                        "
-                  ></mat-icon>
+                  <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:ellipsis-vertical'"></mat-icon>
                 </button>
                 <mat-menu #listMenu="matMenu">
-                  <button
-                    mat-menu-item
-                    (click)="renameList(listTitleInput)"
-                  >
-                    <mat-icon
-                      class="icon-size-5"
-                      [svgIcon]="
-                                                'heroicons_solid:pencil-square'
-                                            "
-                    ></mat-icon>
+                  <button mat-menu-item (click)="renameList(listTitleInput)">
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
                     Rename list
                   </button>
-                  <button
-                    mat-menu-item
-                    (click)="deleteList(list.id)"
-                  >
-                    <mat-icon
-                      class="icon-size-5"
-                      [svgIcon]="'heroicons_solid:trash'"
-                    ></mat-icon>
+                  <button mat-menu-item (click)="deleteList(list.id)">
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:trash'"></mat-icon>
                     Delete list
                   </button>
                 </mat-menu>
@@ -110,80 +90,55 @@
             <!-- Cards -->
             <div class="mt-2 rounded-xl bg-gray-400 bg-opacity-12 dark:border dark:bg-transparent">
               <div
-                [id]="list.id"
-                class="p-3 pb-0"
+                class="p-3 pb-0 min-h-22"
                 cdkDropList
+                [id]="list.id"
                 [cdkDropListData]="list.cards"
                 (cdkDropListDropped)="cardDropped($event)"
               >
                 <!-- Card -->
-                @for (card of list.cards;
-                  track trackByFn($index, card)) {
-                  <a
-                    class="bg-card mb-3 flex flex-col items-start space-y-3 overflow-hidden rounded-lg p-5 shadow"
-                    [routerLink]="['card', card.id]"
-                    cdkDrag
-                  >
-                    <!-- Cover image -->
-                    @if (card.coverImage) {
-                      <div class="-mx-5 -mt-5 mb-2">
-                        <img
-                          class="w-full object-cover"
-                          [src]="card.coverImage"
-                        />
-                      </div>
-                    }
-                    <!-- Title -->
-                    <div
-                      class="text-lg font-medium leading-5"
+                @for (card of list.cards; track trackByFn($index, card)) {
+                  <div cdkDrag>
+                    <a
+                      class="bg-card mb-3 flex flex-col items-start space-y-3 overflow-hidden rounded-lg p-5 shadow"
+                      [routerLink]="['card', card.id]"
                     >
-                      {{ card.title }}
-                    </div>
-                    <!-- Labels -->
-                    @if (card.labels.length) {
-                      <div>
+                      <!-- Cover image -->
+                      @if (card.coverImage) {
+                        <div class="-mx-5 -mt-5 mb-2">
+                          <img class="w-full object-cover" [src]="card.coverImage"/>
+                        </div>
+                      }
+                      <!-- Title -->
+                      <div class="text-lg font-medium leading-5">
+                        {{ card.title }}
+                      </div>
+                      <!-- Labels -->
+                      @if (card.labels.length) {
+                        <div>
+                          <div class="-mx-1 -mb-2 flex flex-wrap">
+                            @for (label of card.labels; track trackByFn($index, label)) {
+                              <div class="mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                {{ label.title }}
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      }
+                      <!-- Due date -->
+                      @if (card.dueDate) {
                         <div
-                          class="-mx-1 -mb-2 flex flex-wrap"
+                          class="text-secondary flex items-center rounded text-sm font-medium leading-5"
+                          [ngClass]="{'text-red-600': isOverdue( card.dueDate ), }"
                         >
-                          @for (label of card.labels;
-                            track trackByFn(
-                              $index,
-                              label
-                            )) {
-                            <div
-                              class="mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300"
-                            >
-                              {{ label.title }}
-                            </div>
-                          }
+                          <mat-icon class="text-current icon-size-4" [svgIcon]="'heroicons_outline:clock'"></mat-icon>
+                          <div class="ml-1">
+                            {{ card.dueDate | date: 'longDate' }}
+                          </div>
                         </div>
-                      </div>
-                    }
-                    <!-- Due date -->
-                    @if (card.dueDate) {
-                      <div
-                        class="text-secondary flex items-center rounded text-sm font-medium leading-5"
-                        [ngClass]="{
-                                                    'text-red-600': isOverdue(
-                                                        card.dueDate
-                                                    ),
-                                                }"
-                      >
-                        <mat-icon
-                          class="text-current icon-size-4"
-                          [svgIcon]="
-                                                        'heroicons_outline:clock'
-                                                    "
-                        ></mat-icon>
-                        <div class="ml-1">
-                          {{
-                            card.dueDate
-                              | date: 'longDate'
-                          }}
-                        </div>
-                      </div>
-                    }
-                  </a>
+                      }
+                    </a>
+                  </div>
                 }
               </div>
 
