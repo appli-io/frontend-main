@@ -43,13 +43,6 @@ export class ListComponent extends SubComponent implements OnInit {
     this._fuseMediaWatcherService.onMediaChange$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(({matchingAliases}) => {
-        console.log(matchingAliases, this.columns);
-
-        // Set the masonry columns
-        //
-        // This if block structured in a way so that only the
-        // biggest matching alias will be used to set the column
-        // count.
         if (matchingAliases.includes('xl')) {
           this.columns = 3;
         } else if (matchingAliases.includes('lg')) {

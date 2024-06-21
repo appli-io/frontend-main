@@ -49,7 +49,6 @@ export class HomeComponent implements AfterViewInit {
   protected readonly relativeTime = relativeTime;
 
   constructor(private readonly route: ActivatedRoute) {
-    console.log(route.snapshot.data);
     this.user = route.snapshot.data.user;
     this.highlightedNews = route.snapshot.data.highlightedNews;
     this.economicIndicators = route.snapshot.data.economicIndicators;

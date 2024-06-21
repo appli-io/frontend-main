@@ -6,12 +6,11 @@ import { Storage }    from '@ionic/storage-angular';
 })
 export class StorageService {
   private storage: Storage | null = null;
-
-  private initPromise: Promise<void>;
+  private readonly initPromise: Promise<void>;
 
   constructor(private ionicStorage: Storage) {
     if (this.storage === null)
-      this.initPromise = this.init().then(() => console.log('Storage initialized'));
+      this.initPromise = this.init().then();
   }
 
   async init() {

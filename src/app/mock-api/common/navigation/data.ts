@@ -93,6 +93,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:calendar'
       },
       {
+        id   : 'admin.albums',
+        title: 'Albums',
+        type : 'basic',
+        link : '/admin/albums',
+        icon : 'heroicons_outline:photo'
+      },
+      {
         id   : 'admin.roles',
         title: 'Roles',
         type : 'basic',

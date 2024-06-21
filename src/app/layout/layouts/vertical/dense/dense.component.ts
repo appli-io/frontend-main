@@ -16,13 +16,14 @@ import { SearchComponent }                                         from 'app/lay
 import { ShortcutsComponent }                                      from 'app/layout/components/shortcuts/shortcuts.component';
 import { UserComponent }                                           from 'app/layout/components/user/user.component';
 import { Subject, takeUntil }                                      from 'rxjs';
+import { CompanySelectorComponent }                                from '@layout/components/company-selector/company-selector.component';
 
 @Component({
   selector   : 'dense-layout',
   templateUrl: './dense.component.html',
   encapsulation: ViewEncapsulation.None,
   standalone : true,
-  imports    : [
+  imports: [
     FuseLoadingBarComponent,
     FuseVerticalNavigationComponent,
     MatButtonModule,
@@ -36,6 +37,7 @@ import { Subject, takeUntil }                                      from 'rxjs';
     UserComponent,
     RouterOutlet,
     QuickChatComponent,
+    CompanySelectorComponent,
   ],
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy {

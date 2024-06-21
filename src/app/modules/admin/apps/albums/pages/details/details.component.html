@@ -1,12 +1,11 @@
 <lightgallery #lightGallery [settings]="settings"></lightgallery>
-<div *transloco="let t; read: 'albums.detail'" class="flex flex-col flex-auto min-w-0">
-
+<div *transloco="let t; read: 'albums.detail'" class="flex flex-col flex-auto min-w-0 h-full">
   <!-- Header -->
   <div
     [class.bg-card]="!album.cover.fileUrl"
     [class.bg-overlay]="album.cover?.fileUrl"
     [style.background-image]="album.cover?.fileUrl? 'url(' + album.cover.fileUrl + ')' : ''"
-    class="bg-cover bg-center resize-y overflow-auto min-h-[250px]"
+    class="bg-cover bg-center"
   >
     <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
       <div class="flex-1 min-w-0">
@@ -43,14 +42,16 @@
 
           <mat-divider class="my-5"></mat-divider>
 
-          <div class="flex flex-row items-center">
-            <span>{{ t('created-by') }}: </span>
-            <img
-              [src]="album.createdBy?.avatar?.fileUrl"
-              alt="Card cover image"
-              class="w-8 h-8 mx-3 rounded-full">
-            <strong [innerText]="album.createdBy.name"></strong>
-            <span class="ml-4">{{ t('created-at') }}: <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
+          <div class="flex flex-col md:flex-row items-start md:items-center">
+            <div class="flex flex-row items-center">
+              <span>{{ t('created-by') }}: </span>
+              <img
+                [src]="album.createdBy?.avatar?.fileUrl"
+                alt="Card cover image"
+                class="w-8 h-8 mx-3 rounded-full">
+              <strong [innerText]="album.createdBy.name"></strong>
+            </div>
+            <span class="ml-0 md:ml-4">{{ t('created-at') }}: <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
           </div>
         </div>
       </div>
@@ -78,7 +79,7 @@
   </div>
 
   <!-- Content -->
-  <div class="shadow bg-default dark:bg-transparent flex flex-col justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+  <div class="bg-card dark:bg-transparent flex flex-col justify-center w-full h-full max-w-5xl mx-auto p-6 sm:p-8">
     <h2 class="text-2xl font-bold">{{ t('photos') }}</h2>
     @if (album.images) {
       @if (album.images.length > 0) {
@@ -90,7 +91,7 @@
           class="mt-4"
         ></fuse-masonry>
       } @else {
-        <div class="flex flex-auto flex-col items-center bg-gray-100 dark:bg-transparent">
+        <div class="flex flex-auto flex-col items-center dark:bg-transparent h-full justify-center items-center">
           <img src="images/undraw/empty.svg" alt="empty content" class="max-w-xs">
           <div class="mt-6 text-lg text-center font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
         </div>

@@ -39,6 +39,7 @@
       "title" : "Administrador",
       "users" : "Usuarios",
       "events" : "Eventos",
+      "albums" : "Álbumes",
       "roles" : "Roles",
       "permissions" : "Permisos",
       "settings" : "Configuración"
@@ -132,6 +133,11 @@
       "title" : "Usuarios",
       "subtitle" : "Administra los Usuarios de la Plataforma",
       "description" : "Administra los usuarios de la plataforma, asigna roles y permisos, y mantén actualizada la información de contacto. Asegúrate de que cada miembro de la organización tenga acceso a las aplicaciones y recursos necesarios para colaborar y contribuir al éxito de la empresa."
+    },
+    "albums" : {
+      "title" : "Álbumes",
+      "subtitle" : "Administra los Álbumes de la Plataforma",
+      "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios."
     },
     "events" : {
       "title" : "Eventos",
