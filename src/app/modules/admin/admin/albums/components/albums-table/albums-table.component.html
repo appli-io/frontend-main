@@ -25,7 +25,7 @@
       <td *matCellDef="let album" mat-cell>
         @if (album.cover?.fileUrl && album.coverThumbnail?.fileUrl) {
           <img
-            class="h-32 w-48 pr-6 py-4 object-cover"
+            class="h-26 w-36 my-2 object-cover drop-shadow hover:drop-shadow-lg"
             [src]="album.coverThumbnail.fileUrl"
             [alt]="album.name"
           />
@@ -86,14 +86,14 @@
       </th>
       <td *matCellDef="let album" mat-cell>
         <div class="flex items-center">
-          <a (click)="editAlbum.emit(album)" [routerLink]="['/apps/albums', album.id]" mat-icon-button>
-            <mat-icon>visibility</mat-icon>
+          <a (click)="editAlbum.emit(album)" [matTooltip]="'Ver'" [routerLink]="['/apps/albums', album.id]" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
           </a>
-          <button (click)="editAlbum.emit(album)" mat-icon-button>
-            <mat-icon>edit</mat-icon>
+          <button (click)="editAlbum.emit(album)" [matTooltip]="'Editar'" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
           </button>
-          <button (click)="deleteAlbum.emit(album)" mat-icon-button>
-            <mat-icon>delete</mat-icon>
+          <button (click)="deleteAlbum.emit(album)" [matTooltip]="'Eliminar'" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
           </button>
         </div>
       </td>
@@ -106,8 +106,8 @@
       </td>
     </ng-container>
 
-    <tr *matHeaderRowDef="albumsTableColumns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row h-16" mat-row></tr>
+    <tr *matHeaderRowDef="albumsTableColumns" class="scale-95" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row py-8 mt-4 scale-95 hover:scale-100 hover:shadow transition-all duration-300 ease-in-out" mat-row></tr>
     <tr *matFooterRowDef="['recentOrdersTableFooter']" class="h-16 border-0" mat-footer-row></tr>
   </table>
 </div>

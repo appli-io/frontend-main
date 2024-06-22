@@ -1,18 +1,24 @@
-import { Component }               from '@angular/core';
+import { Component } from '@angular/core';
+import { MatAnchor } from '@angular/material/button';
+
+import { TranslocoDirective } from '@ngneat/transloco';
+
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
-import { TranslocoDirective }      from '@ngneat/transloco';
-import { AlbumsTableComponent }    from '@modules/admin/admin/albums/components/albums-table/albums-table.component';
 import { AlbumsService }           from '@modules/admin/admin/albums/albums.service';
+import { AlbumsTableComponent }    from '@modules/admin/admin/albums/components/albums-table/albums-table.component';
 import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
-import { FuseConfirmationService } from '../../../../../../../@fuse/services/confirmation';
+import { RouterLink }              from '@angular/router';
 
 @Component({
   selector   : 'app-list',
   standalone : true,
-  imports    : [
+  imports: [
     PageHeaderComponent,
     TranslocoDirective,
-    AlbumsTableComponent
+    AlbumsTableComponent,
+    MatAnchor,
+    RouterLink
   ],
   templateUrl: './list.component.html'
 })

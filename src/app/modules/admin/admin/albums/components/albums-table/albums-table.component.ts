@@ -24,11 +24,12 @@ import { Observable, Subject, takeUntil }                            from 'rxjs'
 import { IAlbum }                                                    from '@modules/admin/apps/albums/interfaces/album.interface';
 import { MatIcon }                                                   from '@angular/material/icon';
 import { RouterLink }                                                from '@angular/router';
+import { MatTooltip }                                                from '@angular/material/tooltip';
 
 @Component({
   selector   : 'albums-table',
   standalone : true,
-  imports    : [
+  imports: [
     MatHeaderRow,
     MatHeaderRowDef,
     MatRow,
@@ -51,7 +52,8 @@ import { RouterLink }                                                from '@angu
     MatIconButton,
     MatIcon,
     MatIconAnchor,
-    RouterLink
+    RouterLink,
+    MatTooltip
   ],
   templateUrl: './albums-table.component.html'
 })

@@ -16,10 +16,14 @@ export default [
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
       },
       {
-        path: ':id',
-        // resolve: {},
-        loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
+        path         : 'new',
+        loadComponent: () => import('./pages/new/new.component').then(m => m.NewComponent)
       }
+      // {
+      //   path: ':id',
+      //   // resolve: {},
+      //   loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
+      // }
     ]
   }
 ] as Routes;
