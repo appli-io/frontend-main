@@ -14,10 +14,6 @@ export default [
           albums: () => inject(AlbumsService).getAlbums()
         },
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
-      },
-      {
-        path         : 'new',
-        loadComponent: () => import('./pages/new/new.component').then(m => m.NewComponent)
       }
       // {
       //   path: ':id',

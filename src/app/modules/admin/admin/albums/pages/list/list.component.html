@@ -11,14 +11,14 @@
       <h2 class="flex-1 font-bold text-gray-700 text-xl">{{ t('title') }}</h2>
 
       <!-- New album button -->
-      <a
-        [routerLink]="['new']"
+      <button
         class="flex-1 md:flex-0 font-bold py-2 px-4 rounded"
         color="primary"
         mat-button
+        (click)="openNewAlbumDialog()"
       >
         + Add New Album
-      </a>
+      </button>
 
     </div>
     <albums-table

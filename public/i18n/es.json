@@ -126,7 +126,14 @@
     "albums" : {
       "title" : "Álbumes",
       "subtitle" : "Administra los Álbumes de la Plataforma",
-      "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios."
+      "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios.",
+      "new" : {
+        "title" : "Nuevo Álbum",
+        "name" : "Nombre",
+        "description" : "Descripción",
+        "cover" : "Portada",
+        "create" : "Crear"
+      }
     },
     "events" : {
       "title" : "Eventos",

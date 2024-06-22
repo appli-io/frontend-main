@@ -170,6 +170,16 @@ swiper-slide {
   }
 }
 
+.dialog-default-padding {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 1.5rem !important;
+  }
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 0;
+}
+
 // cdk drag drop custom styles
 .cdk-drag {
   &.cdk-drag-preview {

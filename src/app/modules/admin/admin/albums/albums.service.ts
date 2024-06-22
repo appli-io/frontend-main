@@ -25,4 +25,18 @@ export class AlbumsService {
         tap(albums => this._albums.next(albums))
       );
   }
+
+  public postAlbum(album: { name: string, description: string, cover: File[] }): Observable<IAlbum> {
+    const formData = new FormData();
+
+    formData.append('name', album.name);
+    formData.append('description', album.description);
+    formData.append('cover', album.cover[0], album.cover[0].name);
+
+    return this._httpClient.post<Api<IAlbum>>('api/albums', formData)
+      .pipe(
+        map(apiResponse => apiResponse.content),
+        tap(newAlbum => this._albums.next([ newAlbum, ...this._albums.value ]))
+      );
+  }
 }

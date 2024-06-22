@@ -1,13 +1,13 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CalendarCommonModule, CalendarEvent, CalendarMonthModule } from 'angular-calendar';
-import { DatePipe, NgIf } from '@angular/common';
-import { TranslocoDirective } from '@ngneat/transloco';
-import VanillaCalendar from 'vanilla-calendar-pro';
-import { FormatDateString, IOptions, IVanillaCalendar } from 'vanilla-calendar-pro/types';
-import { MatDialog } from '@angular/material/dialog';
-import { EventModalComponent } from '@modules/admin/home/entry-components/event-modal/event-modal.component';
-import { EventCardComponent } from '@modules/admin/home/components/event-card/event-card.component';
-import { CalendarService } from './calendar.service';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
+import { CalendarCommonModule, CalendarEvent, CalendarMonthModule }       from 'angular-calendar';
+import { DatePipe, NgIf }                                                 from '@angular/common';
+import { TranslocoDirective }                                             from '@ngneat/transloco';
+import VanillaCalendar                                                    from 'vanilla-calendar-pro';
+import { FormatDateString, IOptions, IVanillaCalendar }                   from 'vanilla-calendar-pro/types';
+import { MatDialog }                                                      from '@angular/material/dialog';
+import { EventModalComponent }                                            from '@modules/admin/home/entry-components/event-modal/event-modal.component';
+import { EventCardComponent }                                             from '@modules/admin/home/components/event-card/event-card.component';
+import { CalendarService }                                                from './calendar.service';
 
 @Component({
   selector: 'home-calendar',
@@ -70,7 +70,7 @@ export class CalendarComponent implements AfterViewInit {
   openEventDetail(event: CalendarEvent): void {
     this._matDialog.open(EventModalComponent, {
       autoFocus: false,
-      panelClass: ['dialog-mobile-fullscreen'],
+      panelClass: [ 'dialog-mobile-fullscreen', 'dialog-default-padding' ],
       closeOnNavigation: true,
       data: { event },
     });
