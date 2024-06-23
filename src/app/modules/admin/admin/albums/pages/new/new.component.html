@@ -11,7 +11,7 @@
   </div>
 
   <!-- Content -->
-  <form [formGroup]="albumForm" class="flex-1 flex flex-auto flex-col overflow-y-auto p-6 sm:p-8 h-full">
+  <form [formGroup]="albumForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
     <!-- Name -->
     <mat-form-field>
       <mat-label [innerText]="t('name')"></mat-label>
@@ -28,10 +28,10 @@
     <mat-form-field>
       <mat-label [innerText]="t('cover')"></mat-label>
       <ngx-mat-dropzone>
-        <input fileInput formControlName="cover" multiple type="file"/>
+        <input fileInput formControlName="cover" type="file"/>
 
-        @for (file of $any(albumForm.get('cover').value); track file.name) {
-          <mat-chip-row (removed)="remove(file)">
+        @if ($any(albumForm.get('cover').value); as file) {
+          <mat-chip-row (removed)="remove()">
             {{ file.name }}
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>
@@ -45,13 +45,18 @@
       <mat-icon matSuffix>upload_file</mat-icon>
     </mat-form-field>
     <h2 class="text-md font-medium">Vista previa de la portada</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      @for (file of $any(albumForm.get('cover').value); track file.name) {
+    <div class="grid grid-cols-1">
+      @if ($any(albumForm.get('cover').value); as file) {
         <image-upload-preview
           [file]="file"
-          (remove)="removeFile($event)"
-          (upload)="uploadFile($event)">
+          (remove)="remove()">
         </image-upload-preview>
+      } @else {
+        <div class="w-full flex justify-center pt-4">
+          <mat-card class="w-48 h-36 flex items-center justify-center">
+            <mat-icon class="text-6xl">image</mat-icon>
+          </mat-card>
+        </div>
       }
     </div>
   </form>

@@ -10,7 +10,7 @@
   </div>
   @if (enableUpload) {
     @if (!isUploading) {
-      <button class="absolute bottom-0 top-1/2 left-1/2 bg-accent/" style="transform: translate(-50%, -50%)" mat-icon-button (click)="uploadImage()">
+      <button class="absolute bottom-0 top-1/2 left-1/2 bg-accent" style="transform: translate(-50%, -50%)" mat-icon-button (click)="uploadImage()">
         <mat-icon svgIcon="heroicons_outline:cloud-arrow-up" class="text-white"></mat-icon>
       </button>
     } @else {
