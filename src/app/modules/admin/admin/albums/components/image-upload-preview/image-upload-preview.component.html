@@ -1,0 +1,20 @@
+<div class="relative">
+  <img [alt]="file.name" [src]="imageSrc" class="drop-shadow mt-2 rounded w-full max-h-48 object-contain"/>
+  <button (click)="removeImage()" class="absolute top-0 right-0" mat-icon-button>
+    <mat-icon svgIcon="heroicons_outline:minus-circle"></mat-icon>
+  </button>
+  <div class="absolute bottom-0 left-0 w-full">
+    @if (uploadProgress !== null) {
+      <mat-progress-bar [value]="uploadProgress" mode="determinate"></mat-progress-bar>
+    }
+  </div>
+  @if (enableUpload) {
+    @if (!isUploading) {
+      <button class="absolute bottom-0 top-1/2 left-1/2 bg-accent/" style="transform: translate(-50%, -50%)" mat-icon-button (click)="uploadImage()">
+        <mat-icon svgIcon="heroicons_outline:cloud-arrow-up" class="text-white"></mat-icon>
+      </button>
+    } @else {
+      <mat-spinner class="absolute bottom-0 top-1/2 left-1/2" style="transform: translate(-50%, -50%)" diameter="24"></mat-spinner>
+    }
+  }
+</div>

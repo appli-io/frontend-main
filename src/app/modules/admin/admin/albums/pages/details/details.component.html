@@ -1,1 +1,78 @@
-<p>details works!</p>
+<div *transloco="let t; read: 'admin.albums.detail'" class="flex flex-col flex-auto min-w-0 h-full">
+  <div
+    [class.bg-card]="!album.cover.fileUrl"
+    [class.bg-overlay]="album.cover?.fileUrl"
+    [style.background-image]="album.cover?.fileUrl? 'url(' + album.cover.fileUrl + ')' : ''"
+    class="bg-cover bg-center"
+  >
+    <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
+      <div class="flex-1 min-w-0">
+        <!-- Breadcrumbs -->
+        <div>
+          <div class="hidden sm:flex flex-wrap items-center font-medium">
+            <a [routerLink]="'../..'" class="whitespace-nowrap text-primary-500">{{ 'admin.albums.title' | transloco }}</a>
+            <div class="flex items-center ml-1 whitespace-nowrap">
+              <mat-icon
+                [svgIcon]="'heroicons_mini:chevron-right'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span [innerHtml]="album.name" class="ml-1 text-secondary"></span>
+            </div>
+          </div>
+          <div class="flex sm:hidden">
+            <a
+              [routerLink]="'./..'"
+              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+              <mat-icon
+                [svgIcon]="'heroicons_solid:chevron-left'"
+                class="icon-size-5 text-secondary"></mat-icon>
+              <span class="ml-1">Back</span>
+            </a>
+          </div>
+        </div>
+        <!-- Title -->
+        <div class="mt-2">
+          <h2 [innerHtml]="album.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+          @if (album.description) {
+            <p [innerHtml]="album.description" class="mt-4 text-justify"></p>
+          }
+
+          <mat-divider class="my-5"></mat-divider>
+
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-x-4 gap-y-2">
+            <div class="flex-1 flex flex-row items-center gap-x-2">
+              <img
+                [src]="album.createdBy?.avatar?.fileUrl"
+                alt="Card cover image"
+                class="w-8 h-8 rounded-full object-cover">
+              <strong [innerText]="album.createdBy.name"></strong>
+            </div>
+            <div class="flex-0 flex flex-row md:flex-row-reverse items-center gap-x-2">
+              <mat-icon class="w-8 h-8 bg-primary rounded-full p-2 text-white" svgIcon="heroicons_outline:calendar"></mat-icon>
+              <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Actions -->
+      <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
+        <button (click)="editAlbum()" [matTooltip]="t('edit')" mat-stroked-button matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:cursor-arrow-rays'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">Ver portada</span>
+        </button>
+        <button
+          [color]="'primary'"
+          class=""
+          mat-flat-button
+          matTooltip="PENDING_NAME"
+          matTooltipPosition="left">
+          <mat-icon
+            [svgIcon]="'heroicons_mini:link'"
+            class="icon-size-4"></mat-icon>
+          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

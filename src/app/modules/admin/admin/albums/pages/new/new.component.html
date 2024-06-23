@@ -21,7 +21,7 @@
     <!-- Description -->
     <mat-form-field>
       <mat-label [innerText]="t('description')">Description</mat-label>
-      <textarea formControlName="description" matInput></textarea>
+      <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
     </mat-form-field>
 
     <!-- Cover (File upload) -->
@@ -39,11 +39,21 @@
           </mat-chip-row>
         }
 
-        <mat-icon matSuffix>cloud_upload</mat-icon>
+        <mat-icon matSuffix>paper-clip</mat-icon>
 
       </ngx-mat-dropzone>
-      <mat-icon matSuffix>cloud_upload</mat-icon>
+      <mat-icon matSuffix>upload_file</mat-icon>
     </mat-form-field>
+    <h2 class="text-md font-medium">Vista previa de la portada</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      @for (file of $any(albumForm.get('cover').value); track file.name) {
+        <image-upload-preview
+          [file]="file"
+          (remove)="removeFile($event)"
+          (upload)="uploadFile($event)">
+        </image-upload-preview>
+      }
+    </div>
   </form>
 
   <!-- Actions -->

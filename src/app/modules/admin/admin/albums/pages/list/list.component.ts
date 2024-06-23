@@ -1,7 +1,7 @@
-import { Component }            from '@angular/core';
-import { MatAnchor, MatButton } from '@angular/material/button';
+import { Component }                           from '@angular/core';
+import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
 
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
@@ -11,6 +11,8 @@ import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/a
 import { RouterLink }              from '@angular/router';
 import { MatDialog }               from '@angular/material/dialog';
 import { NewComponent }            from '@modules/admin/admin/albums/pages/new/new.component';
+import { MatIcon }                 from '@angular/material/icon';
+import { MatTooltip }              from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-list',
@@ -21,7 +23,11 @@ import { NewComponent }            from '@modules/admin/admin/albums/pages/new/n
     AlbumsTableComponent,
     MatAnchor,
     RouterLink,
-    MatButton
+    MatButton,
+    MatIconAnchor,
+    MatIcon,
+    MatTooltip,
+    TranslocoPipe
   ],
   templateUrl: './list.component.html'
 })

@@ -25,6 +25,7 @@ import { IAlbum }                                                    from '@modu
 import { MatIcon }                                                   from '@angular/material/icon';
 import { RouterLink }                                                from '@angular/router';
 import { MatTooltip }                                                from '@angular/material/tooltip';
+import { TranslocoDirective }                                        from '@ngneat/transloco';
 
 @Component({
   selector   : 'albums-table',
@@ -53,7 +54,8 @@ import { MatTooltip }                                                from '@angu
     MatIcon,
     MatIconAnchor,
     RouterLink,
-    MatTooltip
+    MatTooltip,
+    TranslocoDirective
   ],
   templateUrl: './albums-table.component.html'
 })

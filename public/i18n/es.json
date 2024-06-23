@@ -124,9 +124,23 @@
       "description" : "Administra los usuarios de la plataforma, asigna roles y permisos, y mantén actualizada la información de contacto. Asegúrate de que cada miembro de la organización tenga acceso a las aplicaciones y recursos necesarios para colaborar y contribuir al éxito de la empresa."
     },
     "albums" : {
-      "title" : "Álbumes",
+      "title" : "Gestor de Álbumes",
       "subtitle" : "Administra los Álbumes de la Plataforma",
       "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios.",
+      "table" : {
+        "id" : "ID",
+        "cover" : "Portada",
+        "name" : "Nombre",
+        "image-count" : "Cantidad de Imágenes",
+        "created-at" : "Creado el",
+        "views" : "Vistas",
+        "actions" : "Acciones",
+        "view" : "Ver",
+        "edit" : "Editar",
+        "delete" : "Eliminar",
+        "add-images" : "Agregar Imágenes",
+        "no-content" : "No hay álbumes disponibles para mostrar"
+      },
       "new" : {
         "title" : "Nuevo Álbum",
         "name" : "Nombre",
