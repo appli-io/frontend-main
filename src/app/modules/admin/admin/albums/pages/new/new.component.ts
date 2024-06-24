@@ -77,11 +77,9 @@ export class NewComponent implements OnInit {
           .pipe(takeUntil(this._matDialogRef.afterClosed()))
           .subscribe({
               next : (result) => {
-                console.log('Album created', result);
                 this._matDialogRef.close();
               },
               error: (error) => {
-                console.error('Error creating album', error);
                 this.notyf.error({
                   message : this._translocoService.translate('errors.service.message'),
                   position: {x: 'right', y: 'top'}
@@ -91,14 +89,12 @@ export class NewComponent implements OnInit {
             }
           );
       } catch (error) {
-        console.error('Error creating album', error);
         this.notyf.error({
           message : this._translocoService.translate('errors.runtime.message'),
           position: {x: 'right', y: 'top'}
         });
         this.albumForm.enable();
       }
-      // this._matDialogRef.close(this.albumForm.value);
     }
   }
 

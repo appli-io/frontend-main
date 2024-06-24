@@ -13,7 +13,7 @@ import { MatDialogRef }                                                         
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
 import { MatSelectAutocompleteComponent }                                        from '@libs/ui/mat-select-autocomplete/mat-select-autocomplete.component';
 import { ScrumboardService }                                                     from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
-import { Subject, takeUntil }                                                    from 'rxjs';
+import { Subject, take, takeUntil }                                              from 'rxjs';
 
 @Component({
   selector   : 'app-new-board',
@@ -54,7 +54,7 @@ export class NewBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.boardForm = this._formBuilder.group({
-      name       : [ '', Validators.required ],
+      title: [ '', Validators.required ],
       description: [ '', Validators.required ],
       members    : [ [] ]
     });
@@ -73,8 +73,14 @@ export class NewBoardComponent implements OnInit, OnDestroy {
 
     this.boardForm.disable();
 
-    this._scrumboardService.createBoard(this.boardForm.getRawValue())
-      .pipe(takeUntil(this._unsubscribeAll))
+    this._scrumboardService.createBoard({
+      ...this.boardForm.getRawValue(),
+      icon: 'heroicons_outline:building-office-2'
+    })
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        take(1)
+      )
       .subscribe({
         next : (result) => {
           this.notyf.success('Board created successfully');
@@ -85,7 +91,5 @@ export class NewBoardComponent implements OnInit, OnDestroy {
           this.boardForm.enable();
         }
       });
-
-    this._matDialogRef.close(this.boardForm.value);
   }
 }

@@ -90,9 +90,9 @@
             <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
           </a>
           <a [matTooltip]="t('edit')" [routerLink]="['edit', album.id]" mat-icon-button>
-            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+            <mat-icon svgIcon="heroicons_outline:pencil-square"></mat-icon>
           </a>
-          <button (click)="deleteAlbum.emit(album)" [matTooltip]="t('delete')" mat-icon-button>
+          <button (click)="deleteAlbum.emit(album)" [matTooltip]="t('delete')" color="warn" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
           </button>
         </div>

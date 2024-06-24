@@ -11,12 +11,12 @@
   </div>
 
   <!-- Content -->
-  <form [formGroup]="boardForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full space-y-2">
+  <form [formGroup]="boardForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full space-y-2" id="boardForm">
     <!-- Name -->
     <mat-form-field>
       <mat-label [innerText]="t('name')"></mat-label>
-      <input formControlName="name" matInput/>
-      <mat-error *ngIf="boardForm.get('name').hasError('required')" [innerText]="t('name-required')"></mat-error>
+      <input formControlName="title" matInput/>
+      <mat-error *ngIf="boardForm.get('title').hasError('required')" [innerText]="t('name-required')"></mat-error>
     </mat-form-field>
 
     <!-- Description -->
