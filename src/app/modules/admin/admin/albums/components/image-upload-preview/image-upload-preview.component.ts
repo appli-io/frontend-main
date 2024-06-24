@@ -3,6 +3,7 @@ import { MatIconButton }                                  from '@angular/materia
 import { MatProgressSpinner }                             from '@angular/material/progress-spinner';
 import { MatProgressBar }                                 from '@angular/material/progress-bar';
 import { MatIcon }                                        from '@angular/material/icon';
+import { fuseAnimations }                                 from '@fuse/animations';
 
 @Component({
   selector   : 'image-upload-preview',
@@ -13,7 +14,8 @@ import { MatIcon }                                        from '@angular/materia
     MatProgressBar,
     MatIcon
   ],
-  templateUrl: './image-upload-preview.component.html'
+  templateUrl: './image-upload-preview.component.html',
+  animations : fuseAnimations,
 })
 export class ImageUploadPreviewComponent implements OnInit {
   @Input() file!: File;
@@ -22,8 +24,9 @@ export class ImageUploadPreviewComponent implements OnInit {
   @Output() upload = new EventEmitter<File>();
 
   imageSrc!: string;
-  uploadProgress: number | null = null;
+  uploadProgress: number = 0;
   isUploading = false;
+  isUploaded = false;
 
   ngOnInit() {
     this.imageSrc = URL.createObjectURL(this.file);
@@ -42,6 +45,7 @@ export class ImageUploadPreviewComponent implements OnInit {
     this.uploadProgress = progress;
     if (progress === 100) {
       this.isUploading = false;
+      this.isUploaded = true;
     }
   }
 }

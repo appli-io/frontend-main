@@ -158,7 +158,8 @@
           "format" : "Formato",
           "size" : "Tamaño",
           "created-at" : "Creado el",
-          "actions" : "Acciones"
+          "actions" : "Acciones",
+          "delete" : "Eliminar"
         },
         "new" : {
           "title" : "Agregar Imágenes",
@@ -194,6 +195,10 @@
       "title" : "Error del Servicio",
       "message" : "Se ha producido un error al comunicarse con el servicio. Por favor, inténtalo de nuevo más tarde."
     }
+  },
+  "messages" : {
+    "upload-complete" : "La carga se ha completado con éxito",
+    "upload-error" : "Se ha producido un error al subir el/los archivo(s)"
   },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",

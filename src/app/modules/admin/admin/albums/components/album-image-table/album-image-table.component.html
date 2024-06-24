@@ -75,7 +75,7 @@
       </th>
       <td *matCellDef="let image" mat-cell>
         <div class="flex items-center">
-          <button (click)="deleteImage.emit(image)" [matTooltip]="t('delete')" mat-icon-button>
+          <button (click)="deleteImage.emit(image)" [matTooltip]="t('delete')" color="warn" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
           </button>
         </div>
