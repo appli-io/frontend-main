@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, map, Observable, of, switchMap, take, tap, throwError, } from 'rxjs';
 
-import { Board, Card, Label, List } from 'app/modules/admin/apps/scrumboard/scrumboard.models';
+import { Board, Card, Label, List } from '@modules/admin/apps/scrumboard/models/scrumboard.models';
 import { Api }                      from '@core/interfaces/api';
 
 @Injectable({providedIn: 'root'})

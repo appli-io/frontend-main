@@ -15,18 +15,18 @@ import { MatButtonModule }                                                      
 import { MatIconModule }                                                                                from '@angular/material/icon';
 import { MatMenuModule }                                                                                from '@angular/material/menu';
 import { ActivatedRoute, RouterLink, RouterOutlet }                                                     from '@angular/router';
-import { FuseConfirmationService }                                                                      from '@fuse/services/confirmation';
+import { FuseConfirmationService }                                                                      from '../../../../../../../@fuse/services/confirmation';
 import {
   Board,
   Card,
   List,
-}                                                                                                       from 'app/modules/admin/apps/scrumboard/scrumboard.models';
-import { ScrumboardService }                                                                            from 'app/modules/admin/apps/scrumboard/scrumboard.service';
+}                                                                                                       from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }                                                                            from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
 import { DateTime }                                                                                     from 'luxon';
 import { Subject, takeUntil }                                                                           from 'rxjs';
 import { ScrumboardBoardAddCardComponent }                                                              from './add-card/add-card.component';
 import { ScrumboardBoardAddListComponent }                                                              from './add-list/add-list.component';
-import { WebsocketService }                                                                             from '@modules/admin/apps/scrumboard/websocket.service';
+import { WebsocketService }                                                                             from '@modules/admin/apps/scrumboard/pages/services/websocket.service';
 import { takeUntilDestroyed }                                                                           from '@angular/core/rxjs-interop';
 
 @Component({

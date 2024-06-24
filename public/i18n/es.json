@@ -117,6 +117,25 @@
       "write-comment" : "Escribe un comentario..."
     }
   },
+  "scrumboard" : {
+    "boards" : {
+      "title" : "Tablero de Scrum",
+      "subtitle" : "Organiza y Gestiona tus Proyectos de Forma Efectiva",
+      "description" : "Organiza y gestiona tus proyectos de forma efectiva con el tablero de Scrum. Crea tareas, asigna responsables y establece fechas límite para mantener el progreso y la colaboración en tu equipo. Visualiza el estado de tus proyectos y tareas en tiempo real, y fomenta la transparencia y la responsabilidad en la ejecución de tus proyectos.",
+      "new" : {
+        "title" : "Nuevo tablero",
+        "name" : "Nombre",
+        "name-placeholder" : "Nombre del tablero",
+        "name-required" : "El nombre es obligatorio",
+        "description" : "Descripción",
+        "description-placeholder" : "Descripción del tablero",
+        "description-required" : "La descripción es obligatoria",
+        "members" : "Miembros",
+        "create" : "Crear",
+        "discard" : "Descartar"
+      }
+    }
+  },
   "admin" : {
     "users" : {
       "title" : "Usuarios",

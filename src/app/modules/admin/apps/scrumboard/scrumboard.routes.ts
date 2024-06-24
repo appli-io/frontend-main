@@ -3,11 +3,11 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes, } from '@a
 
 import { catchError, Observable, throwError } from 'rxjs';
 
-import { ScrumboardBoardComponent }  from 'app/modules/admin/apps/scrumboard/board/board.component';
-import { ScrumboardBoardsComponent } from 'app/modules/admin/apps/scrumboard/boards/boards.component';
-import { ScrumboardCardComponent }   from 'app/modules/admin/apps/scrumboard/card/card.component';
-import { Board }                     from 'app/modules/admin/apps/scrumboard/scrumboard.models';
-import { ScrumboardService }         from 'app/modules/admin/apps/scrumboard/scrumboard.service';
+import { ScrumboardCardComponent }   from '@modules/admin/apps/scrumboard/components/card/card.component';
+import { ScrumboardBoardComponent }  from '@modules/admin/apps/scrumboard/pages/board/board.component';
+import { ScrumboardBoardsComponent } from '@modules/admin/apps/scrumboard/pages/boards/boards.component';
+import { Board }                     from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }         from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
 
 /**
  * Board resolver

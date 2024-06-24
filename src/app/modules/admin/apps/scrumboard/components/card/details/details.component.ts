@@ -34,8 +34,8 @@ import {
   Board,
   Card,
   Label,
-}                                                from 'app/modules/admin/apps/scrumboard/scrumboard.models';
-import { ScrumboardService }                     from 'app/modules/admin/apps/scrumboard/scrumboard.service';
+}                                                from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }                     from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
 import { assign }                                from 'lodash-es';
 import { DateTime }                              from 'luxon';
 import { debounceTime, Subject, takeUntil, tap } from 'rxjs';

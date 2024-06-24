@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, } from '@angular/core';
 import { MatDialog }                                                      from '@angular/material/dialog';
 import { ActivatedRoute, Router }                                         from '@angular/router';
-import { ScrumboardCardDetailsComponent }                                 from 'app/modules/admin/apps/scrumboard/card/details/details.component';
+import { ScrumboardCardDetailsComponent }                                 from '@modules/admin/apps/scrumboard/components/card/details/details.component';
 
 @Component({
   selector       : 'scrumboard-card',
