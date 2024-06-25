@@ -1,23 +1,33 @@
-import { Component, OnInit }           from '@angular/core';
-import { TranslocoDirective }  from '@ngneat/transloco';
-import { PageHeaderComponent } from '@layout/components/page-header/page-header.component';
 import { CommonModule } from '@angular/common';
-import { IEvent } from '@modules/admin/home/interface/event.interface';
-import { EventsService } from '../../events.service';
-import { RouterLink, RouterModule } from '@angular/router';
-import { EventsTableComponent } from '../../components/events-table/events-table.component';
-import { MatAnchor } from '@angular/material/button';
+import { Component, OnInit }           from '@angular/core';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { IEvent } from '@modules/admin/home/interface/event.interface';
+import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { PageHeaderComponent } from '@layout/components/page-header/page-header.component';
+import { RouterLink, RouterModule } from '@angular/router';
+import { TranslocoDirective, TranslocoPipe }  from '@ngneat/transloco';
+
+import { EventsService } from '../../events.service';
+import { EventsTableComponent } from '../../components/events-table/events-table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NewComponent } from '../new/new.component';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-list',
   standalone : true,
   imports    : [
-    PageHeaderComponent,
-    TranslocoDirective,
     EventsTableComponent,
     MatAnchor,
+    MatButton,
+    MatIcon,
+    MatIconAnchor,
+    MatTooltip,
+    PageHeaderComponent,
     RouterLink,
+    TranslocoDirective,
+    TranslocoPipe,
   ],
   templateUrl: './list.component.html'
 })
@@ -26,7 +36,15 @@ export class ListComponent {
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _eventsService: EventsService) {}
+    private readonly _eventsService: EventsService,
+    private readonly _matDialog: MatDialog
+  ) {}
+
+  openNewEventDialog() {
+    this._matDialog.open(NewComponent, {
+      panelClass: 'dialog-mobile-fullscreen',
+    });
+  }
 
   editEvent(event: IEvent) {
     console.log('Edit event', event);

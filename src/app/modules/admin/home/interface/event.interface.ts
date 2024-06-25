@@ -10,12 +10,12 @@ export class IEvent {
   public title: string;
   public description: string;
   public isAllDay: boolean = false;
-  public startDate: Date;
+  public startDate?: Date;
   public endDate: Date;
   public location: string;
-  public url: IEventUrl[];
+  public url?: IEventUrl[];
   public image: string;
-  public capacity: number;
+  public capacity?: number;
   public organizer: IEventOrganizer;
   public type: EventTypeEnum;
   public status: EventStatusEnum;

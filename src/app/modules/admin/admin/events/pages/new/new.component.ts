@@ -1,0 +1,122 @@
+import { Component, OnInit, booleanAttribute } from "@angular/core";
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { Notyf } from "notyf";
+import { EventsService } from "../../events.service";
+import { TranslocoDirective, TranslocoService } from "@ngneat/transloco";
+import { MatDialogRef } from "@angular/material/dialog";
+import { takeUntil } from "rxjs";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatFormField, MatFormFieldControl, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { DropzoneCdkModule } from "@ngx-dropzone/cdk";
+import { DropzoneMaterialModule } from "@ngx-dropzone/material";
+import { ImageUploadPreviewComponent } from "@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component";
+import { JsonPipe, NgForOf, NgIf } from "@angular/common";
+import { MatCard } from "@angular/material/card";
+import { MatChipRemove, MatChipRow } from "@angular/material/chips";
+import { MatIcon } from "@angular/material/icon";
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatCheckbox } from "@angular/material/checkbox";
+
+@Component({
+  selector: "app-new",
+  standalone: true,
+  imports: [
+    CdkTextareaAutosize,
+    DropzoneCdkModule,
+    DropzoneMaterialModule,
+    ImageUploadPreviewComponent,
+    JsonPipe,
+    MatButton,
+    MatCard,
+    MatCheckbox,
+    MatChipRemove,
+    MatChipRow,
+    MatFormField,
+    MatIcon,
+    MatIconButton,
+    MatInput,
+    MatLabel,
+    MatProgressSpinner,
+    MatSuffix,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    TranslocoDirective,
+  ],
+  templateUrl: "./new.component.html",
+})
+export class NewComponent implements OnInit {
+  eventForm: UntypedFormGroup;
+  notyf = new Notyf();
+
+  constructor(
+    public readonly _matDialogRef: MatDialogRef<NewComponent>,
+    private readonly _translocoService: TranslocoService,
+    private readonly _formBuilder: UntypedFormBuilder,
+    private readonly _eventsService: EventsService
+  ) {}
+
+  ngOnInit(): void {
+    this.eventForm = this._formBuilder.group({
+      title: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      description: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      isAllDay: [undefined, [Validators.required]],
+      startDate: [undefined, [Validators.required]],
+      endDate: [undefined],
+      location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      url: [undefined],
+      image: [undefined],
+      capacity: [undefined],
+      organizer: this._formBuilder.group({
+        name: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        email: [undefined, [Validators.required, Validators.email]],
+        phone: this._formBuilder.group({
+          countryCode: [undefined, [Validators.required]],
+          number: [undefined, [Validators.required, Validators.minLength(7), Validators.maxLength(15)]],
+        }),
+      }),
+      type: [undefined, [Validators.required]],
+      status: [undefined, [Validators.required]],
+    });
+  }
+
+  discard(): void {
+    this._matDialogRef.close();
+  }
+
+  save(): void {
+    if (this.eventForm.valid) {
+      this.eventForm.disable();
+
+      try {
+        this._eventsService
+          .createEvent(this.eventForm.getRawValue())
+          .pipe(takeUntil(this._matDialogRef.afterClosed()))
+          .subscribe({
+            next: (result) => {
+              this._matDialogRef.close(result);
+            },
+            error: (error) => {
+              this.notyf.error({
+                message: this._translocoService.translate("errors.service.message"),
+                position: { x: "right", y: "top" },
+              });
+              this.eventForm.enable();
+            },
+          });
+      } catch (error) {
+        this.notyf.error({
+          message: this._translocoService.translate("errors.runtime.message"),
+          position: { x: "right", y: "top" },
+        });
+        this.eventForm.enable();
+      }
+    }
+  }
+
+  remove() {
+    console.log('remove')
+  }
+}

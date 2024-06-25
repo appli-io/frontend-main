@@ -13,12 +13,13 @@
 
       <!-- New event button -->
       <a
-        [routerLink]="['new']"
         class="flex-1 md:flex-0 font-bold py-2 px-4 rounded"
         color="primary"
-        mat-button
+        [matTooltip]="'admin.events.new.title' | transloco"
+        mat-icon-button
+        (click)="openNewEventDialog()"
       >
-        + Add New Event
+        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
       </a>
     </div>
     <events-table
