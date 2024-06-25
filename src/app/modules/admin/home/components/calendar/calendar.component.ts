@@ -94,7 +94,7 @@ export class CalendarComponent implements AfterViewInit {
     });
   }
 
-  getDays(day: number, date: FormatDateString, HTMLElement: HTMLElement, HTMLButtonElement: HTMLButtonElement, self: IVanillaCalendar) {
+  getDays(day: number, date: FormatDateString, HTMLElement: HTMLElement, HTMLButtonElement: HTMLButtonElement, self: IVanillaCalendar):void {
     HTMLButtonElement.style.flexDirection = 'column';
     HTMLButtonElement.innerHTML = `<span>${day}</span>`;
 

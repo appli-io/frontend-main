@@ -1,0 +1,83 @@
+<div class="relative">
+  <table
+    (matSortChange)="sortChange.emit($event)"
+    [dataSource]="eventsDataSource"
+    [trackBy]="trackByFn"
+    class="w-full bg-transparent"
+    mat-table
+    matSort
+  >
+    <!-- Title -->
+    <ng-container matColumnDef="title">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        Title
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <span class="text-secondary whitespace-nowrap pr-6 text-sm font-medium">{{ event.title }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Description -->
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        Description
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <span class="whitespace-nowrap pr-6">{{ event.description }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Location -->
+    <ng-container matColumnDef="location">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        Location
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <span class="whitespace-nowrap pr-6">{{ event.location }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Start Date -->
+    <ng-container matColumnDef="startDate">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        Start Date
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <span class="whitespace-nowrap pr-6">{{ event.startDate | date: 'MMM dd, y' }}</span>
+      </td>
+    </ng-container>
+
+    <!-- End Date -->
+    <ng-container matColumnDef="endDate">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        End Date
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <span class="whitespace-nowrap pr-6">{{ event.endDate ? (event.endDate | date: 'MMM dd, y') : 'No End Date' }}</span>
+      </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell>
+        Actions
+      </th>
+      <td *matCellDef="let event" mat-cell>
+        <div class="flex items-center">
+          <a (click)="viewEvent.emit(event)" [matTooltip]="'View'" [routerLink]="[event.id]" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
+          </a>
+          <button (click)="editEvent.emit(event)" [matTooltip]="'Edit'" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+          </button>
+          <button (click)="deleteEvent.emit(event)" [matTooltip]="'Delete'" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="eventsTableColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: eventsTableColumns" mat-row></tr>
+  </table>
+</div>

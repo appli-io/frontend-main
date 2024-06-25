@@ -45,15 +45,15 @@ export class EventModalComponent implements OnInit {
   }
 
 
-  zoomIn() {
+  zoomIn():void {
     if (this.zoom < this.options.maxZoom) this.zoom++;
   }
 
-  zoomOut() {
+  zoomOut():void {
     if (this.zoom > this.options.minZoom) this.zoom--;
   }
 
-  click(event: google.maps.MapMouseEvent) {
+  click(event: google.maps.MapMouseEvent): void {
     console.log(event.latLng.toJSON());
   }
 
