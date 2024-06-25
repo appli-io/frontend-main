@@ -201,6 +201,7 @@
         "addUrl": "Agregar URL",
         "url" : {
           "label" : "URL",
+          "url" : "URL Link",
           "platform" : "Plataforma"
         },
         "image" : "Imagen",

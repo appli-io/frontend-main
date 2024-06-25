@@ -1,5 +1,5 @@
 import { Component, OnInit }                                                     from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Notyf }                                                                 from 'notyf';
 import { EventsService }                                                         from '../../events.service';
 import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
@@ -58,7 +58,7 @@ export class NewComponent implements OnInit {
       startDate: [undefined, [Validators.required]],
       endDate: [undefined],
       location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      url: [undefined],
+      url: this._formBuilder.array([]),
       image: [undefined],
       capacity: [undefined],
       organizer: this._formBuilder.group({
@@ -72,6 +72,23 @@ export class NewComponent implements OnInit {
       type: [undefined, [Validators.required]],
       status: [undefined, [Validators.required]],
     });
+  }
+
+  get urlArray(): UntypedFormArray {
+    return this.eventForm.get('url') as UntypedFormArray;
+  }
+
+  addUrl(): void {
+    const urlGroup = this._formBuilder.group({
+      label: [undefined, Validators.required],
+      url: [undefined, Validators.required],
+      platform: [undefined, Validators.required],
+    });
+    this.urlArray.push(urlGroup);
+  }
+
+  removeUrl(index: number): void {
+    this.urlArray.removeAt(index);
   }
 
   discard(): void {

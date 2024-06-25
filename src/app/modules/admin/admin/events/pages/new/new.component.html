@@ -61,17 +61,17 @@
 
     <!-- URL -->
     <div formArrayName="url">
-      <div *ngFor="let url of eventForm.get('url').controls; let i = index" [formGroupName]="i">
+      <div *ngFor="let url of urlArray.controls; let i = index" [formGroupName]="i">
         <mat-form-field>
-          <mat-label [innerText]="t('url.label')"></mat-label>
+          <mat-label>{{ t('url.label') }}</mat-label>
           <input formControlName="label" matInput />
         </mat-form-field>
         <mat-form-field>
-          <mat-label [innerText]="t('url.label')"></mat-label>
+          <mat-label>{{ t('url.url') }}</mat-label>
           <input formControlName="url" matInput />
         </mat-form-field>
         <mat-form-field>
-          <mat-label [innerText]="t('url.platform')"></mat-label>
+          <mat-label>{{ t('url.platform') }}</mat-label>
           <input formControlName="platform" matInput />
         </mat-form-field>
         <button mat-icon-button (click)="removeUrl(i)">
@@ -80,7 +80,7 @@
       </div>
       <button mat-stroked-button (click)="addUrl()">
         <mat-icon>add</mat-icon>
-        <span [innerText]="t('addUrl')"></span>
+        <span>{{ t('addUrl') }}</span>
       </button>
     </div>
 
