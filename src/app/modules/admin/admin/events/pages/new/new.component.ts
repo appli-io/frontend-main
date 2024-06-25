@@ -6,15 +6,10 @@ import { TranslocoDirective, TranslocoService }                                 
 import { MatDialogRef }                                                          from '@angular/material/dialog';
 import { takeUntil }                                                             from 'rxjs';
 import { MatButton, MatIconButton }                                              from '@angular/material/button';
-import { MatFormField, MatLabel, MatSuffix }                                     from '@angular/material/form-field';
+import { MatFormField, MatLabel }                                                from '@angular/material/form-field';
 import { MatInput }                                                              from '@angular/material/input';
 import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
-import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
-import { DropzoneMaterialModule }                                                from '@ngx-dropzone/material';
-import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
-import { JsonPipe, NgForOf, NgIf }                                               from '@angular/common';
-import { MatCard }                                                               from '@angular/material/card';
-import { MatChipRemove, MatChipRow }                                             from '@angular/material/chips';
+import { NgForOf, NgIf }                                                         from '@angular/common';
 import { MatIcon }                                                               from '@angular/material/icon';
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { MatCheckbox }                                                           from '@angular/material/checkbox';
@@ -24,30 +19,22 @@ import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }               
   selector: "app-new",
   standalone: true,
   imports: [
-    CdkTextareaAutosize,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    ImageUploadPreviewComponent,
-    JsonPipe,
-    MatButton,
-    MatCard,
-    MatCheckbox,
-    MatChipRemove,
-    MatChipRow,
-    MatFormField,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    MatLabel,
-    MatProgressSpinner,
-    MatSuffix,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     TranslocoDirective,
+    MatIcon,
+    MatIconButton,
+    MatLabel,
+    MatFormField,
+    MatInput,
+    CdkTextareaAutosize,
+    MatCheckbox,
     MatDatepickerToggle,
-    MatDatepicker,
     MatDatepickerInput,
+    MatDatepicker,
+    MatButton,
+    MatProgressSpinner,
+    NgIf,
+    NgForOf
   ],
   templateUrl: "./new.component.html",
 })

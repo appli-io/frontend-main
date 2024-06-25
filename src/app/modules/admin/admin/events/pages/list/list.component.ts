@@ -1,18 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit }           from '@angular/core';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { IEvent } from '@modules/admin/home/interface/event.interface';
+import { Component }                           from '@angular/core';
+import { FuseConfirmationService }             from '@fuse/services/confirmation';
+import { IEvent }                              from '@modules/admin/home/interface/event.interface';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { PageHeaderComponent } from '@layout/components/page-header/page-header.component';
-import { RouterLink, RouterModule } from '@angular/router';
-import { TranslocoDirective, TranslocoPipe }  from '@ngneat/transloco';
+import { MatIcon }                             from '@angular/material/icon';
+import { PageHeaderComponent }                 from '@layout/components/page-header/page-header.component';
+import { RouterLink }                          from '@angular/router';
+import { TranslocoDirective, TranslocoPipe }   from '@ngneat/transloco';
 
-import { EventsService } from '../../events.service';
+import { EventsService }        from '../../events.service';
 import { EventsTableComponent } from '../../components/events-table/events-table.component';
-import { MatDialog } from '@angular/material/dialog';
-import { NewComponent } from '../new/new.component';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatDialog }            from '@angular/material/dialog';
+import { NewComponent }         from '../new/new.component';
+import { MatTooltip }           from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-list',
@@ -38,7 +37,9 @@ export class ListComponent {
     private readonly _fuseConfirmationService: FuseConfirmationService,
     private readonly _eventsService: EventsService,
     private readonly _matDialog: MatDialog
-  ) {}
+  ) {
+    this.openNewEventDialog();
+  }
 
   openNewEventDialog() {
     this._matDialog.open(NewComponent, {

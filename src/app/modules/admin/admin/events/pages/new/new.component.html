@@ -25,10 +25,7 @@
     </mat-form-field>
 
     <!-- Is All Day -->
-    <mat-form-field>
-      <mat-label [innerText]="t('isAllDay')"></mat-label>
-      <mat-checkbox formControlName="isAllDay"></mat-checkbox>
-    </mat-form-field>
+    <mat-checkbox formControlName="isAllDay">dasdjasldkj</mat-checkbox>
 
     <!-- Start Date -->
     <mat-form-field>
@@ -53,29 +50,29 @@
     </mat-form-field>
 
     <!-- URL -->
-    <!-- <div formArrayName="url">
-      <div *ngFor="let url of eventForm.get('url').controls; let i = index" [formGroupName]="i">
-        <mat-form-field>
-          <mat-label [innerText]="t('urlLabel')"></mat-label>
-          <input formControlName="label" matInput/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label [innerText]="t('url')"></mat-label>
-          <input formControlName="url" matInput/>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label [innerText]="t('platform')"></mat-label>
-          <input formControlName="platform" matInput/>
-        </mat-form-field>
-        <button mat-icon-button (click)="removeUrl(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+    <div formArrayName="url">
+      <!--      <div *ngFor="let url of eventForm.get('url').controls; let i = index" [formGroupName]="i">-->
+      <!--        <mat-form-field>-->
+      <!--          <mat-label [innerText]="t('urlLabel')"></mat-label>-->
+      <!--          <input formControlName="label" matInput/>-->
+      <!--        </mat-form-field>-->
+      <!--        <mat-form-field>-->
+      <!--          <mat-label [innerText]="t('url')"></mat-label>-->
+      <!--          <input formControlName="url" matInput/>-->
+      <!--        </mat-form-field>-->
+      <!--        <mat-form-field>-->
+      <!--          <mat-label [innerText]="t('platform')"></mat-label>-->
+      <!--          <input formControlName="platform" matInput/>-->
+      <!--        </mat-form-field>-->
+      <!--        <button mat-icon-button (click)="removeUrl(i)">-->
+      <!--          <mat-icon>delete</mat-icon>-->
+      <!--        </button>-->
+      <!--      </div>-->
       <button mat-stroked-button (click)="addUrl()">
         <mat-icon>add</mat-icon>
         <span [innerText]="t('addUrl')"></span>
       </button>
-    </div> -->
+    </div>
 
     <!-- Image -->
     <mat-form-field>
