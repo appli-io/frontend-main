@@ -1,21 +1,21 @@
-import { Component, OnInit }                                                     from '@angular/core';
+import { Component, OnInit }                                                                       from '@angular/core';
 import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Notyf }                                                                 from 'notyf';
-import { EventsService }                                                         from '../../events.service';
-import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
-import { MatDialogRef }                                                          from '@angular/material/dialog';
-import { takeUntil }                                                             from 'rxjs';
-import { MatButton, MatIconButton }                                              from '@angular/material/button';
-import { MatFormField, MatFormFieldModule, MatLabel, MatPrefix }                                                from '@angular/material/form-field';
-import { MatInputModule }                                                        from '@angular/material/input';
-import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
-import { NgForOf, NgIf }                                                         from '@angular/common';
-import { MatIcon }                                                               from '@angular/material/icon';
-import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
-import { MatCheckbox }                                                           from '@angular/material/checkbox';
-import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }                from '@angular/material/datepicker';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import { Notyf }                                                                                   from 'notyf';
+import { EventsService }                                                                           from '../../events.service';
+import { TranslocoDirective, TranslocoService }                                                    from '@ngneat/transloco';
+import { MatDialogRef }                                                                            from '@angular/material/dialog';
+import { takeUntil }                                                                               from 'rxjs';
+import { MatButton, MatIconButton }                                                                from '@angular/material/button';
+import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
+import { MatInputModule }                                                                          from '@angular/material/input';
+import { CdkTextareaAutosize }                                                                     from '@angular/cdk/text-field';
+import { NgForOf, NgIf }                                                                           from '@angular/common';
+import { MatIcon }                                                                                 from '@angular/material/icon';
+import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
+import { MatCheckbox }                                                                             from '@angular/material/checkbox';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }                                  from '@angular/material/datepicker';
+import { MatSelectModule }                                                                         from '@angular/material/select';
+import { MatOptionModule }                                                                         from '@angular/material/core';
 
 @Component({
   selector: "app-new",
@@ -37,9 +37,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatProgressSpinner,
     NgIf,
     NgForOf,
-    MatOptionModule,
-    MatPrefix,
     MatSelectModule,
+    MatOptionModule,
   ],
   templateUrl: "./new.component.html",
 })
