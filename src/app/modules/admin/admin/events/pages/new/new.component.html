@@ -85,7 +85,7 @@
     </mat-form-field>
 
     <!-- Organizer -->
-    <div formGroupName="organizer">
+    <div formGroupName="organizer" class="w-100 flex">
       <mat-form-field>
         <mat-label [innerText]="t('organizer.name')"></mat-label>
         <input formControlName="name" matInput />
@@ -94,19 +94,14 @@
         <mat-label [innerText]="t('organizer.email')"></mat-label>
         <input formControlName="email" matInput type="email" />
       </mat-form-field>
-      <div formGroupName="phone">
-        <mat-form-field>
+      <div formGroupName="phone" class="w-100">
+        <mat-form-field class="w-100 flex-auto">
           <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
-          <input [placeholder]="'Prefijo'" matInput/>
+          <input [placeholder]="'Prefijo'" matInput />
           <mat-select [value]="'+56 9'" matPrefix>
             <mat-option [value]="'+56 9'">Chile</mat-option>
             <mat-option [value]="'US'">US</mat-option>
           </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label [innerText]="t('organizer.phone.number')"></mat-label>
-          <input formControlName="number" matInput type="tel" />
         </mat-form-field>
       </div>
     </div>
