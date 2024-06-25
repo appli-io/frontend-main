@@ -5,7 +5,7 @@ import { EventsService }                                                        
 import { TranslocoDirective, TranslocoService }                                                    from '@ngneat/transloco';
 import { MatDialogRef }                                                                            from '@angular/material/dialog';
 import { takeUntil }                                                                               from 'rxjs';
-import { MatButton, MatIconButton }                                                                from '@angular/material/button';
+import { MatButtonModule, MatIconButton }                                                          from '@angular/material/button';
 import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
 import { MatInputModule }                                                                          from '@angular/material/input';
 import { CdkTextareaAutosize }                                                                     from '@angular/cdk/text-field';
@@ -13,32 +13,32 @@ import { NgForOf, NgIf }                                                        
 import { MatIcon }                                                                                 from '@angular/material/icon';
 import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
 import { MatCheckbox }                                                                             from '@angular/material/checkbox';
-import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }                                  from '@angular/material/datepicker';
+import { MatDatepickerModule }                                                                     from '@angular/material/datepicker';
 import { MatSelectModule }                                                                         from '@angular/material/select';
 import { MatOptionModule }                                                                         from '@angular/material/core';
+import { MatDivider }                                                                              from '@angular/material/divider';
 
 @Component({
   selector: "app-new",
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatOptionModule,
     TranslocoDirective,
     MatIcon,
     MatIconButton,
     MatLabel,
-    MatFormFieldModule,
     MatInputModule,
     CdkTextareaAutosize,
     MatCheckbox,
-    MatDatepickerToggle,
-    MatDatepickerInput,
-    MatDatepicker,
-    MatButton,
+    MatButtonModule,
     MatProgressSpinner,
     NgIf,
     NgForOf,
-    MatSelectModule,
-    MatOptionModule,
+    MatDivider,
   ],
   templateUrl: "./new.component.html",
 })
@@ -58,7 +58,7 @@ export class NewComponent implements OnInit {
     this.eventForm = this._formBuilder.group({
       title: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      isAllDay: [false, [Validators.required]],
+      isAllDay: [ true, [ Validators.required ] ],
       startDate: [undefined, [Validators.required]],
       endDate: [undefined],
       location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
