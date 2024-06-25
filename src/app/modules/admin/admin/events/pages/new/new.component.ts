@@ -1,23 +1,24 @@
-import { Component, OnInit, booleanAttribute } from "@angular/core";
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
-import { Notyf } from "notyf";
-import { EventsService } from "../../events.service";
-import { TranslocoDirective, TranslocoService } from "@ngneat/transloco";
-import { MatDialogRef } from "@angular/material/dialog";
-import { takeUntil } from "rxjs";
-import { MatButton, MatIconButton } from "@angular/material/button";
-import { MatFormField, MatFormFieldControl, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { CdkTextareaAutosize } from "@angular/cdk/text-field";
-import { DropzoneCdkModule } from "@ngx-dropzone/cdk";
-import { DropzoneMaterialModule } from "@ngx-dropzone/material";
-import { ImageUploadPreviewComponent } from "@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component";
-import { JsonPipe, NgForOf, NgIf } from "@angular/common";
-import { MatCard } from "@angular/material/card";
-import { MatChipRemove, MatChipRow } from "@angular/material/chips";
-import { MatIcon } from "@angular/material/icon";
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
-import { MatCheckbox } from "@angular/material/checkbox";
+import { Component, OnInit }                                                     from '@angular/core';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Notyf }                                                                 from 'notyf';
+import { EventsService }                                                         from '../../events.service';
+import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
+import { MatDialogRef }                                                          from '@angular/material/dialog';
+import { takeUntil }                                                             from 'rxjs';
+import { MatButton, MatIconButton }                                              from '@angular/material/button';
+import { MatFormField, MatLabel, MatSuffix }                                     from '@angular/material/form-field';
+import { MatInput }                                                              from '@angular/material/input';
+import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
+import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule }                                                from '@ngx-dropzone/material';
+import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
+import { JsonPipe, NgForOf, NgIf }                                               from '@angular/common';
+import { MatCard }                                                               from '@angular/material/card';
+import { MatChipRemove, MatChipRow }                                             from '@angular/material/chips';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
+import { MatCheckbox }                                                           from '@angular/material/checkbox';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }                from '@angular/material/datepicker';
 
 @Component({
   selector: "app-new",
@@ -44,6 +45,9 @@ import { MatCheckbox } from "@angular/material/checkbox";
     NgIf,
     ReactiveFormsModule,
     TranslocoDirective,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
   ],
   templateUrl: "./new.component.html",
 })

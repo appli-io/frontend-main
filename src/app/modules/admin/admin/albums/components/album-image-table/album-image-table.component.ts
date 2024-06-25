@@ -1,4 +1,6 @@
+import { DatePipe, NgClass }                                         from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatButton, MatIconAnchor, MatIconButton }                   from '@angular/material/button';
 import {
   MatCell,
   MatCellDef,
@@ -17,45 +19,45 @@ import {
   MatTableDataSource
 }                                                                    from '@angular/material/table';
 import { MatSort, MatSortHeader, Sort }                              from '@angular/material/sort';
-import { trackByFn }                                                 from '@libs/ui/utils/utils';
-import { DatePipe, NgClass }                                         from '@angular/common';
-import { MatButton, MatIconAnchor, MatIconButton }                   from '@angular/material/button';
-import { Observable, Subject, takeUntil }                            from 'rxjs';
-import { IAlbum }                                                    from '@modules/admin/apps/albums/interfaces/album.interface';
 import { MatIcon }                                                   from '@angular/material/icon';
-import { RouterLink }                                                from '@angular/router';
 import { MatTooltip }                                                from '@angular/material/tooltip';
-import { TranslocoDirective }                                        from '@ngneat/transloco';
-import { IAlbumImage }                                               from '@modules/admin/apps/albums/interfaces/album-image.interface';
+import { RouterLink }                                                from '@angular/router';
+
+import { Observable, Subject, takeUntil } from 'rxjs';
+
+import { trackByFn }          from '@libs/ui/utils/utils';
+import { TranslocoDirective } from '@ngneat/transloco';
+import { IAlbum }             from '@modules/admin/apps/albums/interfaces/album.interface';
+import { IAlbumImage }        from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
 @Component({
   selector   : 'album-image-table',
   standalone : true,
   imports    : [
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRow,
-    MatRowDef,
-    MatColumnDef,
-    MatFooterCellDef,
-    MatFooterCell,
-    MatTable,
-    MatSort,
-    MatHeaderCell,
-    MatHeaderCellDef,
+    DatePipe,
+    MatButton,
     MatCellDef,
     MatCell,
-    DatePipe,
-    NgClass,
-    MatButton,
+    MatColumnDef,
     MatFooterRowDef,
     MatFooterRow,
-    MatSortHeader,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
     MatIconButton,
     MatIcon,
     MatIconAnchor,
-    RouterLink,
+    MatFooterCellDef,
+    MatFooterCell,
+    MatRow,
+    MatRowDef,
+    MatSort,
+    MatSortHeader,
+    MatTable,
     MatTooltip,
+    NgClass,
+    RouterLink,
     TranslocoDirective
   ],
   templateUrl: './album-image-table.component.html'

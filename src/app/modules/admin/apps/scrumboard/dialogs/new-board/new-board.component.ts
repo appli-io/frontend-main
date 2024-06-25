@@ -9,7 +9,7 @@ import { TranslocoDirective, TranslocoService }                                 
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { JsonPipe, NgIf }                                                        from '@angular/common';
 import { Notyf }                                                                 from 'notyf';
-import { MatDialogRef }                                                          from '@angular/material/dialog';
+import { MatDialogClose, MatDialogRef }                                          from '@angular/material/dialog';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
 import { MatSelectAutocompleteComponent }                                        from '@libs/ui/mat-select-autocomplete/mat-select-autocomplete.component';
 import { ScrumboardService }                                                     from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
@@ -18,7 +18,7 @@ import { Subject, take, takeUntil }                                             
 @Component({
   selector   : 'app-new-board',
   standalone : true,
-  imports    : [
+  imports: [
     CdkTextareaAutosize,
     MatLabel,
     MatFormField,
@@ -35,7 +35,8 @@ import { Subject, take, takeUntil }                                             
     MatAutocomplete,
     MatOption,
     MatSelectAutocompleteComponent,
-    JsonPipe
+    JsonPipe,
+    MatDialogClose
   ],
   templateUrl: './new-board.component.html'
 })

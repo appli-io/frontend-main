@@ -102,4 +102,21 @@ export class AlbumsService {
   public addImageToAlbum(id: string, image: File): Observable<{ progress: number, response?: IAlbumImage[] }> {
     return this.addImagesToAlbum(id, [ image ]);
   }
+
+  public deleteAlbum(id: string): Observable<void> {
+    return this._httpClient.delete<void>(`api/albums/${ id }`)
+      .pipe(
+        tap(() => this._albums.next(this._albums.value.filter(album => album.id !== id)))
+      );
+  }
+
+  public deleteImage(albumId: string, imageId: string): Observable<void> {
+    return this._httpClient.delete<void>(`api/albums/${ albumId }/images/${ imageId }`)
+      .pipe(
+        tap(() => this._album.next({
+          ...this._album.value,
+          images: this._album.value.images.filter(image => image.id !== imageId)
+        }))
+      );
+  }
 }

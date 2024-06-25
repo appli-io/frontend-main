@@ -8,7 +8,7 @@ import { MatTooltip }               from '@angular/material/tooltip';
 import { RouterLink }               from '@angular/router';
 
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { Observable }                        from 'rxjs';
+import { Observable, take }                  from 'rxjs';
 
 import { FuseConfirmationService }  from '@fuse/services/confirmation';
 import { AlbumsService }            from '@modules/admin/admin/albums/albums.service';
@@ -16,6 +16,7 @@ import { AlbumImageTableComponent } from '@modules/admin/admin/albums/components
 import { IAlbum }                   from '@modules/admin/apps/albums/interfaces/album.interface';
 import { IAlbumImage }              from '@modules/admin/apps/albums/interfaces/album-image.interface';
 import { UploadImagesComponent }    from '@modules/admin/admin/albums/components/upload-images/upload-images.component';
+import { Notyf }                    from 'notyf';
 
 @Component({
   selector   : 'app-details',
@@ -37,6 +38,7 @@ import { UploadImagesComponent }    from '@modules/admin/admin/albums/components
 })
 export class DetailsComponent {
   public album$: Observable<IAlbum>;
+  notyf = new Notyf();
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
@@ -63,8 +65,32 @@ export class DetailsComponent {
 
   }
 
-  public deleteImage(image: IAlbumImage): void {
+  public deleteImage(albumId: string, image: IAlbumImage): void {
+    const confirmation = this._fuseConfirmationService.open({
+      title  : 'Delete Image',
+      message: 'Are you sure you want to delete this image?',
+      actions: {
+        confirm: {
+          label: 'Delete'
+        }
+      }
+    });
 
+    confirmation.afterClosed().subscribe((result) => {
+      if (result === 'confirmed') {
+        this._albumsService.deleteImage(albumId, image.id)
+          .pipe(take(1))
+          .subscribe({
+            next : () => {
+              this.notyf.success('Image deleted');
+            },
+            error: (error) => {
+              console.error(error);
+              this.notyf.error('Error deleting image');
+            }
+          });
+      }
+    });
   }
 
   public pageChange(event: any): void {

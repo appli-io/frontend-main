@@ -112,7 +112,7 @@
       </div>
 
       <album-image-table
-        (deleteImage)="deleteImage($event)"
+        (deleteImage)="deleteImage(album.id, $event)"
         (pageChange)="pageChange($event)"
         [album]="album$"
         [loading]="true"
