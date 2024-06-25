@@ -1,1 +1,86 @@
-<p>new works!</p>
+<div *transloco="let t; read: 'admin.albums.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
+  <!-- Header -->
+  <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+    <div [innerText]="t('title')" class="text-lg font-medium"></div>
+    <button (click)="discard()" mat-icon-button>
+      <mat-icon
+        [svgIcon]="'heroicons_outline:x-mark'"
+        class="text-current"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <form [formGroup]="albumForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
+    <!-- Name -->
+    <mat-form-field>
+      <mat-label [innerText]="t('name')"></mat-label>
+      <input formControlName="name" matInput/>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field>
+      <mat-label [innerText]="t('description')">Description</mat-label>
+      <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
+    </mat-form-field>
+
+    <!-- Cover (File upload) -->
+    <mat-form-field>
+      <mat-label [innerText]="t('cover')"></mat-label>
+      <ngx-mat-dropzone>
+        <input fileInput formControlName="cover" type="file"/>
+
+        @if ($any(albumForm.get('cover').value); as file) {
+          <mat-chip-row (removed)="remove()">
+            {{ file.name }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+
+        <mat-icon matSuffix>paper-clip</mat-icon>
+
+      </ngx-mat-dropzone>
+      <mat-icon matSuffix>upload_file</mat-icon>
+    </mat-form-field>
+    <h2 class="text-md font-medium">Vista previa de la portada</h2>
+    <div class="grid grid-cols-1">
+      @if ($any(albumForm.get('cover').value); as file) {
+        <image-upload-preview
+          [file]="file"
+          (remove)="remove()">
+        </image-upload-preview>
+      } @else {
+        <div class="w-full flex justify-center pt-4">
+          <mat-card class="w-48 h-36 flex items-center justify-center">
+            <mat-icon class="text-6xl">image</mat-icon>
+          </mat-card>
+        </div>
+      }
+    </div>
+  </form>
+
+  <!-- Actions -->
+  <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
+    <!-- Discard -->
+    <button
+      (click)="discard()"
+      class="w-full md:w-30 "
+      mat-stroked-button
+    >
+      Discard
+    </button>
+    <!-- Save as draft -->
+    <button
+      (click)="save()"
+      [disabled]="albumForm.disabled"
+      class="w-full md:w-30"
+      color="primary"
+      mat-flat-button
+    >
+      <span *ngIf="!albumForm.disabled">Create</span>
+      <mat-progress-spinner *ngIf="albumForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+  </div>
+</div>

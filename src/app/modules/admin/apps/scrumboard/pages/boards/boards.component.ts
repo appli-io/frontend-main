@@ -3,11 +3,14 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, } from '@angular/core';
 import { MatIconModule }                                                                                from '@angular/material/icon';
 import { RouterLink }                                                                                   from '@angular/router';
-import { Board }                                                                                        from 'app/modules/admin/apps/scrumboard/scrumboard.models';
-import { ScrumboardService }                                                                            from 'app/modules/admin/apps/scrumboard/scrumboard.service';
+import { Board }                                                                                        from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }                                                                            from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
 import { DateTime }                                                                                     from 'luxon';
 import { Subject, takeUntil }                                                                           from 'rxjs';
 import { MatTooltip }                                                                                   from '@angular/material/tooltip';
+import { MatDialog }                                                                                    from '@angular/material/dialog';
+import { NewBoardComponent }                                                                            from '@modules/admin/apps/scrumboard/dialogs/new-board/new-board.component';
+import { trackByFn }                                                                                    from '@libs/ui/utils/utils';
 
 @Component({
   selector       : 'scrumboard-boards',
@@ -23,21 +26,8 @@ export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
   // Private
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  /**
-   * Constructor
-   */
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _scrumboardService: ScrumboardService
-  ) {}
+  protected readonly trackByFn = trackByFn;
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
     // Get the boards
     this._scrumboardService.boards$
@@ -50,18 +40,17 @@ export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * On destroy
-   */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef,
+    private readonly _matDialog: MatDialog,
+    private _scrumboardService: ScrumboardService
+  ) {}
 
   /**
    * Format the given ISO_8601 date as a relative date
@@ -72,13 +61,9 @@ export class ScrumboardBoardsComponent implements OnInit, OnDestroy {
     return DateTime.fromISO(date).toRelative();
   }
 
-  /**
-   * Track by function for ngFor loops
-   *
-   * @param index
-   * @param item
-   */
-  trackByFn(index: number, item: any): any {
-    return item.id || index;
+  openNewBoardDialog(): void {
+    this._matDialog.open(NewBoardComponent, {
+      panelClass: [ 'dialog-mobile-fullscreen' ],
+    });
   }
 }

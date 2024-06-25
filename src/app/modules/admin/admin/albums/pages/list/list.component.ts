@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { MatAnchor } from '@angular/material/button';
+import { Component }                           from '@angular/core';
+import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
 
-import { TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
@@ -9,6 +9,10 @@ import { AlbumsService }           from '@modules/admin/admin/albums/albums.serv
 import { AlbumsTableComponent }    from '@modules/admin/admin/albums/components/albums-table/albums-table.component';
 import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
 import { RouterLink }              from '@angular/router';
+import { MatDialog }               from '@angular/material/dialog';
+import { NewComponent }            from '@modules/admin/admin/albums/pages/new/new.component';
+import { MatIcon }                 from '@angular/material/icon';
+import { MatTooltip }              from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-list',
@@ -18,7 +22,12 @@ import { RouterLink }              from '@angular/router';
     TranslocoDirective,
     AlbumsTableComponent,
     MatAnchor,
-    RouterLink
+    RouterLink,
+    MatButton,
+    MatIconAnchor,
+    MatIcon,
+    MatTooltip,
+    TranslocoPipe
   ],
   templateUrl: './list.component.html'
 })
@@ -27,8 +36,15 @@ export class ListComponent {
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _albumsService: AlbumsService
+    private readonly _albumsService: AlbumsService,
+    private readonly _matDialog: MatDialog
   ) {}
+
+  openNewAlbumDialog() {
+    this._matDialog.open(NewComponent, {
+      panelClass: 'dialog-mobile-fullscreen',
+    });
+  }
 
   editAlbum(album: IAlbum) {
     console.log('Edit album', album);

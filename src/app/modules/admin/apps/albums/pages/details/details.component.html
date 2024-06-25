@@ -12,9 +12,7 @@
         <!-- Breadcrumbs -->
         <div>
           <div class="hidden sm:flex flex-wrap items-center font-medium">
-            <div>
-              <a [routerLink]="'/apps/albums'" class="whitespace-nowrap text-primary-500">Álbums</a>
-            </div>
+            <a [routerLink]="'/apps/albums'" class="whitespace-nowrap text-primary-500">{{ 'albums.title' | transloco }}</a>
             <div class="flex items-center ml-1 whitespace-nowrap">
               <mat-icon
                 [svgIcon]="'heroicons_mini:chevron-right'"
@@ -42,16 +40,18 @@
 
           <mat-divider class="my-5"></mat-divider>
 
-          <div class="flex flex-col md:flex-row items-start md:items-center">
-            <div class="flex flex-row items-center">
-              <span>{{ t('created-by') }}: </span>
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-x-4 gap-y-2">
+            <div class="flex-1 flex flex-row items-center gap-x-2">
               <img
                 [src]="album.createdBy?.avatar?.fileUrl"
                 alt="Card cover image"
-                class="w-8 h-8 mx-3 rounded-full">
+                class="w-8 h-8 rounded-full object-cover">
               <strong [innerText]="album.createdBy.name"></strong>
             </div>
-            <span class="ml-0 md:ml-4">{{ t('created-at') }}: <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong></span>
+            <div class="flex-0 flex flex-row md:flex-row-reverse items-center gap-x-2">
+              <mat-icon class="w-8 h-8 bg-primary rounded-full p-2 text-white" svgIcon="heroicons_outline:calendar"></mat-icon>
+              <strong>{{ album.createdAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<div class="relative">
+<div *transloco="let t; read: 'admin.albums.table'" class="relative">
   <table
     (matSortChange)="sortChange.emit($event)"
     [dataSource]="albumsDataSource"
@@ -10,7 +10,7 @@
     <!-- ID -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        ID
+        {{ t('id') }}
       </th>
       <td *matCellDef="let album" mat-cell>
         <span class="text-secondary whitespace-nowrap pr-6 text-sm font-medium">{{ album.id }}</span>
@@ -20,7 +20,7 @@
     <!-- Cover image -->
     <ng-container matColumnDef="coverImage">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        Image
+        {{ t('cover') }}
       </th>
       <td *matCellDef="let album" mat-cell>
         @if (album.cover?.fileUrl && album.coverThumbnail?.fileUrl) {
@@ -36,7 +36,7 @@
     <!-- Name -->
     <ng-container matColumnDef="name">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">Name</span>
+        <span class="text-left select-none">{{ t('name') }}</span>
       </th>
       <td *matCellDef="let album" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ album.name }}</span>
@@ -46,7 +46,7 @@
     <!-- Iamge Quantity -->
     <ng-container matColumnDef="imagesCount">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">Image count</span>
+        <span class="text-left select-none">{{ t('image-count') }}</span>
       </th>
       <td *matCellDef="let album" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ album.imagesCount }}</span>
@@ -56,7 +56,7 @@
     <!-- Created At -->
     <ng-container matColumnDef="createdAt">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">Created at</span>
+        <span class="text-left select-none">{{ t('created-at') }}</span>
       </th>
       <td *matCellDef="let album" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ album.createdAt | date: 'MMM dd, y' }}</span>
@@ -66,7 +66,7 @@
     <!-- Views -->
     <ng-container matColumnDef="views">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">Views</span>
+        <span class="text-left select-none">{{ t('views') }}</span>
       </th>
       <td *matCellDef="let album" mat-cell>
         <span [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': album.status === 'pending',
@@ -82,17 +82,17 @@
     <!-- Actions -->
     <ng-container matColumnDef="actions">
       <th *matHeaderCellDef mat-header-cell>
-        <span class="text-left select-none">Actions</span>
+        <span class="text-left select-none">{{ t('actions') }}</span>
       </th>
       <td *matCellDef="let album" mat-cell>
         <div class="flex items-center">
-          <a (click)="editAlbum.emit(album)" [matTooltip]="'Ver'" [routerLink]="['/apps/albums', album.id]" mat-icon-button>
+          <a [matTooltip]="t('view')" [routerLink]="['/apps/albums', album.id]" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
           </a>
-          <button (click)="editAlbum.emit(album)" [matTooltip]="'Editar'" mat-icon-button>
-            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
-          </button>
-          <button (click)="deleteAlbum.emit(album)" [matTooltip]="'Eliminar'" mat-icon-button>
+          <a [matTooltip]="t('edit')" [routerLink]="['edit', album.id]" mat-icon-button>
+            <mat-icon svgIcon="heroicons_outline:pencil-square"></mat-icon>
+          </a>
+          <button (click)="deleteAlbum.emit(album)" [matTooltip]="t('delete')" color="warn" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
           </button>
         </div>

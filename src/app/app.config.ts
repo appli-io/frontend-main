@@ -14,13 +14,15 @@ import { SocketIoConfig, SocketIoModule }                     from 'ngx-socket-i
 import { firstValueFrom }                                     from 'rxjs';
 
 
-import { provideAuth }         from '@core/auth/auth.provider';
-import { provideIcons }        from '@core/icons/icons.provider';
-import { TranslocoHttpLoader } from '@core/transloco/transloco.http-loader';
-import { provideFuse }         from '@fuse';
-import { StorageService }      from '@fuse/services/storage';
-import { appRoutes }           from 'app/app.routes';
-import { mockApiServices }     from 'app/mock-api';
+import { provideAuth }            from '@core/auth/auth.provider';
+import { provideIcons }           from '@core/icons/icons.provider';
+import { TranslocoHttpLoader }    from '@core/transloco/transloco.http-loader';
+import { provideFuse }            from '@fuse';
+import { StorageService }         from '@fuse/services/storage';
+import { appRoutes }              from 'app/app.routes';
+import { mockApiServices }        from 'app/mock-api';
+import { DropzoneCdkModule }      from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 
 const config: SocketIoConfig = {
   url    : 'localhost:5000/ws/board',
@@ -32,7 +34,6 @@ const config: SocketIoConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-
     provideAnimations(),
     provideHttpClient(),
     provideRouter(appRoutes,
@@ -49,7 +50,9 @@ export const appConfig: ApplicationConfig = {
         provide   : DateAdapterAC,
         useFactory: adapterFactory
       }),
-      LightgalleryModule
+      LightgalleryModule,
+      DropzoneCdkModule,
+      DropzoneMaterialModule
     ),
 
     // Material Date Adapter

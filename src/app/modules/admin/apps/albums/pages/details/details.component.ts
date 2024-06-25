@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
-import { TranslocoDirective }                                                                      from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe }                                                       from '@ngneat/transloco';
 import { IAlbum }                                                                                  from '@modules/admin/apps/albums/interfaces/album.interface';
 import { ActivatedRoute, RouterLink }                                                              from '@angular/router';
 import { MatIcon }                                                                                 from '@angular/material/icon';
@@ -24,7 +24,7 @@ import { takeUntilDestroyed }                                                   
   selector       : 'app-albums-detail',
   standalone     : true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports        : [
+  imports: [
     TranslocoDirective,
     RouterLink,
     MatIcon,
@@ -35,7 +35,8 @@ import { takeUntilDestroyed }                                                   
     FuseMasonryComponent,
     AlbumCardComponent,
     ImgLoaderDirective,
-    LightgalleryModule
+    LightgalleryModule,
+    TranslocoPipe
   ],
   templateUrl: './details.component.html'
 })

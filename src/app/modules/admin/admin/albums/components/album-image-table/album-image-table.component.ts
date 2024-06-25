@@ -26,11 +26,12 @@ import { MatIcon }                                                   from '@angu
 import { RouterLink }                                                from '@angular/router';
 import { MatTooltip }                                                from '@angular/material/tooltip';
 import { TranslocoDirective }                                        from '@ngneat/transloco';
+import { IAlbumImage }                                               from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
 @Component({
-  selector   : 'albums-table',
+  selector   : 'album-image-table',
   standalone : true,
-  imports: [
+  imports    : [
     MatHeaderRow,
     MatHeaderRowDef,
     MatRow,
@@ -57,27 +58,26 @@ import { TranslocoDirective }                                        from '@ngne
     MatTooltip,
     TranslocoDirective
   ],
-  templateUrl: './albums-table.component.html'
+  templateUrl: './album-image-table.component.html'
 })
-export class AlbumsTableComponent implements OnInit, OnDestroy {
-  @Input('albums') albums$!: Observable<IAlbum[]>;
+export class AlbumImageTableComponent implements OnInit, OnDestroy {
+  @Input('album') album$!: Observable<IAlbum>;
   @Input() loading: boolean = false;
   @Output() readonly pageChange = new EventEmitter();
   @Output() readonly sortChange = new EventEmitter<Sort>();
-  @Output() readonly deleteAlbum = new EventEmitter();
-  @Output() readonly editAlbum = new EventEmitter();
-  @Output() readonly viewAlbum = new EventEmitter();
+  @Output() readonly deleteImage = new EventEmitter();
+  @Output() readonly viewImage = new EventEmitter();
 
-  albumsDataSource: MatTableDataSource<any> = new MatTableDataSource();
-  albumsTableColumns: string[] = [ 'coverImage', 'name', 'imagesCount', 'createdAt', 'views', 'actions' ];
+  albumsDataSource: MatTableDataSource<IAlbumImage> = new MatTableDataSource();
+  albumsTableColumns: string[] = [ 'image', 'format', 'size', 'createdAt', 'actions' ];
 
   protected readonly trackByFn = trackByFn;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   ngOnInit() {
-    this.albums$?.pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((albums) => {
-        this.albumsDataSource.data = albums;
+    this.album$?.pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((album) => {
+        this.albumsDataSource.data = album.images;
       });
   }
 
@@ -85,5 +85,9 @@ export class AlbumsTableComponent implements OnInit, OnDestroy {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
+  }
+
+  byteToKb(byte: number): number {
+    return byte / 1024;
   }
 }

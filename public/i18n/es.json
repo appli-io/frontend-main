@@ -117,6 +117,25 @@
       "write-comment" : "Escribe un comentario..."
     }
   },
+  "scrumboard" : {
+    "boards" : {
+      "title" : "Tablero de Scrum",
+      "subtitle" : "Organiza y Gestiona tus Proyectos de Forma Efectiva",
+      "description" : "Organiza y gestiona tus proyectos de forma efectiva con el tablero de Scrum. Crea tareas, asigna responsables y establece fechas límite para mantener el progreso y la colaboración en tu equipo. Visualiza el estado de tus proyectos y tareas en tiempo real, y fomenta la transparencia y la responsabilidad en la ejecución de tus proyectos.",
+      "new" : {
+        "title" : "Nuevo tablero",
+        "name" : "Nombre",
+        "name-placeholder" : "Nombre del tablero",
+        "name-required" : "El nombre es obligatorio",
+        "description" : "Descripción",
+        "description-placeholder" : "Descripción del tablero",
+        "description-required" : "La descripción es obligatoria",
+        "members" : "Miembros",
+        "create" : "Crear",
+        "discard" : "Descartar"
+      }
+    }
+  },
   "admin" : {
     "users" : {
       "title" : "Usuarios",
@@ -124,15 +143,81 @@
       "description" : "Administra los usuarios de la plataforma, asigna roles y permisos, y mantén actualizada la información de contacto. Asegúrate de que cada miembro de la organización tenga acceso a las aplicaciones y recursos necesarios para colaborar y contribuir al éxito de la empresa."
     },
     "albums" : {
-      "title" : "Álbumes",
+      "title" : "Gestor de Álbumes",
       "subtitle" : "Administra los Álbumes de la Plataforma",
-      "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios."
+      "description" : "Crea y actualiza y elimina álbumes de fotos para compartir momentos importantes y eventos especiales con los miembros de la organización. Asegúrate de que cada álbum refleje la cultura y los logros de la empresa, y fomente la interacción y la participación de los usuarios.",
+      "table" : {
+        "id" : "ID",
+        "cover" : "Portada",
+        "name" : "Nombre",
+        "image-count" : "Cantidad de Imágenes",
+        "created-at" : "Creado el",
+        "views" : "Vistas",
+        "actions" : "Acciones",
+        "view" : "Ver",
+        "edit" : "Editar",
+        "delete" : "Eliminar",
+        "add-images" : "Agregar Imágenes",
+        "no-content" : "No hay álbumes disponibles para mostrar"
+      },
+      "new" : {
+        "title" : "Nuevo Álbum",
+        "name" : "Nombre",
+        "description" : "Descripción",
+        "cover" : "Portada",
+        "create" : "Crear"
+      },
+      "details" : {
+        "title" : "Detalle del Álbum",
+        "see-cover" : "Ver portada",
+        "edit" : "Editar",
+        "delete" : "Eliminar",
+        "table" : {
+          "image" : "Imagen",
+          "format" : "Formato",
+          "size" : "Tamaño",
+          "created-at" : "Creado el",
+          "actions" : "Acciones",
+          "delete" : "Eliminar"
+        },
+        "new" : {
+          "title" : "Agregar Imágenes",
+          "images" : "Imágenes",
+          "upload" : "Subir"
+        }
+      }
     },
     "events" : {
       "title" : "Eventos",
       "subtitle" : "Administra los Eventos de la Plataforma",
       "description" : "Administra los eventos de la plataforma, crea y actualiza eventos, y mantén informados a los usuarios sobre las reuniones, conferencias y actividades importantes. Asegúrate de que cada miembro de la organización esté al tanto de los eventos y pueda participar activamente en la vida de la empresa."
     }
+  },
+  "errors" : {
+    "runtime" : {
+      "title" : "Error de tiempo de ejecución",
+      "message" : "Se ha producido un error inesperado. Por favor, inténtalo de nuevo más tarde."
+    },
+    "not-found" : {
+      "title" : "Página no encontrada",
+      "message" : "La página que estás buscando no se ha encontrado. Por favor, verifica la URL e inténtalo de nuevo."
+    },
+    "unauthorized" : {
+      "title" : "Acceso no autorizado",
+      "message" : "No tienes permiso para acceder a esta página. Por favor, inicia sesión con una cuenta autorizada."
+    },
+    "forbidden" : {
+      "title" : "Acceso denegado",
+      "message" : "No tienes permiso para acceder a esta página. Por favor, contacta al administrador del sistema para obtener acceso."
+    },
+    "service" : {
+      "title" : "Error del Servicio",
+      "message" : "Se ha producido un error al comunicarse con el servicio. Por favor, inténtalo de nuevo más tarde."
+    }
+  },
+  "messages" : {
+    "upload-complete" : "La carga se ha completado con éxito",
+    "upload-error" : "Se ha producido un error al subir el/los archivo(s)"
   },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",

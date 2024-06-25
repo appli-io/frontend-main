@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, map, Observable, of, switchMap, take, tap, throwError, } from 'rxjs';
 
-import { Board, Card, Label, List } from 'app/modules/admin/apps/scrumboard/scrumboard.models';
+import { Board, Card, Label, List } from '@modules/admin/apps/scrumboard/models/scrumboard.models';
 import { Api }                      from '@core/interfaces/api';
 
 @Injectable({providedIn: 'root'})
@@ -88,12 +88,12 @@ export class ScrumboardService {
       take(1),
       switchMap((boards) =>
         this._httpClient
-          .put<Api<Board>>('api/scrumboard/board', {board})
+          .post<Api<Board>>('api/scrumboard/board', board)
           .pipe(
             map((response) => response.content),
             map((newBoard) => {
               // Update the boards with the new board
-              this._boards.next([ ...boards, newBoard ]);
+              this._boards.next([ newBoard, ...boards ]);
 
               // Return new board from observable
               return newBoard;

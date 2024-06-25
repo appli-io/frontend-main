@@ -1,4 +1,4 @@
-import { IBoard, ICard, ILabel, IList, IMember, } from 'app/modules/admin/apps/scrumboard/scrumboard.types';
+import { IBoard, ICard, ILabel, IList, IMember, } from '@modules/admin/apps/scrumboard/models/scrumboard.types';
 import { IImage }                                 from '@modules/admin/news/domain/interfaces/news.interface';
 
 // -----------------------------------------------------------------------------------------------------
