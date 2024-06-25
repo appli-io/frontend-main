@@ -6,7 +6,7 @@ import { TranslocoDirective, TranslocoService }                                 
 import { MatDialogRef }                                                          from '@angular/material/dialog';
 import { takeUntil }                                                             from 'rxjs';
 import { MatButton, MatIconButton }                                              from '@angular/material/button';
-import { MatFormField, MatLabel }                                                from '@angular/material/form-field';
+import { MatFormField, MatFormFieldModule, MatLabel, MatPrefix }                                                from '@angular/material/form-field';
 import { MatInputModule }                                                        from '@angular/material/input';
 import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
 import { NgForOf, NgIf }                                                         from '@angular/common';
@@ -14,6 +14,8 @@ import { MatIcon }                                                              
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { MatCheckbox }                                                           from '@angular/material/checkbox';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }                from '@angular/material/datepicker';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: "app-new",
@@ -24,7 +26,7 @@ import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }               
     MatIcon,
     MatIconButton,
     MatLabel,
-    MatFormField,
+    MatFormFieldModule,
     MatInputModule,
     CdkTextareaAutosize,
     MatCheckbox,
@@ -34,7 +36,10 @@ import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }               
     MatButton,
     MatProgressSpinner,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatOptionModule,
+    MatPrefix,
+    MatSelectModule,
   ],
   templateUrl: "./new.component.html",
 })
