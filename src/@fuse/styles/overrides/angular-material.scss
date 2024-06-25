@@ -330,7 +330,14 @@
 /* -------------------------------------------------------------------------- */
 /*  @ Dialog
 /* -------------------------------------------------------------------------- */
+.mat-mdc-dialog-panel {
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+}
+
 .mat-mdc-dialog-container {
+  max-height: 80vh;
 
   .mdc-dialog__surface {
     border-radius: 16px !important;
