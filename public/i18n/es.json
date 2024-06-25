@@ -190,7 +190,32 @@
     "events" : {
       "title" : "Eventos",
       "subtitle" : "Administra los Eventos de la Plataforma",
-      "description" : "Administra los eventos de la plataforma, crea y actualiza eventos, y mantén informados a los usuarios sobre las reuniones, conferencias y actividades importantes. Asegúrate de que cada miembro de la organización esté al tanto de los eventos y pueda participar activamente en la vida de la empresa."
+      "description" : "Administra los eventos de la plataforma, crea y actualiza eventos, y mantén informados a los usuarios sobre las reuniones, conferencias y actividades importantes. Asegúrate de que cada miembro de la organización esté al tanto de los eventos y pueda participar activamente en la vida de la empresa.",
+      "new" : {
+        "title" : "Nuevo Evento",
+        "description" : "Descripción",
+        "isAllDay" : "Es Todo el Día",
+        "startDate" : "Fecha de Inicio",
+        "endDate" : "Fecha de Término",
+        "location" : "Ubicación",
+        "addUrl": "Agregar URL",
+        "url" : {
+          "label" : "URL",
+          "platform" : "Plataforma"
+        },
+        "image" : "Imagen",
+        "capacity" : "Capacidad",
+        "organizer" : {
+          "name" : "Nombre",
+          "email" : "Correo Electrónico",
+          "phone" : {
+            "countryCode" : "Código de País",
+            "number" : "Número"
+          }
+        },
+        "type" : "Tipo",
+        "status" :"Estado"
+      }
     }
   },
   "errors" : {

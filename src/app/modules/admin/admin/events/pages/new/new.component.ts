@@ -41,6 +41,7 @@ import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle }               
 export class NewComponent implements OnInit {
   eventForm: UntypedFormGroup;
   notyf = new Notyf();
+  
 
   constructor(
     public readonly _matDialogRef: MatDialogRef<NewComponent>,
@@ -53,7 +54,7 @@ export class NewComponent implements OnInit {
     this.eventForm = this._formBuilder.group({
       title: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-      isAllDay: [undefined, [Validators.required]],
+      isAllDay: [false, [Validators.required]],
       startDate: [undefined, [Validators.required]],
       endDate: [undefined],
       location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],

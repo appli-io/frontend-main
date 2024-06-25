@@ -1,12 +1,9 @@
-<div *transloco="let t; read: 'admin.albums.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
+<div *transloco="let t; read: 'admin.events.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
   <!-- Header -->
   <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
     <div [innerText]="t('title')" class="text-lg font-medium"></div>
     <button (click)="discard()" mat-icon-button>
-      <mat-icon
-        [svgIcon]="'heroicons_outline:x-mark'"
-        class="text-current"
-      ></mat-icon>
+      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
     </button>
   </div>
 
@@ -15,7 +12,7 @@
     <!-- Title -->
     <mat-form-field>
       <mat-label [innerText]="t('title')"></mat-label>
-      <input formControlName="title" matInput/>
+      <input formControlName="title" matInput />
     </mat-form-field>
 
     <!-- Description -->
@@ -24,50 +21,63 @@
       <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
     </mat-form-field>
 
-    <!-- Is All Day -->
-    <mat-checkbox formControlName="isAllDay">dasdjasldkj</mat-checkbox>
-
+    
     <!-- Start Date -->
     <mat-form-field>
       <mat-label [innerText]="t('startDate')"></mat-label>
-      <input formControlName="startDate" matInput [matDatepicker]="startPicker"/>
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
+      <input formControlName="startDate" matInput [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-
+  
+      <mat-form-field
+          class="flex-auto"
+      >
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker1" />
+          <mat-datepicker-toggle
+              matSuffix
+              [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
     <!-- End Date -->
     <mat-form-field>
       <mat-label [innerText]="t('endDate')"></mat-label>
-      <input formControlName="endDate" matInput [matDatepicker]="endPicker"/>
+      <input formControlName="endDate" matInput [matDatepicker]="endPicker" />
       <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
+    
+    <!-- Is All Day -->
+    <mat-checkbox class="-ml-2 mb-3" formControlName="isAllDay">{{ t("isAllDay") }}</mat-checkbox>
 
     <!-- Location -->
     <mat-form-field>
       <mat-label [innerText]="t('location')"></mat-label>
-      <input formControlName="location" matInput/>
+      <input formControlName="location" matInput />
     </mat-form-field>
 
     <!-- URL -->
     <div formArrayName="url">
-      <!--      <div *ngFor="let url of eventForm.get('url').controls; let i = index" [formGroupName]="i">-->
-      <!--        <mat-form-field>-->
-      <!--          <mat-label [innerText]="t('urlLabel')"></mat-label>-->
-      <!--          <input formControlName="label" matInput/>-->
-      <!--        </mat-form-field>-->
-      <!--        <mat-form-field>-->
-      <!--          <mat-label [innerText]="t('url')"></mat-label>-->
-      <!--          <input formControlName="url" matInput/>-->
-      <!--        </mat-form-field>-->
-      <!--        <mat-form-field>-->
-      <!--          <mat-label [innerText]="t('platform')"></mat-label>-->
-      <!--          <input formControlName="platform" matInput/>-->
-      <!--        </mat-form-field>-->
-      <!--        <button mat-icon-button (click)="removeUrl(i)">-->
-      <!--          <mat-icon>delete</mat-icon>-->
-      <!--        </button>-->
-      <!--      </div>-->
+      <div *ngFor="let url of eventForm.get('url').controls; let i = index" [formGroupName]="i">
+        <mat-form-field>
+          <mat-label [innerText]="t('url.label')"></mat-label>
+          <input formControlName="label" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label [innerText]="t('url.label')"></mat-label>
+          <input formControlName="url" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label [innerText]="t('url.platform')"></mat-label>
+          <input formControlName="platform" matInput />
+        </mat-form-field>
+        <button mat-icon-button (click)="removeUrl(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
       <button mat-stroked-button (click)="addUrl()">
         <mat-icon>add</mat-icon>
         <span [innerText]="t('addUrl')"></span>
@@ -77,33 +87,33 @@
     <!-- Image -->
     <mat-form-field>
       <mat-label [innerText]="t('image')"></mat-label>
-      <input formControlName="image" matInput/>
+      <input formControlName="image" matInput />
     </mat-form-field>
 
     <!-- Capacity -->
     <mat-form-field>
       <mat-label [innerText]="t('capacity')"></mat-label>
-      <input formControlName="capacity" matInput type="number"/>
+      <input formControlName="capacity" matInput type="number" />
     </mat-form-field>
 
     <!-- Organizer -->
     <div formGroupName="organizer">
       <mat-form-field>
-        <mat-label [innerText]="t('organizerName')"></mat-label>
-        <input formControlName="name" matInput/>
+        <mat-label [innerText]="t('organizer.name')"></mat-label>
+        <input formControlName="name" matInput />
       </mat-form-field>
       <mat-form-field>
-        <mat-label [innerText]="t('organizerEmail')"></mat-label>
-        <input formControlName="email" matInput type="email"/>
+        <mat-label [innerText]="t('organizer.email')"></mat-label>
+        <input formControlName="email" matInput type="email" />
       </mat-form-field>
       <div formGroupName="phone">
         <mat-form-field>
-          <mat-label [innerText]="t('phoneCountryCode')"></mat-label>
-          <input formControlName="countryCode" matInput/>
+          <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
+          <input formControlName="countryCode" matInput />
         </mat-form-field>
         <mat-form-field>
-          <mat-label [innerText]="t('phoneNumber')"></mat-label>
-          <input formControlName="number" matInput type="tel"/>
+          <mat-label [innerText]="t('organizer.phone.number')"></mat-label>
+          <input formControlName="number" matInput type="tel" />
         </mat-form-field>
       </div>
     </div>
@@ -111,34 +121,22 @@
     <!-- Type -->
     <mat-form-field>
       <mat-label [innerText]="t('type')"></mat-label>
-      <input formControlName="type" matInput/>
+      <input formControlName="type" matInput />
     </mat-form-field>
 
     <!-- Status -->
     <mat-form-field>
       <mat-label [innerText]="t('status')"></mat-label>
-      <input formControlName="status" matInput/>
+      <input formControlName="status" matInput />
     </mat-form-field>
   </form>
 
   <!-- Actions -->
   <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
     <!-- Discard -->
-    <button
-      (click)="discard()"
-      class="w-full md:w-30 "
-      mat-stroked-button
-    >
-      Discard
-    </button>
+    <button (click)="discard()" class="w-full md:w-30" mat-stroked-button>Discard</button>
     <!-- Save as draft -->
-    <button
-      (click)="save()"
-      [disabled]="eventForm.disabled"
-      class="w-full md:w-30"
-      color="primary"
-      mat-flat-button
-    >
+    <button (click)="save()" [disabled]="eventForm.disabled" class="w-full md:w-30" color="primary" mat-flat-button>
       <span *ngIf="!eventForm.disabled">Save</span>
       <mat-progress-spinner *ngIf="eventForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
     </button>
