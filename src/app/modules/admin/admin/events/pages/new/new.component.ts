@@ -9,7 +9,7 @@ import { MatButtonModule, MatIconButton }                                       
 import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
 import { MatInputModule }                                                                          from '@angular/material/input';
 import { CdkTextareaAutosize }                                                                     from '@angular/cdk/text-field';
-import { NgForOf, NgIf }                                                                           from '@angular/common';
+import { JsonPipe, NgForOf, NgIf }                                                                 from '@angular/common';
 import { MatIcon }                                                                                 from '@angular/material/icon';
 import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
 import { MatCheckbox }                                                                             from '@angular/material/checkbox';
@@ -17,8 +17,8 @@ import { MatDatepickerModule }                                                  
 import { MatSelectModule }                                                                         from '@angular/material/select';
 import { MatOptionModule }                                                                         from '@angular/material/core';
 import { MatDivider }                                                                              from '@angular/material/divider';
-import {MatStepperModule}                                                                          from '@angular/material/stepper';
-import { trackByFn }                                                                                    from '@libs/ui/utils/utils';
+import { MatStepperModule }                                                                        from '@angular/material/stepper';
+import { trackByFn }                                                                               from '@libs/ui/utils/utils';
 
 const EventStatusEnum = {
   DRAFT: 'draft',
@@ -69,6 +69,7 @@ const EventTypeEnum = {
     NgForOf,
     MatDivider,
     MatStepperModule,
+    JsonPipe,
   ],
   templateUrl: "./new.component.html",
 })
@@ -92,7 +93,7 @@ export class NewComponent implements OnInit {
     this.eventForm = this._formBuilder.group({
       step1: this._formBuilder.group({
         title: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-        description: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        description: [ undefined, [ Validators.required, Validators.minLength(3) ] ],
         isAllDay: [true, [Validators.required]],
         startDate: [undefined, [Validators.required]],
         endDate: [undefined],

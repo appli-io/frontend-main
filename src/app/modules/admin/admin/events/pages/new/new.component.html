@@ -8,46 +8,47 @@
   </div>
 
   <!-- Content -->
-  <form [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
-    <mat-vertical-stepper [linear]="true" #verticalStepper>
+  <form [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto h-full">
+    <mat-vertical-stepper #verticalStepper [linear]="true">
       <!-- Paso 1: Nuevo evento -->
       <mat-step [formGroupName]="'step1'" [stepControl]="eventForm.get('step1')">
         <ng-template matStepLabel>Nuevo evento</ng-template>
         <!-- Title -->
-        <div class="flex flex-row gap-4">
+        <div class="flex flex-col gap-2 mt-2">
+          <!-- Title of event -->
           <mat-form-field>
             <mat-label [innerText]="t('name')"></mat-label>
-            <input formControlName="title" matInput />
+            <input formControlName="title" matInput/>
           </mat-form-field>
+
           <!-- Description -->
           <mat-form-field>
             <mat-label [innerText]="t('description')"></mat-label>
             <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
+
           </mat-form-field>
-        </div>
-        <!-- Start Date -->
-        <div class="flex flex-row gap-4">
+          <!-- Start Date -->
           <mat-form-field class="flex-auto">
             <mat-label [innerText]="t('startDate')"></mat-label>
-            <input [matDatepicker]="picker1" formControlName="startDate" matInput />
+            <input [matDatepicker]="picker1" formControlName="startDate" matInput/>
             <mat-datepicker-toggle [for]="picker1" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
           <!-- End Date -->
           @if (!eventForm.get('step1.isAllDay').value) {
-          <mat-form-field class="flex-auto">
-            <mat-label [innerText]="t('endDate')"></mat-label>
-            <input [matDatepicker]="picker2" formControlName="endDate" matInput />
-            <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
+            <mat-form-field class="flex-auto">
+              <mat-label [innerText]="t('endDate')"></mat-label>
+              <input [matDatepicker]="picker2" formControlName="endDate" matInput/>
+              <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
           }
         </div>
 
         <!-- Is All Day -->
         <mat-checkbox class="-ml-2 mb-3" formControlName="isAllDay">{{ t("isAllDay") }}</mat-checkbox>
         <div class="flex justify-end">
-          <button mat-flat-button color="primary" matStepperNext>Next</button>
+          <button color="primary" mat-flat-button matStepperNext>Next</button>
         </div>
       </mat-step>
 
@@ -55,49 +56,55 @@
       <mat-step [formGroupName]="'step2'" [stepControl]="eventForm.get('step2')">
         <ng-template matStepLabel>Detalles adicionales</ng-template>
         <!-- Location -->
-        <mat-form-field>
-          <mat-label [innerText]="t('location')"></mat-label>
-          <input formControlName="location" matInput />
-        </mat-form-field>
-        <!-- URL -->
-        <div class="pb-4" formArrayName="url">
-          @for (url of urlArray.controls; track $index) {
-          <div [formGroupName]="i">
-            <mat-form-field>
-              <mat-label>{{ t("url.label") }}</mat-label>
-              <input formControlName="label" matInput />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ t("url.url") }}</mat-label>
-              <input formControlName="url" matInput />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ t("url.platform") }}</mat-label>
-              <input formControlName="platform" matInput />
-            </mat-form-field>
-            <button (click)="removeUrl(i)" mat-icon-button>
-              <mat-icon>delete</mat-icon>
+        <div class="flex flex-col gap-2 mt-2">
+          <mat-form-field>
+            <mat-label [innerText]="t('location')"></mat-label>
+            <input formControlName="location" matInput/>
+          </mat-form-field>
+          <!-- URL -->
+          <div class="pb-4" formArrayName="url">
+            @for (url of urlArray.controls; track trackByFn($index, url)) {
+              <h2>URL de evento {{ $index + 1 }}</h2>
+              <pre>{{ eventForm.value['step2'].url[$index]?.platform | json }}</pre>
+              <div [formGroupName]="$index" class="flex flex-col gap-2 pl-4 mt-2 border-l border-gray-400">
+                <mat-form-field>
+                  <mat-label>{{ t("url.platform") }}</mat-label>
+                  <input formControlName="platform" matInput/>
+                </mat-form-field>
+                @if (eventForm.value['step2'].url[$index]?.platform === "Zoom") {
+                  <mat-form-field>
+                    <mat-label>{{ t("url.label") }}</mat-label>
+                    <input formControlName="label" matInput/>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>{{ t("url.url") }}</mat-label>
+                    <input formControlName="url" matInput/>
+                  </mat-form-field>
+                }
+                <button (click)="removeUrl($index)" mat-icon-button>
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
+            <button (click)="addUrl()" mat-stroked-button>
+              <mat-icon>add</mat-icon>
+              <span>{{ t("addUrl") }}</span>
             </button>
           </div>
-          }
-          <button (click)="addUrl()" mat-stroked-button>
-            <mat-icon>add</mat-icon>
-            <span>{{ t("addUrl") }}</span>
-          </button>
+          <!-- Image -->
+          <mat-form-field>
+            <mat-label [innerText]="t('image')"></mat-label>
+            <input formControlName="image" matInput/>
+          </mat-form-field>
+          <!-- Capacity -->
+          <mat-form-field>
+            <mat-label [innerText]="t('capacity')"></mat-label>
+            <input formControlName="capacity" matInput type="number"/>
+          </mat-form-field>
         </div>
-        <!-- Image -->
-        <mat-form-field>
-          <mat-label [innerText]="t('image')"></mat-label>
-          <input formControlName="image" matInput />
-        </mat-form-field>
-        <!-- Capacity -->
-        <mat-form-field>
-          <mat-label [innerText]="t('capacity')"></mat-label>
-          <input formControlName="capacity" matInput type="number" />
-        </mat-form-field>
         <div class="flex justify-end">
-          <button mat-flat-button color="accent" matStepperPrevious>Back</button>
-          <button mat-flat-button color="primary" matStepperNext>Next</button>
+          <button color="accent" mat-flat-button matStepperPrevious>Back</button>
+          <button color="primary" mat-flat-button matStepperNext>Next</button>
         </div>
       </mat-step>
 
@@ -111,18 +118,18 @@
         <div class="flex flex-col px-4" formGroupName="organizer">
           <mat-form-field>
             <mat-label [innerText]="t('organizer.name')"></mat-label>
-            <input formControlName="name" matInput />
+            <input formControlName="name" matInput/>
           </mat-form-field>
           <!-- Organizer Email -->
           <mat-form-field>
             <mat-label [innerText]="t('organizer.email')"></mat-label>
-            <input formControlName="email" matInput type="email" />
+            <input formControlName="email" matInput type="email"/>
           </mat-form-field>
           <!-- Organizer Phone -->
           <div formGroupName="phone">
             <mat-form-field class="w-100 flex-auto">
               <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
-              <input formControlName="number" [placeholder]="'Prefijo'" matInput />
+              <input [placeholder]="'Prefijo'" formControlName="number" matInput/>
               <mat-select formControlName="countryCode" matPrefix>
                 <mat-option value="+56 9">Chile</mat-option>
                 <mat-option value="US">US</mat-option>
@@ -135,7 +142,7 @@
           <mat-label>{{ t("type") }}</mat-label>
           <mat-select formControlName="type">
             @for (type of eventTypeOptions; track trackByFn($index, type)) {
-            <mat-option [value]="type">{{ t("eventTypes." + type) }}</mat-option>
+              <mat-option [value]="type">{{ t("eventTypes." + type) }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
@@ -144,16 +151,16 @@
           <mat-label>{{ t("status") }}</mat-label>
           <mat-select formControlName="status">
             @for (status of eventStatusOptions; track trackByFn($index, status)) {
-            <mat-option [value]="status">{{ t("eventStatuses." + status) }}</mat-option>
+              <mat-option [value]="status">{{ t("eventStatuses." + status) }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
         <div class="flex justify-end">
-          <button mat-flat-button color="accent" matStepperPrevious>Back</button>
+          <button color="accent" mat-flat-button matStepperPrevious>Back</button>
           <button (click)="save()" [disabled]="eventForm.disabled || !eventForm.valid" class="w-full md:w-30" color="primary" mat-flat-button>
             <span>Save</span>
             @if (eventForm.disabled) {
-            <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+              <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
             }
           </button>
         </div>
