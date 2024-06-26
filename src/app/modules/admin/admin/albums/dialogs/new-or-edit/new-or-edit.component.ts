@@ -64,7 +64,6 @@ export class NewOrEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
     if (this.data?.album)
       this.albumForm = this._formBuilder.group({
         name       : [ this.data.album.name, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
@@ -77,8 +76,6 @@ export class NewOrEditComponent implements OnInit {
         description: [ undefined, [ Validators.required, Validators.minLength(3) ] ],
         cover      : [ undefined, [ Validators.required, FileInputValidators.accept('image/*') ] ],
       });
-
-
   }
 
   discard(): void {

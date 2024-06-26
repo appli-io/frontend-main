@@ -156,8 +156,9 @@ swiper-slide {
   @media (max-width: 959px) {
     overflow: hidden;
     width: 91vw !important;
-    height: 95vh !important;
+    //height: 95vh !important;
     max-width: 91vw !important;
+    max-height: 95vh !important;
 
     //& .mat-mdc-dialog-surface {
     //  border-radius: 0 !important;

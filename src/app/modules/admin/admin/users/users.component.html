@@ -5,8 +5,25 @@
     [title]="t('title')"
   ></page-header>
 
-  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10">
-    <!-- Add team member -->
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 px-4 sm:px-8">
+    <!-- Title and new member button -->
+    <div class="flex flex-row w-full">
+      <!-- Title -->
+      <h2 class="flex-1 font-bold text-gray-700 text-xl self-center">{{ t('title') }}</h2>
+
+      <!-- New member button -->
+      <a
+        (click)="openNewMemberDialog()"
+        [matTooltip]="t('new.title')"
+        class="flex-0 font-bold py-2 px-4 rounded"
+        color="primary"
+        mat-icon-button
+      >
+        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+      </a>
+    </div>
+
+    <!-- Filter team member -->
     <div class="w-full">
       <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
         <mat-label>Add team members</mat-label>
@@ -26,7 +43,7 @@
     </div>
 
     <!-- Team members -->
-    <div class="mt-8 flex flex-col w-full divide-y border-b border-t">
+    <div class="flex flex-col w-full divide-y border-b border-t">
       @for (member of members; track trackByFn($index, member)) {
         <div class="flex flex-col py-6 sm:flex-row sm:items-center">
           <div class="flex items-center">

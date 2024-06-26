@@ -24,4 +24,8 @@ export class UsersService {
         tap((response: Page<CompanyUser>) => this._companyMembers.next(response.content)),
       );
   }
+
+  sendMemberInvitation({email, role, invitationMessage}: { email: string, role: string, invitationMessage: string }): Observable<any> {
+    return this._httpClient.post('api/company/members/invite', {email, role, invitationMessage});
+  }
 }

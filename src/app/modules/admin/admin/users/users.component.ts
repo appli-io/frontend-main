@@ -4,7 +4,7 @@ import { TranslocoDirective }                     from '@ngneat/transloco';
 import { MatFormField }                           from '@angular/material/form-field';
 import { MatIcon }                                from '@angular/material/icon';
 import { MatInput }                               from '@angular/material/input';
-import { MatIconButton }                          from '@angular/material/button';
+import { MatIconAnchor, MatIconButton }           from '@angular/material/button';
 import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
 import { trackByFn }                              from '@libs/ui/utils/utils';
 import { TitleCasePipe }                          from '@angular/common';
@@ -12,11 +12,15 @@ import { FuseConfirmationService }                from '../../../../../@fuse/ser
 import { UsersService }                           from '@modules/admin/admin/users/users.service';
 import { CompanyUser }                            from '@modules/admin/admin/users/model/company-user.model';
 import { takeUntilDestroyed }                     from '@angular/core/rxjs-interop';
+import { MatTooltip }                             from '@angular/material/tooltip';
+import { MatDialog }                              from '@angular/material/dialog';
+import { MemberNewComponent }                     from '@modules/admin/admin/users/dialogs/member-new/member-new.component';
+import { rolesList }                              from '@core/constants';
 
 @Component({
   selector   : 'app-users',
   standalone : true,
-  imports    : [
+  imports: [
     PageHeaderComponent,
     TranslocoDirective,
     MatFormField,
@@ -27,6 +31,8 @@ import { takeUntilDestroyed }                     from '@angular/core/rxjs-inter
     MatSelectTrigger,
     MatOption,
     TitleCasePipe,
+    MatIconAnchor,
+    MatTooltip,
   ],
   templateUrl: './users.component.html'
 })
@@ -37,6 +43,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
+    private readonly _matDialog: MatDialog,
     private readonly _usersService: UsersService
   ) {
     this._usersService.data$.pipe(takeUntilDestroyed()).subscribe((members) => {
@@ -47,26 +54,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     // Setup the roles
-    this.roles = [
-      {
-        label      : 'Read',
-        value      : 'read',
-        description:
-          'Can read and clone this repository. Can also open and comment on issues and pull requests.',
-      },
-      {
-        label      : 'Write',
-        value      : 'write',
-        description:
-          'Can read, clone, and push to this repository. Can also manage issues and pull requests.',
-      },
-      {
-        label      : 'Admin',
-        value      : 'admin',
-        description:
-          'Can read, clone, and push to this repository. Can also manage issues, pull requests, and repository settings, including adding collaborators.',
-      },
-    ];
+    this.roles = rolesList;
   }
 
   deleteMember(id): void {
@@ -90,6 +78,12 @@ export class UsersComponent implements OnInit {
         console.log('Delete member', id);
         // this._scrumboardService.deleteList(id).subscribe();
       }
+    });
+  }
+
+  openNewMemberDialog() {
+    this._matDialog.open(MemberNewComponent, {
+      panelClass: 'dialog-mobile-fullscreen',
     });
   }
 }
