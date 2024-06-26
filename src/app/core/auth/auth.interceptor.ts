@@ -35,21 +35,18 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
   return next(newReq).pipe(
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        if (authService.accessToken) return authService.signInUsingToken().pipe(
-          switchMap(() => {
-            const retryReq = req.clone({
-              headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken)
-            });
-            return next(retryReq);
-          }),
-          catchError((refreshError) => {
-            if (refreshError instanceof HttpErrorResponse && refreshError.status === 401)
-              return throwError(() => authService.signOut().then(() => location.reload()));
-            return throwError(refreshError);
-          })
-        );
+        if (authService.accessToken && !error.url.includes('refresh-access')) {
+          return authService.signInUsingToken().pipe(
+            switchMap(() => {
+              newReq = req.clone({
+                headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken),
+              });
+
+              return next(newReq);
+            })
+          );
+        } else return throwError(() => authService.signOut().then(() => location.reload()));
       }
-      return throwError(error);
     })
   );
 };

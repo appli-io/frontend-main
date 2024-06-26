@@ -98,14 +98,13 @@ export class AuthService {
     return this._httpClient.post('api/auth/refresh-access', {})
       .pipe(
         catchError((err) => {
-          if (err.status !== 401) {
-            localStorage.removeItem('accessToken');
-            this._authenticated = false;
-            location.reload();
-          }
-          return of(false);
+          localStorage.removeItem('accessToken');
+          this._authenticated = false;
+          location.reload();
+          return err;
         }),
         switchMap((response: any) => {
+          console.log(response);
           // Replace the access token with the new one if it's available on
           // the response object.
           //
