@@ -217,7 +217,32 @@
           }
         },
         "type" : "Tipo",
-        "status" :"Estado"
+        "status" :"Estado",
+        "eventTypes": {
+          "conference": "Conferencia",
+          "meetup": "Reunión",
+          "workshop": "Taller",
+          "seminar": "Seminario",
+          "webinar": "Webinario",
+          "hackathon": "Hackathon",
+          "concert": "Concierto",
+          "festival": "Festival",
+          "exhibition": "Exposición",
+          "fair": "Feria",
+          "show": "Show",
+          "performance": "Actuación",
+          "competition": "Competencia",
+          "game": "Juego",
+          "sports": "Deportes"
+        },
+        "eventStatuses": {
+          "draft": "Borrador",
+          "published": "Publicado",
+          "cancelled": "Cancelado",
+          "postponed": "Pospuesto",
+          "rescheduled": "Reprogramado",
+          "ended": "Finalizado"
+        }
       }
     }
   },
