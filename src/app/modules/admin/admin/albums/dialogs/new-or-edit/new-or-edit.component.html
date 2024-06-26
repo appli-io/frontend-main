@@ -1,12 +1,9 @@
 <div *transloco="let t; read: 'admin.albums.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
   <!-- Header -->
   <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
-    <div [innerText]="t('title')" class="text-lg font-medium"></div>
+    <div [innerText]="title" class="text-lg font-medium"></div>
     <button (click)="discard()" mat-icon-button>
-      <mat-icon
-        [svgIcon]="'heroicons_outline:x-mark'"
-        class="text-current"
-      ></mat-icon>
+      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
     </button>
   </div>
 
@@ -79,7 +76,7 @@
       color="primary"
       mat-flat-button
     >
-      <span *ngIf="!albumForm.disabled">Create</span>
+      <span *ngIf="!albumForm.disabled" [innerText]="saveText"></span>
       <mat-progress-spinner *ngIf="albumForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
     </button>
   </div>

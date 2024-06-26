@@ -19,7 +19,7 @@
 
     <!-- Cover image -->
     <ng-container matColumnDef="coverImage">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+      <th *matHeaderCellDef mat-header-cell>
         {{ t('cover') }}
       </th>
       <td *matCellDef="let album" mat-cell>
@@ -109,5 +109,14 @@
     <tr *matHeaderRowDef="albumsTableColumns" class="scale-95" mat-header-row></tr>
     <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row py-8 mt-4 scale-95 hover:scale-100 hover:shadow transition-all duration-300 ease-in-out" mat-row></tr>
     <tr *matFooterRowDef="['recentOrdersTableFooter']" class="h-16 border-0" mat-footer-row></tr>
+
+    <!-- No data -->
+    <tr *matNoDataRow class="mat-row">
+      <td [attr.colspan]="albumsTableColumns.length" class="mat-cell">
+        <div class="flex items-center justify-center py-8">
+          <span class="italic">{{ t('no-content') }}</span>
+        </div>
+      </td>
+    </tr>
   </table>
 </div>

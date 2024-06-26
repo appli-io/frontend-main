@@ -167,6 +167,13 @@
         "cover" : "Portada",
         "create" : "Crear"
       },
+      "edit" : {
+        "title" : "Editar Álbum",
+        "name" : "Nombre",
+        "description" : "Descripción",
+        "cover" : "Portada",
+        "update" : "Actualizar"
+      },
       "details" : {
         "title" : "Detalle del Álbum",
         "see-cover" : "Ver portada",
@@ -178,7 +185,8 @@
           "size" : "Tamaño",
           "created-at" : "Creado el",
           "actions" : "Acciones",
-          "delete" : "Eliminar"
+          "delete" : "Eliminar",
+          "no-content" : "No hay imágenes disponibles para mostrar"
         },
         "new" : {
           "title" : "Agregar Imágenes",
