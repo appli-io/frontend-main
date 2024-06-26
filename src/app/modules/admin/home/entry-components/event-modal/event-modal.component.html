@@ -9,15 +9,12 @@
 
   <!-- Content -->
   <div class="flex-1">
-    <!-- Google Map -->
+    <!-- OSM -->
     @if(neededMaps) {
-    <google-map (mapClick)="click($event)" [center]="center" [zoom]="zoom" height="500px" mapId="f9fde58250b04ee8" width="100%">
-      @for (position of markers; track position) {
-      <map-advanced-marker [position]="position" />
-      }
+    <div class="map-container"  
+    #map>
+    </div>
 
-      <map-info-window>texto</map-info-window>
-    </google-map>
     }
   </div>
 

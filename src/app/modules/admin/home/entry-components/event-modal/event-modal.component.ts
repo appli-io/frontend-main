@@ -1,63 +1,78 @@
-import { Component, Inject, OnInit }              from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef }          from '@angular/material/dialog';
-import { IEvent }                                 from '@modules/admin/home/interface/event.interface';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
-import { GoogleMapsModule, MapAdvancedMarker }    from '@angular/google-maps';
-import { MatIcon }                                from '@angular/material/icon';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { IEvent } from "@modules/admin/home/interface/event.interface";
+import { MatButton, MatFabButton, MatIconButton } from "@angular/material/button";
+import { GoogleMapsModule, MapAdvancedMarker } from "@angular/google-maps";
+import { MatIcon } from "@angular/material/icon";
+import { Map, map, tileLayer, marker, LeafletEvent, LeafletMouseEvent} from "leaflet";
 
 @Component({
-  selector   : 'app-event-modal',
-  standalone : true,
-  imports    : [ MatButton, GoogleMapsModule, MapAdvancedMarker, MatIcon, MatFabButton, MatIconButton ],
-  templateUrl: './event-modal.component.html',
+  selector: "app-event-modal",
+  standalone: true,
+  imports: [
+    MatButton,
+    GoogleMapsModule,
+    MapAdvancedMarker,
+    MatIcon,
+    MatFabButton,
+    MatIconButton,
+  ],
+  templateUrl: "./event-modal.component.html",
+  styleUrls: ["./event-modal.component.scss"],
 })
-export class EventModalComponent implements OnInit {
+export class EventModalComponent implements OnInit, AfterViewInit {
+  @ViewChild("map")
+  private mapContainer: ElementRef<HTMLElement>;
+  
   neededMaps: boolean = false;
-  markers: google.maps.LatLngLiteral[] = [];
-  zoom: number = 15;
-  center: google.maps.LatLngLiteral;
-  options: google.maps.MapOptions = {
-    mapTypeId  : 'hybrid',
-    zoomControl: false,
-    scrollwheel: false,
-    disableDoubleClickZoom: true,
-    maxZoom    : 15,
-    minZoom    : 8,
-  };
+  leafletMap : Map;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private _data: { event: IEvent },
-    private _matDialogRef: MatDialogRef<EventModalComponent>
-  ) {}
+  constructor(@Inject(MAT_DIALOG_DATA) private _data: { event: IEvent }, private _matDialogRef: MatDialogRef<EventModalComponent>) {}
 
   ngOnInit(): void {
-    console.log('Evento en el modal: ',this._data);
     if(this._data.event.url?.some((url) => url.platform === 'maps')){
       this.neededMaps = true;
-      this._data.event.url.forEach((url) => {
-        if(url.platform === 'maps'){
-          this.center = {lat: url.latitude, lng: url.longitude};
-          this.markers.push({lat: url.latitude, lng: url.longitude});
-        }
-      });
     }
-    console.log('Markers: ',this.markers);
   }
 
+  ngAfterViewInit(): void {
+    console.log("Evento en el modal: ", this._data);
+    this._data.event.url.forEach((url) => {
+      if (url.platform === "maps") {
+        const initialState = { lng: url.longitude, lat: url.latitude, zoom: 17 };
 
-  zoomIn():void {
-    if (this.zoom < this.options.maxZoom) this.zoom++;
+        this.leafletMap = map(this.mapContainer.nativeElement).setView(
+          [initialState.lat, initialState.lng],
+          initialState.zoom
+        );
+
+        const isRetina = window.devicePixelRatio > 1;
+        const baseUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=3dd80fef8eff420593405a01b0bfa621";
+        const retinaUrl = "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey=3dd80fef8eff420593405a01b0bfa621";
+        const tileLayerUrl = isRetina ? retinaUrl : baseUrl;
+
+        tileLayer(tileLayerUrl, {
+          attribution:
+            'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
+          maxZoom: 20,
+        }).addTo(this.leafletMap);
+
+        marker([url.latitude, url.longitude]).addTo(this.leafletMap);
+
+        //@TODO : Delete this const and console.log
+        const lat = marker([url.latitude, url.longitude]).getLatLng();
+        console.log('lat',lat)
+      }
+    });
   }
 
-  zoomOut():void {
-    if (this.zoom > this.options.minZoom) this.zoom--;
-  }
-
-  click(event: google.maps.MapMouseEvent): void {
-    console.log(event.latLng.toJSON());
+  onMapClick(event: LeafletMouseEvent): void {
+    const lat = event.latlng;
+    console.log('Latitud: ',lat);
   }
 
   closeDialog(): void {
+    console.log('Leaftletmap',this.leafletMap)
     this._matDialogRef.close();
   }
 }

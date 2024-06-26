@@ -2,6 +2,6 @@ export interface IEventUrl {
   label: string;
   url: string;
   platform: 'gmeet' | 'zoom' | 'teams' | 'maps' | 'website' | 'other';
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
 }
