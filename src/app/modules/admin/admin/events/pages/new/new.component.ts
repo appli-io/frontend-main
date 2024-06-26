@@ -143,8 +143,7 @@ export class NewComponent implements OnInit {
     if (this.eventForm.valid) {
       this.eventForm.disable();
 
-      const flattenedData = this.flattenFormData(this.eventForm.value);
-
+      const flattenedData = this.flattenFormData(this.eventForm.getRawValue());
       try {
         this._eventsService
           .createEvent(flattenedData)
