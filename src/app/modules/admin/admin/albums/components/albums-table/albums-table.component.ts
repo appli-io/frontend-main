@@ -11,6 +11,7 @@ import {
   MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
+  MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTable,
@@ -55,7 +56,8 @@ import { TranslocoDirective }                                        from '@ngne
     MatIconAnchor,
     RouterLink,
     MatTooltip,
-    TranslocoDirective
+    TranslocoDirective,
+    MatNoDataRow
   ],
   templateUrl: './albums-table.component.html'
 })

@@ -13,6 +13,7 @@ import {
   MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
+  MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTable,
@@ -33,7 +34,7 @@ import { IAlbumImage }        from '@modules/admin/apps/albums/interfaces/album-
 @Component({
   selector   : 'album-image-table',
   standalone : true,
-  imports    : [
+  imports: [
     DatePipe,
     MatButton,
     MatCellDef,
@@ -58,7 +59,8 @@ import { IAlbumImage }        from '@modules/admin/apps/albums/interfaces/album-
     MatTooltip,
     NgClass,
     RouterLink,
-    TranslocoDirective
+    TranslocoDirective,
+    MatNoDataRow
   ],
   templateUrl: './album-image-table.component.html'
 })

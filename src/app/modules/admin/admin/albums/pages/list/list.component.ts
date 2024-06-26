@@ -1,5 +1,9 @@
 import { Component }                           from '@angular/core';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
+import { MatDialog }                           from '@angular/material/dialog';
+import { MatIcon }                             from '@angular/material/icon';
+import { MatTooltip }                          from '@angular/material/tooltip';
+import { RouterLink }                          from '@angular/router';
 
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 
@@ -7,12 +11,10 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
 import { AlbumsService }           from '@modules/admin/admin/albums/albums.service';
 import { AlbumsTableComponent }    from '@modules/admin/admin/albums/components/albums-table/albums-table.component';
+import { NewOrEditComponent }      from '@modules/admin/admin/albums/dialogs/new-or-edit/new-or-edit.component';
 import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
-import { RouterLink }              from '@angular/router';
-import { MatDialog }               from '@angular/material/dialog';
-import { NewComponent }            from '@modules/admin/admin/albums/pages/new/new.component';
-import { MatIcon }                 from '@angular/material/icon';
-import { MatTooltip }              from '@angular/material/tooltip';
+import { mergeMap }                from 'rxjs';
+import { Notyf }                   from 'notyf';
 
 @Component({
   selector   : 'app-list',
@@ -33,6 +35,7 @@ import { MatTooltip }              from '@angular/material/tooltip';
 })
 export class ListComponent {
   public albums$ = this._albumsService.albums$;
+  private _notyf = new Notyf();
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
@@ -41,7 +44,7 @@ export class ListComponent {
   ) {}
 
   openNewAlbumDialog() {
-    this._matDialog.open(NewComponent, {
+    this._matDialog.open(NewOrEditComponent, {
       panelClass: 'dialog-mobile-fullscreen',
     });
   }
@@ -64,14 +67,26 @@ export class ListComponent {
     });
 
     // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed().subscribe((result) => {
-      // If the confirm button pressed...
-      if (result === 'confirmed') {
-        // Delete the list
-        console.log('Delete member', album.id);
-        // this._scrumboardService.deleteList(id).subscribe();
-      }
-    });
+    confirmation.afterClosed()
+      .pipe(
+        mergeMap((result) => {
+          // If the confirm button pressed...
+          if (result === 'confirmed') {
+            // Delete the album
+            return this._albumsService.deleteAlbum(album.id);
+          }
+          return [];
+        })
+      )
+      .subscribe({
+        next : () => {
+          this._notyf.success('Album deleted');
+        },
+        error: (error) => {
+          console.error('Delete album error', error);
+          this._notyf.error('Error deleting album');
+        }
+      });
   }
 
   pageChange(event: any) {

@@ -5,18 +5,19 @@ import { MatDialog }                from '@angular/material/dialog';
 import { MatDivider }               from '@angular/material/divider';
 import { MatIcon }                  from '@angular/material/icon';
 import { MatTooltip }               from '@angular/material/tooltip';
-import { RouterLink }               from '@angular/router';
+import { Router, RouterLink }       from '@angular/router';
 
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { Observable, take }                  from 'rxjs';
+import { TranslocoDirective, TranslocoPipe }                                            from '@ngneat/transloco';
+import { Notyf }                                                                        from 'notyf';
+import { combineLatest, firstValueFrom, lastValueFrom, mergeMap, Observable, of, take } from 'rxjs';
 
 import { FuseConfirmationService }  from '@fuse/services/confirmation';
 import { AlbumsService }            from '@modules/admin/admin/albums/albums.service';
+import { UploadImagesComponent }    from '@modules/admin/admin/albums/dialogs/upload-images/upload-images.component';
 import { AlbumImageTableComponent } from '@modules/admin/admin/albums/components/album-image-table/album-image-table.component';
 import { IAlbum }                   from '@modules/admin/apps/albums/interfaces/album.interface';
 import { IAlbumImage }              from '@modules/admin/apps/albums/interfaces/album-image.interface';
-import { UploadImagesComponent }    from '@modules/admin/admin/albums/components/upload-images/upload-images.component';
-import { Notyf }                    from 'notyf';
+import { NewOrEditComponent }       from '@modules/admin/admin/albums/dialogs/new-or-edit/new-or-edit.component';
 
 @Component({
   selector   : 'app-details',
@@ -38,12 +39,13 @@ import { Notyf }                    from 'notyf';
 })
 export class DetailsComponent {
   public album$: Observable<IAlbum>;
-  notyf = new Notyf();
+  private _notyf = new Notyf();
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
     private readonly _albumsService: AlbumsService,
-    private readonly _matDialog: MatDialog
+    private readonly _matDialog: MatDialog,
+    private readonly _router: Router
   ) {
     this.album$ = this._albumsService.album$;
   }
@@ -57,12 +59,53 @@ export class DetailsComponent {
     });
   }
 
-  public editAlbum(): void {
+  public async editAlbum() {
+    const album = await firstValueFrom(this.album$);
 
+    this._matDialog.open(NewOrEditComponent, {
+      panelClass: 'dialog-mobile-fullscreen',
+      data      : {album}
+    });
   }
 
-  public deleteAlbum(): void {
+  public async deleteAlbum() {
+    const confirmation = this._fuseConfirmationService.open({
+      title  : 'Delete album',
+      message:
+        'Are you sure you want to delete the album? This action cannot be undone.',
+      actions: {
+        confirm: {
+          label: 'Delete',
+        },
+      },
+    });
 
+    // Subscribe to the confirmation dialog closed action
+
+    confirmation.afterClosed()
+      .pipe(
+        mergeMap((result) => combineLatest([ of(result), this.album$ ])),
+        mergeMap(async ([ result, album ]) => {
+          if (result === 'confirmed') {
+            await lastValueFrom(this._albumsService.deleteAlbum(album.id));
+            return {removed: true};
+          }
+          return {removed: false};
+        }),
+        take(1)
+      ).subscribe({
+      next : (response) => {
+        console.log(response);
+        if (response.removed) {
+          this._notyf.success('Album deleted');
+          this._router.navigate([ '/admin/albums' ]);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this._notyf.error('Error deleting album');
+      }
+    });
   }
 
   public deleteImage(albumId: string, image: IAlbumImage): void {
@@ -82,11 +125,11 @@ export class DetailsComponent {
           .pipe(take(1))
           .subscribe({
             next : () => {
-              this.notyf.success('Image deleted');
+              this._notyf.success('Image deleted');
             },
             error: (error) => {
               console.error(error);
-              this.notyf.error('Error deleting image');
+              this._notyf.error('Error deleting image');
             }
           });
       }
