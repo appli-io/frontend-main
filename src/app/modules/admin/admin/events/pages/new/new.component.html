@@ -34,14 +34,14 @@
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
           <!-- End Date -->
-            @if (!eventForm.get('step1.isAllDay').value) {
+          @if (!eventForm.get('step1.isAllDay').value) {
           <mat-form-field class="flex-auto">
             <mat-label [innerText]="t('endDate')"></mat-label>
             <input [matDatepicker]="picker2" formControlName="endDate" matInput />
             <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
-        }
+          }
         </div>
 
         <!-- Is All Day -->
@@ -62,7 +62,7 @@
         <!-- URL -->
         <div class="pb-4" formArrayName="url">
           @for (url of urlArray.controls; track $index) {
-          <div  [formGroupName]="i">
+          <div [formGroupName]="i">
             <mat-form-field>
               <mat-label>{{ t("url.label") }}</mat-label>
               <input formControlName="label" matInput />
@@ -79,7 +79,7 @@
               <mat-icon>delete</mat-icon>
             </button>
           </div>
-        }
+          }
           <button (click)="addUrl()" mat-stroked-button>
             <mat-icon>add</mat-icon>
             <span>{{ t("addUrl") }}</span>
@@ -122,8 +122,8 @@
           <div formGroupName="phone">
             <mat-form-field class="w-100 flex-auto">
               <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
-              <input [placeholder]="'Prefijo'" matInput />
-              <mat-select  matPrefix>
+              <input formControlName="number" [placeholder]="'Prefijo'" matInput />
+              <mat-select formControlName="countryCode" matPrefix>
                 <mat-option value="+56 9">Chile</mat-option>
                 <mat-option value="US">US</mat-option>
               </mat-select>
@@ -132,27 +132,29 @@
         </div>
         <!-- Type -->
         <mat-form-field>
-          <mat-label>{{ t('type') }}</mat-label>
+          <mat-label>{{ t("type") }}</mat-label>
           <mat-select formControlName="type">
-            <mat-option *ngFor="let type of eventTypeOptions" [value]="type">{{ t('eventTypes.' + type) }}</mat-option>
+            @for (type of eventTypeOptions; track trackByFn($index, type)) {
+            <mat-option [value]="type">{{ t("eventTypes." + type) }}</mat-option>
+            }
           </mat-select>
         </mat-form-field>
         <!-- Status -->
         <mat-form-field>
-          <mat-label>{{ t('status') }}</mat-label>
+          <mat-label>{{ t("status") }}</mat-label>
           <mat-select formControlName="status">
             @for (status of eventStatusOptions; track trackByFn($index, status)) {
-              <mat-option [value]="status">{{ t('eventStatuses.' + status) }}</mat-option>
+            <mat-option [value]="status">{{ t("eventStatuses." + status) }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
         <div class="flex justify-end">
           <button mat-flat-button color="accent" matStepperPrevious>Back</button>
-          <button (click)="save()" [disabled]="eventForm.disabled" class="w-full md:w-30" color="primary" mat-flat-button>
-            @if (eventForm.disabled) {
+          <button (click)="save()" [disabled]="eventForm.disabled || !eventForm.valid" class="w-full md:w-30" color="primary" mat-flat-button>
             <span>Save</span>
+            @if (eventForm.disabled) {
             <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-          }
+            }
           </button>
         </div>
       </mat-step>
