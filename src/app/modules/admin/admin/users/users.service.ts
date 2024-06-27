@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
-import { Api }         from '@core/interfaces/api';
-import { Page }        from '@core/interfaces/page';
+import { Api } from '@core/interfaces/api';
+import { Page } from '@core/interfaces/page';
 import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UsersService {
   private _companyMembers: BehaviorSubject<CompanyUser[]> = new BehaviorSubject(null);
 
@@ -25,7 +25,9 @@ export class UsersService {
       );
   }
 
-  sendMemberInvitation({email, role, invitationMessage}: { email: string, role: string, invitationMessage: string }): Observable<any> {
-    return this._httpClient.post('api/company/members/invite', {email, role, invitationMessage});
+
+  sendMemberInvitation( { email, role, message }: { email: string, role: string, message: string }): Observable<any> {
+    console.log('Sending Data:', { email, role, message });
+    return this._httpClient.post(`api/company-user/invite`, { email, role, message });
   }
 }
