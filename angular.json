@@ -39,6 +39,11 @@
                 "output" : "/"
               },
               {
+                "glob" : "**/*",
+                "input" : "node_modules/leaflet/dist/images/",
+                "output" : "media"
+              },
+              {
                 "glob" : "_redirects",
                 "input" : "src",
                 "output" : "/"
@@ -125,6 +130,10 @@
               {
                 "glob" : "**/*",
                 "input" : "public"
+              },
+              {
+                "glob" : "**/*",
+                "input" : "node_modules/leaflet/dist/images/"
               }
             ],
             "styles" : [
