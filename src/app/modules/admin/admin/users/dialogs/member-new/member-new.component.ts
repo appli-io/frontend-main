@@ -1,7 +1,7 @@
-import { CdkTextareaAutosize }                                                                from '@angular/cdk/text-field';
-import { JsonPipe, NgIf, TitleCasePipe }                                                      from '@angular/common';
 import { Component, OnInit }                                                                  from '@angular/core';
+import { CdkTextareaAutosize }                                                                from '@angular/cdk/text-field';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { JsonPipe, NgIf, TitleCasePipe }                                                      from '@angular/common';
 import { MatButton, MatIconButton }                                                           from '@angular/material/button';
 import { MatCard }                                                                            from '@angular/material/card';
 import { MatChipRemove, MatChipRow }                                                          from '@angular/material/chips';
@@ -13,25 +13,24 @@ import { MatInput }                                                             
 import { MatProgressSpinner }                                                                 from '@angular/material/progress-spinner';
 import { MatSelect, MatSelectTrigger }                                                        from '@angular/material/select';
 
-import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
-import { DropzoneCdkModule }                    from '@ngx-dropzone/cdk';
-import { DropzoneMaterialModule }               from '@ngx-dropzone/material';
-import { Notyf }                                from 'notyf';
-import { take }                                 from 'rxjs';
+import { DropzoneCdkModule }                                                                  from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule }                                                             from '@ngx-dropzone/material';
+import { Notyf }                                                                              from 'notyf';
+import { take }                                                                               from 'rxjs';
+import { TranslocoDirective, TranslocoService }                                               from '@ngneat/transloco';
 
-import { rolesList }                   from '@core/constants';
-import { ImageUploadPreviewComponent } from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
-import { UsersService }                from '@modules/admin/admin/users/users.service';
+import { rolesList }                                                                          from '@core/constants';
+import { UsersService }                                                                       from '@modules/admin/admin/users/users.service';
+
 
 @Component({
-  selector   : 'app-member-new',
-  standalone : true,
-  imports    : [
+  selector: 'app-member-new',
+  standalone: true,
+  imports: [
     CdkTextareaAutosize,
     DropzoneCdkModule,
     DropzoneMaterialModule,
     FormsModule,
-    ImageUploadPreviewComponent,
     MatButton,
     MatCard,
     MatChipRemove,
@@ -63,15 +62,15 @@ export class MemberNewComponent implements OnInit {
     public readonly _matDialogRef: MatDialogRef<MemberNewComponent>,
     private readonly _formBuilder: UntypedFormBuilder,
     private readonly _translateService: TranslocoService,
-    private readonly _usersService: UsersService
-  ) {}
+    private readonly _usersService: UsersService,
+  ) { }
 
   ngOnInit(): void {
     this.roles = rolesList;
     this.memberForm = this._formBuilder.group({
-      email            : [ '', Validators.required ],
-      invitationMessage: [ undefined, [ Validators.required ] ],
-      role             : [ rolesList.find((role) => role.value === 'admin').value, [ Validators.required ] ],
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', [Validators.required, Validators.minLength(1)]],
+      role: [rolesList.find((role) => role.value === 'admin').value, [Validators.required]],
     });
   }
 
@@ -79,17 +78,15 @@ export class MemberNewComponent implements OnInit {
     if (this.memberForm.invalid) {
       return;
     }
-
-    this._usersService
-      .sendMemberInvitation(this.memberForm.getRawValue()).pipe(take(1))
-      .subscribe({
-        next : () => {
-          this._notyf.success('Invitation sent successfully');
-          this._matDialogRef.close();
-        },
-        error: (error) => {
-          this._notyf.error(error.message);
-        }
-      });
+    
+    this._usersService.sendMemberInvitation(this.memberForm.getRawValue()).pipe(take(1)).subscribe({
+      next: () => {
+        this._notyf.success('Invitation sent successfully');
+        this._matDialogRef.close();
+      },
+      error: (error) => {
+        this._notyf.error(error.message);
+      }
+    });
   }
 }
