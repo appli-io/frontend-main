@@ -90,7 +90,7 @@ export class NewComponent implements OnInit {
 
   eventStatusOptions = Object.values(EventStatusEnum);
   eventTypeOptions = Object.values(EventTypeEnum);
-  eventPlataformOptions = Object.values(EventPlatformEnum);
+  eventPlatformOptions = Object.values(EventPlatformEnum);
 
   protected readonly trackByFn = trackByFn;
 
@@ -137,15 +137,43 @@ export class NewComponent implements OnInit {
 
   addUrl(): void {
     const urlGroup = this._formBuilder.group({
-      label: [undefined, Validators.required],
-      url: [undefined, Validators.required],
       platform: [undefined, Validators.required],
+      label: [undefined, Validators.required],
+      url: [undefined],
       latitude: [undefined],
       longitude: [undefined],
     });
     this.urlArray.push(urlGroup);
   }
 
+  onPlatformSelected(index: number, event: { value: string }): void {
+    const urlGroup = this.urlArray.at(index) as UntypedFormGroup;
+    const platformValue = event.value;
+
+    urlGroup.controls['url'].clearValidators();
+    urlGroup.controls['url'].updateValueAndValidity();
+    urlGroup.controls['latitude'].clearValidators();
+    urlGroup.controls['latitude'].updateValueAndValidity();
+    urlGroup.controls['longitude'].clearValidators();
+    urlGroup.controls['longitude'].updateValueAndValidity();
+
+    switch (platformValue) {
+      case EventPlatformEnum.MAPS:
+        urlGroup.controls['latitude'].setValidators([Validators.required]);
+        urlGroup.controls['latitude'].updateValueAndValidity();
+        urlGroup.controls['longitude'].setValidators([Validators.required]);
+        urlGroup.controls['longitude'].updateValueAndValidity();
+        break;
+      default:
+        urlGroup.controls['url'].setValidators([Validators.required]);
+        urlGroup.controls['url'].updateValueAndValidity();
+        break;
+      }
+    urlGroup.patchValue({
+      platform: event.value
+    });
+  }
+  
   removeUrl(index: number): void {
     this.urlArray.removeAt(index);
   }

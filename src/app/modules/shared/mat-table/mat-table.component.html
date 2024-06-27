@@ -1,0 +1,15 @@
+<div class="relative">
+  <table
+    (matSortChange)="sortChange.emit($event)"
+    [dataSource]="albumsDataSource"
+    [trackBy]="trackByFn"
+    class="w-full bg-transparent"
+    mat-table
+    matSort
+  >
+    <ng-content></ng-content>
+
+    <tr *matHeaderRowDef="albumsTableColumns" class="scale-95" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row py-8 mt-4 scale-95 hover:scale-100 hover:shadow transition-all duration-300 ease-in-out" mat-row></tr>
+  </table>
+</div>

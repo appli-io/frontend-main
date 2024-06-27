@@ -27,6 +27,7 @@
     "admin" : {
       "title" : "Administrador",
       "users" : "Usuarios",
+      "news" : "Noticias",
       "events" : "Eventos",
       "albums" : "Álbumes",
       "roles" : "Roles",
@@ -137,6 +138,42 @@
     }
   },
   "admin" : {
+    "news" : {
+      "title" : "Noticias",
+      "subtitle" : "Administra las Noticias de la Plataforma",
+      "description" : "Administra las noticias de la plataforma, crea y actualiza noticias, y mantén informados a los usuarios sobre los logros, eventos y anuncios importantes. Asegúrate de que cada miembro de la organización esté al tanto de las novedades y pueda participar activamente en la vida de la empresa.",
+      "table" : {
+        "id" : "ID",
+        "title" : "Título",
+        "category" : "Categoría",
+        "published" : "Publicado",
+        "author" : "Autor",
+        "views" : "Vistas",
+        "actions" : "Acciones",
+        "view" : "Ver",
+        "edit" : "Editar",
+        "delete" : "Eliminar",
+        "no-content" : "No hay noticias disponibles para mostrar"
+      },
+      "new" : {
+        "title" : "Nueva Noticia",
+        "headline" : "Titular",
+        "category" : "Categoría",
+        "abstract" : "Resumen",
+        "content" : "Contenido",
+        "cover" : "Portada",
+        "create" : "Crear"
+      },
+      "edit" : {
+        "title" : "Editar Noticia",
+        "headline" : "Titular",
+        "category" : "Categoría",
+        "abstract" : "Resumen",
+        "content" : "Contenido",
+        "cover" : "Portada",
+        "update" : "Actualizar"
+      }
+    },
     "users" : {
       "title" : "Usuarios",
       "subtitle" : "Administra los Usuarios de la Plataforma",
@@ -214,7 +251,7 @@
         "startDate" : "Fecha de Inicio",
         "endDate" : "Fecha de Término",
         "location" : "Ubicación",
-        "addUrl": "Agregar URL",
+        "addUrl" : "Agregar URL",
         "url" : {
           "label" : "URL Nombre",
           "url" : "URL Link",
@@ -232,43 +269,43 @@
           }
         },
         "type" : "Tipo",
-        "status" :"Estado",
-        "eventTypes": {
-          "conference": "Conferencia",
-          "meetup": "Reunión",
-          "workshop": "Taller",
-          "seminar": "Seminario",
-          "webinar": "Webinario",
-          "hackathon": "Hackathon",
-          "concert": "Concierto",
-          "festival": "Festival",
-          "exhibition": "Exposición",
-          "fair": "Feria",
-          "show": "Show",
-          "performance": "Actuación",
-          "competition": "Competencia",
-          "game": "Juego",
-          "sports": "Deportes"
+        "status" : "Estado",
+        "eventTypes" : {
+          "conference" : "Conferencia",
+          "meetup" : "Reunión",
+          "workshop" : "Taller",
+          "seminar" : "Seminario",
+          "webinar" : "Webinario",
+          "hackathon" : "Hackathon",
+          "concert" : "Concierto",
+          "festival" : "Festival",
+          "exhibition" : "Exposición",
+          "fair" : "Feria",
+          "show" : "Show",
+          "performance" : "Actuación",
+          "competition" : "Competencia",
+          "game" : "Juego",
+          "sports" : "Deportes"
         },
-        "eventStatuses": {
-          "draft": "Borrador",
-          "published": "Publicado",
-          "cancelled": "Cancelado",
-          "postponed": "Pospuesto",
-          "rescheduled": "Reprogramado",
-          "ended": "Finalizado"
+        "eventStatuses" : {
+          "draft" : "Borrador",
+          "published" : "Publicado",
+          "cancelled" : "Cancelado",
+          "postponed" : "Pospuesto",
+          "rescheduled" : "Reprogramado",
+          "ended" : "Finalizado"
         },
-        "platforms": {
-          "gmeet": "Google Meets",
-          "zoom": "Zoom",
-          "teams": "Microsoft Teams",
-          "maps": "Mapa (se abrirá un mapa)",
-          "website": "Página web",
-          "other": "Otro"
+        "platforms" : {
+          "gmeet" : "Google Meets",
+          "zoom" : "Zoom",
+          "teams" : "Microsoft Teams",
+          "maps" : "Mapa (se abrirá un mapa)",
+          "website" : "Página web",
+          "other" : "Otro"
         },
-        "step1Details": "Agrega datos adicionales Para la creación del evento",
-        "step2Details": "Agrega datos adicionales sobre la ubicación",
-        "step3Details": "Agrega datos adicionales sobre el organizador"
+        "step1Details" : "Agrega datos adicionales Para la creación del evento",
+        "step2Details" : "Agrega datos adicionales sobre la ubicación",
+        "step3Details" : "Agrega datos adicionales sobre el organizador"
       }
     }
   },

@@ -79,6 +79,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
     link    : '/admin',
     children: [
       {
+        id   : 'admin.news',
+        title: 'News',
+        type : 'basic',
+        link : '/admin/news',
+        icon : 'heroicons_outline:newspaper'
+      },
+      {
         id   : 'admin.users',
         title: 'Users',
         type : 'basic',
