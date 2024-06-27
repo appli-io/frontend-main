@@ -19,6 +19,7 @@ import { MatOptionModule }                                                      
 import { MatDivider }                                                                              from '@angular/material/divider';
 import { MatStepperModule }                                                                        from '@angular/material/stepper';
 import { trackByFn }                                                                               from '@libs/ui/utils/utils';
+import { OpenStreetMapComponent }                                                                  from '../../components/open-street-map/open-street-map.component';
 
 const EventStatusEnum = {
   DRAFT: 'draft',
@@ -47,29 +48,39 @@ const EventTypeEnum = {
   SPORTS: 'sports',
 };
 
+const EventPlatformEnum = {
+  GMEET: 'gmeet',
+  ZOOM: 'zoom',
+  TEAMS: 'teams',
+  MAPS: 'maps',
+  WEBSITE: 'website',
+  OTHER: 'other',
+};
+
 @Component({
   selector: "app-new",
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
+    CdkTextareaAutosize,
+    JsonPipe,
+    MatButtonModule,
+    MatCheckbox,
     MatDatepickerModule,
-    MatSelectModule,
-    MatOptionModule,
-    TranslocoDirective,
+    MatDivider,
+    MatFormFieldModule,
     MatIcon,
     MatIconButton,
-    MatLabel,
     MatInputModule,
-    CdkTextareaAutosize,
-    MatCheckbox,
-    MatButtonModule,
+    MatLabel,
+    MatOptionModule,
     MatProgressSpinner,
-    NgIf,
-    NgForOf,
-    MatDivider,
+    MatSelectModule,
     MatStepperModule,
-    JsonPipe,
+    NgForOf,
+    NgIf,
+    OpenStreetMapComponent,
+    ReactiveFormsModule,
+    TranslocoDirective,
   ],
   templateUrl: "./new.component.html",
 })
@@ -79,6 +90,7 @@ export class NewComponent implements OnInit {
 
   eventStatusOptions = Object.values(EventStatusEnum);
   eventTypeOptions = Object.values(EventTypeEnum);
+  eventPlataformOptions = Object.values(EventPlatformEnum);
 
   protected readonly trackByFn = trackByFn;
 

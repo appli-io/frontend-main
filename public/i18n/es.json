@@ -216,7 +216,7 @@
         "location" : "Ubicación",
         "addUrl": "Agregar URL",
         "url" : {
-          "label" : "URL",
+          "label" : "URL Nombre",
           "url" : "URL Link",
           "platform" : "Plataforma"
         },
@@ -257,7 +257,18 @@
           "postponed": "Pospuesto",
           "rescheduled": "Reprogramado",
           "ended": "Finalizado"
-        }
+        },
+        "platforms": {
+          "gmeet": "Google Meets",
+          "zoom": "Zoom",
+          "teams": "Microsoft Teams",
+          "maps": "Mapa (se abrirá un mapa)",
+          "website": "Página web",
+          "other": "Otro"
+        },
+        "step1Details": "Agrega datos adicionales Para la creación del evento",
+        "step2Details": "Agrega datos adicionales sobre la ubicación",
+        "step3Details": "Agrega datos adicionales sobre el organizador"
       }
     }
   },

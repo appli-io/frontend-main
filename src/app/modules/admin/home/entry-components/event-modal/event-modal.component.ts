@@ -59,6 +59,8 @@ export class EventModalComponent implements OnInit, AfterViewInit {
 
         marker([url.latitude, url.longitude]).addTo(this.leafletMap);
 
+
+        this.leafletMap.on('click', this.onMapClick);
         //@TODO : Delete this const and console.log
         const lat = marker([url.latitude, url.longitude]).getLatLng();
         console.log('lat',lat)
