@@ -94,8 +94,19 @@
 
               @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
                 <ng-container>
-                  <app-open-street-map></app-open-street-map>
+                  <app-open-street-map (locationSelected)="onLocationSelected($index, $event)"></app-open-street-map>
+                  
                 </ng-container>
+
+                <mat-form-field>
+                  <mat-label>Latitud</mat-label>
+                  <input formControlName="latitude" matInput readonly />
+                </mat-form-field>
+                
+                <mat-form-field>
+                  <mat-label>Longitud</mat-label>
+                  <input formControlName="longitude" matInput readonly />
+                </mat-form-field>
                 }
               @else {
 

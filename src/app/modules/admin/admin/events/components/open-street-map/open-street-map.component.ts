@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { LeafletMouseEvent, Map, map, marker, tileLayer } from "leaflet";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from "@angular/core";
+import { LeafletMouseEvent, Map, Marker, map, marker, tileLayer } from "leaflet";
 
 @Component({
   selector: "app-open-street-map",
@@ -13,8 +13,12 @@ export class OpenStreetMapComponent implements AfterViewInit {
   @ViewChild("map")
   private mapContainer: ElementRef<HTMLElement>;
 
+  @Output()
+  locationSelected = new EventEmitter<{ latitude: number, longitude: number }>();
+  
   neededMaps: boolean = false;
   leafletMap : Map;
+  currentMarker: Marker;
 
   ngAfterViewInit(): void {
  
@@ -37,12 +41,19 @@ export class OpenStreetMapComponent implements AfterViewInit {
         }).addTo(this.leafletMap);
 
         // marker([url.latitude, url.longitude]).addTo(this.leafletMap);
-        this.leafletMap.on('click', this.onMapClick);
+        this.leafletMap.on('click', this.onMapClick.bind(this));
   }
 
   onMapClick(event: LeafletMouseEvent): void {
-    const lat = event.latlng;
-    console.log('Latitud: ',lat);
+    const latLng = event.latlng;
+    console.log('Latitud: ', latLng.lat, 'Longitud: ', latLng.lng);
+
+    if (this.currentMarker) {
+      this.currentMarker.remove();
+    }
+    this.currentMarker = marker([latLng.lat, latLng.lng]).addTo(this.leafletMap);
+
+    this.locationSelected.emit({ latitude: latLng.lat, longitude: latLng.lng });
   }
 
 }

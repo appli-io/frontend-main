@@ -140,12 +140,23 @@ export class NewComponent implements OnInit {
       label: [undefined, Validators.required],
       url: [undefined, Validators.required],
       platform: [undefined, Validators.required],
+      latitude: [undefined],
+      longitude: [undefined],
     });
     this.urlArray.push(urlGroup);
   }
 
   removeUrl(index: number): void {
     this.urlArray.removeAt(index);
+  }
+
+  onLocationSelected(index: number, event: { latitude: number, longitude: number }): void {
+    const urlGroup = this.urlArray.at(index) as UntypedFormGroup;
+    urlGroup.patchValue({
+      latitude: event.latitude,
+      longitude: event.longitude
+    });
+    console.log('urlGroup', urlGroup.value)
   }
 
   discard(): void {
