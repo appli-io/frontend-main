@@ -90,7 +90,7 @@ export class NewComponent implements OnInit {
 
   eventStatusOptions = Object.values(EventStatusEnum);
   eventTypeOptions = Object.values(EventTypeEnum);
-  eventPlataformOptions = Object.values(EventPlatformEnum);
+  eventPlatformOptions = Object.values(EventPlatformEnum);
 
   protected readonly trackByFn = trackByFn;
 
