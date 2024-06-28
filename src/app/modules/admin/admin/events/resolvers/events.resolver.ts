@@ -7,5 +7,5 @@ export const eventResolver: ResolveFn<any> = (
   state: RouterStateSnapshot,
   eventsService: EventsService = inject(EventsService)
 ) => {
-  return eventsService.getEvents();
+  return eventsService.getEvent(route.params.id);
 };

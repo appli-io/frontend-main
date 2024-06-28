@@ -19,10 +19,21 @@ export class EventsService {
     return this._events.asObservable();
   }
 
+  get event$(): Observable<IEvent> {
+    return this._event.asObservable();
+  }
+
   public getEvents() {
     return this._http.get<Api<IEvent[]>>('api/event')
       .pipe(map(response => response.content),
       tap(events => this._events.next(events))
+    );
+  }
+
+  public getEvent(eventId: string): Observable<IEvent> {
+    return this._http.get<Api<IEvent>>(`api/event/${eventId}`)
+      .pipe(map(response => response.content),
+      tap(event => this._event.next(event))
     );
   }
 
@@ -32,6 +43,18 @@ export class EventsService {
       tap(newEvent => this._events.next([newEvent, ...this._events.value]))
     );
   }
+
+  public updateEvent(event: IEvent) {
+    return this._http.put<Api<IEvent>>(`api/event/${event.id}`, event)
+      .pipe
+      (map(response => response.content),
+      tap(updatedEvent => {
+        this._events.next(this._events.value
+          .map(event => event.id === updatedEvent.id ? updatedEvent : event));
+      }
+    ))
+  }
+  
 
   public deleteEvent(eventId: string) {
     return this._http.delete<Api<IEvent>>(`api/event/${eventId}`)
