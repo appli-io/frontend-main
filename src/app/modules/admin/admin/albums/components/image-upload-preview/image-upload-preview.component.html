@@ -1,4 +1,4 @@
-<div class="relative h-full flex">
+<mat-card class="relative h-full flex">
   <img [alt]="file.name" [src]="imageSrc" class="drop-shadow mt-2 rounded w-full max-h-48 object-contain object-center"/>
   <button (click)="removeImage()" class="absolute top-0 right-0" mat-icon-button>
     <mat-icon svgIcon="heroicons_outline:minus-circle"></mat-icon>
@@ -16,10 +16,15 @@
     }
   }
 
-  @if (isUploaded) {
+  @if (isUploading || isUploaded) {
     <!-- full square width and height, green bg semi transparent -->
     <div class="absolute inset-0 bg-green-300 bg-opacity-50 flex items-center justify-center delay-500" @fadeIn>
-      <mat-icon class="text-5xl w-12 h-12 bg-accent rounded-full text-green-100 delay-500" @zoomIn>cloud_done</mat-icon>
+      @if (isUploading) {
+        <mat-spinner class="absolute bottom-0 top-1/2 left-1/2" style="transform: translate(-50%, -50%)" diameter="24"></mat-spinner>
+      }
+      @if (isUploaded) {
+        <mat-icon class="text-5xl w-12 h-12 bg-accent rounded-full text-green-100 delay-500" @zoomIn>cloud_done</mat-icon>
+      }
     </div>
   }
-</div>
+</mat-card>

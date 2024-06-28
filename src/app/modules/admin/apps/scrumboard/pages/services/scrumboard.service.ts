@@ -209,7 +209,7 @@ export class ScrumboardService {
    */
   updateList(list: List): Observable<List> {
     return this._httpClient
-      .patch<Api<List>>('api/scrumboard/board/list', list)
+      .patch<Api<List>>('api/scrumboard/list/' + list.id, list)
       .pipe(
         map((response) => response.content),
         map((response) => new List(response)),
@@ -241,7 +241,7 @@ export class ScrumboardService {
    */
   updateLists(lists: List[]): Observable<List[]> {
     return this._httpClient
-      .patch<Api<List[]>>('api/scrumboard/list', lists)
+      .patch<Api<List[]>>('api/scrumboard/list/' + lists[0].id, lists[0])
       .pipe(
         map((response) => response.content),
         map((response) => response.map((item) => new List(item))),

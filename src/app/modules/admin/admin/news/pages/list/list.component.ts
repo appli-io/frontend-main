@@ -76,15 +76,17 @@ export class ListComponent {
     });
   }
 
-  deleteNews(id: string): void {
+  openDeleteDialog(news: INews): void {
     const confirmation = this._fuseConfirmationService.open({
       title  : this._translationService.translate('admin.news.delete.title'),
       message: this._translationService.translate('admin.news.delete.message'),
       actions: {
         confirm: {
-          label: this._translationService.translate('admin.news.delete.confirm'),
+          label: this._translationService.translate('admin.news.delete.delete'),
         },
-        cancel : {}
+        cancel : {
+          label: this._translationService.translate('admin.news.delete.cancel'),
+        }
       },
     });
 
@@ -93,7 +95,7 @@ export class ListComponent {
       // If the confirm button pressed...
       if (result === 'confirmed') {
         // Delete the list
-        console.log('Delete member', id);
+        console.log('Delete member', news.id);
         // this._scrumboardService.deleteList(id).subscribe();
       }
     });

@@ -10,7 +10,8 @@ export default [
       {
         path         : '',
         resolve      : {
-          news: () => inject(NewsService).getNews({})
+          news      : () => inject(NewsService).getNews({}),
+          categories: () => inject(NewsService).getCategories()
         },
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
       },

@@ -4,15 +4,17 @@ import { MatProgressSpinner }                             from '@angular/materia
 import { MatProgressBar }                                 from '@angular/material/progress-bar';
 import { MatIcon }                                        from '@angular/material/icon';
 import { fuseAnimations }                                 from '@fuse/animations';
+import { MatCard }                                        from '@angular/material/card';
 
 @Component({
   selector   : 'image-upload-preview',
   standalone : true,
-  imports    : [
+  imports: [
     MatIconButton,
     MatProgressSpinner,
     MatProgressBar,
-    MatIcon
+    MatIcon,
+    MatCard
   ],
   templateUrl: './image-upload-preview.component.html',
   animations : fuseAnimations,

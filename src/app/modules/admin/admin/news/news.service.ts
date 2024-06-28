@@ -1,14 +1,16 @@
-import { Injectable }                       from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { INews }                            from '@modules/admin/news/domain/interfaces/news.interface';
-import { HttpClient, HttpParams }           from '@angular/common/http';
-import { Page }                             from '@core/interfaces/page';
-import { Api }                              from '@core/interfaces/api';
-import { DEFAULT_PAGEABLE }                 from '@core/constants';
+import { Injectable }                            from '@angular/core';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { INews }                                 from '@modules/admin/news/domain/interfaces/news.interface';
+import { HttpClient, HttpParams }                from '@angular/common/http';
+import { Page }                                  from '@core/interfaces/page';
+import { Api }                                   from '@core/interfaces/api';
+import { DEFAULT_PAGEABLE }                      from '@core/constants';
+import { INewsCategory }                         from '@modules/admin/news/domain/interfaces/category.interface';
 
 @Injectable({providedIn: 'root'})
 export class NewsService {
   private _newsPage$: BehaviorSubject<Page<INews>> = new BehaviorSubject<Page<INews>>(null);
+  private _categories$: BehaviorSubject<INewsCategory[]> = new BehaviorSubject<INewsCategory[]>(null);
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -38,6 +40,13 @@ export class NewsService {
         this._newsPage$.next(pageNews);
         return pageNews;
       })
+    );
+  }
+
+  getCategories(): Observable<INewsCategory[]> {
+    return this._httpClient.get<Api<INewsCategory[]>>('api/news-category').pipe(
+      map(({content}) => content),
+      tap(categories => this._categories$.next(categories))
     );
   }
 }

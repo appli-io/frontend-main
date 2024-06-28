@@ -172,7 +172,7 @@
         "title" : "Eliminar Noticia",
         "message" : "¿Estás seguro de que deseas eliminar esta noticia? No podrás deshacer esta acción.",
         "cancel" : "Cancelar",
-        "save" : "Crear"
+        "delete" : "Eliminar"
       },
       "new" : {
         "title" : "Nueva Noticia",

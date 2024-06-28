@@ -1,16 +1,22 @@
-import { Component, OnInit }                                         from '@angular/core';
-import { MatDialogRef }                                              from '@angular/material/dialog';
-import { TranslocoDirective, TranslocoService }                      from '@ngneat/transloco';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { NewsService }                                               from '@modules/admin/admin/news/news.service';
-import { MatButtonModule }                                           from '@angular/material/button';
-import { CdkTextareaAutosize }                                       from '@angular/cdk/text-field';
-import { MatFormFieldModule }                                        from '@angular/material/form-field';
-import { MatIcon }                                                   from '@angular/material/icon';
-import { MatInputModule }                                            from '@angular/material/input';
-import { MatProgressSpinner }                                        from '@angular/material/progress-spinner';
-import { NgIf }                                                      from '@angular/common';
-import { QuillEditorComponent }                                      from 'ngx-quill';
+import { Component, OnInit }                                                     from '@angular/core';
+import { MatDialogRef }                                                          from '@angular/material/dialog';
+import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { NewsService }                                                           from '@modules/admin/admin/news/news.service';
+import { MatButtonModule }                                                       from '@angular/material/button';
+import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
+import { MatFormFieldModule }                                                    from '@angular/material/form-field';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatInputModule }                                                        from '@angular/material/input';
+import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
+import { NgIf }                                                                  from '@angular/common';
+import { QuillEditorComponent }                                                  from 'ngx-quill';
+import { defer }                                                                 from 'rxjs';
+import { DropzoneMaterialModule }                                                from '@ngx-dropzone/material';
+import { MatChipsModule }                                                        from '@angular/material/chips';
+import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
+import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
+import { MatCard }                                                               from '@angular/material/card';
 
 @Component({
   selector   : 'app-new-news',
@@ -25,7 +31,12 @@ import { QuillEditorComponent }                                      from 'ngx-q
     MatProgressSpinner,
     NgIf,
     QuillEditorComponent,
-    TranslocoDirective
+    TranslocoDirective,
+    DropzoneCdkModule,
+    DropzoneMaterialModule,
+    MatChipsModule,
+    ImageUploadPreviewComponent,
+    MatCard
   ],
   templateUrl: './new-news.component.html'
 })
@@ -43,6 +54,8 @@ export class NewNewsComponent implements OnInit {
       [ 'link', 'image' ]
     ],
   };
+  private quillImageCompress$ = defer(() => import('quill-image-compress').then(module => module.default));
+  public customModules = [ {implementation: this.quillImageCompress$, path: 'modules/imageCompress', property: 'imageCompress'} ];
 
   constructor(
     public readonly _matDialogRef: MatDialogRef<NewNewsComponent>,
@@ -56,15 +69,22 @@ export class NewNewsComponent implements OnInit {
     this.saveText = this._translateService.translate('admin.news.new.create');
 
     this.newsForm = this._formBuilder.group({
-      headline: [ undefined ],
-      slug    : [ undefined ],
-      abstract: [ undefined ],
-      body    : [ undefined ],
-      category: [ undefined ],
+      headline     : [ undefined, [ Validators.required, Validators.minLength(10) ] ],
+      abstract     : [ undefined, [ Validators.required, Validators.minLength(10) ] ],
+      body         : [ undefined, [ Validators.required, Validators.minLength(50) ] ],
+      category     : [ undefined, [ Validators.required ] ],
+      portraitImage: [ undefined, [ Validators.required ] ],
     });
   }
 
   save() {
+    console.log({
+      ...this.newsForm.getRawValue(),
+      body: JSON.parse(this.newsForm.getRawValue().body)
+    });
+  }
 
+  remove() {
+    this._matDialogRef.close();
   }
 }
