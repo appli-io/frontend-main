@@ -104,7 +104,6 @@ export class AuthService {
           return err;
         }),
         switchMap((response: any) => {
-          console.log(response);
           // Replace the access token with the new one if it's available on
           // the response object.
           //

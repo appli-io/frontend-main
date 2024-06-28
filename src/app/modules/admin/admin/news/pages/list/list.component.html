@@ -1,1 +1,113 @@
-<p>list works!</p>
+<div *transloco="let t; read: 'admin.news'" class="flex flex-col min-w-0 w-full">
+  <page-header
+    [description]="t('description')"
+    [subtitle]="t('subtitle')"
+    [title]="t('title')"
+  ></page-header>
+
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 px-4 sm:px-8">
+    <!-- Title and new member button -->
+    <div class="flex flex-row w-full">
+      <!-- Title -->
+      <h2 class="flex-1 font-bold text-gray-700 text-xl self-center">{{ t('title') }}</h2>
+
+      <!-- New member button -->
+      <a
+        (click)="openNewDialog()"
+        [matTooltip]="t('new.title')"
+        class="flex-0 font-bold py-2 px-4 rounded"
+        color="primary"
+        mat-icon-button
+      >
+        <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+      </a>
+    </div>
+
+    <mat-divider class="w-full"></mat-divider>
+
+    <div class="w-full">
+      <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
+        <mat-label>Buscar noticia</mat-label>
+        <mat-icon
+          [svgIcon]="'heroicons_solid:magnifying-glass'"
+          class="icon-size-5"
+          matPrefix
+        ></mat-icon>
+        <input [placeholder]="'Título de noticia'" matInput/>
+        <button mat-icon-button matSuffix>
+          <mat-icon
+            class="icon-size-5"
+            svgIcon="heroicons_solid:plus-circle"
+          ></mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <wwt-table
+      [data]="news$"
+      [displayedColumns]="displayedColumns"
+      [messageNoData]="t('no-content')"
+      [pageable]="pageable$"
+      class="w-full"
+    >
+      <ng-container matColumnDef="title" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('table.title') }}</span></th>
+        <td *matCellDef="let news" mat-cell><span [title]="news.headline" class="line-clamp-1">{{ news.headline }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="cover">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.cover') }}</span></th>
+        <td *matCellDef="let news" mat-cell>
+          <div class="flex justify-center">
+            @if ($any(news.portraitImage); as portraitImage) {
+              <img
+                [src]="portraitImage.fileUrl"
+                alt="Cover"
+                class="w-16 h-16 object-cover rounded"
+              />
+            } @else {
+              <button
+                mat-icon-button
+              >
+                <mat-icon class="w-16 h-16">add_photo_alternate</mat-icon>
+              </button>
+            }
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="author">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.author') }}</span></th>
+        <td *matCellDef="let news" mat-cell>{{ news.createdBy.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="publishedAt">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.author') }}</span></th>
+        <td *matCellDef="let news" mat-cell>{{ news.publishedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.actions') }}</span></th>
+        <td *matCellDef="let news" mat-cell>
+          <div class="flex justify-center gap-2">
+            <button
+              (click)="openEditDialog(news)"
+              [matTooltip]="t('table.edit')"
+              mat-icon-button
+            >
+              <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+            </button>
+            <button
+              (click)="openDeleteDialog(news)"
+              [matTooltip]="t('table.delete')"
+              color="warn"
+              mat-icon-button
+            >
+              <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+    </wwt-table>
+  </div>
+</div>

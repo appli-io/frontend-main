@@ -138,6 +138,18 @@
     }
   },
   "admin" : {
+    "users" : {
+      "title" : "Usuarios",
+      "subtitle" : "Administra los Usuarios de la Plataforma",
+      "description" : "Administra los usuarios de la plataforma, asigna roles y permisos, y mantén actualizada la información de contacto. Asegúrate de que cada miembro de la organización tenga acceso a las aplicaciones y recursos necesarios para colaborar y contribuir al éxito de la empresa.",
+      "new" : {
+        "title" : "Nuevo Usuario",
+        "email" : "Correo Electrónico",
+        "invitationMessage" : "Mensaje de Invitación",
+        "role" : "Rol",
+        "send" : "Enviar invitación"
+      }
+    },
     "news" : {
       "title" : "Noticias",
       "subtitle" : "Administra las Noticias de la Plataforma",
@@ -147,6 +159,7 @@
         "title" : "Título",
         "category" : "Categoría",
         "published" : "Publicado",
+        "cover" : "Portada",
         "author" : "Autor",
         "views" : "Vistas",
         "actions" : "Acciones",
@@ -155,12 +168,19 @@
         "delete" : "Eliminar",
         "no-content" : "No hay noticias disponibles para mostrar"
       },
+      "delete" : {
+        "title" : "Eliminar Noticia",
+        "message" : "¿Estás seguro de que deseas eliminar esta noticia? No podrás deshacer esta acción.",
+        "cancel" : "Cancelar",
+        "save" : "Crear"
+      },
       "new" : {
         "title" : "Nueva Noticia",
         "headline" : "Titular",
         "category" : "Categoría",
         "abstract" : "Resumen",
         "content" : "Contenido",
+        "content-placeholder" : "Escribe aquí el contenido de la noticia...",
         "cover" : "Portada",
         "create" : "Crear"
       },
@@ -172,18 +192,6 @@
         "content" : "Contenido",
         "cover" : "Portada",
         "update" : "Actualizar"
-      }
-    },
-    "users" : {
-      "title" : "Usuarios",
-      "subtitle" : "Administra los Usuarios de la Plataforma",
-      "description" : "Administra los usuarios de la plataforma, asigna roles y permisos, y mantén actualizada la información de contacto. Asegúrate de que cada miembro de la organización tenga acceso a las aplicaciones y recursos necesarios para colaborar y contribuir al éxito de la empresa.",
-      "new" : {
-        "title" : "Nuevo Usuario",
-        "email" : "Correo Electrónico",
-        "invitationMessage" : "Mensaje de Invitación",
-        "role" : "Rol",
-        "send" : "Enviar invitación"
       }
     },
     "albums" : {

@@ -337,7 +337,7 @@
 }
 
 .mat-mdc-dialog-container {
-  max-height: 80vh;
+  max-height: 80vh !important;
 
   .mdc-dialog__surface {
     border-radius: 16px !important;

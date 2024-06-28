@@ -1,3 +1,7 @@
+export const DEFAULT_PAGE_SIZE = 10;
+
+export const DEFAULT_PAGEABLE = {page: 1, size: DEFAULT_PAGE_SIZE};
+
 export const rolesList = [
   {
     label      : 'Read',
