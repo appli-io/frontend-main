@@ -13,6 +13,8 @@ import { EventsTableComponent } from '../../components/events-table/events-table
 import { MatDialog }            from '@angular/material/dialog';
 import { NewComponent }         from '../new/new.component';
 import { MatTooltip }           from '@angular/material/tooltip';
+import { mergeMap } from 'rxjs';
+import { Notyf } from 'notyf';
 
 @Component({
   selector   : 'app-list',
@@ -33,6 +35,7 @@ import { MatTooltip }           from '@angular/material/tooltip';
 })
 export class ListComponent {
   public events$ = this._eventsService.events$;
+  private _notyf = new Notyf();
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
@@ -65,14 +68,26 @@ export class ListComponent {
     });
 
     // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed().subscribe((result) => {
-      // If the confirm button pressed...
-      if (result === 'confirmed') {
-        // Delete the list
-        console.log('Delete event', event.id);
-        // this._scrumboardService.deleteList(id).subscribe();
+    confirmation.afterClosed()
+    .pipe(
+      mergeMap((result) => {
+        // If the confirm button pressed...
+        if (result === 'confirmed') {
+          // Delete the event
+          return this._eventsService.deleteEvent(event.id);
+        }
+        return [];
+      })
+    )
+    .subscribe({
+      next : () => {
+        this._notyf.success('Event deleted');
+      },
+      error: (error) => {
+        console.error('Delete event error', error);
+        this._notyf.error('Error deleting event');
       }
-    });
+    })
   }
 
   pageChange(event: any) {

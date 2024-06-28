@@ -33,6 +33,14 @@ export class EventsService {
     );
   }
 
- 
-
+  public deleteEvent(eventId: string) {
+    return this._http.delete<Api<IEvent>>(`api/event/${eventId}`)
+      .pipe(map(response => response.content),
+      tap(() => {
+        const events = this._events.value.filter(event => event.id !== eventId);
+        this._events.next(events);
+      })
+    );
+  }
+  
 }
