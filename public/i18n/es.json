@@ -259,12 +259,18 @@
         "isAllDay" : "Es Todo el Día",
         "startDate" : "Fecha de Inicio",
         "endDate" : "Fecha de Término",
+        "hour" : "Hora",
         "location" : "Ubicación",
         "addUrl" : "Agregar URL",
+        "save" : "Guardar", 
+        "next" : "Siguiente",
+        "back" : "Volver",
         "url" : {
           "label" : "URL Nombre",
           "url" : "URL Link",
-          "platform" : "Plataforma"
+          "platform" : "Plataforma",
+          "latitude" : "Latitud",
+          "longitude" : "Longitud"
         },
         "image" : "Imagen",
         "capacity" : "Capacidad",
@@ -313,8 +319,11 @@
           "other" : "Otro"
         },
         "step1Details" : "Agrega datos adicionales Para la creación del evento",
+        "step1Title"   : "Nuevo evento",
         "step2Details" : "Agrega datos adicionales sobre la ubicación",
-        "step3Details" : "Agrega datos adicionales sobre el organizador"
+        "step2Title"   : "Detalles adicionales",
+        "step3Details" : "Agrega datos adicionales sobre el organizador",
+        "step3Title"   : "Detalles del organizador"
       }
     }
   },

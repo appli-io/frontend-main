@@ -38,7 +38,6 @@ export class ListComponent {
     private readonly _eventsService: EventsService,
     private readonly _matDialog: MatDialog
   ) {
-    this.openNewEventDialog();
   }
 
   openNewEventDialog() {

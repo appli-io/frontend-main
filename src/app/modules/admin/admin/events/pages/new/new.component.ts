@@ -108,7 +108,9 @@ export class NewComponent implements OnInit {
         description: [ undefined, [ Validators.required, Validators.minLength(3) ] ],
         isAllDay: [true, [Validators.required]],
         startDate: [undefined, [Validators.required]],
+        startDateTime: [undefined, [Validators.required]],
         endDate: [undefined],
+        endDateTime: [undefined],
       }),
       step2: this._formBuilder.group({
         location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -129,6 +131,7 @@ export class NewComponent implements OnInit {
         status: [undefined, [Validators.required]],
       }),
     });
+    this.addUrl();
   }
 
   get urlArray(): UntypedFormArray {
@@ -223,11 +226,29 @@ export class NewComponent implements OnInit {
   }
 
   flattenFormData(formData: any): any {
-    return {
+    const { startDate, startDateTime, endDate, endDateTime } = formData.step1;
+
+    const startDateTimeCombined = new Date(startDate);
+    if (startDateTime) {
+      const [startHours, startMinutes] = startDateTime.split(':');
+      startDateTimeCombined.setHours(startHours, startMinutes);
+    }
+
+    const endDateTimeCombined = endDate ? new Date(endDate) : undefined;
+    if (endDateTimeCombined && endDateTime) {
+      const [endHours, endMinutes] = endDateTime.split(':');
+      endDateTimeCombined.setHours(endHours, endMinutes);
+    }
+
+    const flattenedData = {
       ...formData.step1,
       ...formData.step2,
-      ...formData.step3
+      ...formData.step3,
+      startDate: startDateTimeCombined,
+      endDate: endDateTimeCombined
     };
+
+    return flattenedData;
   }
 
   remove() {
