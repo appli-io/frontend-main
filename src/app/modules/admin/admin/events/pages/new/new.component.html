@@ -37,6 +37,14 @@
             <mat-datepicker-toggle [for]="picker1" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
+          <mat-form-field>
+            <mat-label>Hora</mat-label>
+            <input  formControlName="timePicker" matInput type="time">
+            <button matSuffix mat-icon-button aria-label="TimePicker">
+              <mat-icon>schedule</mat-icon>
+            </button>
+          </mat-form-field>
+          <input type="time" name="time">
           <!-- End Date -->
           @if (!eventForm.get('step1.isAllDay').value) {
           <mat-form-field class="flex-auto">

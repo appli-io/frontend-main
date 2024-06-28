@@ -2,8 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild }
 
 import { LeafletMouseEvent, Map, map, Marker, marker, tileLayer }                from 'leaflet';
 
-import "leaflet.locatecontrol";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; 
+
 @Component({
   selector   : 'app-open-street-map',
   standalone : true,
@@ -35,7 +34,7 @@ export class OpenStreetMapComponent implements AfterViewInit {
     tileLayer(tileLayerUrl, {
       maxZoom: 20
     }).addTo(this.leafletMap);
-    this.leafletMap.locate({setView: true, watch: true, maxZoom: 20, enableHighAccuracy: true});
+    this.leafletMap.locate({setView: true, maxZoom: 20, enableHighAccuracy: true});
     this.leafletMap.on('click', this.onMapClick.bind(this));
   }
 
