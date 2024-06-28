@@ -58,7 +58,7 @@
       <ng-container matColumnDef="cover">
         <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.cover') }}</span></th>
         <td *matCellDef="let news" mat-cell>
-          <div class="flex justify-center">
+          <div class="flex justify-center my-2">
             @if ($any(news.portraitImage); as portraitImage) {
               <img
                 [src]="portraitImage.fileUrl"
@@ -82,7 +82,7 @@
       </ng-container>
 
       <ng-container matColumnDef="publishedAt">
-        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.author') }}</span></th>
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('table.published') }}</span></th>
         <td *matCellDef="let news" mat-cell>{{ news.publishedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
       </ng-container>
 

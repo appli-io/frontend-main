@@ -113,7 +113,7 @@ export const appConfig: ApplicationConfig = {
         });
       },
       multi     : true,
-      deps      : [ TranslocoService ],
+      deps: [ TranslocoService, StorageService ],
     },
     // Fuse
     provideAuth(),
