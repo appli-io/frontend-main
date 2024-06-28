@@ -5,6 +5,7 @@ import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
 import { MatIcon }                             from '@angular/material/icon';
 import { PageHeaderComponent }                 from '@layout/components/page-header/page-header.component';
 import { RouterLink }                          from '@angular/router';
+
 import { TranslocoDirective, TranslocoPipe }   from '@ngneat/transloco';
 
 import { EventsService }        from '../../events.service';
@@ -31,7 +32,7 @@ import { MatTooltip }           from '@angular/material/tooltip';
   templateUrl: './list.component.html'
 })
 export class ListComponent {
-  public events$ = this._eventsService.getEvents();
+  public events$ = this._eventsService.events$;
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,

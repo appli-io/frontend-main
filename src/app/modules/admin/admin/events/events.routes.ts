@@ -1,4 +1,8 @@
 import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+
+import { eventResolver } from './resolvers/events.resolver';
+import { EventsService } from './events.service';
 
 export default [
   {
@@ -7,11 +11,16 @@ export default [
     children     : [
       {
         path         : '',
+        resolve     : {
+          events: () => inject(EventsService).getEvents()
+        },
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
       },
       {
-        path: ':id',
-        // resolve: {},
+        path: 'edit/:id',
+        resolve: {
+          event: eventResolver
+        },
         loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
       }
     ]
