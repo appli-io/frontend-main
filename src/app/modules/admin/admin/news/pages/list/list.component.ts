@@ -73,6 +73,8 @@ export class ListComponent {
   openNewDialog(): void {
     this._matDialog.open(NewNewsComponent, {
       panelClass: 'dialog-mobile-fullscreen',
+      autoFocus   : false,
+      disableClose: true,
     });
   }
 

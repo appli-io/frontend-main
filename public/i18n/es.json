@@ -182,6 +182,7 @@
         "content" : "Contenido",
         "content-placeholder" : "Escribe aquí el contenido de la noticia...",
         "cover" : "Portada",
+        "cover-hint" : "Arrastra y suelta una imagen aquí o haz clic para seleccionar un archivo",
         "create" : "Crear"
       },
       "edit" : {

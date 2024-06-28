@@ -85,6 +85,6 @@ export class NewNewsComponent implements OnInit {
   }
 
   remove() {
-    this._matDialogRef.close();
+    this.newsForm.get('portraitImage').setValue(undefined);
   }
 }
