@@ -1,4 +1,4 @@
-import { Component }                    from '@angular/core';
+import { Component, OnInit }            from '@angular/core';
 import { MatIconAnchor, MatIconButton } from '@angular/material/button';
 import { MatDialog }                    from '@angular/material/dialog';
 import { MatDivider }                   from '@angular/material/divider';
@@ -10,18 +10,19 @@ import { MatTooltip }                   from '@angular/material/tooltip';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { Notyf }                                from 'notyf';
 
-import { FuseConfirmationService }       from '@fuse/services/confirmation';
-import { PageHeaderComponent }           from '@layout/components/page-header/page-header.component';
-import { NewNewsComponent }              from '@modules/admin/admin/news/dialogs/new-news/new-news.component';
-import { Table }                         from '@modules/shared/table/table.component';
-import { BehaviorSubject }               from 'rxjs';
-import { INews }                         from '@modules/admin/news/domain/interfaces/news.interface';
-import { Pageable }                      from '@core/interfaces/pageable';
-import { takeUntilDestroyed }            from '@angular/core/rxjs-interop';
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
-import { NewsService }                   from '@modules/admin/admin/news/news.service';
-import { MatTableModule }                from '@angular/material/table';
-import { MatSort, MatSortHeader }        from '@angular/material/sort';
+import { FuseConfirmationService }                                                  from '@fuse/services/confirmation';
+import { PageHeaderComponent }                                                      from '@layout/components/page-header/page-header.component';
+import { NewNewsComponent }                                                         from '@modules/admin/admin/news/dialogs/new-news/new-news.component';
+import { Table }                                                                    from '@modules/shared/table/table.component';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, mergeMap, switchMap } from 'rxjs';
+import { INews }                                                                    from '@modules/admin/news/domain/interfaces/news.interface';
+import { Pageable }                                                                 from '@core/interfaces/pageable';
+import { takeUntilDestroyed }                                                       from '@angular/core/rxjs-interop';
+import { AsyncPipe, DatePipe, JsonPipe }                                            from '@angular/common';
+import { NewsService }                                                              from '@modules/admin/admin/news/news.service';
+import { MatTableModule }                                                           from '@angular/material/table';
+import { MatSort, MatSortHeader }                                                   from '@angular/material/sort';
+import { FormBuilder, FormControl, ReactiveFormsModule }                            from '@angular/forms';
 
 @Component({
   selector   : 'app-list',
@@ -43,21 +44,25 @@ import { MatSort, MatSortHeader }        from '@angular/material/sort';
     DatePipe,
     MatSortHeader,
     MatSort,
+    ReactiveFormsModule,
   ],
   templateUrl: './list.component.html'
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
   public news$: BehaviorSubject<INews[]> = new BehaviorSubject<INews[]>(null);
   public pageable$: BehaviorSubject<Pageable> = new BehaviorSubject<Pageable>(null);
   public readonly displayedColumns: string[] = [ 'title', 'cover', 'publishedAt', 'actions' ];
+  public searchControl = new FormControl(undefined);
   private _notyf = new Notyf();
 
   constructor(
+    private readonly _formBuilder: FormBuilder,
     private readonly _fuseConfirmationService: FuseConfirmationService,
     private readonly _newsService: NewsService,
     private readonly _translationService: TranslocoService,
     private readonly _matDialog: MatDialog,
   ) {
+    this._subscribeToSearchControl();
     this._newsService.newsPage
       .pipe(takeUntilDestroyed())
       .subscribe({
@@ -69,6 +74,8 @@ export class ListComponent {
         }
       });
   }
+
+  ngOnInit() {}
 
   openNewDialog(): void {
     this._matDialog.open(NewNewsComponent, {
@@ -92,14 +99,28 @@ export class ListComponent {
       },
     });
 
-    // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed().subscribe((result) => {
-      // If the confirm button pressed...
-      if (result === 'confirmed') {
-        // Delete the list
-        console.log('Delete member', news.id);
-        // this._scrumboardService.deleteList(id).subscribe();
-      }
-    });
+    confirmation.afterClosed()
+      .pipe(
+        mergeMap((result) => {
+          // If the confirm button pressed...
+          if (result === 'confirmed') {
+            // Delete the news
+            return this._newsService.delete(news.id);
+          }
+          return [];
+        })
+      )
+      .subscribe();
+  }
+
+  private _subscribeToSearchControl() {
+    this.searchControl.valueChanges
+      .pipe(
+        takeUntilDestroyed(),
+        debounceTime(1000),
+        distinctUntilChanged(),
+        switchMap((value) => this._newsService.getNews({query: {headline: value}}))
+      )
+      .subscribe();
   }
 }

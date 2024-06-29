@@ -9,7 +9,6 @@ export interface INews {
   body?: string;
   images?: IImage[];
   portraitImage?: IImage;
-  isDeleted?: boolean;
   publishedAt?: Date;
   updatedAt?: Date;
 
