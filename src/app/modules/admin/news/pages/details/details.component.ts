@@ -17,14 +17,15 @@ import { FuseCardComponent } from '@fuse/components/card';
 import { SwiperDirective }   from '@core/directives/swiper/swiper.directive';
 import { UserService }       from '@core/user/user.service';
 
-import { INews }        from '../../domain/interfaces/news.interface';
-import { LightGallery } from 'lightgallery/lightgallery';
-import lightGallery     from 'lightgallery';
+import { INews }                                      from '../../domain/interfaces/news.interface';
+import { LightGallery }                               from 'lightgallery/lightgallery';
+import lightGallery                                   from 'lightgallery';
+import { QuillViewComponent, QuillViewHTMLComponent } from 'ngx-quill';
 
 @Component({
   selector   : 'app-single-news',
   standalone : true,
-  imports    : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule ],
+  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule, QuillViewHTMLComponent, QuillViewComponent ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './details.component.html',
   schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]

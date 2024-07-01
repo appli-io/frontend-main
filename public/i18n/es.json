@@ -349,7 +349,14 @@
     "service" : {
       "title" : "Error del Servicio",
       "message" : "Se ha producido un error al comunicarse con el servicio. Por favor, inténtalo de nuevo más tarde."
+    },
+    "validation" : {
+      "title" : "Error de Validación",
+      "message" : "Por favor, corrige los errores en el formulario antes de enviarlo."
     }
+  },
+  "selectors" : {
+    "news-category" : "Categoría"
   },
   "messages" : {
     "upload-complete" : "La carga se ha completado con éxito",

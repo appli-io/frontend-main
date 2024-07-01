@@ -9,7 +9,7 @@ import { MatFormFieldModule }                                                   
 import { MatIcon }                                                               from '@angular/material/icon';
 import { MatInputModule }                                                        from '@angular/material/input';
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
-import { NgIf }                                                                  from '@angular/common';
+import { JsonPipe, NgIf }                                                        from '@angular/common';
 import { QuillEditorComponent }                                                  from 'ngx-quill';
 import { defer }                                                                 from 'rxjs';
 import { DropzoneMaterialModule }                                                from '@ngx-dropzone/material';
@@ -17,6 +17,8 @@ import { MatChipsModule }                                                       
 import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
 import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
 import { MatCard }                                                               from '@angular/material/card';
+import { NewsCategoriesSelectorComponent }                                       from '@modules/shared/selectors/components/news-categories-selector/news-categories-selector.component';
+import { Notyf }                                                                 from 'notyf';
 
 @Component({
   selector   : 'app-new-news',
@@ -36,7 +38,9 @@ import { MatCard }                                                              
     DropzoneMaterialModule,
     MatChipsModule,
     ImageUploadPreviewComponent,
-    MatCard
+    MatCard,
+    NewsCategoriesSelectorComponent,
+    JsonPipe
   ],
   templateUrl: './new-news.component.html'
 })
@@ -56,6 +60,8 @@ export class NewNewsComponent implements OnInit {
   };
   private quillImageCompress$ = defer(() => import('quill-image-compress').then(module => module.default));
   public customModules = [ {implementation: this.quillImageCompress$, path: 'modules/imageCompress', property: 'imageCompress'} ];
+
+  private readonly _notyf = new Notyf();
 
   constructor(
     public readonly _matDialogRef: MatDialogRef<NewNewsComponent>,
@@ -82,6 +88,24 @@ export class NewNewsComponent implements OnInit {
       ...this.newsForm.getRawValue(),
       body: JSON.parse(this.newsForm.getRawValue().body)
     });
+    if (this.newsForm.invalid) {
+      this._notyf.error({message: this._translateService.translate('errors.validation.message')});
+      return;
+    }
+
+    this.newsForm.disable();
+
+    this._newsService
+      .post(this.newsForm.getRawValue())
+      .subscribe({
+        next : (result) => {
+          this._matDialogRef.close();
+        },
+        error: (error) => {
+          this._notyf.error({message: this._translateService.translate('errors.service.message')});
+          this.newsForm.enable();
+        }
+      });
   }
 
   remove() {

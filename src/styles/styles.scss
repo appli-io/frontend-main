@@ -207,3 +207,22 @@ swiper-slide {
     }
   }
 }
+
+// quill editor custom styles
+quill-view {
+  .ql-container {
+    font-family: inherit;
+  }
+
+  .ql-container .ql-editor {
+    background: unset;
+  }
+
+  p {
+    line-height: 1.5;
+
+    & > img {
+      padding: 1.5rem;
+    }
+  }
+}
