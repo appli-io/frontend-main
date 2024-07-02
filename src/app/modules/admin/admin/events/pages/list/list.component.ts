@@ -11,7 +11,7 @@ import { TranslocoDirective, TranslocoPipe }   from '@ngneat/transloco';
 import { EventsService }        from '../../events.service';
 import { EventsTableComponent } from '../../components/events-table/events-table.component';
 import { MatDialog }            from '@angular/material/dialog';
-import { NewComponent }         from '../new/new.component';
+import { NewOrEditComponent }         from '../../dialogs/new-or-edit/new-or-edit.component';
 import { MatTooltip }           from '@angular/material/tooltip';
 import { mergeMap } from 'rxjs';
 import { Notyf } from 'notyf';
@@ -45,7 +45,7 @@ export class ListComponent {
   }
 
   openNewEventDialog() {
-    this._matDialog.open(NewComponent, {
+    this._matDialog.open(NewOrEditComponent, {
       panelClass: 'dialog-mobile-fullscreen',
     });
   }

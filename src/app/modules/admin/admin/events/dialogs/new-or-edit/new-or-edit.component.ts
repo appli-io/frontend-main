@@ -82,9 +82,9 @@ const EventPlatformEnum = {
     ReactiveFormsModule,
     TranslocoDirective,
   ],
-  templateUrl: "./new.component.html",
+  templateUrl: "./new-or-edit.component.html",
 })
-export class NewComponent implements OnInit {
+export class NewOrEditComponent implements OnInit {
   eventForm: UntypedFormGroup;
   notyf = new Notyf();
 
@@ -95,7 +95,7 @@ export class NewComponent implements OnInit {
   protected readonly trackByFn = trackByFn;
 
   constructor(
-    public readonly _matDialogRef: MatDialogRef<NewComponent>,
+    public readonly _matDialogRef: MatDialogRef<NewOrEditComponent>,
     private readonly _translocoService: TranslocoService,
     private readonly _formBuilder: UntypedFormBuilder,
     private readonly _eventsService: EventsService
