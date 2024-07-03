@@ -67,7 +67,7 @@
           <a (click)="viewEvent.emit(event)" [matTooltip]="'View'" [routerLink]="[event.id]" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
           </a>
-          <button (click)="editEvent.emit(event)" [matTooltip]="'Edit'" mat-icon-button>
+          <button (click)="editEvent.emit(event)"  [matTooltip]="'Edit'" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
           </button>
           <button (click)="deleteEvent.emit(event)" [matTooltip]="'Delete'" mat-icon-button>

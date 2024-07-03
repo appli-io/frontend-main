@@ -11,16 +11,11 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 })
 export class EventsService {
   private _events: BehaviorSubject<IEvent[]> = new BehaviorSubject<IEvent[]>(null);
-  private _event: BehaviorSubject<IEvent> = new BehaviorSubject<IEvent>(null);
 
   constructor(private _http: HttpClient) { }
 
   get events$(): Observable<IEvent[]> {
     return this._events.asObservable();
-  }
-
-  get event$(): Observable<IEvent> {
-    return this._event.asObservable();
   }
 
   public getEvents() {
@@ -32,9 +27,7 @@ export class EventsService {
 
   public getEvent(eventId: string): Observable<IEvent> {
     return this._http.get<Api<IEvent>>(`api/event/${eventId}`)
-      .pipe(map(response => response.content),
-      tap(event => this._event.next(event))
-    );
+      .pipe(map(response => response.content));
   }
 
   public createEvent(event: IEvent) {
@@ -44,7 +37,7 @@ export class EventsService {
     );
   }
 
-  public updateEvent(event: IEvent) {
+  public updateEvent( event: IEvent) {
     return this._http.put<Api<IEvent>>(`api/event/${event.id}`, event)
       .pipe
       (map(response => response.content),
