@@ -1,4 +1,4 @@
-import { IImage }   from '@modules/admin/news/domain/interfaces/news.interface';
+import { IImage } from '@modules/admin/news/domain/interfaces/news.interface';
 import { RoleEnum } from '@modules/admin/admin/users/enums/role.enum';
 
 export interface CompanyUser {
@@ -6,8 +6,16 @@ export interface CompanyUser {
   name: string;
   username: string;
   email: string;
-  avatar: IImage;
   role: RoleEnum;
+
+  avatar: IImage;
   isActive: boolean;
   createdAt: Date;
+  updatedAt: Date | null;
+  createdBy: string;
+  joined: boolean;
+}
+
+export interface InvitationsResponse {
+  content: CompanyUser[];
 }

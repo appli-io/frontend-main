@@ -1,0 +1,46 @@
+<div *transloco="let t; read: 'admin.users.invitations'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
+  <!-- Header -->
+  <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+    <div [innerText]="t('title')" class="text-lg font-medium"></div>
+    <button (click)="close()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
+    <wwt-table [data]="invitations$" [displayedColumns]="displayedColumns" [messageNoData]="t('noInvitations')">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> {{ t('email') }} </th>
+        <td mat-cell *matCellDef="let invite"> {{ invite.email }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="joined">
+        <th mat-header-cell *matHeaderCellDef> {{ t('joined') }} </th>
+        <td mat-cell *matCellDef="let invite"> {{ invite.joined ? 'Yes' : 'No' }} </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{ t('actions') }} </th>
+        <td mat-cell *matCellDef="let invite">
+          <button mat-button (click)="resendInvitation(invite.id)">{{ t('resend') }}</button>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </wwt-table>
+  </div>
+
+  <!-- Actions -->
+  <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
+    <!-- Close -->
+    <button
+      (click)="close()"
+      class="w-full md:w-30"
+      mat-stroked-button
+    >
+      {{ t('discard') }}
+    </button>
+  </div>
+</div>

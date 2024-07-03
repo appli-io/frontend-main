@@ -148,7 +148,17 @@
         "invitationMessage" : "Mensaje de Invitación",
         "role" : "Rol",
         "send" : "Enviar invitación"
+      },
+      "invitations" : {
+        "title" : "Invitaciones",
+        "noInvitations" : "No se encontraron invitaciones",
+        "email" : "Correo Electrónico",
+        "joined" : "Se Unió",
+        "discard" : "Descartar",
+        "resend" : "Reenviar",
+        "actions" : "Acciones"
       }
+      
     },
     "news" : {
       "title" : "Noticias",
