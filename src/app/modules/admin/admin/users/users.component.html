@@ -10,7 +10,7 @@
 
       <!-- New member button -->
       <a (click)="openNewMemberDialog()" [matTooltip]="t('new.title')" class="flex-0 font-bold py-2 px-4 rounded"
-        color="primary" mat-icon-button>
+         color="primary" mat-icon-button>
         <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
       </a>
       <a (click)="openInvitationsDialog()" [matTooltip]="'View Invitations'" class="flex-0 font-bold py-2 px-4 rounded" color="primary" mat-icon-button>
@@ -23,7 +23,7 @@
       <mat-form-field [subscriptSizing]="'dynamic'" class="w-full" hintLabel="Búsqueda mínima 3 carácteres">
         <mat-label>Buscar miembro</mat-label>
         <mat-icon [svgIcon]="'heroicons_solid:magnifying-glass'" class="icon-size-5" matPrefix></mat-icon>
-        <input [formControl]="searchControl" [placeholder]="'Nombre del miembro'" matInput />
+        <input [formControl]="searchControl" [placeholder]="'Nombre del miembro'" matInput/>
         <button mat-icon-button matSuffix>
           <mat-icon class="icon-size-5" svgIcon="heroicons_solid:plus-circle"></mat-icon>
         </button>
@@ -32,54 +32,54 @@
 
     <!-- Team members -->
     <div class="flex flex-col w-full divide-y border-b border-t">
-      @for (member of members; track trackByFn($index, member)) {
-      <div class="flex flex-col py-6 sm:flex-row sm:items-center">
-        <div class="flex items-center">
-          <div class="flex h-10 w-10 flex-0 items-center justify-center overflow-hidden rounded-full">
-            @if (member.avatar?.fileUrl) {
-            <img class="h-full w-full object-cover" [src]="member.avatar.fileUrl" alt="Contact avatar" />
-            }
-            @if (!member.avatar?.fileUrl) {
-            <div
-              class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-              {{ member.name.charAt(0) }}
+      @for (member of (members$ | async).content; track member.id) {
+        <div class="flex flex-col py-6 sm:flex-row sm:items-center">
+          <div class="flex items-center">
+            <div class="flex h-10 w-10 flex-0 items-center justify-center overflow-hidden rounded-full">
+              @if (member.avatar?.fileUrl) {
+                <img class="h-full w-full object-cover" [src]="member.avatar.fileUrl" alt="Contact avatar"/>
+              }
+              @if (!member.avatar?.fileUrl) {
+                <div
+                  class="flex h-full w-full items-center justify-center rounded-full bg-gray-200 text-lg uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                  {{ member.name.charAt(0) }}
+                </div>
+              }
             </div>
-            }
+            <div class="ml-4">
+              <div class="font-medium">{{ member.name }}</div>
+              <div class="text-secondary">{{ member.email }}</div>
+            </div>
           </div>
-          <div class="ml-4">
-            <div class="font-medium">{{ member.name }}</div>
-            <div class="text-secondary">{{ member.email }}</div>
+          <div class="mt-4 flex items-center sm:ml-auto sm:mt-0">
+            <div class="order-2 ml-4 sm:order-1 sm:ml-0">
+              <mat-form-field class="fuse-mat-dense w-32" [subscriptSizing]="'dynamic'">
+                <mat-select [panelClass]="'w-80 min-w-72 max-w-72 h-auto max-h-none'" [value]="member.role"
+                            disableOptionCentering #roleSelect="matSelect">
+                  <mat-select-trigger class="text-md">
+                    <span>Role:</span>
+                    <span class="ml-1 font-medium">{{ roleSelect.value | titlecase }}</span>
+                  </mat-select-trigger>
+                  @for (role of roles; track role) {
+                    <mat-option class="h-auto py-4 leading-none" [value]="role.value">
+                      <div class="font-medium">
+                        {{ role.label }}
+                      </div>
+                      <div class="text-secondary mt-1.5 whitespace-normal text-sm leading-normal">
+                        {{ role.description }}
+                      </div>
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="order-1 sm:order-2 sm:ml-3">
+              <button mat-icon-button color="warn" (click)="deleteMember(member.id)">
+                <mat-icon class="text-hint" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="mt-4 flex items-center sm:ml-auto sm:mt-0">
-          <div class="order-2 ml-4 sm:order-1 sm:ml-0">
-            <mat-form-field class="fuse-mat-dense w-32" [subscriptSizing]="'dynamic'">
-              <mat-select [panelClass]="'w-80 min-w-72 max-w-72 h-auto max-h-none'" [value]="member.role"
-                disableOptionCentering #roleSelect="matSelect">
-                <mat-select-trigger class="text-md">
-                  <span>Role:</span>
-                  <span class="ml-1 font-medium">{{ roleSelect.value | titlecase }}</span>
-                </mat-select-trigger>
-                @for (role of roles; track role) {
-                <mat-option class="h-auto py-4 leading-none" [value]="role.value">
-                  <div class="font-medium">
-                    {{ role.label }}
-                  </div>
-                  <div class="text-secondary mt-1.5 whitespace-normal text-sm leading-normal">
-                    {{ role.description }}
-                  </div>
-                </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="order-1 sm:order-2 sm:ml-3">
-            <button mat-icon-button color="warn" (click)="deleteMember(member.id)">
-              <mat-icon class="text-hint" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
       }
     </div>
   </div>

@@ -6,7 +6,7 @@ export default [
   {
     path         : '',
     resolve      : {
-      data: () => inject(UsersService).getData()
+      data: () => inject(UsersService).getMembers({}),
     },
     loadComponent: () => import('./users.component').then(m => m.UsersComponent),
   }

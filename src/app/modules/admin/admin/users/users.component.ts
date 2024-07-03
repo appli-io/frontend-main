@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { PageHeaderComponent } from '@layout/components/page-header/page-header.component';
-import { TranslocoDirective } from '@ngneat/transloco';
-import { MatFormField } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInput } from '@angular/material/input';
-import { MatIconAnchor, MatIconButton } from '@angular/material/button';
+import { AsyncPipe, JsonPipe, TitleCasePipe }     from '@angular/common';
+import { Component, OnInit }                      from '@angular/core';
+import { takeUntilDestroyed }                     from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule }       from '@angular/forms';
+import { MatIconAnchor, MatIconButton }           from '@angular/material/button';
+import { MatDialog }                              from '@angular/material/dialog';
+import { MatFormField }                           from '@angular/material/form-field';
+import { MatIcon }                                from '@angular/material/icon';
+import { MatInput }                               from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
-import { trackByFn } from '@libs/ui/utils/utils';
-import { TitleCasePipe } from '@angular/common';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { UsersService } from '@modules/admin/admin/users/users.service';
-import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatTooltip } from '@angular/material/tooltip';
-import { MatDialog } from '@angular/material/dialog';
-import { MemberNewComponent } from '@modules/admin/admin/users/dialogs/member-new/member-new.component';
-import { rolesList } from '@core/constants';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatTooltip }                             from '@angular/material/tooltip';
+
+import { TranslocoDirective }                                             from '@ngneat/transloco';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+
+import { rolesList }               from '@core/constants';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
+import { trackByFn }               from '@libs/ui/utils/utils';
+import { UsersService }            from '@modules/admin/admin/users/users.service';
+import { CompanyUser }             from '@modules/admin/admin/users/model/company-user.model';
+import { MemberNewComponent }      from '@modules/admin/admin/users/dialogs/member-new/member-new.component';
 import { GetInvitationsComponent } from './dialogs/get-invitations/get-invitations.component';
+import { Page }                    from '@core/interfaces/page';
 
 @Component({
-  selector: 'app-users',
+  selector  : 'app-users',
   standalone: true,
   imports: [
     PageHeaderComponent,
@@ -36,16 +39,18 @@ import { GetInvitationsComponent } from './dialogs/get-invitations/get-invitatio
     TitleCasePipe,
     MatIconAnchor,
     MatTooltip,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AsyncPipe,
+    JsonPipe
   ],
   templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
-  members: CompanyUser[];
   roles: any[];
-  protected readonly trackByFn = trackByFn;
   public searchControl = new FormControl('');
-  public filteredMembers$ = new BehaviorSubject<CompanyUser[]>([]);
+  public members$ = new BehaviorSubject<Page<CompanyUser>>(null);
+
+  protected readonly trackByFn = trackByFn;
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
@@ -53,10 +58,9 @@ export class UsersComponent implements OnInit {
     private readonly _usersService: UsersService
   ) {
     this._subscribeToSearchControl();
-    this._usersService.data$.pipe(takeUntilDestroyed()).subscribe((members) => {
+    this._usersService.membersPage$.pipe(takeUntilDestroyed()).subscribe((members) => {
       console.log('Members', members);
-      this.members = members;
-      this.filteredMembers$.next(members);
+      this.members$.next(members);
     });
   }
 
@@ -66,10 +70,10 @@ export class UsersComponent implements OnInit {
 
   deleteMember(id): void {
     const confirmation = this._fuseConfirmationService.open({
-      title: 'Remove member',
+      title  : 'Remove member',
       message: 'Are you sure you want to remove this member from the company? This action cannot be undone.',
       actions: {
-        confirm: { label: 'Remove' },
+        confirm: {label: 'Remove'},
       },
     });
 
@@ -98,9 +102,7 @@ export class UsersComponent implements OnInit {
       takeUntilDestroyed(),
       debounceTime(1000),
       distinctUntilChanged(),
-      switchMap((value) => this._usersService.getMembers({ query: { name: value } }))
-    ).subscribe((filteredMembers) => {
-      this.filteredMembers$.next(filteredMembers.content);
-    });
+      switchMap((value) => this._usersService.getMembers({query: {name: value}}))
+    ).subscribe();
   }
 }
