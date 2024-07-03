@@ -245,11 +245,11 @@ export class NewOrEditComponent implements OnInit {
       this.eventForm.disable();
 
       const flattenedData = this.flattenFormData(this.eventForm.getRawValue());
-      console.log('data',this.data.event.id)
+      const eventId       = this.data.event.id
       if (this.data?.event) {
         try {
           this._eventsService
-            .updateEvent(flattenedData)
+            .updateEvent(eventId, flattenedData)
             .pipe(takeUntil(this._matDialogRef.afterClosed()))
             .subscribe({
               next: (result) => {

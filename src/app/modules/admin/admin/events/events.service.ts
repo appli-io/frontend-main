@@ -37,15 +37,24 @@ export class EventsService {
     );
   }
 
-  public updateEvent( event: IEvent) {
-    return this._http.put<Api<IEvent>>(`api/event/${event.id}`, event)
-      .pipe
-      (map(response => response.content),
-      tap(updatedEvent => {
-        this._events.next(this._events.value
-          .map(event => event.id === updatedEvent.id ? updatedEvent : event));
-      }
-    ))
+  public updateEvent(eventId:string, event: IEvent) {
+    // return this._http.put<Api<IEvent>>(`api/event/${event.id}`, event)
+    //   .pipe
+    //   (map(response => response.content),
+    //   tap(updatedEvent => {
+    //     this._events.next(this._events.value
+    //       .map(event => event.id === updatedEvent.id ? updatedEvent : event));
+    //   }
+    // ))
+
+    return this._http.patch<Api<IEvent>>(`api/event/${eventId}`, event)
+    .pipe
+    (map(response => response.content),
+    tap(updatedEvent => {
+      this._events.next(this._events.value
+        .map(event => event.id === updatedEvent.id ? updatedEvent : event));
+    }
+  ))
   }
   
 
