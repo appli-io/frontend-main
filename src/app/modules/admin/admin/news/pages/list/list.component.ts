@@ -10,19 +10,19 @@ import { MatTooltip }                   from '@angular/material/tooltip';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { Notyf }                                from 'notyf';
 
-import { FuseConfirmationService }                                                  from '@fuse/services/confirmation';
-import { PageHeaderComponent }                                                      from '@layout/components/page-header/page-header.component';
-import { NewNewsComponent }                                                         from '@modules/admin/admin/news/dialogs/new-news/new-news.component';
-import { Table }                                                                    from '@modules/shared/table/table.component';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, mergeMap, switchMap } from 'rxjs';
-import { INews }                                                                    from '@modules/admin/news/domain/interfaces/news.interface';
-import { Pageable }                                                                 from '@core/interfaces/pageable';
-import { takeUntilDestroyed }                                                       from '@angular/core/rxjs-interop';
-import { AsyncPipe, DatePipe, JsonPipe }                                            from '@angular/common';
-import { NewsService }                                                              from '@modules/admin/admin/news/news.service';
-import { MatTableModule }                                                           from '@angular/material/table';
-import { MatSort, MatSortHeader }                                                   from '@angular/material/sort';
-import { FormBuilder, FormControl, ReactiveFormsModule }                            from '@angular/forms';
+import { FuseConfirmationService }                                                      from '@fuse/services/confirmation';
+import { PageHeaderComponent }                                                          from '@layout/components/page-header/page-header.component';
+import { NewNewsComponent }                                                             from '@modules/admin/admin/news/dialogs/new-news/new-news.component';
+import { Table }                                                                        from '@modules/shared/table/table.component';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, mergeMap, of, switchMap } from 'rxjs';
+import { INews }                                                                        from '@modules/admin/news/domain/interfaces/news.interface';
+import { Pageable }                                                                     from '@core/interfaces/pageable';
+import { takeUntilDestroyed }                                                           from '@angular/core/rxjs-interop';
+import { AsyncPipe, DatePipe, JsonPipe }                                                from '@angular/common';
+import { NewsService }                                                                  from '@modules/admin/admin/news/news.service';
+import { MatTableModule }                                                               from '@angular/material/table';
+import { MatSort, MatSortHeader }                                                       from '@angular/material/sort';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators }                    from '@angular/forms';
 
 @Component({
   selector   : 'app-list',
@@ -52,7 +52,7 @@ export class ListComponent implements OnInit {
   public news$: BehaviorSubject<INews[]> = new BehaviorSubject<INews[]>(null);
   public pageable$: BehaviorSubject<Pageable> = new BehaviorSubject<Pageable>(null);
   public readonly displayedColumns: string[] = [ 'title', 'cover', 'publishedAt', 'actions' ];
-  public searchControl = new FormControl(undefined);
+  public searchControl = new FormControl(undefined, [ Validators.minLength(3), Validators.maxLength(100) ]);
   private _notyf = new Notyf();
 
   constructor(
@@ -119,7 +119,12 @@ export class ListComponent implements OnInit {
         takeUntilDestroyed(),
         debounceTime(1000),
         distinctUntilChanged(),
-        switchMap((value) => this._newsService.getNews({query: {headline: value}}))
+        switchMap((value) => {
+          value = value.trim();
+          if (!value) return this._newsService.getNews({});
+          else if (value.length >= 3 && value.length < 100) return this._newsService.getNews({query: {headline: value}});
+          else return of('invalid');
+        })
       )
       .subscribe();
   }

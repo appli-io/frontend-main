@@ -26,22 +26,18 @@
     <mat-divider class="w-full"></mat-divider>
 
     <div class="w-full">
-      <mat-form-field [subscriptSizing]="'dynamic'" class="w-full" hintLabel="Búsqueda mínima 3 carácteres">
+      <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
         <mat-label>Buscar noticia</mat-label>
         <mat-icon
           [svgIcon]="'heroicons_solid:magnifying-glass'"
           class="icon-size-5"
           matPrefix
         ></mat-icon>
-        <input [formControl]="searchControl" [placeholder]="'Título de noticia'" matInput/>
-        @if ((searchControl.valueChanges | async); as searchValue) {
-          <button mat-icon-button matSuffix>
-            <mat-icon
-              class="icon-size-5"
-              svgIcon="heroicons_solid:plus-circle"
-            ></mat-icon>
-          </button>
+        <input #searchBar [formControl]="searchControl" [placeholder]="'Título de noticia'" matInput type="search"/>
+        @if (searchControl.errors?.minlength) {
+          <mat-error>Mínimo 3 caracteres</mat-error>
         }
+        <mat-hint>{{ searchBar.value?.length || 0 }}/100</mat-hint>
       </mat-form-field>
     </div>
 

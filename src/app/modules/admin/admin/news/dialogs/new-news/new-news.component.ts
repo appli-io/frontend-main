@@ -57,6 +57,11 @@ export class NewNewsComponent implements OnInit {
       [ 'clean' ],
       [ 'link', 'image' ]
     ],
+    'imageCompress': {
+      quality  : 0.5,
+      imageType: 'image/webp',
+      debug    : true
+    }
   };
   private quillImageCompress$ = defer(() => import('quill-image-compress').then(module => module.default));
   public customModules = [ {implementation: this.quillImageCompress$, path: 'modules/imageCompress', property: 'imageCompress'} ];
