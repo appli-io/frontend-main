@@ -112,9 +112,19 @@
               </mat-form-field>
 
               @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
-              <ng-container>
-                <app-open-street-map (locationSelected)="onLocationSelected($index, $event)"></app-open-street-map>
-              </ng-container>
+                <pre>{{eventForm.value['step2'].url[$index]?.latitude}}</pre>
+                <pre>{{eventForm.value['step2'].url[$index]?.longitude}}</pre>
+              @defer (on viewport) {
+                <app-open-street-map
+                (locationSelected)="onLocationSelected($index, $event)"
+                [latitude]="eventForm.value['step2'].url[$index]?.latitude"
+                [longitude]="eventForm.value['step2'].url[$index]?.longitude"
+                [marker]="{ lat: eventForm.value['step2'].url[$index]?.latitude, lng: eventForm.value['step2'].url[$index]?.longitude }"
+              >
+              </app-open-street-map>
+              } @placeholder {
+                <div>cargando</div>
+              }
 
               <mat-form-field>
                 <mat-label [innerText]="t('url.latitude')"></mat-label>

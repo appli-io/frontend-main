@@ -105,15 +105,17 @@ export class NewOrEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data?.event) {
+      const startDate = new Date(this.data.event.startDate);
+      const endDate = new Date(this.data.event.endDate);
       this.eventForm = this._formBuilder.group({
         step1: this._formBuilder.group({
           title: [this.data.event.title, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
           description: [this.data.event.description, [Validators.required, Validators.minLength(3)]],
           isAllDay: [this.data.event.isAllDay, [Validators.required]],
-          startDate: [this.data.event.startDate, [Validators.required]],
-          startDateTime: [this.data.event.startDate, [Validators.required]],
-          endDate: [this.data.event.endDate],
-          endDateTime: [this.data.event.endDate],
+          startDate: [startDate.toISOString().substring(0, 10), [Validators.required]],
+          startDateTime: [startDate.toTimeString().substring(0, 5), [Validators.required]],
+          endDate: [endDate.toISOString().substring(0, 10)],
+          endDateTime: [endDate.toTimeString().substring(0, 5)],
         }),
 
         step2: this._formBuilder.group({
