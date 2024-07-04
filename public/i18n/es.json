@@ -17,6 +17,11 @@
     "allNews" : "Todas las noticias",
     "newsByCategory" : "Noticias por categoría",
     "bio-bio" : "Radio Bío Bío",
+    "dashboards" : {
+      "title" : "Tableros",
+      "analytics" : "Analítica",
+      "projects" : "Proyectos"
+    },
     "apps" : {
       "title" : "Aplicaciones",
       "contacts" : "Contactos",

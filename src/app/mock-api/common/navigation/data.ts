@@ -9,6 +9,28 @@ export const defaultNavigation: FuseNavigationItem[] = [
     icon : 'heroicons_outline:home',
     link : '/home'
   },
+  {
+    id      : 'dashboards.title',
+    title   : 'Dashboards',
+    type    : 'collapsable',
+    icon    : 'heroicons_outline:chart-bar-square',
+    children: [
+      {
+        id   : 'dashboards.analytics',
+        title: 'All News',
+        type : 'basic',
+        link : '/news/all',
+        icon : 'heroicons_outline:globe-asia-australia'
+      },
+      {
+        id   : 'dashboards.projects',
+        title: 'All News',
+        type : 'basic',
+        link : '/news/all',
+        icon : 'heroicons_outline:queue-list'
+      },
+    ]
+  },
   // news
   {
     id      : 'news',
