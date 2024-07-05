@@ -21,8 +21,8 @@ import { LeafletMouseEvent, Map, map, Marker, marker, tileLayer } from "leaflet"
   styleUrls: ["./open-street-map.component.scss"],
 })
 export class OpenStreetMapComponent implements AfterViewInit {
-  @Input() latitude: number = -36.9760017;
-  @Input() longitude: number = -72.938316;
+  @Input() latitude: number
+  @Input() longitude: number
   @Input() marker: { lat: number; lng: number };
   @Output() locationSelected = new EventEmitter<{ latitude: number; longitude: number }>();
   @ViewChild("map") private mapContainer: ElementRef<HTMLElement>;

@@ -96,7 +96,7 @@
               <mat-form-field>
                 <mat-label>{{ t("url.platform") }}</mat-label>
                 <mat-select formControlName="platform" (selectionChange)="onPlatformSelected($index, $event)">
-                  @for (platform of eventPlatformOptions; track trackByFn($index, platform)) {
+                  @for (platform of getAvailablePlatforms($index); track trackByFn($index, platform)) {
                   <mat-option [value]="platform">
                     {{ t("platforms." + platform) }}
                   </mat-option>
@@ -117,8 +117,8 @@
               @defer (on viewport) {
                 <app-open-street-map
                 (locationSelected)="onLocationSelected($index, $event)"
-                [latitude]="eventForm.value['step2'].url[$index]?.latitude"
-                [longitude]="eventForm.value['step2'].url[$index]?.longitude"
+                [latitude]="eventForm.value['step2'].url[$index]?.latitude || -33.437862717498135"
+                [longitude]="eventForm.value['step2'].url[$index]?.longitude || -70.65009359000236"
                 [marker]="{ lat: eventForm.value['step2'].url[$index]?.latitude, lng: eventForm.value['step2'].url[$index]?.longitude }"
               >
               </app-open-street-map>
