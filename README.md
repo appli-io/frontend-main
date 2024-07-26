@@ -13,7 +13,7 @@
 
 ## Project Description
 
-[Your project description here. Describe what your project is, what it does, who it's for, and any other important details.]
+Description in development.
 
 ## Getting Started
 

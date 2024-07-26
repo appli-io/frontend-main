@@ -58,7 +58,7 @@ export class NewNewsComponent implements OnInit {
       [ 'link', 'image' ]
     ],
     'imageCompress': {
-      quality  : 0.5,
+      quality: 0.8,
       imageType: 'image/webp',
       debug    : true
     }
