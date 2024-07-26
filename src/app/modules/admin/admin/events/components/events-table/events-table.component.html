@@ -1,4 +1,4 @@
-<div class="relative">
+<div *transloco="let t; read: 'admin.events'" class="relative">
   <table
     (matSortChange)="sortChange.emit($event)"
     [dataSource]="eventsDataSource"
@@ -10,7 +10,7 @@
     <!-- Title -->
     <ng-container matColumnDef="title">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        Title
+        {{ t('new.name') }}
       </th>
       <td *matCellDef="let event" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ event.title }}</span>
@@ -20,7 +20,7 @@
     <!-- Description -->
     <ng-container matColumnDef="description">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        Description
+        {{ t('new.description') }}
       </th>
       <td *matCellDef="let event" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ event.description }}</span>
@@ -30,7 +30,7 @@
     <!-- Location -->
     <ng-container matColumnDef="location">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        Location
+        {{ t('new.location') }}
       </th>
       <td *matCellDef="let event" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ event.location }}</span>
@@ -40,7 +40,7 @@
     <!-- Start Date -->
     <ng-container matColumnDef="startDate">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        Start Date
+        {{ t('new.startDate') }}
       </th>
       <td *matCellDef="let event" mat-cell>
         <span class="whitespace-nowrap pr-6">{{ event.startDate | date: 'MMM dd, y' }}</span>
@@ -50,27 +50,27 @@
     <!-- End Date -->
     <ng-container matColumnDef="endDate">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        End Date
+        {{ t('new.endDate') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.endDate ? (event.endDate | date: 'MMM dd, y') : 'No End Date' }}</span>
+        <span class="whitespace-nowrap pr-6">{{ event.endDate ? (event.endDate | date: 'MMM dd, y') : t('new.noEndDate') }}</span>
       </td>
     </ng-container>
 
     <!-- Actions -->
     <ng-container matColumnDef="actions">
       <th *matHeaderCellDef mat-header-cell>
-        Actions
+        {{ t('new.actions') }}
       </th>
       <td *matCellDef="let event" mat-cell>
         <div class="flex items-center">
-          <a (click)="viewEvent.emit(event)" [matTooltip]="'View'" [routerLink]="[event.id]" mat-icon-button>
+          <a (click)="viewEvent.emit(event)" [matTooltip]="t('new.view')" [routerLink]="[event.id]" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
           </a>
-          <button (click)="editEvent.emit(event)"  [matTooltip]="'Edit'" mat-icon-button>
+          <button (click)="editEvent.emit(event)"  [matTooltip]="t('new.edit')" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
           </button>
-          <button (click)="deleteEvent.emit(event)" [matTooltip]="'Delete'" mat-icon-button>
+          <button (click)="deleteEvent.emit(event)" [matTooltip]="t('new.delete')" mat-icon-button>
             <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
           </button>
         </div>

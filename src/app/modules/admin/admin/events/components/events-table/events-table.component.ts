@@ -25,35 +25,37 @@ import { IEvent }                                                     from '@mod
 import { MatIcon }                                                    from '@angular/material/icon';
 import { RouterLink }                                                 from '@angular/router';
 import { MatTooltip }                                                 from '@angular/material/tooltip';
+import { TranslocoDirective }                                         from '@ngneat/transloco';
 
 @Component({
   selector: 'events-table',
   standalone: true,
   imports: [
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRow,
-    MatRowDef,
+    DatePipe,
+    MatButton,
+    MatCell,
+    MatCellDef,
     MatColumnDef,
-    MatFooterCellDef,
     MatFooterCell,
-    MatTable,
-    MatSort,
+    MatFooterCellDef,
+    MatFooterRow,
+    MatFooterRowDef,
     MatHeaderCell,
     MatHeaderCellDef,
-    MatCellDef,
-    MatCell,
-    DatePipe,
-    NgClass,
-    MatButton,
-    MatFooterRowDef,
-    MatFooterRow,
-    MatSortHeader,
-    MatIconButton,
+    MatHeaderRow,
+    MatHeaderRowDef,
     MatIcon,
     MatIconAnchor,
+    MatIconButton,
+    MatRow,
+    MatRowDef,
+    MatSort,
+    MatSortHeader,
+    MatTable,
+    MatTooltip,
+    NgClass,
     RouterLink,
-    MatTooltip
+    TranslocoDirective
   ],
   templateUrl: './events-table.component.html'
 })

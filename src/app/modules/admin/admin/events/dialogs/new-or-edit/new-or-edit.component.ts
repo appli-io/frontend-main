@@ -197,6 +197,11 @@ export class NewOrEditComponent implements OnInit {
     this.urlArray.push(urlGroup);
   }
 
+  getAvailablePlatforms(index: number): string[] {
+    const selectPlatforms = this.urlArray.controls.map(control => control.get('platform').value);
+    return this.eventPlatformOptions.filter(platform => !selectPlatforms.includes(platform) || selectPlatforms.indexOf(platform) === index);
+  }
+
   onPlatformSelected(index: number, event: { value: string }): void {
     const urlGroup = this.urlArray.at(index) as UntypedFormGroup;
     const platformValue = event.value;
@@ -247,8 +252,9 @@ export class NewOrEditComponent implements OnInit {
       this.eventForm.disable();
 
       const flattenedData = this.flattenFormData(this.eventForm.getRawValue());
-      const eventId       = this.data.event.id
+
       if (this.data?.event) {
+      const eventId       = this.data.event.id
         try {
           this._eventsService
             .updateEvent(eventId, flattenedData)
