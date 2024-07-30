@@ -116,6 +116,9 @@
           <mat-error *ngIf="signUpForm.get('email').hasError('email')">
             Please enter a valid email address
           </mat-error>
+          <mat-error *ngIf="signUpForm.get('email').hasError('invalidEmail')">
+            Email address is already in use
+          </mat-error>
         </mat-form-field>
 
         <!-- Password field -->

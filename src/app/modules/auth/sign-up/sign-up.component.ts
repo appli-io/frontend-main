@@ -60,10 +60,10 @@ export class AuthSignUpComponent implements OnInit {
 
     this.signUpForm.get('hasToken').valueChanges.subscribe((hasToken: boolean) => {
       if (hasToken) {
-        this._addCompanyFormGroup();
+        this._removeCompanyFormGroup();
         this.signUpForm.get('token').setValidators([ Validators.required ]);
       } else {
-        this._removeCompanyFormGroup();
+        this.signUpForm.addControl('company', this._addCompanyFormGroup());
         this.signUpForm.get('token').setValidators(null);
       }
 
