@@ -1,0 +1,19 @@
+import { catchError, map, Observable }                         from 'rxjs';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AuthService }                                         from '@core/auth/auth.service';
+import AES                                                     from 'crypto-js/aes';
+import { environment }                                         from '../../../../../environments/environment';
+
+export function emailAsyncValidator(authService: AuthService): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    console.log(control.value);
+
+    console.log(environment.ENCRYPTION_KEY);
+    const encryptedEmail = AES.encrypt(control.value, environment.ENCRYPTION_KEY).toString();
+
+    return authService.validateEmail(encryptedEmail).pipe(
+      map(isValid => (isValid ? null : {invalidEmail: true})),
+      catchError(() => null) // Handle errors and return null to indicate no validation error
+    );
+  };
+}

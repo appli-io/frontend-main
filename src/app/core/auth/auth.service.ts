@@ -160,6 +160,13 @@ export class AuthService {
     return this._httpClient.post('api/auth/sign-up', post);
   }
 
+  validateEmail = (email: string): Observable<boolean> => this._httpClient
+    .post<Api<{ isValid: boolean }>>(`api/auth/sign-up/validate-email`, {email})
+    .pipe(
+      map(({content}) => content.isValid),
+      catchError(() => of(false))
+    );
+
   /**
    * Unlock session
    *
