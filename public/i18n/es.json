@@ -166,7 +166,6 @@
         "resend" : "Reenviar",
         "actions" : "Acciones"
       }
-      
     },
     "news" : {
       "title" : "Noticias",
@@ -197,8 +196,12 @@
       "new" : {
         "title" : "Nueva Noticia",
         "headline" : "Titular",
+        "headline-placeholder" : "Ejemplo: Celebración del Día de la Independencia",
+        "headline-required" : "El titular es obligatorio",
         "category" : "Categoría",
         "abstract" : "Resumen",
+        "abstract-placeholder" : "Ejemplo: El equipo celebró el Día de la Independencia con un almuerzo especial y actividades recreativas.",
+        "abstract-required" : "El resumen es obligatorio",
         "content" : "Contenido",
         "content-placeholder" : "Escribe aquí el contenido de la noticia...",
         "cover" : "Portada",
@@ -376,10 +379,18 @@
     "validation" : {
       "title" : "Error de Validación",
       "message" : "Por favor, corrige los errores en el formulario antes de enviarlo."
+    },
+    "form" : {
+      "min-length" : "El contenido debe tener al menos {{length}} caracteres",
+      "max-length" : "El contenido no debe exceder los {{length}} caracteres",
+      "required" : "Este campo es obligatorio"
     }
   },
   "selectors" : {
-    "news-category" : "Categoría"
+    "news-category" : {
+      "title" : "Categoría de Noticias",
+      "no-categories" : "No hay categorías disponibles"
+    }
   },
   "messages" : {
     "upload-complete" : "La carga se ha completado con éxito",

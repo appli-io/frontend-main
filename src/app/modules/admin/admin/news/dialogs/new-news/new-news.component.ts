@@ -1,6 +1,6 @@
 import { Component, OnInit }                                                     from '@angular/core';
 import { MatDialogRef }                                                          from '@angular/material/dialog';
-import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService }                   from '@ngneat/transloco';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NewsService }                                                           from '@modules/admin/admin/news/news.service';
 import { MatButtonModule }                                                       from '@angular/material/button';
@@ -24,9 +24,11 @@ import { Notyf }                                                                
   selector   : 'app-new-news',
   standalone : true,
   imports: [
-    MatButtonModule,
     ReactiveFormsModule,
     CdkTextareaAutosize,
+    MatButtonModule,
+    MatCard,
+    MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
     MatIcon,
@@ -36,11 +38,10 @@ import { Notyf }                                                                
     TranslocoDirective,
     DropzoneCdkModule,
     DropzoneMaterialModule,
-    MatChipsModule,
     ImageUploadPreviewComponent,
-    MatCard,
     NewsCategoriesSelectorComponent,
-    JsonPipe
+    JsonPipe,
+    TranslocoPipe
   ],
   templateUrl: './new-news.component.html'
 })

@@ -10,15 +10,22 @@
   <!-- Content -->
   <form [formGroup]="newsForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full gap-y-4 overflow-auto">
     <!-- Name -->
-    <mat-form-field subscriptSizing="dynamic">
+    <mat-form-field hintLabel="{{ newsForm.get('headline').value?.length || 0 }}/100" subscriptSizing="dynamic">
       <mat-label [innerText]="t('headline')"></mat-label>
-      <input formControlName="headline" matInput/>
+      <input [placeholder]="t('headline-placeholder')" formControlName="headline" matInput maxlength="100"/>
+
+      <mat-error *ngIf="newsForm.controls.headline?.errors?.required">
+        {{ 'errors.form.required' | transloco }}
+      </mat-error>
+      <mat-error *ngIf="newsForm.controls.headline?.errors?.minlength">
+        {{ 'errors.form.min-length' | transloco:{ length: 10 } }}
+      </mat-error>
     </mat-form-field>
 
     <!-- Description -->
     <mat-form-field subscriptSizing="dynamic">
       <mat-label [innerText]="t('abstract')"></mat-label>
-      <textarea cdkTextareaAutosize formControlName="abstract" matInput></textarea>
+      <textarea [placeholder]="t('abstract-placeholder')" cdkTextareaAutosize formControlName="abstract" matInput></textarea>
     </mat-form-field>
 
     <!-- Body -->
