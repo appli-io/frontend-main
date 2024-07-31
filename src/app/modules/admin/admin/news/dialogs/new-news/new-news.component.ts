@@ -90,10 +90,6 @@ export class NewNewsComponent implements OnInit {
   }
 
   save() {
-    console.log({
-      ...this.newsForm.getRawValue(),
-      body: JSON.parse(this.newsForm.getRawValue().body)
-    });
     if (this.newsForm.invalid) {
       this._notyf.error({message: this._translateService.translate('errors.validation.message')});
       return;
