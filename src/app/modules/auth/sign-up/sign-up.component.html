@@ -168,6 +168,9 @@
             <mat-error *ngIf="signUpForm.get('token').hasError('required')">
               Invitation token is required for creating an account.
             </mat-error>
+            <mat-error *ngIf="signUpForm.get('token').hasError('notFound')">
+              Invitation token is not valid.
+            </mat-error>
           </mat-form-field>
         } @else {
           <ng-container [formGroupName]="'company'">
@@ -193,6 +196,12 @@
                 matInput>
               <mat-error *ngIf="signUpForm.get('company.email').hasError('required')">
                 Company email is required
+              </mat-error>
+              <mat-error *ngIf="signUpForm.get('company.email').hasError('email')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="signUpForm.get('company.email').hasError('conflict')">
+                Company email is already in use
               </mat-error>
             </mat-form-field>
 

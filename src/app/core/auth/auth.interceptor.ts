@@ -34,8 +34,9 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
   // Response
   return next(newReq).pipe(
     catchError((error) => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        if (authService.accessToken && !error.url.includes('refresh-access')) {
+      if (error instanceof HttpErrorResponse && error.status === 401 && (!error.url.includes('refresh-access') && !error.url.includes('sign-in') && !error.url.includes('sign-out'))) {
+        console.log('HTTP 401 Unauthorized Error');
+        if (authService.accessToken) {
           return authService.signInUsingToken().pipe(
             switchMap(() => {
               newReq = req.clone({
@@ -46,7 +47,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             })
           );
         } else return throwError(() => authService.signOut().then(() => location.reload()));
-      }
+      } else return throwError(error);
     })
   );
 };

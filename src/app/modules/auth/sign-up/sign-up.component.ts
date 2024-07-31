@@ -12,6 +12,7 @@ import { fuseAnimations }                                                       
 import { FuseAlertComponent, FuseAlertType }                                                          from '@fuse/components/alert';
 import { AuthService }                                                                                from 'app/core/auth/auth.service';
 import { emailAsyncValidator }                                                                        from '@modules/auth/sign-up/validators/valid-email.validator';
+import { take }                                                                                       from 'rxjs';
 
 @Component({
   selector   : 'auth-sign-up',
@@ -90,24 +91,44 @@ export class AuthSignUpComponent implements OnInit {
     this.showAlert = false;
 
     // Sign up
-    this._authService.signUp(this.signUpForm.value)
+    this._authService.signUp(this.signUpForm.getRawValue())
+      .pipe(take(1))
       .subscribe({
         next : (response) => {
+          console.log(response);
           // Navigate to the confirmation required page
           this._router.navigateByUrl('/confirmation-required');
         },
-        error: (response) => {
+        error: (err) => {
+          console.log(err);
+
           // Re-enable the form
           this.signUpForm.enable();
 
-          // Reset the form
-          this.signUpNgForm.resetForm();
-
           // Set the alert
-          this.alert = {
-            type: 'error',
-            message: 'Something went wrong, please try again.',
-          };
+          switch (err.error.message) {
+            case 'CONFLICT':
+              this.signUpForm.get('nationalId').setErrors({conflict: true});
+              this.alert = {type: 'error', message: 'Company by Business ID already exists.'};
+              break;
+            case 'CONFLICT_EMAIL':
+              this.signUpForm.get('email').setErrors({conflict: true});
+              this.alert = {type: 'error', message: 'Company email already registered.'};
+              break;
+            case 'INVITE_NOT_FOUND':
+              this.signUpForm.get('token').setErrors({notFound: true});
+              this.alert = {type: 'error', message: 'Invite token not found.'};
+              break;
+            case 'TOKEN_EMAIL_MISMATCH':
+              this.alert = {type: 'error', message: 'Token email mismatch.'};
+              break;
+            case 'TOKEN_OR_COMPANY_REQUIRED':
+              this.alert = {type: 'error', message: 'Token invite or company information is required.'};
+              break;
+            default:
+              this.alert = {type: 'error', message: 'Something went wrong, please try again.'};
+              break;
+          }
 
           // Show the alert
           this.showAlert = true;
@@ -116,12 +137,12 @@ export class AuthSignUpComponent implements OnInit {
   }
 
   private _loadForm = (): UntypedFormGroup => this._formBuilder.group({
-    name      : [ '', Validators.required ],
-    email     : [ '', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
-    password  : [ '', Validators.required ],
-    hasToken  : [ false ],
-    token     : [ '' ],
-    agreements: [ '', Validators.requiredTrue ],
+    name      : [ 'David Misael Villegas Sandoval', Validators.required ],
+    email     : [ 'david.misa002@gmail.com', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
+    password  : [ 'G00d1sG00d!', Validators.required ],
+    hasToken  : [ true ],
+    token     : [ 'dasdasdasdasd' ],
+    agreements: [ true, Validators.requiredTrue ],
     company   : this._addCompanyFormGroup()
   });
 

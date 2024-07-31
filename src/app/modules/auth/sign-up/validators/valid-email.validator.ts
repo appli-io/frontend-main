@@ -6,9 +6,6 @@ import { environment }                                         from '../../../..
 
 export function emailAsyncValidator(authService: AuthService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    console.log(control.value);
-
-    console.log(environment.ENCRYPTION_KEY);
     const encryptedEmail = AES.encrypt(control.value, environment.ENCRYPTION_KEY).toString();
 
     return authService.validateEmail(encryptedEmail).pipe(

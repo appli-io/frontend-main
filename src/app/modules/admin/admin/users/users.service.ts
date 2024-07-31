@@ -40,8 +40,8 @@ export class UsersService {
     return this._httpClient.get<InvitationsResponse>('/api/company-user/invitations');
   }
 
-  sendMemberInvitation({ email, role, message }: { email: string, role: string, message: string }): Observable<any> {
-    console.log('Sending Data:', { email, role, message });
-    return this._httpClient.post(`api/company-user/invite`, { email, role, message });
+  sendMemberInvitation(invitation: any): Observable<any> {
+    return this._httpClient.post(`api/company-user/invite`, invitation)
+      .pipe(tap((value) => console.log(value.content)));
   }
 }
