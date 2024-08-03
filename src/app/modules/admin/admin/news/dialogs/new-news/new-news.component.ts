@@ -18,7 +18,7 @@ import { DropzoneCdkModule }                                                    
 import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
 import { MatCard }                                                               from '@angular/material/card';
 import { NewsCategoriesSelectorComponent }                                       from '@modules/shared/selectors/components/news-categories-selector/news-categories-selector.component';
-import { Notyf }                                                                 from 'notyf';
+import { INotyfNotificationOptions, Notyf }                                      from 'notyf';
 
 @Component({
   selector   : 'app-new-news',
@@ -50,7 +50,7 @@ export class NewNewsComponent implements OnInit {
   public title: string;
   public saveText: string;
   public quillModules: any = {
-    toolbar: [
+    toolbar        : [
       [ 'bold', 'italic', 'underline' ],
       [ 'blockquote', 'code-block' ],
       [ {header: [ 1, 2, 3, 4, 5, 6, false ]} ],
@@ -91,7 +91,11 @@ export class NewNewsComponent implements OnInit {
 
   save() {
     if (this.newsForm.invalid) {
-      this._notyf.error({message: this._translateService.translate('errors.validation.message')});
+      this.newsForm.markAllAsTouched();
+      if (this.newsForm.get('portraitImage').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.image'), ...this.notyfOptions()});
+      if (this.newsForm.get('body').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.body'), ...this.notyfOptions()});
+      if (this.newsForm.get('category').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.category'), ...this.notyfOptions()});
+      this._notyf.error({message: this._translateService.translate('errors.validation.message'), ...this.notyfOptions()});
       return;
     }
 
@@ -113,4 +117,11 @@ export class NewNewsComponent implements OnInit {
   remove() {
     this.newsForm.get('portraitImage').setValue(undefined);
   }
+
+  notyfOptions = (): Partial<INotyfNotificationOptions> => ({
+    duration   : 5000,
+    ripple     : true,
+    position   : {x: 'right', y: 'top'},
+    dismissible: true
+  });
 }

@@ -1,0 +1,8 @@
+<a [routerLink]="benefit.link" class="">
+  <img
+    [alt]="benefit.title"
+    [src]="benefit.image || 'https://masbeneficios.cajalosandes.cl/img/salud.svg'"
+    class="w-16 h-16 object-contain mb-2 mx-auto"
+  />
+  <span class="text-blue-950 dark:text-gray-300 text-lg">{{ benefit.title }}</span>
+</a>

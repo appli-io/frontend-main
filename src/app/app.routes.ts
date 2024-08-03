@@ -94,6 +94,7 @@ export const appRoutes: Route[] = [
           {path: 'contacts', loadChildren: () => import('@modules/admin/apps/contacts/contacts.routes')},
           {path: 'albums', loadChildren: () => import('@modules/admin/apps/albums/albums.routes')},
           {path: 'scrumboards', loadChildren: () => import('app/modules/admin/apps/scrumboard/scrumboard.routes')},
+          {path: 'benefits', loadChildren: () => import('app/modules/admin/apps/benefits/benefits.routes')},
           {path: '', redirectTo: '/home', pathMatch: 'full'}
         ]
       },

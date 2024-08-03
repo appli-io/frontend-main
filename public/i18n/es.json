@@ -26,7 +26,8 @@
       "title" : "Aplicaciones",
       "contacts" : "Contactos",
       "gallery" : "Galería",
-      "scrumboards" : "Tablero de scrum"
+      "scrumboards" : "Tablero de scrum",
+      "benefits" : "Beneficios"
     },
     "videos" : "Videos",
     "admin" : {
@@ -140,6 +141,15 @@
         "create" : "Crear",
         "discard" : "Descartar"
       }
+    }
+  },
+  "benefits" : {
+    "title" : "Beneficios",
+    "subtitle" : "Descubre los Beneficios de Trabajar con Nosotros",
+    "description" : "Desde programas de bienestar y salud hasta descuentos y oportunidades de desarrollo profesional, nuestra empresa se preocupa por tu bienestar y crecimiento personal. Explora los beneficios disponibles y aprovecha al máximo tu experiencia laboral con nosotros.",
+    "no-content" : "No hay beneficios disponibles para mostrar en este momento",
+    "list" : {
+      "title" : "Lista de Beneficios"
     }
   },
   "admin" : {
