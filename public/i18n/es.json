@@ -156,6 +156,9 @@
       "no-content" : "No hay beneficios disponibles para mostrar en esta categoría",
       "subcategory" : {
         "title-list" : "Lista de Subcategorías"
+      },
+      "benefits" : {
+        "title-list" : "Lista de Beneficios"
       }
     }
   },

@@ -383,7 +383,8 @@
     "longitude" : -71.2666667,
     "name" : "Punitaqui",
     "province" : "Limarí",
-    "region" : "Coquimbo"
+    "region" : "Coquimbo",
+    "regionCode" : "CL-CO"
   },
   {
     "code" : 4305,
@@ -705,7 +706,7 @@
     "latitude" : -33.05,
     "longitude" : -71.45,
     "name" : "Quilpué",
-    "province" : "Marga Marga",
+    "province" : "Valparaíso",
     "region" : "Valparaíso",
     "regionCode" : "CL-VS"
   },
@@ -714,7 +715,7 @@
     "latitude" : -32.9833333,
     "longitude" : -71.2833333,
     "name" : "Limache",
-    "province" : "Marga Marga",
+    "province" : "Quillota",
     "region" : "Valparaíso",
     "regionCode" : "CL-VS"
   },
@@ -723,7 +724,7 @@
     "latitude" : -33,
     "longitude" : -71.2,
     "name" : "Olmué",
-    "province" : "Marga Marga",
+    "province" : "Quillota",
     "region" : "Valparaíso",
     "regionCode" : "CL-VS"
   },
@@ -732,7 +733,7 @@
     "latitude" : -33.05,
     "longitude" : -71.3666667,
     "name" : "Villa Alemana",
-    "province" : "Marga Marga",
+    "province" : "Valparaíso",
     "region" : "Valparaíso",
     "regionCode" : "CL-VS"
   },
@@ -2767,7 +2768,8 @@
     "longitude" : -70.5833333,
     "name" : "Las Condes",
     "province" : "Santiago",
-    "region" : "Metropolitana"
+    "region" : "Metropolitana",
+    "regionCode" : "CL-RM"
   },
   {
     "code" : 13115,

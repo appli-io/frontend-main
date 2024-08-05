@@ -31,13 +31,13 @@
           </div>
           <!-- Title -->
           <div class="mt-2">
-            <h2 [innerHtml]="category.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+            <h1 [innerHtml]="category.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h1>
             <p [innerHtml]="category.description" class="mt-4 text-justify"></p>
           </div>
         </div>
       </div>
       <div class="flex flex-col flex-1 relative overflow-hidden">
-        <img [src]="category.image?.fileUrl" alt="BannerImage" class="min-h-64 h-full w-full"/>
+        <img [src]="category.image?.fileUrl" alt="BannerImage" class="min-h-64 h-full w-full object-cover"/>
         <div class="bg-gradient-to-b md:bg-gradient-to-r dark:from-gray-800 to-white/0 absolute -inset-[1px] to-25%"></div>
         <div class="bg-gradient-to-t md:bg-none lg:bg-gradient-to-l dark:from-gray-900 dark:lg:from-gray-800 to-white/0 absolute -inset-[1px] to-25%"></div>
       </div>
@@ -72,7 +72,7 @@
 
     <div class="flex flex-col w-full">
       <!-- Title -->
-      <h2 class="flex-1 font-bold text-accent dark:text-accent-50 text-xl">{{ t('title') }}</h2>
+      <h2 class="flex-1 font-bold text-accent dark:text-accent-50 text-xl">{{ t('benefits.title-list') }}</h2>
       <div class="flex flex-row flex-wrap justify-start py-8 gap-8">
         <fuse-card class="flex-0 flex flex-col w-full overflow-hidden relative basis-full md:basis-[48%] lg:basis-[31%] select-none pb-4 gap-y-4">
           <img
