@@ -1,0 +1,78 @@
+<div *transloco="let t; read: 'benefits.category-detail'" class="flex flex-col flex-auto min-w-0 min-h-full">
+
+  <!-- Header -->
+  <div class="bg-card">
+    <div class="flex flex-col md:flex-row w-full max-w-5xl mx-auto">
+      <div class="flex flex-auto flex-col md:flex-row justify-center p-6 sm:p-8 relative z-10">
+        <div class="flex-1 min-w-0">
+          <!-- Breadcrumbs -->
+          <div>
+            <div class="hidden sm:flex flex-wrap items-center font-medium">
+              <div>
+                <a [routerLink]="'./../..'" class="whitespace-nowrap text-primary-500">{{ 'benefits.title' | transloco }}</a>
+              </div>
+              <div class="flex items-center ml-1 whitespace-nowrap">
+                <mat-icon
+                  [svgIcon]="'heroicons_mini:chevron-right'"
+                  class="icon-size-5 text-secondary"></mat-icon>
+                <span [innerHtml]="category.name" class="ml-1 text-secondary"></span>
+              </div>
+            </div>
+            <div class="flex sm:hidden">
+              <a
+                [routerLink]="'./../..'"
+                class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+                <mat-icon
+                  [svgIcon]="'heroicons_solid:chevron-left'"
+                  class="icon-size-5 text-secondary"></mat-icon>
+                <span class="ml-1">Back</span>
+              </a>
+            </div>
+          </div>
+          <!-- Title -->
+          <div class="mt-2">
+            <h2 [innerHtml]="category.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
+            <p [innerHtml]="category.description" class="mt-4 text-justify"></p>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col basis-1/2 relative">
+        <img [src]="category.image?.fileUrl" alt="BannerImage" class="min-h-64 h-full w-full object-cover object-right"/>
+        <div class="bg-gradient-to-b md:bg-gradient-to-r dark:from-gray-800 to-white/0 absolute -inset-[1px] to-25%"></div>
+        <div class="bg-gradient-to-t md:bg-none lg:bg-gradient-to-l dark:from-gray-900 dark:lg:from-gray-800 to-white/0 absolute -inset-[1px] to-25%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits -->
+  <div class="bg-card dark:bg-transparent flex flex-col justify-center md:justify-start w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
+    @if (category.subCategories && category.subCategories.length > 0) {
+      <h2 class="font-bold text-accent dark:text-accent-50 text-xl">{{ t('subcategory.title-list') }}</h2>
+
+      <div class="flex flex-row flex-wrap justify-start py-8 gap-8">
+        @for (subCategory of category.subCategories; track subCategory.id) {
+          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
+            <subcategory-card [subCategory]="subCategory"></subcategory-card>
+          </div>
+          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
+            <subcategory-card [subCategory]="subCategory"></subcategory-card>
+          </div>
+          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
+            <subcategory-card [subCategory]="subCategory"></subcategory-card>
+          </div>
+          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
+            <subcategory-card [subCategory]="subCategory"></subcategory-card>
+          </div>
+          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
+            <subcategory-card [subCategory]="subCategory"></subcategory-card>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="flex flex-row w-full">
+      <!-- Title -->
+      <h2 class="flex-1 font-bold text-accent dark:text-accent-50 text-xl">{{ t('title') }}</h2>
+    </div>
+  </div>
+</div>

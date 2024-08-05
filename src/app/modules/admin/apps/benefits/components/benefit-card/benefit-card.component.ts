@@ -5,7 +5,8 @@ export interface Benefit {
   id: string;
   title: string;
   description: string;
-  image: string;
+  icon: string;
+  image?: string;
   link: string;
 }
 
@@ -18,11 +19,5 @@ export interface Benefit {
   templateUrl: './benefit-card.component.html'
 })
 export class BenefitCardComponent {
-  @Input() benefit: Benefit = {
-    id         : '1',
-    title      : 'Benefit Title',
-    description: 'Benefit Description',
-    image      : undefined,
-    link       : '/1'
-  };
+  @Input() benefit: Benefit;
 }

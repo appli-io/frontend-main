@@ -4,7 +4,7 @@ import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 import { MatIcon }                           from '@angular/material/icon';
 import { MatIconAnchor }                     from '@angular/material/button';
 import { MatTooltip }                        from '@angular/material/tooltip';
-import { BenefitCardComponent }              from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
+import { Benefit, BenefitCardComponent }     from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
 import { RouterLink }                        from '@angular/router';
 
 @Component({
@@ -23,19 +23,20 @@ import { RouterLink }                        from '@angular/router';
   templateUrl: './list.component.html'
 })
 export class ListComponent {
-  benefits = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {}
+  benefits: Benefit[] = [
+    {
+      id         : 'uuid1',
+      icon       : 'https://masbeneficios.cajalosandes.cl/img/salud.svg',
+      link       : './id/uuid1',
+      title      : 'Salud',
+      description: 'Descuentos en farmacias, ópticas y centros médicos'
+    },
+    {
+      id         : 'uuid2',
+      icon       : 'https://masbeneficios.cajalosandes.cl/img/emprendimiento.svg',
+      link       : './id/uuid2',
+      title      : 'Emprendimiento',
+      description: 'Descuentos en servicios de diseño, marketing y más'
+    }
   ];
 }

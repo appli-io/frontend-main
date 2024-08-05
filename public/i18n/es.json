@@ -150,6 +150,13 @@
     "no-content" : "No hay beneficios disponibles para mostrar en este momento",
     "list" : {
       "title" : "Lista de Beneficios"
+    },
+    "category-detail" : {
+      "title" : "Detalle de la Categoría",
+      "no-content" : "No hay beneficios disponibles para mostrar en esta categoría",
+      "subcategory" : {
+        "title-list" : "Lista de Subcategorías"
+      }
     }
   },
   "admin" : {
