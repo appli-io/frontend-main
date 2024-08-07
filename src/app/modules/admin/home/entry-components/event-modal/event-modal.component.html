@@ -1,4 +1,5 @@
-<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 bg-white rounded-lg shadow-lg">
+<div *transloco="let t; read: ''"></div>
+<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 rounded-lg shadow-lg">
   <!-- Header -->
   <div class="flex items-center mb-4">
     <h2 class="text-lg font-medium tracking-tight leading-6 truncate flex-1">Detalle de actividad</h2>
@@ -9,17 +10,12 @@
 
   <!-- Content -->
   <div class="flex-1">
-    <!-- OSM -->
-    @if (neededMaps) {
-      <div class="map-container"
-           #map>
-      </div>
-    }
     <!-- Description -->
     <div>
       <h3 class="text-md font-semibold">Descripción:</h3>
       <p>{{ event.description }}</p>
     </div>
+    
 
     <!-- Organizer -->
     <div>
@@ -37,9 +33,11 @@
     <!-- Dates -->
     <div>
       <h3 class="text-md font-semibold">Fecha y Hora:</h3>
-      <p>Inicio: {{ event.startDate }}</p>
+      <p>Inicio: {{ event.startDate | date  : "short"  }}</p>
       @if (event.endDate) {
       <p>Fin: {{ event.endDate | date : "short" }}</p>
+    } @else {
+      <p>Todo el día</p>
     }
     </div>
 

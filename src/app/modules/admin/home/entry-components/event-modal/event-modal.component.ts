@@ -5,6 +5,7 @@ import { MatButton, MatFabButton, MatIconButton } from "@angular/material/button
 import { GoogleMapsModule, MapAdvancedMarker } from "@angular/google-maps";
 import { MatIcon } from "@angular/material/icon";
 import { Map, map, tileLayer, marker, LeafletEvent, LeafletMouseEvent} from "leaflet";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-event-modal",
@@ -16,6 +17,7 @@ import { Map, map, tileLayer, marker, LeafletEvent, LeafletMouseEvent} from "lea
     MatIcon,
     MatFabButton,
     MatIconButton,
+    DatePipe,
   ],
   templateUrl: "./event-modal.component.html",
   styleUrls: ["./event-modal.component.scss"],
@@ -27,6 +29,7 @@ export class EventModalComponent implements OnInit, AfterViewInit {
 
   @Input()
   public event: IEvent = this._data.event;
+
 
   neededMaps: boolean = false;
   leafletMap : Map;
@@ -71,6 +74,7 @@ export class EventModalComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  
 
   onMapClick(event: LeafletMouseEvent): void {
     const lat = event.latlng;
