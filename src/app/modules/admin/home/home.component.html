@@ -5,11 +5,17 @@
       <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
         <!-- Avatar and name -->
         <div class="flex flex-auto items-center min-w-0">
-          <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
-            <img
-              [alt]="user?.username"
-              [src]="user?.avatar?.fileUrl" class="w-full h-full object-cover">
-          </div>
+          @if (user?.avatar?.fileUrl) {
+            <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+              <img
+                [alt]="user?.username"
+                [src]="user?.avatar?.fileUrl" class="w-full h-full object-cover">
+            </div>
+          } @else {
+            <div class="ring-bg-card flex h-12 md:h-18 w-12 md:w-18 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 ring ring-offset-1 ring-offset-transparent text-2xl font-medium">
+              {{ user?.name.charAt(0) }}
+            </div>
+          }
           <div class="flex flex-col min-w-0 ml-4">
             <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{ t('welcome-back') }}, {{ user?.name.split(' ')[0] || 'unknown' }}!</div>
           </div>
@@ -33,131 +39,143 @@
   <section class="flex-auto -mt-px pt-4 sm:pt-6">
     <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
       <!-- News slider -->
-      <section class="splide pb-4 mb-4">
-        <div class="splide__track">
-          <ul class="splide__list pb-4">
-            @for (news of highlightedNews; track news.id) {
-              <li class="splide__slide flex justify-center">
-                <fuse-card class="flex flex-col max-w-120 w-full relative">
-                  <a
-                    [color]="'primary'"
-                    [routerLink]="['/news', 'read', news.slug]"
-                    class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
-                    mat-button>
-                    Read More
-                  </a>
-                  <div class="relative">
-                    <img
-                      alt="Card cover image"
-                      class="h-50 object-cover"
-                      src="https://picsum.photos/500/300?random={{$index}}">
-                    <div class="gradient-overlay"></div>
-                  </div>
-                  <div class="m-8 -mt-8 z-10">
-                    <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ news.category.name | uppercase }}</div>
-                    <div [title]="news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
-                    <div class="mt-2 text-secondary line-clamp-2">{{ news.abstract }}</div>
-                    <div class="w-12 h-1 my-6 border-t-2"></div>
-                    <!-- Publisher info -->
-                    <div class="flex items-center mt-6">
+      @if (highlightedNews?.length > 0) {
+        <section class="splide pb-4 mb-4">
+          <div class="splide__track">
+            <ul class="splide__list pb-4">
+              @for (news of highlightedNews; track news.id) {
+                <li class="splide__slide flex justify-center">
+                  <fuse-card class="flex flex-col max-w-120 w-full relative">
+                    <a
+                      [color]="'primary'"
+                      [routerLink]="['/news', 'read', news.slug]"
+                      class="absolute px-3 py-1 top-2 right-2 bg-dialog text-white hover:text-primary-500 bg-opacity-50 hover:bg-opacity-100 z-10"
+                      mat-button>
+                      Read More
+                    </a>
+                    <div class="relative">
                       <img
                         alt="Card cover image"
-                        class="w-10 h-10 rounded-full"
-                        [src]="news.createdBy?.avatar?.fileUrl">
-                      <div class="flex flex-col ml-3">
-                        <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
-                        <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
+                        class="h-50 object-cover"
+                        src="https://picsum.photos/500/300?random={{$index}}">
+                      <div class="gradient-overlay"></div>
+                    </div>
+                    <div class="m-8 -mt-8 z-10">
+                      <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ news.category.name | uppercase }}</div>
+                      <div [title]="news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
+                      <div class="mt-2 text-secondary line-clamp-2">{{ news.abstract }}</div>
+                      <div class="w-12 h-1 my-6 border-t-2"></div>
+                      <!-- Publisher info -->
+                      <div class="flex items-center mt-6">
+                        @if (news.createdBy?.avatar?.fileUrl) {
+                          <img
+                            alt="Card cover image"
+                            class="w-10 h-10 rounded-full"
+                            [src]="news.createdBy?.avatar?.fileUrl">
+                        } @else {
+                          <div class="ring-bg-card flex h-10 w-10 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 ring ring-offset-1 ring-offset-transparent font-medium">
+                            {{ news.createdBy.name.charAt(0) }}
+                          </div>
+                        }
+                        <div class="flex flex-col ml-3">
+                          <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
+                          <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </fuse-card>
-              </li>
-            }
-          </ul>
-        </div>
-      </section>
+                  </fuse-card>
+                </li>
+              }
+            </ul>
+          </div>
+        </section>
+      }
 
       <!-- Economic indicators -->
-      <div *ngIf="economicIndicators as ei; else economicIndicatorsFailed" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0 py-4">
-        <!-- IPC -->
-        <div *ngIf="ei.ipc as ipc" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden justify-around">
-          <div class="flex items-start justify-between">
-            <div class="text-lg font-medium tracking-tight leading-6 truncate">Indice de Precios al Consumidor (IPC)</div>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <div [innerText]="ipc.valor" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
-            <div [innerText]="ipc.fecha | date" class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
-          </div>
-        </div>
-
-        <!-- UTM -->
-        <div *ngIf="ei.utm as utm" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-          <div class="flex items-start justify-between">
-            <div class="text-lg font-medium tracking-tight leading-6 truncate">Unidad Tributaria Mensual (UTM)</div>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <div [innerText]="utm.valor | currency:'CLP':'symbol-narrow'" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
-            <div [innerText]="utm.fecha | date" class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
-          </div>
-        </div>
-
-        <!-- TPM -->
-        <div *ngIf="ei.tpm as tpm" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-          <div class="flex items-start justify-between">
-            <div class="text-lg font-medium tracking-tight leading-6 truncate">Tasa Política Monetaria (TPM)</div>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <div [innerText]="tpm.valor" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
-            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
-            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-              <div [innerText]="tpm.fecha | date" class="text-md font-medium truncate"></div>
+      @defer {
+        @if (economicIndicators; as ei) {
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0 py-4">
+            <!-- IPC -->
+            <div *ngIf="ei.ipc as ipc" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden justify-around">
+              <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Indice de Precios al Consumidor (IPC)</div>
+              </div>
+              <div class="flex flex-col items-center mt-2">
+                <div [innerText]="ipc.valor" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
+                <div [innerText]="ipc.fecha | date" class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- UF -->
-        <div *ngIf="ei.uf as uf" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-          <div class="flex items-start justify-between">
-            <div class="text-lg font-medium tracking-tight leading-6 truncate">Unidad de Fomento (UF)</div>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <div [innerText]="uf.valor | currency:'CLP':'symbol-narrow'" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
-            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
-            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
-              <div [innerText]="uf.fecha | date" class="text-md font-medium truncate"></div>
+            <!-- UTM -->
+            <div *ngIf="ei.utm as utm" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+              <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Unidad Tributaria Mensual (UTM)</div>
+              </div>
+              <div class="flex flex-col items-center mt-2">
+                <div [innerText]="utm.valor | currency:'CLP':'symbol-narrow'" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
+                <div [innerText]="utm.fecha | date" class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
+              </div>
             </div>
+
+            <!-- TPM -->
+            <div *ngIf="ei.tpm as tpm" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+              <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Tasa Política Monetaria (TPM)</div>
+              </div>
+              <div class="flex flex-col items-center mt-2">
+                <div [innerText]="tpm.valor" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
+                <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
+                <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                  <div [innerText]="tpm.fecha | date" class="text-md font-medium truncate"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- UF -->
+            <div *ngIf="ei.uf as uf" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+              <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">Unidad de Fomento (UF)</div>
+              </div>
+              <div class="flex flex-col items-center mt-2">
+                <div [innerText]="uf.valor | currency:'CLP':'symbol-narrow'" class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"></div>
+                <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>
+                <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                  <div [innerText]="uf.fecha | date" class="text-md font-medium truncate"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- USD -->
+            <!--        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" *ngIf="ei.dolar as dolar">-->
+            <!--          <div class="flex items-start justify-between">-->
+            <!--            <div class="text-lg font-medium tracking-tight leading-6 truncate">Dolar (USD)</div>-->
+            <!--          </div>-->
+            <!--          <div class="flex flex-col items-center mt-2">-->
+            <!--            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500" [innerText]="dolar.valor | currency:'CLP':'symbol-narrow'"></div>-->
+            <!--            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>-->
+            <!--            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">-->
+            <!--              <div class="text-md font-medium truncate" [innerText]="dolar.fecha | date"></div>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--        </div>-->
+
+            <!-- EUR -->
+            <!--        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" *ngIf="ei.euro as euro">-->
+            <!--          <div class="flex items-start justify-between">-->
+            <!--            <div class="text-lg font-medium tracking-tight leading-6 truncate">Euro (EUR)</div>-->
+            <!--          </div>-->
+            <!--          <div class="flex flex-col items-center mt-2">-->
+            <!--            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500" [innerText]="euro.valor | currency:'CLP':'symbol-narrow'"></div>-->
+            <!--            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>-->
+            <!--            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">-->
+            <!--              <div class="text-md font-medium truncate" [innerText]="euro.fecha | date"></div>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--        </div>-->
+
           </div>
-        </div>
-
-        <!-- USD -->
-        <!--        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" *ngIf="ei.dolar as dolar">-->
-        <!--          <div class="flex items-start justify-between">-->
-        <!--            <div class="text-lg font-medium tracking-tight leading-6 truncate">Dolar (USD)</div>-->
-        <!--          </div>-->
-        <!--          <div class="flex flex-col items-center mt-2">-->
-        <!--            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500" [innerText]="dolar.valor | currency:'CLP':'symbol-narrow'"></div>-->
-        <!--            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>-->
-        <!--            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">-->
-        <!--              <div class="text-md font-medium truncate" [innerText]="dolar.fecha | date"></div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
-
-        <!-- EUR -->
-        <!--        <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" *ngIf="ei.euro as euro">-->
-        <!--          <div class="flex items-start justify-between">-->
-        <!--            <div class="text-lg font-medium tracking-tight leading-6 truncate">Euro (EUR)</div>-->
-        <!--          </div>-->
-        <!--          <div class="flex flex-col items-center mt-2">-->
-        <!--            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500" [innerText]="euro.valor | currency:'CLP':'symbol-narrow'"></div>-->
-        <!--            <div class="text-lg font-medium text-blue-600 dark:text-blue-500"></div>-->
-        <!--            <div class="flex items-baseline justify-center w-full mt-5 text-secondary">-->
-        <!--              <div class="text-md font-medium truncate" [innerText]="euro.fecha | date"></div>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
-
-      </div>
+        }
+      }
 
       <!-- Shortcuts | TODO: Make it dynamic, loading from backend -->
       <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
@@ -167,7 +185,7 @@
         </div>
         @defer (on viewport) {
           <home-shortcuts></home-shortcuts>
-        } @placeholder (minimum 2s) {
+        } @placeholder {
           <!-- TODO: Add ngx skeleton <https://github.com/willmendesneto/ngx-skeleton-loader> -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <skeleton class='h-15 w-full bg-card'/>
@@ -177,7 +195,6 @@
           </div>
         }
       </div>
-
     </div>
   </section>
 

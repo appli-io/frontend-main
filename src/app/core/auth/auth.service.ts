@@ -5,6 +5,8 @@ import { UserService }                                                          
 import { catchError, lastValueFrom, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { Api }                                                                        from '@core/interfaces/api';
 import { ICompany }                                                                   from '@core/domain/interfaces/company.interface';
+import { CreateUserDto }                                                              from '@core/auth/domain/create-user.dto';
+import { IUser }                                                                      from '@modules/admin/profile/interfaces/user.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -150,15 +152,23 @@ export class AuthService {
    *
    * @param user
    */
-  signUp(user: { name: string; email: string; password: string; company: string }): Observable<any> {
+  signUp(user: CreateUserDto): Observable<any> {
     const post = {
+      ...user,
       name     : user.name,
       email    : user.email,
       password1: user.password,
       password2: user.password,
     };
-    return this._httpClient.post('api/auth/sign-up', post);
+    return this._httpClient.post<Api<IUser>>('api/auth/sign-up', post);
   }
+
+  validateEmail = (email: string): Observable<boolean> => this._httpClient
+    .post<Api<{ isValid: boolean }>>(`api/auth/sign-up/validate-email`, {email})
+    .pipe(
+      map(({content}) => content.isValid),
+      catchError(() => of(false))
+    );
 
   /**
    * Unlock session

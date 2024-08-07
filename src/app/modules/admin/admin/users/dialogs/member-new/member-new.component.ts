@@ -13,14 +13,14 @@ import { MatInput }                                                             
 import { MatProgressSpinner }                                                                 from '@angular/material/progress-spinner';
 import { MatSelect, MatSelectTrigger }                                                        from '@angular/material/select';
 
-import { DropzoneCdkModule }                                                                  from '@ngx-dropzone/cdk';
-import { DropzoneMaterialModule }                                                             from '@ngx-dropzone/material';
-import { Notyf }                                                                              from 'notyf';
-import { take }                                                                               from 'rxjs';
-import { TranslocoDirective, TranslocoService }                                               from '@ngneat/transloco';
+import { DropzoneCdkModule }                    from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule }               from '@ngx-dropzone/material';
+import { Notyf }                                from 'notyf';
+import { take }                                 from 'rxjs';
+import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 
-import { rolesList }                                                                          from '@core/constants';
-import { UsersService }                                                                       from '@modules/admin/admin/users/users.service';
+import { rolesList }    from '@core/constants';
+import { UsersService } from '@modules/admin/admin/users/users.service';
 
 
 @Component({
@@ -68,23 +68,23 @@ export class MemberNewComponent implements OnInit {
   ngOnInit(): void {
     this.roles = rolesList;
     this.memberForm = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(1)]],
+      email   : [ undefined, [ Validators.required, Validators.email ] ],
+      message : [ undefined, [ Validators.required, Validators.minLength(1) ] ],
+      position: [ undefined, [ Validators.required ] ],
       role: [rolesList.find((role) => role.value === 'admin').value, [Validators.required]],
     });
   }
 
   save() {
-    if (this.memberForm.invalid) {
-      return;
-    }
+    if (this.memberForm.invalid) return;
     
     this._usersService.sendMemberInvitation(this.memberForm.getRawValue()).pipe(take(1)).subscribe({
       next: () => {
-        this._notyf.success('Invitation sent successfully');
+        this._notyf.success(this._translateService.translate('admin.users.new.success'));
         this._matDialogRef.close();
       },
       error: (error) => {
+        console.log(error);
         this._notyf.error(error.message);
       }
     });

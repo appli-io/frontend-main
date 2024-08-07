@@ -8,13 +8,13 @@
   </div>
 
   <!-- Content -->
-  <div class="flex-1 space-y-4">
-    <!-- Title -->
-    <div>
-      <h3 class="text-md font-semibold">Título:</h3>
-      <p>{{ event.title }}</p>
-    </div>
-
+  <div class="flex-1">
+    <!-- OSM -->
+    @if (neededMaps) {
+      <div class="map-container"
+           #map>
+      </div>
+    }
     <!-- Description -->
     <div>
       <h3 class="text-md font-semibold">Descripción:</h3>

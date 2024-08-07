@@ -54,15 +54,16 @@
     <div class="w-12 h-1 my-6 border-t-2"></div>
     <!-- Publisher info -->
     <div class="flex items-center mt-6">
-      <img
-        *ngIf="news.createdBy?.avatar?.fileUrl"
-        [src]="news.createdBy?.avatar?.fileUrl"
-        alt="News card cover image"
-        class="w-10 h-10 rounded-full">
-      <mat-icon
-        *ngIf="!news.createdBy?.avatar?.fileUrl"
-        [svgIcon]="externalLogo || 'heroicons_outline:user-circle'"
-        class="w-10 h-10 rounded-full p-1.5"></mat-icon>
+      @if (news.createdBy?.avatar) {
+        <img
+          [src]="news.createdBy?.avatar?.fileUrl"
+          alt="News card cover image"
+          class="w-10 h-10 rounded-full">
+      } @else {
+        <div class="ring-bg-card flex h-10 w-10 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium">
+          {{ news.createdBy?.name.charAt(0) }}
+        </div>
+      }
       <div class="flex flex-col ml-3">
         <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
         <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>

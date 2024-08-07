@@ -1,20 +1,26 @@
 <!-- Horizontal 4 column grid -->
 <div *transloco="let t" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
   @for (shortcut of shortcuts; track shortcut.id) {
-    <a *ngIf="shortcut.useRouter" [routerLink]="shortcut.link" class="bg-card shadow-md rounded-lg p-4 flex items-center justify-center">
-      <ng-container *ngTemplateOutlet="shortcutContentTemplate"></ng-container>
-    </a>
-    <a *ngIf="!shortcut.useRouter" [href]="shortcut.link" target="_blank" class="bg-card shadow-md rounded-lg p-4 flex items-center justify-center">
-      <ng-container *ngTemplateOutlet="shortcutContentTemplate"></ng-container>
-    </a>
+    <div>
+      <a *ngIf="shortcut.useRouter" [routerLink]="shortcut.link" class="w-min mx-auto rounded-lg flex flex-col items-center justify-center group">
+        <ng-container *ngTemplateOutlet="shortcutContentTemplate"></ng-container>
+      </a>
+      <a *ngIf="!shortcut.useRouter" [href]="shortcut.link" class="bg-card shadow-md rounded-lg p-6 flex items-center justify-center" target="_blank">
+        <ng-container *ngTemplateOutlet="shortcutContentTemplate"></ng-container>
+      </a>
+    </div>
     <ng-template #shortcutContentTemplate>
-      <span class="flex items-center justify-center" [attr.aria-label]="t('home.shortcuts.apps.' + shortcut.id)">
-          <mat-icon *ngIf="shortcut.svgIcon else materialIcon" [svgIcon]="shortcut.svgIcon" class="mr-2"></mat-icon>
+      <div class="flex flex-col items-center justify-center relative min-w-36 min-h-36 p-16">
+        <svg class="absolute inset-0 z-0 w-full h-full drop-shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103.51 102.2">
+          <path class="fill-accent group-hover:fill-primary transition-all duration-300 hover:transform-path-custom" stroke-width="0px"
+                d="M102.41,32.97c5.8,20.3-12.2,46-32.9,59-20.8,13-44.3,13.2-57.2,2.9C-.59,84.57-2.79,63.67,3.11,43.17,9.11,22.77,23.11,2.77,45.01.27s51.5,12.4,57.4,32.7Z"/>
+        </svg>
+        <mat-icon *ngIf="shortcut.svgIcon else materialIcon" [svgIcon]="shortcut.svgIcon" color="accent" class="z-10 text-white"></mat-icon>
+        <span class="text-lg text-secondary text-nowrap z-10 px-8" [innerText]="t('home.shortcuts.apps.' + shortcut.id)"></span>
+      </div>
           <ng-template #materialIcon>
             <mat-icon class="mr-2">{{ shortcut.icon }}</mat-icon>
           </ng-template>
-          <span class="text-lg" [innerText]="t('home.shortcuts.apps.' + shortcut.id)"></span>
-        </span>
     </ng-template>
   }
 </div>

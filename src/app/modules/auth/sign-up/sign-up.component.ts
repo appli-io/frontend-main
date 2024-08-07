@@ -1,4 +1,4 @@
-import { NgIf }                                                                                       from '@angular/common';
+import { NgClass, NgIf }                                                                              from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation }                                            from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule }                                                                            from '@angular/material/button';
@@ -7,18 +7,20 @@ import { MatFormFieldModule }                                                   
 import { MatIconModule }                                                                              from '@angular/material/icon';
 import { MatInputModule }                                                                             from '@angular/material/input';
 import { MatProgressSpinnerModule }                                                                   from '@angular/material/progress-spinner';
-import { Router, RouterLink }                                                                         from '@angular/router';
+import { ActivatedRoute, Router, RouterLink }                                                         from '@angular/router';
 import { fuseAnimations }                                                                             from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType }                                                          from '@fuse/components/alert';
 import { AuthService }                                                                                from 'app/core/auth/auth.service';
+import { emailAsyncValidator }                                                                        from '@modules/auth/sign-up/validators/valid-email.validator';
+import { take }                                                                                       from 'rxjs';
 
 @Component({
-  selector: 'auth-sign-up',
+  selector   : 'auth-sign-up',
   templateUrl: './sign-up.component.html',
   encapsulation: ViewEncapsulation.None,
-  animations: fuseAnimations,
-  standalone: true,
-  imports: [ RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule ],
+  animations : fuseAnimations,
+  standalone : true,
+  imports    : [ RouterLink, NgIf, FuseAlertComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, NgClass ],
 })
 export class AuthSignUpComponent implements OnInit {
   @ViewChild('signUpNgForm') signUpNgForm: NgForm;
@@ -30,13 +32,11 @@ export class AuthSignUpComponent implements OnInit {
   signUpForm: UntypedFormGroup;
   showAlert: boolean = false;
 
-  /**
-   * Constructor
-   */
   constructor(
     private _authService: AuthService,
     private _formBuilder: UntypedFormBuilder,
     private _router: Router,
+    private _route: ActivatedRoute
   ) {
   }
 
@@ -49,14 +49,27 @@ export class AuthSignUpComponent implements OnInit {
    */
   ngOnInit(): void {
     // Create the form
-    this.signUpForm = this._formBuilder.group({
-        name: [ '', Validators.required ],
-        email: [ '', [ Validators.required, Validators.email ] ],
-        password: [ '', Validators.required ],
-        company: [ '' ],
-        agreements: [ '', Validators.requiredTrue ],
-      },
-    );
+    this.signUpForm = this._loadForm();
+
+    // Subscribe to the query params
+    const queryParams = this._route.snapshot.queryParams;
+
+    if (queryParams.token) {
+      this.signUpForm.get('hasToken').setValue(true);
+      this.signUpForm.get('token').setValue(queryParams.token);
+    }
+
+    this.signUpForm.get('hasToken').valueChanges.subscribe((hasToken: boolean) => {
+      if (hasToken) {
+        this._removeCompanyFormGroup();
+        this.signUpForm.get('token').setValidators([ Validators.required ]);
+      } else {
+        this.signUpForm.addControl('company', this._addCompanyFormGroup());
+        this.signUpForm.get('token').setValidators(null);
+      }
+
+      this.signUpForm.get('token').updateValueAndValidity();
+    });
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -68,9 +81,8 @@ export class AuthSignUpComponent implements OnInit {
    */
   signUp(): void {
     // Do nothing if the form is invalid
-    if (this.signUpForm.invalid) {
-      return;
-    }
+    if (this.signUpForm.invalid) return;
+
 
     // Disable the form
     this.signUpForm.disable();
@@ -79,28 +91,71 @@ export class AuthSignUpComponent implements OnInit {
     this.showAlert = false;
 
     // Sign up
-    this._authService.signUp(this.signUpForm.value)
-      .subscribe(
-        (response) => {
+    this._authService.signUp(this.signUpForm.getRawValue())
+      .pipe(take(1))
+      .subscribe({
+        next : (response) => {
+          console.log(response);
           // Navigate to the confirmation required page
           this._router.navigateByUrl('/confirmation-required');
         },
-        (response) => {
+        error: (err) => {
+          console.log(err);
+
           // Re-enable the form
           this.signUpForm.enable();
 
-          // Reset the form
-          this.signUpNgForm.resetForm();
-
           // Set the alert
-          this.alert = {
-            type: 'error',
-            message: 'Something went wrong, please try again.',
-          };
+          switch (err.error.message) {
+            case 'CONFLICT':
+              this.signUpForm.get('nationalId').setErrors({conflict: true});
+              this.alert = {type: 'error', message: 'Company by Business ID already exists.'};
+              break;
+            case 'CONFLICT_EMAIL':
+              this.signUpForm.get('email').setErrors({conflict: true});
+              this.alert = {type: 'error', message: 'Company email already registered.'};
+              break;
+            case 'INVITE_NOT_FOUND':
+              this.signUpForm.get('token').setErrors({notFound: true});
+              this.alert = {type: 'error', message: 'Invite token not found.'};
+              break;
+            case 'TOKEN_EMAIL_MISMATCH':
+              this.alert = {type: 'error', message: 'Token email mismatch.'};
+              break;
+            case 'TOKEN_OR_COMPANY_REQUIRED':
+              this.alert = {type: 'error', message: 'Token invite or company information is required.'};
+              break;
+            default:
+              this.alert = {type: 'error', message: 'Something went wrong, please try again.'};
+              break;
+          }
 
           // Show the alert
           this.showAlert = true;
-        },
-      );
+        }
+      });
   }
+
+  private _loadForm = (): UntypedFormGroup => this._formBuilder.group({
+    name      : [ 'David Misael Villegas Sandoval', Validators.required ],
+    email     : [ 'david.misa002@gmail.com', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
+    password  : [ 'G00d1sG00d!', Validators.required ],
+    hasToken  : [ true ],
+    token     : [ 'dasdasdasdasd' ],
+    agreements: [ true, Validators.requiredTrue ],
+    company   : this._addCompanyFormGroup()
+  });
+
+  private _addCompanyFormGroup = () => this._formBuilder.group({
+    name      : [ '', Validators.required ],
+    email     : [ '', Validators.required ],
+    nationalId: [ '', Validators.required ],
+    website   : [ '', Validators.required ],
+    country   : [ '', Validators.required ],
+  });
+
+  private _removeCompanyFormGroup = () => {
+    this.signUpForm.removeControl('company');
+    this.signUpForm.updateValueAndValidity();
+  };
 }

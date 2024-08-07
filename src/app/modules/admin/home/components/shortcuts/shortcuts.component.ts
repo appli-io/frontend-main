@@ -20,7 +20,7 @@ export class ShortcutsComponent {
     this.shortcuts = [
       {id: 'calendar', svgIcon: 'heroicons_solid:calendar', link: '/apps/calendar', useRouter: true},
       {id: 'scrumboards', svgIcon: 'heroicons_solid:rectangle-stack', link: '/apps/scrumboards', useRouter: true},
-      {id: 'security', svgIcon: 'heroicons_solid:key', link: '/apps/security', useRouter: true},
+      {id: 'benefits', svgIcon: 'heroicons_solid:gift', link: '/apps/benefits', useRouter: true},
       {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true}
     ];
   }

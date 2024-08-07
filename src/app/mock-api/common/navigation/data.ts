@@ -89,6 +89,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         link: '/apps/scrumboards',
         icon: 'heroicons_outline:queue-list'
+      },
+      {
+        id   : 'apps.benefits',
+        title: 'Benefits',
+        type : 'basic',
+        link : '/apps/benefits',
+        icon : 'heroicons_outline:gift'
       }
     ]
   },

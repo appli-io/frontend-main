@@ -56,29 +56,24 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      new Splide('.splide', {
-        type        : 'loop',
-        gap         : '5rem',
-        focus       : 'center',
-        autoplay    : true,
-        pagination  : true,
-        lazyLoad    : 'nearby',
-        pauseOnHover: true,
-        perPage     : 3,
-        perMove     : 1,
-        breakpoints : {
-          640 : {
-            perPage: 1,
-            arrows : false
-          },
-          768 : {
-            perPage: 3,
-          },
-          1024: {
-            perPage: 3,
+      if (this.highlightedNews) {
+        new Splide('.splide', {
+          type        : 'loop',
+          gap         : '5rem',
+          focus       : 'center',
+          autoplay    : true,
+          pagination  : true,
+          lazyLoad    : 'nearby',
+          pauseOnHover: true,
+          perPage     : 3,
+          perMove     : 1,
+          breakpoints : {
+            640 : {perPage: 1, arrows: false},
+            768 : {perPage: 3},
+            1024: {perPage: 3}
           }
-        }
-      }).mount();
+        }).mount();
+      }
     }, 0);
   }
 }

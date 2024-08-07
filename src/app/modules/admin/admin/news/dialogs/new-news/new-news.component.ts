@@ -1,6 +1,6 @@
 import { Component, OnInit }                                                     from '@angular/core';
 import { MatDialogRef }                                                          from '@angular/material/dialog';
-import { TranslocoDirective, TranslocoService }                                  from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService }                   from '@ngneat/transloco';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { NewsService }                                                           from '@modules/admin/admin/news/news.service';
 import { MatButtonModule }                                                       from '@angular/material/button';
@@ -18,15 +18,17 @@ import { DropzoneCdkModule }                                                    
 import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
 import { MatCard }                                                               from '@angular/material/card';
 import { NewsCategoriesSelectorComponent }                                       from '@modules/shared/selectors/components/news-categories-selector/news-categories-selector.component';
-import { Notyf }                                                                 from 'notyf';
+import { INotyfNotificationOptions, Notyf }                                      from 'notyf';
 
 @Component({
   selector   : 'app-new-news',
   standalone : true,
   imports: [
-    MatButtonModule,
     ReactiveFormsModule,
     CdkTextareaAutosize,
+    MatButtonModule,
+    MatCard,
+    MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
     MatIcon,
@@ -36,11 +38,10 @@ import { Notyf }                                                                
     TranslocoDirective,
     DropzoneCdkModule,
     DropzoneMaterialModule,
-    MatChipsModule,
     ImageUploadPreviewComponent,
-    MatCard,
     NewsCategoriesSelectorComponent,
-    JsonPipe
+    JsonPipe,
+    TranslocoPipe
   ],
   templateUrl: './new-news.component.html'
 })
@@ -49,7 +50,7 @@ export class NewNewsComponent implements OnInit {
   public title: string;
   public saveText: string;
   public quillModules: any = {
-    toolbar: [
+    toolbar        : [
       [ 'bold', 'italic', 'underline' ],
       [ 'blockquote', 'code-block' ],
       [ {header: [ 1, 2, 3, 4, 5, 6, false ]} ],
@@ -58,7 +59,7 @@ export class NewNewsComponent implements OnInit {
       [ 'link', 'image' ]
     ],
     'imageCompress': {
-      quality  : 0.5,
+      quality: 0.8,
       imageType: 'image/webp',
       debug    : true
     }
@@ -89,12 +90,12 @@ export class NewNewsComponent implements OnInit {
   }
 
   save() {
-    console.log({
-      ...this.newsForm.getRawValue(),
-      body: JSON.parse(this.newsForm.getRawValue().body)
-    });
     if (this.newsForm.invalid) {
-      this._notyf.error({message: this._translateService.translate('errors.validation.message')});
+      this.newsForm.markAllAsTouched();
+      if (this.newsForm.get('portraitImage').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.image'), ...this.notyfOptions()});
+      if (this.newsForm.get('body').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.body'), ...this.notyfOptions()});
+      if (this.newsForm.get('category').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.category'), ...this.notyfOptions()});
+      this._notyf.error({message: this._translateService.translate('errors.validation.message'), ...this.notyfOptions()});
       return;
     }
 
@@ -116,4 +117,11 @@ export class NewNewsComponent implements OnInit {
   remove() {
     this.newsForm.get('portraitImage').setValue(undefined);
   }
+
+  notyfOptions = (): Partial<INotyfNotificationOptions> => ({
+    duration   : 5000,
+    ripple     : true,
+    position   : {x: 'right', y: 'top'},
+    dismissible: true
+  });
 }

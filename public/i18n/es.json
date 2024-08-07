@@ -26,7 +26,8 @@
       "title" : "Aplicaciones",
       "contacts" : "Contactos",
       "gallery" : "Galería",
-      "scrumboards" : "Tablero de scrum"
+      "scrumboards" : "Tablero de scrum",
+      "benefits" : "Beneficios"
     },
     "videos" : "Videos",
     "admin" : {
@@ -55,7 +56,8 @@
         "mail" : "Correo",
         "calendar" : "Calendario",
         "to-do" : "Tareas",
-        "security" : "Seguridad"
+        "security" : "Seguridad",
+        "benefits" : "Beneficios"
       }
     },
     "calendar" : {
@@ -142,6 +144,25 @@
       }
     }
   },
+  "benefits" : {
+    "title" : "Beneficios",
+    "subtitle" : "Descubre los Beneficios de Trabajar con Nosotros",
+    "description" : "Desde programas de bienestar y salud hasta descuentos y oportunidades de desarrollo profesional, nuestra empresa se preocupa por tu bienestar y crecimiento personal. Explora los beneficios disponibles y aprovecha al máximo tu experiencia laboral con nosotros.",
+    "no-content" : "No hay beneficios disponibles para mostrar en este momento",
+    "list" : {
+      "title" : "Lista de Beneficios"
+    },
+    "category-detail" : {
+      "title" : "Detalle de la Categoría",
+      "no-content" : "No hay beneficios disponibles para mostrar en esta categoría",
+      "subcategory" : {
+        "title-list" : "Lista de Subcategorías"
+      },
+      "benefits" : {
+        "title-list" : "Lista de Beneficios"
+      }
+    }
+  },
   "admin" : {
     "users" : {
       "title" : "Usuarios",
@@ -150,9 +171,12 @@
       "new" : {
         "title" : "Nuevo Usuario",
         "email" : "Correo Electrónico",
+        "position" : "Cargo",
         "invitationMessage" : "Mensaje de Invitación",
         "role" : "Rol",
-        "send" : "Enviar invitación"
+        "send" : "Enviar invitación",
+        "success" : "La invitación ha sido enviada con éxito",
+        "error" : "Se ha producido un error al enviar la invitación"
       },
       "invitations" : {
         "title" : "Invitaciones",
@@ -163,7 +187,6 @@
         "resend" : "Reenviar",
         "actions" : "Acciones"
       }
-      
     },
     "news" : {
       "title" : "Noticias",
@@ -194,8 +217,12 @@
       "new" : {
         "title" : "Nueva Noticia",
         "headline" : "Titular",
+        "headline-placeholder" : "Ejemplo: Celebración del Día de la Independencia",
+        "headline-required" : "El titular es obligatorio",
         "category" : "Categoría",
         "abstract" : "Resumen",
+        "abstract-placeholder" : "Ejemplo: El equipo celebró el Día de la Independencia con un almuerzo especial y actividades recreativas.",
+        "abstract-required" : "El resumen es obligatorio",
         "content" : "Contenido",
         "content-placeholder" : "Escribe aquí el contenido de la noticia...",
         "cover" : "Portada",
@@ -373,10 +400,18 @@
     "validation" : {
       "title" : "Error de Validación",
       "message" : "Por favor, corrige los errores en el formulario antes de enviarlo."
+    },
+    "form" : {
+      "min-length" : "El contenido debe tener al menos {{length}} caracteres",
+      "max-length" : "El contenido no debe exceder los {{length}} caracteres",
+      "required" : "Este campo es obligatorio"
     }
   },
   "selectors" : {
-    "news-category" : "Categoría"
+    "news-category" : {
+      "title" : "Categoría de Noticias",
+      "no-categories" : "No hay categorías disponibles"
+    }
   },
   "messages" : {
     "upload-complete" : "La carga se ha completado con éxito",
