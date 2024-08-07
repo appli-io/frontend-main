@@ -1,26 +1,27 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
-import { Notyf } from "notyf";
-import { EventsService } from "../../events.service";
-import { TranslocoDirective, TranslocoService } from "@ngneat/transloco";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { takeUntil } from "rxjs";
-import { MatButtonModule, MatIconButton } from "@angular/material/button";
-import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { CdkTextareaAutosize } from "@angular/cdk/text-field";
-import { JsonPipe, NgForOf, NgIf } from "@angular/common";
-import { MatIcon } from "@angular/material/icon";
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
-import { MatCheckbox } from "@angular/material/checkbox";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatSelectModule } from "@angular/material/select";
-import { MatOptionModule } from "@angular/material/core";
-import { MatDivider } from "@angular/material/divider";
-import { MatStepperModule } from "@angular/material/stepper";
-import { trackByFn } from "@libs/ui/utils/utils";
-import { OpenStreetMapComponent } from "../../components/open-street-map/open-street-map.component";
-import { IEvent } from "@modules/admin/home/interface/event.interface";
+import { Component, Inject, OnInit }                                                               from '@angular/core';
+import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Notyf }                                                                                   from 'notyf';
+import { EventsService }                                                                           from '../../events.service';
+import { TranslocoDirective, TranslocoService }                                                    from '@ngneat/transloco';
+import { MAT_DIALOG_DATA, MatDialogRef }                                                           from '@angular/material/dialog';
+import { takeUntil }                                                                               from 'rxjs';
+import { MatButtonModule, MatIconButton }                                                          from '@angular/material/button';
+import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
+import { MatInputModule }                                                                          from '@angular/material/input';
+import { CdkTextareaAutosize }                                                                     from '@angular/cdk/text-field';
+import { JsonPipe, NgForOf, NgIf }                                                                 from '@angular/common';
+import { MatIcon }                                                                                 from '@angular/material/icon';
+import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
+import { MatCheckbox }                                                                             from '@angular/material/checkbox';
+import { MatDatepickerModule }                                                                     from '@angular/material/datepicker';
+import { MatSelectModule }                                                                         from '@angular/material/select';
+import { MatOptionModule }                                                                         from '@angular/material/core';
+import { MatDivider }                                                                              from '@angular/material/divider';
+import { MatStepperModule }                                                                        from '@angular/material/stepper';
+import { trackByFn }                                                                               from '@libs/ui/utils/utils';
+import { OpenStreetMapComponent }                                                                  from '../../components/open-street-map/open-street-map.component';
+import { IEvent }                                                                                  from '@modules/admin/home/interface/event.interface';
+import { DateTime }                                                                                from 'luxon';
 
 const EventStatusEnum = {
   DRAFT: "draft",
@@ -105,80 +106,9 @@ export class NewOrEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data?.event) {
-      const startDate = new Date(this.data.event.startDate);
-      const endDate = new Date(this.data.event.endDate);
-      this.eventForm = this._formBuilder.group({
-        step1: this._formBuilder.group({
-          title: [this.data.event.title, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-          description: [this.data.event.description, [Validators.required, Validators.minLength(3)]],
-          isAllDay: [this.data.event.isAllDay, [Validators.required]],
-          startDate: [startDate.toISOString().substring(0, 10), [Validators.required]],
-          startDateTime: [startDate.toTimeString().substring(0, 5), [Validators.required]],
-          endDate: [endDate.toISOString().substring(0, 10)],
-          endDateTime: [endDate.toTimeString().substring(0, 5)],
-        }),
-
-        step2: this._formBuilder.group({
-          location: [this.data.event.location, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-          url: this._formBuilder.array([
-            ...this.data.event.url.map((url) =>
-              this._formBuilder.group({
-                platform: [url.platform, [Validators.required]],
-                label: [url.label, [Validators.required]],
-                url: [url.url],
-                latitude: [url.latitude],
-                longitude: [url.longitude],
-              })
-            ),
-          ]),
-          image: [this.data.event.image],
-          capacity: [this.data.event.capacity],
-        }),
-
-        step3: this._formBuilder.group({
-          organizer: this._formBuilder.group({
-            name: [this.data.event.organizer.name, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-            email: [this.data.event.organizer.email, [Validators.required, Validators.email]],
-            phone: this._formBuilder.group({
-              countryCode: [this.data.event.organizer.phone.countryCode, [Validators.required]],
-              number: [this.data.event.organizer.phone.number, [Validators.required, Validators.minLength(7), Validators.maxLength(15)]],
-            }),
-          }),
-          type: [this.data.event.type, [Validators.required]],
-          status: [this.data.event.status, [Validators.required]],
-        }),
-      });
+      this.eventForm = this._createEventForm(this.data);
     } else {
-      this.eventForm = this._formBuilder.group({
-        step1: this._formBuilder.group({
-          title: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-          description: [undefined, [Validators.required, Validators.minLength(3)]],
-          isAllDay: [true, [Validators.required]],
-          startDate: [undefined, [Validators.required]],
-          startDateTime: [undefined, [Validators.required]],
-          endDate: [undefined],
-          endDateTime: [undefined],
-        }),
-        step2: this._formBuilder.group({
-          location: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-          url: this._formBuilder.array([]),
-          image: [undefined],
-          capacity: [undefined],
-        }),
-        step3: this._formBuilder.group({
-          organizer: this._formBuilder.group({
-            name: [undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-            email: [undefined, [Validators.required, Validators.email]],
-            phone: this._formBuilder.group({
-              countryCode: [undefined, [Validators.required]],
-              number: [undefined, [Validators.required, Validators.minLength(7), Validators.maxLength(15)]],
-            }),
-          }),
-          type: [undefined, [Validators.required]],
-          status: [undefined, [Validators.required]],
-        }),
-      });
-      this.addUrl();
+      this.eventForm = this._createEventForm();
     }
   }
 
@@ -307,32 +237,79 @@ export class NewOrEditComponent implements OnInit {
   }
 
   flattenFormData(formData: any): any {
-    const { startDate, startDateTime, endDate, endDateTime } = formData.step1;
+    const {startDate, startDateTime, endDate, endDateTime}: {
+      startDate: DateTime,
+      startDateTime: string,
+      endDate: DateTime,
+      endDateTime: string
+    } = formData.step1;
 
-    const startDateTimeCombined = new Date(startDate);
-    if (startDateTime) {
-      const [startHours, startMinutes] = startDateTime.split(":");
-      startDateTimeCombined.setHours(startHours, startMinutes);
-    }
+    // combine start date with time
+    const [ hour, minute ] = startDateTime.split(':');
+    const startDateTimeCombined = startDate.set({hour: +hour, minute: +minute});
 
-    const endDateTimeCombined = endDate ? new Date(endDate) : undefined;
-    if (endDateTimeCombined && endDateTime) {
-      const [endHours, endMinutes] = endDateTime.split(":");
-      endDateTimeCombined.setHours(endHours, endMinutes);
-    }
+    const [ endHour, endMinute ] = endDateTime.split(':');
+    const endDateTimeCombined = endDate ? endDate.set({hour: +endHour, minute: +endMinute}) : undefined;
 
-    const flattenedData = {
+    return {
       ...formData.step1,
       ...formData.step2,
       ...formData.step3,
       startDate: startDateTimeCombined,
       endDate: endDateTimeCombined,
     };
-
-    return flattenedData;
   }
 
   remove() {
     console.log("remove");
+  }
+
+  private _createEventForm(data?: any) {
+    const startDate = data?.event ? DateTime.fromISO(data.event.startDate) : undefined;
+    console.log(startDate.toISOTime({extendedZone: false, includeOffset: false, suppressMilliseconds: true}));
+
+    const endDate = data?.event && data.event.endDate ? DateTime.fromISO(data.event.endDate) : undefined;
+
+    return this._formBuilder.group({
+      step1: this._formBuilder.group({
+        title        : [ data?.event?.title, [ Validators.required, Validators.minLength(3), Validators.maxLength(100) ] ],
+        description  : [ data?.event?.description, [ Validators.required, Validators.minLength(3) ] ],
+        isAllDay     : [ data?.event?.isAllDay ?? true, [ Validators.required ] ],
+        startDate    : [ startDate ? startDate.toISODate() : undefined, [ Validators.required ] ],
+        startDateTime: [ startDate ? startDate.toISOTime({
+          extendedZone        : false,
+          includeOffset       : false,
+          suppressMilliseconds: true
+        }) : undefined, [ Validators.required ] ],
+        endDate      : [ endDate ? endDate.toISODate() : undefined ],
+        endDateTime  : [ endDate ? endDate.toISOTime({extendedZone: false, includeOffset: false, suppressMilliseconds: true}) : undefined ],
+      }),
+      step2: this._formBuilder.group({
+        location: [ data?.event?.location, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
+        url     : this._formBuilder.array(
+          data?.event?.url.map((url) => this._formBuilder.group({
+            platform : [ url.platform, [ Validators.required ] ],
+            label    : [ url.label, [ Validators.required ] ],
+            url      : [ url.url ],
+            latitude : [ url.latitude ],
+            longitude: [ url.longitude ],
+          })) || []
+        ),
+        image   : [ data?.event?.image ],
+        capacity: [ data?.event?.capacity ],
+      }),
+      step3: this._formBuilder.group({
+        organizer: this._formBuilder.group({
+          name : [ data?.event?.organizer?.name, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
+          email: [ data?.event?.organizer?.email, [ Validators.required, Validators.email ] ],
+          phone: this._formBuilder.group({
+            countryCode: [ data?.event?.organizer?.phone?.countryCode, [ Validators.required ] ],
+            number     : [ data?.event?.organizer?.phone?.number, [ Validators.required, Validators.minLength(7), Validators.maxLength(15) ] ],
+          }),
+        }),
+        type     : [ data?.event?.type, [ Validators.required ] ],
+        status   : [ data?.event?.status, [ Validators.required ] ],
+      }),
+    });
   }
 }

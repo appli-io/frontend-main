@@ -10,8 +10,8 @@ export class IEvent {
   public title: string;
   public description: string;
   public isAllDay: boolean = false;
-  public startDate?: Date;
-  public endDate: Date;
+  public startDate?: unknown;
+  public endDate: unknown;
   public location: string;
   public url?: IEventUrl[];
   public image: string;
@@ -20,7 +20,7 @@ export class IEvent {
   public type: EventTypeEnum;
   public status: EventStatusEnum;
   public createdAt: Date;
-  public updatedAt: Date = new Date();
+  public updatedAt: Date;
   public createdBy: IUser;
   public company: ICompany;
 }
