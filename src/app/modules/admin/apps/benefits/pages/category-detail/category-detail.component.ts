@@ -1,15 +1,17 @@
 import { Component }                           from '@angular/core';
-import { TranslocoDirective, TranslocoPipe }   from '@ngneat/transloco';
 import { RouterLink }                          from '@angular/router';
-import { IImage }                              from '@modules/admin/news/domain/interfaces/news.interface';
 import { MatDivider }                          from '@angular/material/divider';
 import { MatIcon }                             from '@angular/material/icon';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
 import { MatTooltip }                          from '@angular/material/tooltip';
-import { BenefitCardComponent }                from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
-import { NgxSkeletonLoaderModule }             from 'ngx-skeleton-loader';
-import { SubcategoryCardComponent }            from '@modules/admin/apps/benefits/components/subcategory-card/subcategory-card.component';
-import { FuseCardComponent }                   from '../../../../../../../@fuse/components/card';
+
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+import { NgxSkeletonLoaderModule }           from 'ngx-skeleton-loader';
+
+import { FuseCardComponent }        from '@fuse/components/card';
+import { BenefitCardComponent }     from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
+import { SubcategoryCardComponent } from '@modules/admin/apps/benefits/components/subcategory-card/subcategory-card.component';
+import { IImage }                   from '@modules/admin/news/domain/interfaces/news.interface';
 
 export interface BenefitCategory {
   id: string;

@@ -235,3 +235,8 @@ quill-view {
     border-radius: 6px;
   }
 }
+
+// Fill
+.custom-fill {
+  @apply fill-white;
+}

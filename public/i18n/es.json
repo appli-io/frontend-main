@@ -56,7 +56,8 @@
         "mail" : "Correo",
         "calendar" : "Calendario",
         "to-do" : "Tareas",
-        "security" : "Seguridad"
+        "security" : "Seguridad",
+        "benefits" : "Beneficios"
       }
     },
     "calendar" : {
