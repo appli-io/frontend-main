@@ -28,7 +28,7 @@
             <span class="text-secondary font-medium text-md">{{ event.allDay ? t('home.calendar.common.all-day') : event.start | date:'HH:mm' }} - {{ event.end | date:'HH:mm' }}</span>
           </div>
         </div>-->
-
+          
         <event-card
           (click)="openEventDetail(event)"
           [event]="event"

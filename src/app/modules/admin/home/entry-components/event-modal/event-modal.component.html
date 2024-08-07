@@ -1,6 +1,6 @@
-<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160">
+<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 bg-white rounded-lg shadow-lg">
   <!-- Header -->
-  <div class="flex-0 mb-4 flex items-center">
+  <div class="flex items-center mb-4">
     <h2 class="text-lg font-medium tracking-tight leading-6 truncate flex-1">Detalle de actividad</h2>
     <button (click)="closeDialog()" class="flex-0" mat-icon-button>
       <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
@@ -14,13 +14,70 @@
       <div class="map-container"
            #map>
       </div>
+    }
+    <!-- Description -->
+    <div>
+      <h3 class="text-md font-semibold">Descripción:</h3>
+      <p>{{ event.description }}</p>
+    </div>
 
+    <!-- Organizer -->
+    <div>
+      <h3 class="text-md font-semibold">Organizador:</h3>
+      <p>{{ event.organizer.name }} - {{ event.organizer.email }}</p>
+      <p>Teléfono: {{ event.organizer.phone.countryCode }} {{ event.organizer.phone.number }}</p>
+    </div>
+
+    <!-- Location -->
+    <div>
+      <h3 class="text-md font-semibold">Ubicación:</h3>
+      <p>{{ event.location }}</p>
+    </div>
+
+    <!-- Dates -->
+    <div>
+      <h3 class="text-md font-semibold">Fecha y Hora:</h3>
+      <p>Inicio: {{ event.startDate }}</p>
+      @if (event.endDate) {
+      <p>Fin: {{ event.endDate | date : "short" }}</p>
+    }
+    </div>
+
+    <!-- Status and Type -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <h3 class="text-md font-semibold">Estado:</h3>
+        <p>{{ event.status }}</p>
+      </div>
+      <div>
+        <h3 class="text-md font-semibold">Tipo:</h3>
+        <p>{{ event.type }}</p>
+      </div>
+    </div>
+
+    <!-- OSM Map -->
+    @if (neededMaps) {
+    <div>
+      <h3 class="text-md font-semibold">Mapa:</h3>
+      <div class="map-container" #map></div>
+    </div>
+    }
+
+    <!-- URLs -->
+    @if (event.url?.length) {
+    <div>
+      <h3 class="text-md font-semibold">Enlaces:</h3>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let link of event.url">
+          <a [href]="link.url" target="_blank" class="text-blue-600 underline">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
     }
   </div>
 
   <!-- Footer - Actions -->
-  <div class="mt-4 flex items-center justify-end flex-0">
-    <!-- Save -->
-    <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Close</button>
+  <div class="mt-4 flex items-center justify-end">
+    <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Cerrar</button>
   </div>
 </div>
