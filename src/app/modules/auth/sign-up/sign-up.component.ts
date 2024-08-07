@@ -49,14 +49,16 @@ export class AuthSignUpComponent implements OnInit {
    */
   ngOnInit(): void {
     // Create the form
-    this.signUpForm = this._loadForm();
+
 
     // Subscribe to the query params
     const queryParams = this._route.snapshot.queryParams;
 
     if (queryParams.token) {
-      this.signUpForm.get('hasToken').setValue(true);
-      this.signUpForm.get('token').setValue(queryParams.token);
+      this.signUpForm = this._loadForm(queryParams.token);
+    } else {
+      this.signUpForm = this._loadForm();
+      this.signUpForm.addControl('company', this._addCompanyFormGroup());
     }
 
     this.signUpForm.get('hasToken').valueChanges.subscribe((hasToken: boolean) => {
@@ -81,7 +83,17 @@ export class AuthSignUpComponent implements OnInit {
    */
   signUp(): void {
     // Do nothing if the form is invalid
-    if (this.signUpForm.invalid) return;
+    if (this.signUpForm.invalid) {
+      this.alert = {type: 'error', message: 'Please fill in all the required fields.'};
+
+      Object.keys(this.signUpForm.controls).forEach((key) => {
+        if (this.signUpForm.get(key).invalid) {
+          this.signUpForm.get(key).markAsTouched();
+          this.signUpForm.get(key).updateValueAndValidity();
+          console.log(this.signUpForm.controls[key].errors);
+        }
+      });
+    }
 
 
     // Disable the form
@@ -136,14 +148,13 @@ export class AuthSignUpComponent implements OnInit {
       });
   }
 
-  private _loadForm = (): UntypedFormGroup => this._formBuilder.group({
+  private _loadForm = (token?: string): UntypedFormGroup => this._formBuilder.group({
     name      : [ 'David Misael Villegas Sandoval', Validators.required ],
     email     : [ 'david.misa002@gmail.com', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
     password  : [ 'G00d1sG00d!', Validators.required ],
-    hasToken  : [ true ],
-    token     : [ 'dasdasdasdasd' ],
-    agreements: [ true, Validators.requiredTrue ],
-    company   : this._addCompanyFormGroup()
+    hasToken  : [ !!token ],
+    token     : [ token || undefined, token ? [ Validators.required ] : null ],
+    agreements: [ true, Validators.requiredTrue ]
   });
 
   private _addCompanyFormGroup = () => this._formBuilder.group({
@@ -151,7 +162,7 @@ export class AuthSignUpComponent implements OnInit {
     email     : [ '', Validators.required ],
     nationalId: [ '', Validators.required ],
     website   : [ '', Validators.required ],
-    country   : [ '', Validators.required ],
+    country: [ 'CL', Validators.required ],
   });
 
   private _removeCompanyFormGroup = () => {
