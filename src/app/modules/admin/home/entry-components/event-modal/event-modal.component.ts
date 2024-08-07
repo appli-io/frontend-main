@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { IEvent } from "@modules/admin/home/interface/event.interface";
 import { MatButton, MatFabButton, MatIconButton } from "@angular/material/button";
@@ -23,7 +23,11 @@ import { Map, map, tileLayer, marker, LeafletEvent, LeafletMouseEvent} from "lea
 export class EventModalComponent implements OnInit, AfterViewInit {
   @ViewChild("map")
   private mapContainer: ElementRef<HTMLElement>;
-  
+
+
+  @Input()
+  public event: IEvent = this._data.event;
+
   neededMaps: boolean = false;
   leafletMap : Map;
 
