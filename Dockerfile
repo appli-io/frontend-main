@@ -5,13 +5,17 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install
+RUN npm ci
 
 COPY . ./
+# echo all environment variables
+RUN printenv
 
-ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
 
-RUN yarn run build
+ENTRYPOINT echo $SENTRY_AUTH_TOKEN
+
+RUN SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN npm run build
+
 
 # Stage 2: Serve the app with nginx
 FROM caddy:alpine
