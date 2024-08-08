@@ -11,6 +11,7 @@ import { take }                                                     from 'rxjs';
 import { EventModalComponent } from '@modules/admin/home/entry-components/event-modal/event-modal.component';
 import { EventCardComponent }  from '@modules/admin/home/components/event-card/event-card.component';
 import { CalendarService }     from './calendar.service';
+import { DateTime }            from 'luxon';
 
 @Component({
   selector   : 'home-calendar',
@@ -21,7 +22,8 @@ import { CalendarService }     from './calendar.service';
   styleUrls  : [ './calendar.component.scss' ],
 })
 export class CalendarComponent implements AfterViewInit {
-  selectedDate: Date = new Date();
+  selectedDate: Date;
+  today: Date = new Date();
   events: CalendarEvent[];
   filteredEvents: CalendarEvent[] = [];
 
@@ -61,7 +63,7 @@ export class CalendarComponent implements AfterViewInit {
 
           events : this.events,
           actions: {
-            clickDay: (e: MouseEvent, self: VanillaCalendar) => this.clickDay(e, self),
+            clickDay: (e: MouseEvent, self: VanillaCalendar) => this.clickDay(self.selectedDates ? self.selectedDates[0] : undefined),
             getDays : (day, date, HTMLElement, HTMLButtonElement, self) => this.getDays(day, date, HTMLElement, HTMLButtonElement, self),
           },
           date   : {
@@ -72,6 +74,7 @@ export class CalendarComponent implements AfterViewInit {
 
         this._changeDetectorRef.detectChanges();
       });
+    this.selectedDate = this.today;
   }
 
   ngAfterViewInit(): void {
@@ -87,17 +90,18 @@ export class CalendarComponent implements AfterViewInit {
     });
   }
 
-  clickDay(e: MouseEvent, self: VanillaCalendar): void {
+  clickDay(selectedDate: string): void {
+    // const selectedDate = DateTime.fromFormatExplain()
     this.filteredEvents = [];
-    if (self.selectedDates.length === 0) {
-      this.selectedDate = new Date();
-      return;
+    if (!selectedDate)
+      this.selectedDate = this.today;
+    else {
+      const [ year, month, day ] = selectedDate.split('-');
+      console.log(DateTime.fromISO(`${ year }-${ month }-${ day }`).toISODate());
+      this.selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     }
 
-    const selectedDateString = self.selectedDates[0];
-    const [ year, month, day ] = selectedDateString.split('-').map(Number);
-
-    this.selectedDate = new Date(year, month - 1, day);
+    const selectedDateString = DateTime.fromJSDate(this.selectedDate).toISODate();
 
     this.filteredEvents = this.events.filter((event) => {
       const eventDate = event.start.toISOString().split('T')[0];

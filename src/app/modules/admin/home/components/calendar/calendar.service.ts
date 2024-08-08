@@ -19,8 +19,6 @@ export class CalendarService {
           const start = DateTime.fromISO(event.startDate as string);
           const end = event.endDate ? DateTime.fromISO(event.endDate as string) : null;
 
-          console.log('start', start.toISO());
-
           return {
             ...event,
             start: start,

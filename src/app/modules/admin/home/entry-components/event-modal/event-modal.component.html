@@ -2,7 +2,7 @@
 <div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 rounded-lg shadow-lg">
   <!-- Header -->
   <div class="flex items-center mb-4">
-    <h2 class="text-lg font-medium tracking-tight leading-6 truncate flex-1">Detalle de actividad</h2>
+    <h2 class="text-2xl font-medium tracking-tight leading-6 truncate flex-1">{{ event.title }}</h2>
     <button (click)="closeDialog()" class="flex-0" mat-icon-button>
       <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
     </button>
@@ -10,12 +10,18 @@
 
   <!-- Content -->
   <div class="flex-1">
+    <!-- Display information -->
+    <div class="grid grid-cols-3 gap-4">
+      <div class="col-span-3">
+        <p>{{ event.description }}</p>
+      </div>
+    </div>
+
     <!-- Description -->
     <div>
       <h3 class="text-md font-semibold">Descripción:</h3>
       <p>{{ event.description }}</p>
     </div>
-    
 
     <!-- Organizer -->
     <div>
@@ -33,12 +39,12 @@
     <!-- Dates -->
     <div>
       <h3 class="text-md font-semibold">Fecha y Hora:</h3>
-      <p>Inicio: {{ event.startDate | date  : "short"  }}</p>
+      <p>Inicio: {{ event.startDate | date  : "short" }}</p>
       @if (event.endDate) {
-      <p>Fin: {{ event.endDate | date : "short" }}</p>
-    } @else {
-      <p>Todo el día</p>
-    }
+        <p>Fin: {{ event.endDate | date : "short" }}</p>
+      } @else {
+        <p>Todo el día</p>
+      }
     </div>
 
     <!-- Status and Type -->
@@ -55,22 +61,22 @@
 
     <!-- OSM Map -->
     @if (neededMaps) {
-    <div>
-      <h3 class="text-md font-semibold">Mapa:</h3>
-      <div class="map-container" #map></div>
-    </div>
+      <div>
+        <h3 class="text-md font-semibold">Mapa:</h3>
+        <div class="map-container" #map></div>
+      </div>
     }
 
     <!-- URLs -->
     @if (event.url?.length) {
-    <div>
-      <h3 class="text-md font-semibold">Enlaces:</h3>
-      <ul class="list-disc list-inside">
-        <li *ngFor="let link of event.url">
-          <a [href]="link.url" target="_blank" class="text-blue-600 underline">{{ link.label }}</a>
-        </li>
-      </ul>
-    </div>
+      <div>
+        <h3 class="text-md font-semibold">Enlaces:</h3>
+        <ul class="list-disc list-inside">
+          <li *ngFor="let link of event.url">
+            <a [href]="link.url" target="_blank" class="text-blue-600 underline">{{ link.label }}</a>
+          </li>
+        </ul>
+      </div>
     }
   </div>
 
