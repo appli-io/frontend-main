@@ -42,7 +42,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide : ErrorHandler,
       useValue: Sentry.createErrorHandler({
-        showDialog: true,
+        showDialog: false
       }),
     }, {
       provide: Sentry.TraceService,
