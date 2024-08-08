@@ -96,9 +96,8 @@ export class CalendarComponent implements AfterViewInit {
     if (!selectedDate)
       this.selectedDate = this.today;
     else {
-      const [ year, month, day ] = selectedDate.split('-');
-      console.log(DateTime.fromISO(`${ year }-${ month }-${ day }`).toISODate());
-      this.selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      const [ year, month, day ] = selectedDate.split('-').map(Number);
+      this.selectedDate = DateTime.fromObject({year, month, day}).toJSDate();
     }
 
     const selectedDateString = DateTime.fromJSDate(this.selectedDate).toISODate();

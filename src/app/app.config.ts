@@ -1,9 +1,12 @@
-import { provideHttpClient }                                                                            from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom, inject }                              from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS }                                                                from '@angular/material/core';
-import { LuxonDateAdapter }                                                                             from '@angular/material-luxon-adapter';
-import { provideAnimations }                                                                            from '@angular/platform-browser/animations';
-import { PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
+import { provideHttpClient }                                                                                    from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject }                        from '@angular/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS
+}                                                                                                               from '@angular/material/core';
+import { LuxonDateAdapter }                                                                                     from '@angular/material-luxon-adapter';
+import { provideAnimations }                                                                                    from '@angular/platform-browser/animations';
+import { PreloadAllModules, provideRouter, Router, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
 
 import { IonicStorageModule }                                 from '@ionic/storage-angular';
 import { provideTransloco, TranslocoService }                 from '@ngneat/transloco';
@@ -12,6 +15,7 @@ import { adapterFactory }                                     from 'angular-cale
 import { LightgalleryModule }                                 from 'lightgallery/angular';
 import { SocketIoConfig, SocketIoModule }                     from 'ngx-socket-io';
 import { firstValueFrom }                                     from 'rxjs';
+import * as Sentry                                            from '@sentry/angular';
 
 
 import { provideAuth }            from '@core/auth/auth.provider';
@@ -34,6 +38,22 @@ const config: SocketIoConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    // Sentry Error Handler
+    {
+      provide : ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    }, {
+      provide: Sentry.TraceService,
+      deps   : [ Router ],
+    },
+    {
+      provide   : APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps      : [ Sentry.TraceService ],
+      multi     : true,
+    },
     provideAnimations(),
     provideHttpClient(),
     provideRouter(appRoutes,

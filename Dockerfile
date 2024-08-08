@@ -9,6 +9,8 @@ RUN yarn install
 
 COPY . ./
 
+ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
+
 RUN yarn run build
 
 # Stage 2: Serve the app with nginx
