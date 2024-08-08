@@ -11,7 +11,6 @@ import { MatInputModule }                                                       
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { JsonPipe, NgIf }                                                        from '@angular/common';
 import { QuillEditorComponent }                                                  from 'ngx-quill';
-import { defer }                                                                 from 'rxjs';
 import { DropzoneMaterialModule }                                                from '@ngx-dropzone/material';
 import { MatChipsModule }                                                        from '@angular/material/chips';
 import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
@@ -64,7 +63,7 @@ export class NewNewsComponent implements OnInit {
       debug    : true
     }
   };
-  private quillImageCompress$ = defer(() => import('quill-image-compress').then(module => module.default));
+  private quillImageCompress$ = import('quill-image-compress').then(module => module.default);
   public customModules = [ {implementation: this.quillImageCompress$, path: 'modules/imageCompress', property: 'imageCompress'} ];
 
   private readonly _notyf = new Notyf();
