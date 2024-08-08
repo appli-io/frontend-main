@@ -69,6 +69,9 @@
           },
           "configurations" : {
             "production" : {
+              "sourceMap" : {
+                "scripts" : true
+              },
               "budgets" : [
                 {
                   "type" : "initial",
@@ -86,9 +89,7 @@
             "development" : {
               "optimization" : false,
               "extractLicenses" : false,
-              "sourceMap" : {
-                "scripts" : true
-              },
+              "sourceMap" : true,
               "fileReplacements" : [
                 {
                   "replace" : "src/environments/environment.ts",
