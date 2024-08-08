@@ -18,6 +18,7 @@ import { ImageUploadPreviewComponent }                                          
 import { MatCard }                                                               from '@angular/material/card';
 import { NewsCategoriesSelectorComponent }                                       from '@modules/shared/selectors/components/news-categories-selector/news-categories-selector.component';
 import { INotyfNotificationOptions, Notyf }                                      from 'notyf';
+import { imageCompressor }                                                       from 'quill-image-compress';
 
 @Component({
   selector   : 'app-new-news',
@@ -63,8 +64,7 @@ export class NewNewsComponent implements OnInit {
       debug    : true
     }
   };
-  private quillImageCompress$ = import('quill-image-compress').then(module => module.default);
-  public customModules = [ {implementation: this.quillImageCompress$, path: 'modules/imageCompress', property: 'imageCompress'} ];
+  public customModules = [ {implementation: imageCompressor, path: 'modules/imageCompress', property: 'imageCompress'} ];
 
   private readonly _notyf = new Notyf();
 
