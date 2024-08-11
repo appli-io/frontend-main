@@ -22,47 +22,48 @@ import { trackByFn }                                                            
 import { OpenStreetMapComponent }                                                                  from '../../components/open-street-map/open-street-map.component';
 import { IEvent }                                                                                  from '@modules/admin/home/interface/event.interface';
 import { DateTime }                                                                                from 'luxon';
+import { requiredIf }                                                                              from '@core/validators/required-if.validator';
 
 const EventStatusEnum = {
-  DRAFT: "draft",
-  PUBLISHED: "published",
-  CANCELLED: "cancelled",
-  POSTPONED: "postponed",
-  RESCHEDULED: "rescheduled",
-  ENDED: "ended",
+  DRAFT      : 'draft',
+  PUBLISHED  : 'published',
+  CANCELLED  : 'cancelled',
+  POSTPONED  : 'postponed',
+  RESCHEDULED: 'rescheduled',
+  ENDED      : 'ended',
 };
 
 const EventTypeEnum = {
-  CONFERENCE: "conference",
-  MEETUP: "meetup",
-  WORKSHOP: "workshop",
-  SEMINAR: "seminar",
-  WEBINAR: "webinar",
-  HACKATHON: "hackathon",
-  CONCERT: "concert",
-  FESTIVAL: "festival",
-  EXHIBITION: "exhibition",
-  FAIR: "fair",
-  SHOW: "show",
-  PERFORMANCE: "performance",
-  COMPETITION: "competition",
-  GAME: "game",
-  SPORTS: "sports",
+  CONFERENCE : 'conference',
+  MEETUP     : 'meetup',
+  WORKSHOP   : 'workshop',
+  SEMINAR    : 'seminar',
+  WEBINAR    : 'webinar',
+  HACKATHON  : 'hackathon',
+  CONCERT    : 'concert',
+  FESTIVAL   : 'festival',
+  EXHIBITION : 'exhibition',
+  FAIR       : 'fair',
+  SHOW       : 'show',
+  PERFORMANCE: 'performance',
+  COMPETITION: 'competition',
+  GAME       : 'game',
+  SPORTS     : 'sports',
 };
 
 const EventPlatformEnum = {
-  GMEET: "gmeet",
-  ZOOM: "zoom",
-  TEAMS: "teams",
-  MAPS: "maps",
-  WEBSITE: "website",
-  OTHER: "other",
+  GMEET  : 'gmeet',
+  ZOOM   : 'zoom',
+  TEAMS  : 'teams',
+  MAPS   : 'maps',
+  WEBSITE: 'website',
+  OTHER  : 'other',
 };
 
 @Component({
-  selector: "app-new",
-  standalone: true,
-  imports: [
+  selector   : 'app-new',
+  standalone : true,
+  imports    : [
     CdkTextareaAutosize,
     JsonPipe,
     MatButtonModule,
@@ -84,7 +85,7 @@ const EventPlatformEnum = {
     ReactiveFormsModule,
     TranslocoDirective,
   ],
-  templateUrl: "./new-or-edit.component.html",
+  templateUrl: './new-or-edit.component.html',
 })
 export class NewOrEditComponent implements OnInit {
   eventForm: UntypedFormGroup;
@@ -104,6 +105,10 @@ export class NewOrEditComponent implements OnInit {
     private readonly _eventsService: EventsService
   ) {}
 
+  get urlArray(): UntypedFormArray {
+    return this.eventForm.get('step2.url') as UntypedFormArray;
+  }
+
   ngOnInit(): void {
     if (this.data?.event) {
       this.eventForm = this._createEventForm(this.data);
@@ -112,17 +117,13 @@ export class NewOrEditComponent implements OnInit {
     }
   }
 
-  get urlArray(): UntypedFormArray {
-    return this.eventForm.get("step2.url") as UntypedFormArray;
-  }
-
   addUrl(): void {
     const urlGroup = this._formBuilder.group({
-      platform: [undefined, Validators.required],
-      label: [undefined, Validators.required],
-      url: [undefined],
-      latitude: [undefined],
-      longitude: [undefined],
+      platform : [ undefined, Validators.required ],
+      label    : [ undefined, Validators.required ],
+      url      : [ undefined ],
+      latitude : [ undefined ],
+      longitude: [ undefined ],
     });
     this.urlArray.push(urlGroup);
   }
@@ -136,23 +137,23 @@ export class NewOrEditComponent implements OnInit {
     const urlGroup = this.urlArray.at(index) as UntypedFormGroup;
     const platformValue = event.value;
 
-    urlGroup.controls["url"].clearValidators();
-    urlGroup.controls["url"].updateValueAndValidity();
-    urlGroup.controls["latitude"].clearValidators();
-    urlGroup.controls["latitude"].updateValueAndValidity();
-    urlGroup.controls["longitude"].clearValidators();
-    urlGroup.controls["longitude"].updateValueAndValidity();
+    urlGroup.controls['url'].clearValidators();
+    urlGroup.controls['url'].updateValueAndValidity();
+    urlGroup.controls['latitude'].clearValidators();
+    urlGroup.controls['latitude'].updateValueAndValidity();
+    urlGroup.controls['longitude'].clearValidators();
+    urlGroup.controls['longitude'].updateValueAndValidity();
 
     switch (platformValue) {
       case EventPlatformEnum.MAPS:
-        urlGroup.controls["latitude"].setValidators([Validators.required]);
-        urlGroup.controls["latitude"].updateValueAndValidity();
-        urlGroup.controls["longitude"].setValidators([Validators.required]);
-        urlGroup.controls["longitude"].updateValueAndValidity();
+        urlGroup.controls['latitude'].setValidators([ Validators.required ]);
+        urlGroup.controls['latitude'].updateValueAndValidity();
+        urlGroup.controls['longitude'].setValidators([ Validators.required ]);
+        urlGroup.controls['longitude'].updateValueAndValidity();
         break;
       default:
-        urlGroup.controls["url"].setValidators([Validators.required]);
-        urlGroup.controls["url"].updateValueAndValidity();
+        urlGroup.controls['url'].setValidators([ Validators.required ]);
+        urlGroup.controls['url'].updateValueAndValidity();
         break;
     }
     urlGroup.patchValue({
@@ -170,7 +171,7 @@ export class NewOrEditComponent implements OnInit {
       latitude: event.latitude,
       longitude: event.longitude,
     });
-    console.log("urlGroup", urlGroup.value);
+    console.log('urlGroup', urlGroup.value);
   }
 
   discard(): void {
@@ -184,27 +185,27 @@ export class NewOrEditComponent implements OnInit {
       const flattenedData = this.flattenFormData(this.eventForm.getRawValue());
 
       if (this.data?.event) {
-      const eventId       = this.data.event.id
+        const eventId = this.data.event.id;
         try {
           this._eventsService
             .updateEvent(eventId, flattenedData)
             .pipe(takeUntil(this._matDialogRef.afterClosed()))
             .subscribe({
-              next: (result) => {
+              next : (result) => {
                 this._matDialogRef.close();
               },
               error: (error) => {
                 this.notyf.error({
-                  message: this._translocoService.translate("errors.service.message"),
-                  position: { x: "right", y: "top" },
+                  message : this._translocoService.translate('errors.service.message'),
+                  position: {x: 'right', y: 'top'},
                 });
                 this.eventForm.enable();
               },
             });
         } catch (error) {
           this.notyf.error({
-            message: this._translocoService.translate("errors.runtime.message"),
-            position: { x: "right", y: "top" },
+            message : this._translocoService.translate('errors.runtime.message'),
+            position: {x: 'right', y: 'top'},
           });
           this.eventForm.enable();
         }
@@ -214,21 +215,21 @@ export class NewOrEditComponent implements OnInit {
             .createEvent(flattenedData)
             .pipe(takeUntil(this._matDialogRef.afterClosed()))
             .subscribe({
-              next: (result) => {
+              next : (result) => {
                 this._matDialogRef.close(result);
               },
               error: (error) => {
                 this.notyf.error({
-                  message: this._translocoService.translate("errors.service.message"),
-                  position: { x: "right", y: "top" },
+                  message : this._translocoService.translate('errors.service.message'),
+                  position: {x: 'right', y: 'top'},
                 });
                 this.eventForm.enable();
               },
             });
         } catch (error) {
           this.notyf.error({
-            message: this._translocoService.translate("errors.runtime.message"),
-            position: { x: "right", y: "top" },
+            message : this._translocoService.translate('errors.runtime.message'),
+            position: {x: 'right', y: 'top'},
           });
           this.eventForm.enable();
         }
@@ -237,38 +238,48 @@ export class NewOrEditComponent implements OnInit {
   }
 
   flattenFormData(formData: any): any {
-    const {startDate, startDateTime, endDate, endDateTime}: {
+    if (typeof formData.step1.startDate === 'string') formData.step1.startDate = DateTime.fromISO(formData.step1.startDate);
+
+    const {startDate, startDateTime, endDate, endDateTime, isAllDay}: {
       startDate: DateTime,
       startDateTime: string,
       endDate: DateTime,
-      endDateTime: string
+      endDateTime: string,
+      isAllDay: boolean,
     } = formData.step1;
 
     // combine start date with time
     const [ hour, minute ] = startDateTime.split(':');
     const startDateTimeCombined = startDate.set({hour: +hour, minute: +minute});
 
-    const [ endHour, endMinute ] = endDateTime.split(':');
-    const endDateTimeCombined = endDate ? endDate.set({hour: +endHour, minute: +endMinute}) : undefined;
+    if (isAllDay)
+      return {
+        ...formData.step1,
+        ...formData.step2,
+        ...formData.step3,
+        startDate: startDateTimeCombined,
+        endDate  : undefined
+      };
+    else {
+      const [ endHour, endMinute ] = endDateTime?.split(':');
+      const endDateTimeCombined = startDate.set({hour: +endHour, minute: +endMinute});
 
-    return {
-      ...formData.step1,
-      ...formData.step2,
-      ...formData.step3,
-      startDate: startDateTimeCombined,
-      endDate: endDateTimeCombined,
-    };
+      return {
+        ...formData.step1,
+        ...formData.step2,
+        ...formData.step3,
+        startDate: startDateTimeCombined,
+        endDate  : endDateTimeCombined
+      };
+    }
   }
 
   remove() {
-    console.log("remove");
+    console.log('remove');
   }
 
   private _createEventForm(data?: any) {
     const startDate = data?.event ? DateTime.fromISO(data.event.startDate) : undefined;
-    console.log(startDate.toISOTime({extendedZone: false, includeOffset: false, suppressMilliseconds: true}));
-
-    const endDate = data?.event && data.event.endDate ? DateTime.fromISO(data.event.endDate) : undefined;
 
     return this._formBuilder.group({
       step1: this._formBuilder.group({
@@ -281,8 +292,11 @@ export class NewOrEditComponent implements OnInit {
           includeOffset       : false,
           suppressMilliseconds: true
         }) : undefined, [ Validators.required ] ],
-        endDate      : [ endDate ? endDate.toISODate() : undefined ],
-        endDateTime  : [ endDate ? endDate.toISOTime({extendedZone: false, includeOffset: false, suppressMilliseconds: true}) : undefined ],
+        endDateTime: [ startDate ? startDate.toISOTime({
+          extendedZone        : false,
+          includeOffset       : false,
+          suppressMilliseconds: true
+        }) : undefined, [ requiredIf(() => this.eventForm.controls.isAllDay?.value !== true) ] ],
       }),
       step2: this._formBuilder.group({
         location: [ data?.event?.location, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
@@ -303,7 +317,7 @@ export class NewOrEditComponent implements OnInit {
           name : [ data?.event?.organizer?.name, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
           email: [ data?.event?.organizer?.email, [ Validators.required, Validators.email ] ],
           phone: this._formBuilder.group({
-            countryCode: [ data?.event?.organizer?.phone?.countryCode, [ Validators.required ] ],
+            countryCode: [ data?.event?.organizer?.phone?.countryCode || '+56', [ Validators.required ] ],
             number     : [ data?.event?.organizer?.phone?.number, [ Validators.required, Validators.minLength(7), Validators.maxLength(15) ] ],
           }),
         }),

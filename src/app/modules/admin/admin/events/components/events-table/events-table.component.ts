@@ -15,17 +15,18 @@ import {
   MatRowDef,
   MatTable,
   MatTableDataSource
-}                                                                     from '@angular/material/table';
-import { MatSort, MatSortHeader, Sort }                               from '@angular/material/sort';
-import { trackByFn }                                                  from '@libs/ui/utils/utils';
-import { DatePipe, NgClass }                                          from '@angular/common';
-import { MatButton, MatIconAnchor, MatIconButton }                    from '@angular/material/button';
-import { Observable, Subject, takeUntil }                             from 'rxjs';
-import { IEvent }                                                     from '@modules/admin/home/interface/event.interface';
-import { MatIcon }                                                    from '@angular/material/icon';
-import { RouterLink }                                                 from '@angular/router';
-import { MatTooltip }                                                 from '@angular/material/tooltip';
-import { TranslocoDirective }                                         from '@ngneat/transloco';
+}                                                                    from '@angular/material/table';
+import { MatSort, MatSortHeader, Sort }                              from '@angular/material/sort';
+import { trackByFn }                                                 from '@libs/ui/utils/utils';
+import { DatePipe, NgClass }                                         from '@angular/common';
+import { MatButton, MatIconAnchor, MatIconButton }                   from '@angular/material/button';
+import { Observable, Subject, takeUntil }                            from 'rxjs';
+import { IEvent }                                                    from '@modules/admin/home/interface/event.interface';
+import { MatIcon }                                                   from '@angular/material/icon';
+import { RouterLink }                                                from '@angular/router';
+import { MatTooltip }                                                from '@angular/material/tooltip';
+import { TranslocoDirective }                                        from '@ngneat/transloco';
+import { DEFAULT_DATETIME_TIME_OPTIONS }                             from '@core/constants';
 
 @Component({
   selector: 'events-table',
@@ -69,7 +70,7 @@ export class EventsTableComponent implements OnInit, OnDestroy {
   @Output() readonly viewEvent = new EventEmitter();
 
   eventsDataSource: MatTableDataSource<IEvent> = new MatTableDataSource();
-  eventsTableColumns: string[] = ['title', 'description', 'location', 'startDate', 'endDate', 'actions'];
+  eventsTableColumns: string[] = [ 'title', 'location', 'startDate', 'endDate', 'actions' ];
 
   protected readonly trackByFn = trackByFn;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -85,4 +86,6 @@ export class EventsTableComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
+
+  protected readonly DEFAULT_DATETIME_TIME_OPTIONS = DEFAULT_DATETIME_TIME_OPTIONS;
 }

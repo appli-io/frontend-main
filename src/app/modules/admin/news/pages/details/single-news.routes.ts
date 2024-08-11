@@ -12,6 +12,6 @@ export default [
   {
     path      : '',
     pathMatch : 'full',
-    redirectTo: '/news'
+    redirectTo: '/news/all'
   }
 ] as Routes;

@@ -25,7 +25,7 @@ export default [
       {
         path      : '**',
         pathMatch: 'full',
-        redirectTo: ''
+        redirectTo: 'all'
       }
     ]
   }

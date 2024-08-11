@@ -2,7 +2,7 @@
 <div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 rounded-lg shadow-lg">
   <!-- Header -->
   <div class="flex items-center mb-4">
-    <h2 class="text-2xl font-medium tracking-tight leading-6 truncate flex-1">{{ event.title }}</h2>
+    <h2 class="text-2xl font-semibold tracking-tight leading-6 truncate flex-1 uppercase">{{ event.title }}</h2>
     <button (click)="closeDialog()" class="flex-0" mat-icon-button>
       <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
     </button>
@@ -10,52 +10,39 @@
 
   <!-- Content -->
   <div class="flex-1">
-    <!-- Display information -->
-    <div class="grid grid-cols-3 gap-4">
-      <div class="col-span-3">
-        <p>{{ event.description }}</p>
-      </div>
+    <!-- Organizer -->
+    <h3 class="font-medium text-md mb-1 text-orange-600">ORGANIZADOR</h3>
+    <div class="flex flex-row items-center mb-4 gap-2">
+      <span class="bg-orange-600 p-2 text-white text-lg font-medium">{{ event.organizer.name }}</span>
+      <a href="mailto:{{event.organizer.email}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:envelope"></mat-icon></span></a>
+      <a href="tel:{{event.organizer.phone.countryCode}}{{event.organizer.phone.number}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:phone"></mat-icon></span></a>
+    </div>
+
+    <!-- Date -->
+    <h3 class="font-medium text-md mb-1 text-green-600">CUANDO</h3>
+    <div class="flex flex-row items-center mb-4 gap-2">
+      <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISODate() }}</span>
+      <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}</span>
     </div>
 
     <!-- Description -->
-    <div>
-      <h3 class="text-md font-semibold">Descripción:</h3>
-      <p>{{ event.description }}</p>
-    </div>
+    <h3 class="font-medium text-md mb-1 text-blue-600">DESCRIPCIÓN</h3>
+    <p class="text-justify mb-2">{{ event.description }}</p>
 
-    <!-- Organizer -->
-    <div>
-      <h3 class="text-md font-semibold">Organizador:</h3>
-      <p>{{ event.organizer.name }} - {{ event.organizer.email }}</p>
-      <p>Teléfono: {{ event.organizer.phone.countryCode }} {{ event.organizer.phone.number }}</p>
-    </div>
-
-    <!-- Location -->
-    <div>
-      <h3 class="text-md font-semibold">Ubicación:</h3>
-      <p>{{ event.location }}</p>
-    </div>
-
-    <!-- Dates -->
-    <div>
-      <h3 class="text-md font-semibold">Fecha y Hora:</h3>
-      <p>Inicio: {{ event.startDate | date  : "short" }}</p>
-      @if (event.endDate) {
-        <p>Fin: {{ event.endDate | date : "short" }}</p>
-      } @else {
-        <p>Todo el día</p>
-      }
-    </div>
-
-    <!-- Status and Type -->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="flex flex-row gap-2">
       <div>
-        <h3 class="text-md font-semibold">Estado:</h3>
-        <p>{{ event.status }}</p>
+        <h3 class="font-medium text-md mb-1">ESTADO</h3>
+        <div class="flex flex-row items-center mb-4 gap-2">
+          <span class="bg-gray-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:pencil"></mat-icon>
+            {{ event.status }}</span>
+        </div>
       </div>
       <div>
-        <h3 class="text-md font-semibold">Tipo:</h3>
-        <p>{{ event.type }}</p>
+        <h3 class="font-medium text-md mb-1">TIPO DE EVENTO</h3>
+        <div class="flex flex-row items-center mb-4 gap-2">
+          <span class="bg-amber-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:wrench-screwdriver"></mat-icon>
+            {{ event.status }}</span>
+        </div>
       </div>
     </div>
 

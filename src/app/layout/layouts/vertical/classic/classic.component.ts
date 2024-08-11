@@ -16,7 +16,7 @@ import { SearchComponent }                                         from 'app/lay
 import { ShortcutsComponent }                                      from 'app/layout/components/shortcuts/shortcuts.component';
 import { UserComponent }                                           from 'app/layout/components/user/user.component';
 import { Subject, takeUntil }                                      from 'rxjs';
-import { CompanySelectorComponent }                                from '../../../components/company-selector/company-selector.component';
+import { CompanySelectorComponent }                                from '@layout/components/company-selector/company-selector.component';
 
 @Component({
   selector   : 'classic-layout',

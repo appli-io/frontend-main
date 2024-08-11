@@ -309,10 +309,11 @@
         "name" : "Título",
         "description" : "Descripción",
         "isAllDay" : "Es Todo el Día",
-        "startDate" : "Fecha de Inicio",
-        "endDate" : "Fecha de Término",
+        "date" : "Fecha",
+        "schedule" : "Horario",
         "noEndDate" : "Es Todo el Día",
-        "hour" : "Hora",
+        "hour-start" : "Inicio",
+        "hour-end" : "Término",
         "location" : "Ubicación",
         "addUrl" : "Agregar URL",
         "save" : "Guardar", 
@@ -323,8 +324,8 @@
         "edit" : "Editar",
         "delete" : "Eliminar",
         "url" : {
-          "label" : "URL Nombre",
-          "url" : "URL Link",
+          "label" : "Nombre a mostrar",
+          "url" : "Dirección URL",
           "platform" : "Plataforma",
           "latitude" : "Latitud",
           "longitude" : "Longitud"
@@ -333,7 +334,7 @@
         "capacity" : "Capacidad",
         "organizer" : {
           "title" : "Organizador",
-          "name" : "Nombre",
+          "name" : "Nombre Completo",
           "email" : "Correo Electrónico",
           "phone" : {
             "countryCode" : "Código de País",
@@ -375,7 +376,7 @@
           "website" : "Página web",
           "other" : "Otro"
         },
-        "step1Details" : "Agrega datos adicionales Para la creación del evento",
+        "step1Details" : "Agrega datos adicionales para la creación del evento",
         "step1Title"   : "Nuevo evento",
         "step2Details" : "Agrega datos adicionales sobre la ubicación",
         "step2Title"   : "Detalles adicionales",

@@ -13,17 +13,7 @@
         {{ t('new.name') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.title }}</span>
-      </td>
-    </ng-container>
-
-    <!-- Description -->
-    <ng-container matColumnDef="description">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        {{ t('new.description') }}
-      </th>
-      <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.description }}</span>
+        <span class="pr-6 line-clamp-1">{{ event.title }}</span>
       </td>
     </ng-container>
 
@@ -33,27 +23,27 @@
         {{ t('new.location') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.location }}</span>
+        <span class="pr-6 line-clamp-1">{{ event.location }}</span>
       </td>
     </ng-container>
 
     <!-- Start Date -->
     <ng-container matColumnDef="startDate">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        {{ t('new.startDate') }}
+        {{ t('new.date') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.startDate | date: 'MMM dd, y' }}</span>
+        <span class="whitespace-nowrap pr-6">{{ event.startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}</span>
       </td>
     </ng-container>
 
     <!-- End Date -->
     <ng-container matColumnDef="endDate">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        {{ t('new.endDate') }}
+        {{ t('new.schedule') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.endDate ? (event.endDate | date: 'MMM dd, y') : t('new.noEndDate') }}</span>
+        <span class="whitespace-nowrap pr-6">{{ event.startDate ? (event.startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) + ' -') : t('new.noEndDate') }} {{ event.endDate ? event.endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : t('new.noEndDate') }}</span>
       </td>
     </ng-container>
 

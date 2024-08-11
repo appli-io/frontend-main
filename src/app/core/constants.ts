@@ -1,7 +1,7 @@
+import { ToISOTimeOptions } from 'luxon';
+
 export const DEFAULT_PAGE_SIZE = 10;
-
 export const DEFAULT_PAGEABLE = {page: 1, size: DEFAULT_PAGE_SIZE};
-
 export const rolesList = [
   {
     label      : 'Read',
@@ -22,3 +22,9 @@ export const rolesList = [
       'Can read, clone, and push to this repository. Can also manage issues, pull requests, and repository settings, including adding collaborators.',
   },
 ];
+export const DEFAULT_DATETIME_TIME_OPTIONS = {
+  extendedZone        : false,
+  includeOffset       : false,
+  suppressMilliseconds: true,
+  suppressSeconds     : true
+} as ToISOTimeOptions;

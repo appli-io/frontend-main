@@ -41,6 +41,7 @@
     "date-fns": "^3.6.0",
     "highlight.js": "11.9.0",
     "leaflet": "^1.9.4",
+`    "leaflet.bigimage" : "^1.0.1",
     "leaflet.locatecontrol": "^0.81.1",
     "lightgallery": "^2.7.2",
     "lodash-es": "4.17.21",
