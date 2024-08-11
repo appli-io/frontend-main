@@ -83,7 +83,12 @@
           <!-- URL -->
           <div class="pb-4" formArrayName="url">
             @for (url of urlArray.controls; track trackByFn($index, url)) {
-              <h2>URL de evento {{ $index + 1 }}</h2>
+              <div class="flex flex-row justify-between items-center">
+                <h2>URL de evento {{ $index + 1 }}</h2>
+                <button (click)="removeUrl($index)" mat-icon-button>
+                  <mat-icon svgIcon="heroicons_outline:trash" color="warn" class="icon-size-5"></mat-icon>
+                </button>
+              </div>
               <div [formGroupName]="$index" class="flex flex-col gap-2 pl-4 mt-2 border-l">
                 <mat-form-field>
                   <mat-label>{{ t("url.platform") }}</mat-label>
@@ -137,9 +142,6 @@
                     </div>
                   }
                 }
-                <button (click)="removeUrl($index)" mat-icon-button>
-                  <mat-icon>delete</mat-icon>
-                </button>
               </div>
             }
             <button (click)="addUrl()" mat-stroked-button>

@@ -22,17 +22,7 @@ export class EventsService {
   public getEvents() {
     return this._http.get<Api<IEvent[]>>('api/event')
       .pipe(map(response => {
-          return response.content.map(event => {
-            const startDate = DateTime.fromISO(event.startDate as string);
-            const endDate = event.endDate ? DateTime.fromISO(event.endDate as string) : null;
-
-            return {
-              ...event,
-              startDate,
-              endDate
-            };
-          });
-
+          return response.content.map(this._mapEvent);
         }),
         tap(events => this._events.next(events))
       );
@@ -61,13 +51,13 @@ export class EventsService {
     // ))
 
     return this._http.patch<Api<IEvent>>(`api/event/${ eventId }`, event)
-      .pipe
-      (map(response => response.content),
+      .pipe(
+        map(response => response.content),
         tap(updatedEvent => {
-            this._events.next(this._events.value
-              .map(event => event.id === updatedEvent.id ? updatedEvent : event));
-          }
-        ));
+          this._events.next(this._events.value
+            .map(event => event.id === updatedEvent.id ? this._mapEvent(updatedEvent) : event));
+        })
+      );
   }
 
 
@@ -81,4 +71,14 @@ export class EventsService {
       );
   }
 
+  private _mapEvent(event: IEvent): IEvent {
+    const startDate = DateTime.fromISO(event.startDate as string);
+    const endDate = event.endDate ? DateTime.fromISO(event.endDate as string) : null;
+
+    return {
+      ...event,
+      startDate,
+      endDate
+    };
+  }
 }

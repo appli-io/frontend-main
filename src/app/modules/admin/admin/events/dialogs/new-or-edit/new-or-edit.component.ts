@@ -23,6 +23,7 @@ import { OpenStreetMapComponent }                                               
 import { IEvent }                                                                                  from '@modules/admin/home/interface/event.interface';
 import { DateTime }                                                                                from 'luxon';
 import { requiredIf }                                                                              from '@core/validators/required-if.validator';
+import { DEFAULT_DATETIME_TIME_OPTIONS }                                                           from '@core/constants';
 
 const EventStatusEnum = {
   DRAFT      : 'draft',
@@ -280,6 +281,7 @@ export class NewOrEditComponent implements OnInit {
 
   private _createEventForm(data?: any) {
     const startDate = data?.event ? DateTime.fromISO(data.event.startDate) : undefined;
+    const endDate = data?.event && data.event.endDate ? DateTime.fromISO(data.event.endDate) : undefined;
 
     return this._formBuilder.group({
       step1: this._formBuilder.group({
@@ -287,16 +289,8 @@ export class NewOrEditComponent implements OnInit {
         description  : [ data?.event?.description, [ Validators.required, Validators.minLength(3) ] ],
         isAllDay     : [ data?.event?.isAllDay ?? true, [ Validators.required ] ],
         startDate    : [ startDate ? startDate.toISODate() : undefined, [ Validators.required ] ],
-        startDateTime: [ startDate ? startDate.toISOTime({
-          extendedZone        : false,
-          includeOffset       : false,
-          suppressMilliseconds: true
-        }) : undefined, [ Validators.required ] ],
-        endDateTime: [ startDate ? startDate.toISOTime({
-          extendedZone        : false,
-          includeOffset       : false,
-          suppressMilliseconds: true
-        }) : undefined, [ requiredIf(() => this.eventForm.controls.isAllDay?.value !== true) ] ],
+        startDateTime: [ startDate ? startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : undefined, [ Validators.required ] ],
+        endDateTime  : [ endDate ? endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : undefined, [ requiredIf(() => this.eventForm.controls.isAllDay?.value !== true) ] ],
       }),
       step2: this._formBuilder.group({
         location: [ data?.event?.location, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],

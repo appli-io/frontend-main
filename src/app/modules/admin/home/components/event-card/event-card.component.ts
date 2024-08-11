@@ -25,6 +25,8 @@ export class EventCardComponent {
 
     const diff = this.event.meta.end.diff(this.event.meta.start, [ 'hours', 'minutes' ]);
 
+    console.log(diff);
+
     return `${ diff.hours > 0 ? `${ diff.hours }h ` : '' }${ diff.minutes > 0 ? `${ diff.minutes }m` : '' }`;
   }
 }
