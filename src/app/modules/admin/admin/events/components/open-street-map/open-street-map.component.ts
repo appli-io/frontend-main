@@ -13,6 +13,7 @@ export class OpenStreetMapComponent implements AfterViewInit {
   @Input() latitude: number;
   @Input() longitude: number;
   @Input() marker: { lat: number; lng: number };
+  @Input() classes: string = '';
   @Output() locationSelected = new EventEmitter<{ latitude: number; longitude: number }>();
   leafletMap: Map;
   currentMarker: Marker;

@@ -1,29 +1,32 @@
-import { Component, Inject, OnInit }                                                               from '@angular/core';
-import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Notyf }                                                                                   from 'notyf';
-import { EventsService }                                                                           from '../../events.service';
-import { TranslocoDirective, TranslocoService }                                                    from '@ngneat/transloco';
-import { MAT_DIALOG_DATA, MatDialogRef }                                                           from '@angular/material/dialog';
-import { takeUntil }                                                                               from 'rxjs';
-import { MatButtonModule, MatIconButton }                                                          from '@angular/material/button';
-import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
-import { MatInputModule }                                                                          from '@angular/material/input';
 import { CdkTextareaAutosize }                                                                     from '@angular/cdk/text-field';
 import { JsonPipe, NgForOf, NgIf }                                                                 from '@angular/common';
-import { MatIcon }                                                                                 from '@angular/material/icon';
-import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
+import { ChangeDetectionStrategy, Component, Inject, OnInit }                                      from '@angular/core';
+import { ReactiveFormsModule, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatButtonModule, MatIconButton }                                                          from '@angular/material/button';
 import { MatCheckbox }                                                                             from '@angular/material/checkbox';
-import { MatDatepickerModule }                                                                     from '@angular/material/datepicker';
-import { MatSelectModule }                                                                         from '@angular/material/select';
 import { MatOptionModule }                                                                         from '@angular/material/core';
+import { MatDatepickerModule }                                                                     from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogRef }                                                           from '@angular/material/dialog';
 import { MatDivider }                                                                              from '@angular/material/divider';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle }        from '@angular/material/expansion';
+import { MatFormFieldModule, MatLabel }                                                            from '@angular/material/form-field';
+import { MatIcon }                                                                                 from '@angular/material/icon';
+import { MatInputModule }                                                                          from '@angular/material/input';
+import { MatProgressSpinner }                                                                      from '@angular/material/progress-spinner';
+import { MatSelectModule }                                                                         from '@angular/material/select';
 import { MatStepperModule }                                                                        from '@angular/material/stepper';
-import { trackByFn }                                                                               from '@libs/ui/utils/utils';
-import { OpenStreetMapComponent }                                                                  from '../../components/open-street-map/open-street-map.component';
-import { IEvent }                                                                                  from '@modules/admin/home/interface/event.interface';
-import { DateTime }                                                                                from 'luxon';
-import { requiredIf }                                                                              from '@core/validators/required-if.validator';
-import { DEFAULT_DATETIME_TIME_OPTIONS }                                                           from '@core/constants';
+
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { control }                                             from 'leaflet';
+import { DateTime }                                            from 'luxon';
+import { Notyf }                                               from 'notyf';
+import { takeUntil }                                           from 'rxjs';
+
+import { trackByFn }                     from '@libs/ui/utils/utils';
+import { DEFAULT_DATETIME_TIME_OPTIONS } from '@core/constants';
+import { IEvent }                        from '@modules/admin/home/interface/event.interface';
+import { OpenStreetMapComponent }        from '../../components/open-street-map/open-street-map.component';
+import { EventsService }                 from '../../events.service';
 
 const EventStatusEnum = {
   DRAFT      : 'draft',
@@ -62,9 +65,10 @@ const EventPlatformEnum = {
 };
 
 @Component({
-  selector   : 'app-new',
-  standalone : true,
-  imports    : [
+  selector       : 'app-new',
+  standalone     : true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports        : [
     CdkTextareaAutosize,
     JsonPipe,
     MatButtonModule,
@@ -85,8 +89,13 @@ const EventPlatformEnum = {
     OpenStreetMapComponent,
     ReactiveFormsModule,
     TranslocoDirective,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    TranslocoPipe,
   ],
-  templateUrl: './new-or-edit.component.html',
+  templateUrl    : './new-or-edit.component.html',
 })
 export class NewOrEditComponent implements OnInit {
   eventForm: UntypedFormGroup;
@@ -97,6 +106,9 @@ export class NewOrEditComponent implements OnInit {
   eventPlatformOptions = Object.values(EventPlatformEnum);
 
   protected readonly trackByFn = trackByFn;
+  protected readonly Object = Object;
+  protected readonly control = control;
+  protected readonly console = console;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { event: IEvent },
@@ -180,6 +192,11 @@ export class NewOrEditComponent implements OnInit {
   }
 
   save(): void {
+    Object.keys(this.eventForm.controls).forEach((key) => {
+      if (this.eventForm.get(key).errors)
+        console.log(this.eventForm.get(key).errors);
+    });
+
     if (this.eventForm.valid) {
       this.eventForm.disable();
 
@@ -290,7 +307,7 @@ export class NewOrEditComponent implements OnInit {
         isAllDay     : [ data?.event?.isAllDay ?? true, [ Validators.required ] ],
         startDate    : [ startDate ? startDate.toISODate() : undefined, [ Validators.required ] ],
         startDateTime: [ startDate ? startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : undefined, [ Validators.required ] ],
-        endDateTime  : [ endDate ? endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : undefined, [ requiredIf(() => this.eventForm.controls.isAllDay?.value !== true) ] ],
+        endDateTime: [ endDate ? endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : undefined ],
       }),
       step2: this._formBuilder.group({
         location: [ data?.event?.location, [ Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],

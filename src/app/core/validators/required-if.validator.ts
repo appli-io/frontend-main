@@ -1,21 +1,22 @@
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { Observable, of }                                      from 'rxjs';
 
-export function requiredIf(predicate: () => boolean): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (!control.parent) {
-      return null;
-    }
+/**
+ * Required if validator that requires the control to have a value if the given
+ * control has a truthy value.
+ *
+ * @param {string} controlName
+ */
+export function requiredIfFalse(controlName: string): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors> => {
+    const controlToCheck = control?.parent?.get(controlName);
 
-    // If the predicate is true, then the control is required and update the validators
-    if (predicate()) {
-      control.setValidators(Validators.required);
-      control.updateValueAndValidity();
-      return Validators.required(control);
-    } else {
-      // If the predicate is false, then the control is not required and remove the validators
-      control.clearValidators();
-      control.updateValueAndValidity();
-      return null;
+    if (!controlToCheck)
+      return of(null);
+
+    if (!controlToCheck || controlToCheck.value === false) {
+      return of({requiredIfFalse: true});
     }
-  };
+    return of(null);
+  }
 }
