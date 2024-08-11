@@ -1,16 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { CalendarEvent }    from 'angular-calendar';
-import { DatePipe, NgIf }   from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CalendarEvent }                             from 'angular-calendar';
+import { DatePipe, NgIf }                            from '@angular/common';
 
 @Component({
-  selector: 'event-card',
-  standalone : true,
-  imports : [
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports        : [
     DatePipe,
     NgIf
   ],
-  templateUrl: './event-card.component.html',
-  styleUrls  : [ './event-card.component.scss' ]
+  selector       : 'event-card',
+  standalone     : true,
+  styleUrls      : [ './event-card.component.scss' ],
+  templateUrl    : './event-card.component.html'
 })
 export class EventCardComponent {
   @Input() event: CalendarEvent;
@@ -18,12 +19,12 @@ export class EventCardComponent {
   @Input() last: boolean = false;
 
   get duration(): string {
-    if (this.event.end) {
-      const duration = (this.event.end.getTime() - this.event.start.getTime()) / 60000; // in minutes
-      const hours = Math.floor(duration / 60);
-      const minutes = duration % 60;
-      return `${ hours }h${ minutes }min`;
-    }
-    return '';
+    // Calculate end date - start date and return the duration in hours. (start and end are DateTime luxon object)
+    console.log(this.event.start);
+    console.log(this.event.end);
+
+    const diff = this.event.meta.end.diff(this.event.meta.start, [ 'hours', 'minutes' ]);
+
+    return `${ diff.hours > 0 ? `${ diff.hours }h ` : '' }${ diff.minutes > 0 ? `${ diff.minutes }m` : '' }`;
   }
 }

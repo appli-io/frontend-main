@@ -1,19 +1,19 @@
 <div *transloco="let t; read: ''"></div>
-<div class="-m-6 p-4 flex flex-auto flex-col md:w-160 md:min-w-160 rounded-lg shadow-lg">
+<div class="flex max-h-screen max-w-160 flex-col md:min-w-160 h-full overflow-hidden">
   <!-- Header -->
-  <div class="flex items-center mb-4">
-    <h2 class="text-2xl font-semibold tracking-tight leading-6 truncate flex-1 uppercase">{{ event.title }}</h2>
-    <button (click)="closeDialog()" class="flex-0" mat-icon-button>
-      <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+  <div class="flex-0 flex justify-between items-center p-4 border-b shadow-md">
+    <h2 [innerText]="event.title" class="text-2xl font-medium uppercase"></h2>
+    <button (click)="closeDialog()" mat-icon-button>
+      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
     </button>
   </div>
 
   <!-- Content -->
-  <div class="flex-1">
+  <div class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh] px-4 pt-4">
     <!-- Organizer -->
     <h3 class="font-medium text-md mb-1 text-orange-600">ORGANIZADOR</h3>
     <div class="flex flex-row items-center mb-4 gap-2">
-      <span class="bg-orange-600 p-2 text-white text-lg font-medium">{{ event.organizer.name }}</span>
+      <span class="bg-orange-600 p-2 text-white text-lg font-medium max-w-3/4 truncate">{{ event.organizer.name }}</span>
       <a href="mailto:{{event.organizer.email}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:envelope"></mat-icon></span></a>
       <a href="tel:{{event.organizer.phone.countryCode}}{{event.organizer.phone.number}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:phone"></mat-icon></span></a>
     </div>
@@ -22,12 +22,15 @@
     <h3 class="font-medium text-md mb-1 text-green-600">CUANDO</h3>
     <div class="flex flex-row items-center mb-4 gap-2">
       <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISODate() }}</span>
-      <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}</span>
+      <span class="bg-green-600 p-2 text-white text-lg font-medium">
+        {{ DateTime.fromISO($any(event.startDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}
+        {{ !event.isAllDay ? ' - ' + DateTime.fromISO($any(event.endDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : '' }}
+      </span>
     </div>
 
     <!-- Description -->
     <h3 class="font-medium text-md mb-1 text-blue-600">DESCRIPCIÓN</h3>
-    <p class="text-justify mb-2">{{ event.description }}</p>
+    <p class="text-justify mb-2 whitespace-pre-wrap">{{ event.description }}</p>
 
     <div class="flex flex-row gap-2">
       <div>
@@ -41,7 +44,7 @@
         <h3 class="font-medium text-md mb-1">TIPO DE EVENTO</h3>
         <div class="flex flex-row items-center mb-4 gap-2">
           <span class="bg-amber-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:wrench-screwdriver"></mat-icon>
-            {{ event.status }}</span>
+            {{ event.type }}</span>
         </div>
       </div>
     </div>
@@ -68,7 +71,7 @@
   </div>
 
   <!-- Footer - Actions -->
-  <div class="mt-4 flex items-center justify-end">
+  <div class="p-4 flex items-center justify-end">
     <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Cerrar</button>
   </div>
 </div>

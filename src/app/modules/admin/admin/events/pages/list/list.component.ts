@@ -15,11 +15,12 @@ import { IEvent }                  from '@modules/admin/home/interface/event.int
 import { EventsTableComponent }    from '../../components/events-table/events-table.component';
 import { EventsService }           from '../../events.service';
 import { NewOrEditComponent }      from '../../dialogs/new-or-edit/new-or-edit.component';
+import { MatDivider }              from '@angular/material/divider';
 
 @Component({
   selector   : 'app-list',
   standalone : true,
-  imports    : [
+  imports: [
     EventsTableComponent,
     MatAnchor,
     MatButton,
@@ -30,6 +31,7 @@ import { NewOrEditComponent }      from '../../dialogs/new-or-edit/new-or-edit.c
     RouterLink,
     TranslocoDirective,
     TranslocoPipe,
+    MatDivider,
   ],
   templateUrl: './list.component.html',
 })

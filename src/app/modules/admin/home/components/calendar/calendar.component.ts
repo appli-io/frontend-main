@@ -84,7 +84,7 @@ export class CalendarComponent implements AfterViewInit {
   openEventDetail(event: CalendarEvent): void {
     this._matDialog.open(EventModalComponent, {
       autoFocus : false,
-      panelClass: [ 'dialog-mobile-fullscreen', 'dialog-default-padding' ],
+      panelClass: [ 'dialog-mobile-fullscreen' ],
       closeOnNavigation: true,
       data      : {event},
     });

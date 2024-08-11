@@ -5,11 +5,10 @@
     [title]="t('title')"
   ></page-header>
   <!-- Content -->
-  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10">
-    <!-- Title and new event button -->
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4">
     <div class="flex flex-row w-full">
       <!-- Title -->
-      <h2 class="flex-1 font-bold text-gray-700 text-xl">{{ t('title') }}</h2>
+      <h2 class="flex-1 font-bold text-secondary text-xl">{{ t('title') }}</h2>
 
       <!-- New event button -->
       <a
@@ -22,13 +21,16 @@
         <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
       </a>
     </div>
+
+    <mat-divider class="w-full"></mat-divider>
+
     <events-table
       (deleteEvent)="deleteEvent($event)"
       (editEvent)="editEvent($event)"
       (pageChange)="pageChange($event)"
       [events]="events$"
       [loading]="true"
-      class="w-full max-w-full overflow-auto mt-4">
+      class="w-full max-w-full overflow-auto">
     </events-table>
   </div>
 </div>

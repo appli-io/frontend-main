@@ -5,8 +5,15 @@
     <div [class.hidden]="last" class="line bottom bg-gray-500"></div>
   </div>
   <div class="event-details">
-    <div class="time">{{ event.start | date: 'shortTime' }}</div>
+    <div class="time">
+      <span>{{ event.start | date: 'shortTime' }}</span>
+      <span *ngIf="!event.allDay"> - {{ event.end | date: 'shortTime' }}</span>
+      <span *ngIf="event.allDay"> - All Day</span>
+
+      @if (!event.allDay) {
+        <span class="text-hint ml-2">({{ duration }})</span>
+      }
+    </div>
     <div class="title">{{ event.title }}</div>
-    <div *ngIf="event.end" class="duration">{{ duration }}</div>
   </div>
 </div>

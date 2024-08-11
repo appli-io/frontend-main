@@ -33,7 +33,7 @@
         {{ t('new.date') }}
       </th>
       <td *matCellDef="let event" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ event.startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}</span>
+        <span class="whitespace-nowrap pr-6">{{ event.startDate.toISODate() }}</span>
       </td>
     </ng-container>
 
