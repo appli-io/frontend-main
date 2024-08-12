@@ -17,7 +17,6 @@ import { MatSelectModule }                                                      
 import { MatStepperModule }                                                                        from '@angular/material/stepper';
 
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { control }                                             from 'leaflet';
 import { DateTime }                                            from 'luxon';
 import { Notyf }                                               from 'notyf';
 import { takeUntil }                                           from 'rxjs';
@@ -106,9 +105,6 @@ export class NewOrEditComponent implements OnInit {
   eventPlatformOptions = Object.values(EventPlatformEnum);
 
   protected readonly trackByFn = trackByFn;
-  protected readonly Object = Object;
-  protected readonly control = control;
-  protected readonly console = console;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { event: IEvent },

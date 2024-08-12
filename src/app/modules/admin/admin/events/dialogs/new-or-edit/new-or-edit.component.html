@@ -145,7 +145,7 @@
                         @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
                           @defer (on viewport) {
                             <app-open-street-map
-                              classes="w-full h-96"
+                              classes="w-full h-64"
                               (locationSelected)="onLocationSelected($index, $event)"
                               [latitude]="eventForm.value['step2'].url[$index]?.latitude || -33.437862717498135"
                               [longitude]="eventForm.value['step2'].url[$index]?.longitude || -70.65009359000236"
