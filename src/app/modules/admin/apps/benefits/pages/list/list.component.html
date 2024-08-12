@@ -14,7 +14,7 @@
     <ul class="flex flex-wrap justify-center min-w-full gap-x-6 gap-y-8">
       @for (benefit of benefits; track benefit.id) {
         <li class="inline-block overflow-hidden relative shadow-lg rounded-2xl text-center cursor-pointer transition-all duration-500 bg-card hover:bg-gray-200 dark:hover:bg-gray-700 hover:-translate-y-4 flex-0 flex-grow-1 basis-[18%] select-none">
-          <benefit-card [benefit]="benefit"></benefit-card>
+          <benefit-card [category]="benefit"></benefit-card>
         </li>
       }
     </ul>

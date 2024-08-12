@@ -1,3 +1,14 @@
-<div class="flex-1">
-  <div #map class="map-container {{classes}}"></div>
+<div class="flex-1 relative">
+  @if (searchBar) {
+    <mat-form-field [subscriptSizing]="'dynamic'" class="w-full" hintLabel="Búsqueda mínima 3 carácteres">
+      <mat-label>Buscar en el mapa</mat-label>
+      <mat-icon [svgIcon]="'heroicons_solid:magnifying-glass'" class="icon-size-5" matPrefix></mat-icon>
+      <input [formControl]="searchControl" [placeholder]="'Nombre del miembro'" #searchBar matInput (keyup.enter)="findPlaces($event, searchBar.value)" [minlength]="3"/>
+      <button mat-icon-button matSuffix (click)="findPlaces($event, searchBar.value)">
+        <mat-icon class="icon-size-5" svgIcon="heroicons_outline:magnifying-glass"></mat-icon>
+      </button>
+      <mat-error *ngIf="searchControl.errors?.minlength">{{ 'errors.form.min-length' | transloco:{ length: 3 } }}</mat-error>
+    </mat-form-field>
+  }
+  <div #map class="mt-2 map-container {{mapContainer}}"></div>
 </div>

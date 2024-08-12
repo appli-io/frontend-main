@@ -8,10 +8,10 @@
   </div>
 
   <!-- Content -->
-  <form [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh]">
+  <form (keydown.enter)="false" [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh]">
     <mat-vertical-stepper linear="true">
       <!-- Step 1: New Event -->
-      <mat-step [stepControl]="eventForm.get('step1')" formGroupName="step1">
+      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step1')" formGroupName="step1">
         <ng-template matStepLabel>{{ t("step1Title") }}</ng-template>
         <!-- Step 1: New Event Details -->
         <h2 class="text-lg text-secondary">{{ t("step1Details") }}</h2>
@@ -81,7 +81,7 @@
       </mat-step>
 
       <!-- Step 2: Details Additional -->
-      <mat-step [stepControl]="eventForm.get('step2')" formGroupName="step2">
+      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step2')" formGroupName="step2">
         <ng-template matStepLabel>{{ t("step2Title") }}</ng-template>
 
         <!-- Step 2: Details -->
@@ -145,7 +145,8 @@
                         @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
                           @defer (on viewport) {
                             <app-open-street-map
-                              classes="w-full h-64"
+                              mapContainer="w-full h-64"
+                              searchBar="true"
                               (locationSelected)="onLocationSelected($index, $event)"
                               [latitude]="eventForm.value['step2'].url[$index]?.latitude || -33.437862717498135"
                               [longitude]="eventForm.value['step2'].url[$index]?.longitude || -70.65009359000236"
@@ -197,7 +198,7 @@
       </mat-step>
 
       <!-- Step 3: Organizer -->
-      <mat-step [stepControl]="eventForm.get('step3')" formGroupName="step3">
+      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step3')" formGroupName="step3">
         <ng-template matStepLabel> {{ t("step3Title") }}</ng-template>
         <!-- Step 3: Details -->
         <h2 class="text-lg text-secondary">{{ t("step3Details") }}</h2>

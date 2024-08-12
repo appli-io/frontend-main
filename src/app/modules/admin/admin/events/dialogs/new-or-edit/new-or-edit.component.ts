@@ -312,8 +312,8 @@ export class NewOrEditComponent implements OnInit {
             platform : [ url.platform, [ Validators.required ] ],
             label    : [ url.label, [ Validators.required ] ],
             url      : [ url.url ],
-            latitude : [ url.latitude ],
-            longitude: [ url.longitude ],
+            latitude : [ {value: url.latitude, disabled: true} ],
+            longitude: [ {value: url.longitude, disabled: true} ],
           })) || []
         ),
         image   : [ data?.event?.image ],

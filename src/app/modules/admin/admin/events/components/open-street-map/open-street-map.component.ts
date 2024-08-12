@@ -1,11 +1,30 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, } from '@angular/core';
 
 import { LeafletMouseEvent, Map, map, Marker, marker, tileLayer } from 'leaflet';
+import { MatFormFieldModule, MatLabel }                           from '@angular/material/form-field';
+import { FormControl, ReactiveFormsModule }                       from '@angular/forms';
+import { MatInputModule }                                         from '@angular/material/input';
+import { MatIcon }                                                from '@angular/material/icon';
+import { MatIconButton }                                          from '@angular/material/button';
+import { NgIf }                                                   from '@angular/common';
+import { TranslocoPipe }                                          from '@ngneat/transloco';
+import { OpenStreetMapService }                                   from '@modules/admin/admin/events/components/open-street-map/open-street-map.service';
+import { Place }                                                  from '@modules/admin/admin/events/components/open-street-map/model/place';
+import { Notyf }                                                  from 'notyf';
 
 @Component({
   selector   : 'app-open-street-map',
   standalone : true,
-  imports    : [],
+  imports: [
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatLabel,
+    MatIcon,
+    MatIconButton,
+    NgIf,
+    TranslocoPipe,
+  ],
   templateUrl: './open-street-map.component.html',
   styleUrls  : [ './open-street-map.component.scss' ],
 })
@@ -13,19 +32,23 @@ export class OpenStreetMapComponent implements AfterViewInit {
   @Input() latitude: number;
   @Input() longitude: number;
   @Input() marker: { lat: number; lng: number };
-  @Input() classes: string = '';
+  @Input() mapContainer: string = '';
+  @Input() searchBar: boolean = false;
   @Output() locationSelected = new EventEmitter<{ latitude: number; longitude: number }>();
+  searchControl = new FormControl('');
   leafletMap: Map;
   currentMarker: Marker;
-  printPlugin: any;
-  @ViewChild('map') private mapContainer: ElementRef<HTMLElement>;
+  notyf = new Notyf();
+  @ViewChild('map') private _mapContainer: ElementRef<HTMLElement>;
+
+  constructor(private readonly _osmService: OpenStreetMapService) {}
 
   ngAfterViewInit(): void {
-    this.leafletMap = map(this.mapContainer.nativeElement).setView([ this.latitude, this.longitude ], 17);
+    this.leafletMap = map(this._mapContainer.nativeElement).setView([ this.latitude, this.longitude ], 17);
 
     const isRetina = window.devicePixelRatio > 1;
-    const baseUrl: string = 'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=3dd80fef8eff420593405a01b0bfa621';
-    const retinaUrl: string = 'https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey=3dd80fef8eff420593405a01b0bfa621';
+    const baseUrl: string = 'https://maps.geoapify.com/v1/tile/osm-liberty/{z}/{x}/{y}.png?apiKey=3dd80fef8eff420593405a01b0bfa621';
+    const retinaUrl: string = 'https://maps.geoapify.com/v1/tile/osm-liberty/{z}/{x}/{y}@2x.png?apiKey=3dd80fef8eff420593405a01b0bfa621';
     const tileLayerUrl: string = isRetina ? retinaUrl : baseUrl;
 
     tileLayer(tileLayerUrl, {maxZoom: 20,}).addTo(this.leafletMap);
@@ -62,5 +85,30 @@ export class OpenStreetMapComponent implements AfterViewInit {
       this.currentMarker.remove();
     }
     this.currentMarker = marker([ latitude, longitude ]).addTo(this.leafletMap);
+  }
+
+  findPlaces($event: KeyboardEvent | MouseEvent, value: string) {
+    if (!value || value.length < 3) {
+      this.searchControl.markAsTouched();
+      return;
+    }
+
+    console.log('Searching for: ', value);
+
+    this._osmService.findPlaces(value).subscribe((places: Place[]) => {
+      console.log('Places: ', places);
+
+      if (places.length === 0) {
+        console.log('No places found');
+        this.notyf.error('No se han encontrado resultados');
+        return;
+      }
+
+      const place = places[0];
+
+      this.leafletMap.setView([ parseFloat(place.lat), parseFloat(place.lon) ], 17);
+      this.setMarker(parseFloat(place.lat), parseFloat(place.lon));
+      this.locationSelected.emit({latitude: parseFloat(place.lat), longitude: parseFloat(place.lon)});
+    });
   }
 }

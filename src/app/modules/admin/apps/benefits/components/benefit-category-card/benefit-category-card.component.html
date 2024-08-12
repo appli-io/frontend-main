@@ -1,0 +1,8 @@
+<a [routerLink]="['id', category.id]" class="p-8 flex flex-col justify-center items-center">
+  <img
+    [alt]="category.name"
+    [src]="category.icon.fileUrl"
+    class="w-16 h-16 object-contain mb-2 mx-auto"
+  />
+  <span class="text-blue-950 dark:text-gray-300 text-lg">{{ category.name }}</span>
+</a>

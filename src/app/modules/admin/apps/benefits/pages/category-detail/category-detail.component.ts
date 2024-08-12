@@ -8,23 +8,23 @@ import { MatTooltip }                          from '@angular/material/tooltip';
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 import { NgxSkeletonLoaderModule }           from 'ngx-skeleton-loader';
 
-import { FuseCardComponent }        from '@fuse/components/card';
-import { BenefitCardComponent }     from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
-import { SubcategoryCardComponent } from '@modules/admin/apps/benefits/components/subcategory-card/subcategory-card.component';
-import { IImage }                   from '@modules/admin/news/domain/interfaces/news.interface';
+import { FuseCardComponent }            from '@fuse/components/card';
+import { BenefitCategoryCardComponent } from '@modules/admin/apps/benefits/components/benefit-category-card/benefit-category-card.component';
+import { SubcategoryCardComponent }     from '@modules/admin/apps/benefits/components/subcategory-card/subcategory-card.component';
+import { IImage }                       from '@modules/admin/news/domain/interfaces/news.interface';
 
 export interface BenefitCategory {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   active: boolean;
   order: number;
   icon: IImage;
-  image: IImage;
-  metadata: Record<string, any>;
+  image?: IImage;
+  metadata?: Record<string, any>;
   parent?: BenefitCategory;
-  subCategories: BenefitCategory[];
-  benefits: any[];
+  subCategories?: BenefitCategory[];
+  benefits?: any[];
 }
 
 @Component({
@@ -38,7 +38,7 @@ export interface BenefitCategory {
     MatIcon,
     MatButton,
     MatTooltip,
-    BenefitCardComponent,
+    BenefitCategoryCardComponent,
     NgxSkeletonLoaderModule,
     MatIconAnchor,
     SubcategoryCardComponent,
