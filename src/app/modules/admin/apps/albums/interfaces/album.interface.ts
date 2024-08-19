@@ -1,4 +1,4 @@
-import { IImage }      from '@modules/admin/news/domain/interfaces/news.interface';
+import { IFile }       from '@modules/admin/news/domain/interfaces/news.interface';
 import { IUser }       from '@modules/admin/profile/interfaces/user.interface';
 import { IAlbumImage } from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
@@ -6,8 +6,8 @@ export interface IAlbum {
   id: string;
   name: string;
   description: string;
-  cover: IImage;
-  coverThumbnail: IImage;
+  cover: IFile;
+  coverThumbnail: IFile;
   images: IAlbumImage[];
   imagesCount: number;
   createdBy: IUser;

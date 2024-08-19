@@ -1,12 +1,12 @@
 import { ICompany } from '@core/domain/interfaces/company.interface';
-import { IImage }   from '@modules/admin/news/domain/interfaces/news.interface';
+import { IFile }    from '@modules/admin/news/domain/interfaces/news.interface';
 
 export interface IUser {
   id?: string;
   name?: string;
   username?: string;
   email?: string;
-  avatar?: IImage;
+  avatar?: IFile;
   location?: string;
   positions?: { position: string, companyId: string };
   assignedCompanies?: Partial<ICompany>[];

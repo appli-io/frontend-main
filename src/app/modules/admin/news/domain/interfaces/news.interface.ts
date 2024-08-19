@@ -7,8 +7,8 @@ export interface INews {
   slug?: string;
   abstract?: string;
   body?: string;
-  images?: IImage[];
-  portraitImage?: IImage;
+  images?: IFile[];
+  portraitImage?: IFile;
   publishedAt?: Date;
   updatedAt?: Date;
 
@@ -18,7 +18,7 @@ export interface INews {
   custom: Record<string, any>;
 }
 
-export interface IImage {
+export interface IFile {
   name: string,
   filepath?: string,
   contentType?: string,

@@ -1,12 +1,11 @@
 <div *transloco="let t; read: 'admin.users'" class="flex flex-col min-w-0 w-full">
   <page-header [description]="t('description')" [subtitle]="t('subtitle')" [title]="t('title')"></page-header>
 
-  <div
-    class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 px-4 sm:px-8">
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4">
     <!-- Title and new member button -->
     <div class="flex flex-row w-full">
       <!-- Title -->
-      <h2 class="flex-1 font-bold text-gray-700 text-xl self-center">{{ t('title') }}</h2>
+      <h2 class="flex-1 font-bold text-secondary text-xl self-center">{{ t('title') }}</h2>
 
       <!-- New member button -->
       <a (click)="openNewMemberDialog()" [matTooltip]="t('new.title')" class="flex-0 font-bold py-2 px-4 rounded"

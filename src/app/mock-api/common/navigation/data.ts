@@ -136,6 +136,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:photo'
       },
       {
+        id   : 'admin.benefits',
+        title: 'Benefits',
+        type : 'basic',
+        link : '/admin/benefits',
+        icon : 'heroicons_outline:gift'
+      },
+      {
         id   : 'admin.roles',
         title: 'Roles',
         type : 'basic',

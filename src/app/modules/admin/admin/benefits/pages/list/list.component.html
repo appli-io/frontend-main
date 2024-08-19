@@ -1,4 +1,4 @@
-<div *transloco="let t; read: 'admin.events'" class="flex flex-col min-w-0 w-full">
+<div *transloco="let t; read: 'admin.benefits'" class="flex flex-col min-w-0 w-full">
   <page-header
     [description]="t('description')"
     [subtitle]="t('subtitle')"
@@ -10,25 +10,27 @@
       <!-- Title -->
       <h2 class="flex-1 font-bold text-secondary text-xl self-center">{{ t('title') }}</h2>
 
-      <!-- New event button -->
+      <!-- New benefit button -->
       <a
+        (click)="openNewDialog()"
+        [matTooltip]="'admin.benefits.new.title' | transloco"
         class="flex-1 md:flex-0 font-bold py-2 px-4 rounded"
         color="primary"
-        [matTooltip]="'admin.events.new.title' | transloco"
         mat-icon-button
-        (click)="openNewEventDialog()"
       >
         <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
       </a>
     </div>
 
-    <events-table
-      (deleteEvent)="deleteEvent($event)"
-      (editEvent)="editEvent($event)"
-      (pageChange)="pageChange($event)"
-      [events]="events$"
-      [loading]="true"
-      class="w-full max-w-full overflow-auto">
-    </events-table>
+    @defer {
+      <benefit-table
+        (delete)="delete($event)"
+        (edit)="edit($event)"
+        (pageChange)="pageChange($event)"
+        [benefits]="benefits$"
+        [loading]="true"
+        class="">
+      </benefit-table>
+    }
   </div>
 </div>

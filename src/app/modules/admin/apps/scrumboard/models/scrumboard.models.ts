@@ -1,5 +1,5 @@
 import { IBoard, ICard, ILabel, IList, IMember, } from '@modules/admin/apps/scrumboard/models/scrumboard.types';
-import { IImage }                                 from '@modules/admin/news/domain/interfaces/news.interface';
+import { IFile }                                  from '@modules/admin/news/domain/interfaces/news.interface';
 
 // -----------------------------------------------------------------------------------------------------
 // @ Board
@@ -141,7 +141,7 @@ export class Card implements Required<ICard> {
 export class Member implements IMember {
   id: string;
   name: string;
-  avatar?: IImage;
+  avatar?: IFile;
   position?: string;
 
   constructor(member: IMember) {

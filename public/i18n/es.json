@@ -36,6 +36,7 @@
       "news" : "Noticias",
       "events" : "Eventos",
       "albums" : "Álbumes",
+      "benefits" : "Beneficios",
       "roles" : "Roles",
       "permissions" : "Permisos",
       "settings" : "Configuración"
@@ -382,6 +383,48 @@
         "step2Title"   : "Detalles adicionales",
         "step3Details" : "Agrega datos adicionales sobre el organizador",
         "step3Title"   : "Detalles del organizador"
+      }
+    },
+    "benefits" : {
+      "title" : "Beneficios",
+      "subtitle" : "Administra los Beneficios de la Plataforma",
+      "description" : "Administra los beneficios de la plataforma, crea y actualiza beneficios, y mantén informados a los usuarios sobre los programas de bienestar y descuentos disponibles. Asegúrate de que cada miembro de la organización pueda acceder a los beneficios y aprovechar al máximo su experiencia laboral con nosotros.",
+      "types" : {
+        "PRESENTIAL" : "Presencial",
+        "ONLINE" : "Online"
+      },
+      "list" : {
+        "title" : "Lista de Beneficios",
+        "no-content" : "No hay beneficios disponibles para mostrar",
+        "table-columns" : {
+          "id" : "ID",
+          "title" : "Nombre",
+          "type" : "Tipo",
+          "category" : "Categoría",
+          "company" : "Empresa",
+          "discounts-count" : "Descuentos",
+          "views" : "Vistas",
+          "actions" : "Acciones",
+          "view" : "Ver",
+          "edit" : "Editar",
+          "delete" : "Eliminar"
+        }
+      },
+      "new" : {
+        "title" : "Nuevo Beneficio",
+        "name" : "Nombre",
+        "description" : "Descripción",
+        "category" : "Categoría",
+        "subcategory" : "Subcategoría",
+        "create" : "Crear"
+      },
+      "edit" : {
+        "title" : "Editar Beneficio",
+        "name" : "Nombre",
+        "description" : "Descripción",
+        "category" : "Categoría",
+        "subcategory" : "Subcategoría",
+        "update" : "Actualizar"
       }
     }
   },

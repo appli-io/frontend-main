@@ -1,9 +1,9 @@
-import { IImage } from '@modules/admin/news/domain/interfaces/news.interface';
+import { IFile } from '@modules/admin/news/domain/interfaces/news.interface';
 
 export interface IAlbumImage {
   id: string;
-  original: IImage;
-  thumbnail: IImage;
+  original: IFile;
+  thumbnail: IFile;
   size: number;
   uploadedBy: string;
   company: string;

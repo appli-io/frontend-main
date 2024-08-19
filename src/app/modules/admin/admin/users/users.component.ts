@@ -22,6 +22,7 @@ import { CompanyUser }             from '@modules/admin/admin/users/model/compan
 import { MemberNewComponent }      from '@modules/admin/admin/users/dialogs/member-new/member-new.component';
 import { GetInvitationsComponent } from './dialogs/get-invitations/get-invitations.component';
 import { Page }                    from '@core/interfaces/page';
+import { MatDivider }              from '@angular/material/divider';
 
 @Component({
   selector  : 'app-users',
@@ -41,7 +42,8 @@ import { Page }                    from '@core/interfaces/page';
     MatTooltip,
     ReactiveFormsModule,
     AsyncPipe,
-    JsonPipe
+    JsonPipe,
+    MatDivider
   ],
   templateUrl: './users.component.html'
 })

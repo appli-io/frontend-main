@@ -31,6 +31,7 @@ import { trackByFn } from '@libs/ui/utils/utils';
     MatRow,
     MatRowDef
   ],
+  styleUrls: [ './table.component.scss' ],
   templateUrl: './table.component.html'
 })
 export class Table<T> implements OnInit, AfterContentInit {
@@ -40,6 +41,7 @@ export class Table<T> implements OnInit, AfterContentInit {
   @Input() loading: Observable<boolean> = new Observable<boolean>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() sortChange: EventEmitter<Sort> = new EventEmitter<Sort>();
+  @Output() contextMenu: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(MatTable, {static: true}) table!: MatTable<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
