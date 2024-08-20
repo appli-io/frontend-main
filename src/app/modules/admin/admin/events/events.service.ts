@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Api }    from '@core/interfaces/api';
-import { IEvent } from '@modules/admin/home/interface/event.interface';
+import { IEvent }     from '@modules/admin/home/interface/event.interface';
 
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { DateTime }                              from 'luxon';
@@ -20,22 +18,21 @@ export class EventsService {
   }
 
   public getEvents() {
-    return this._http.get<Api<IEvent[]>>('api/event')
+    return this._http.get<IEvent[]>('api/event')
       .pipe(map(response => {
-          return response.content.map(this._mapEvent);
+          return response.map(this._mapEvent);
         }),
         tap(events => this._events.next(events))
       );
   }
 
   public getEvent(eventId: string): Observable<IEvent> {
-    return this._http.get<Api<IEvent>>(`api/event/${ eventId }`)
-      .pipe(map(response => response.content));
+    return this._http.get<IEvent>(`api/event/${ eventId }`);
   }
 
   public createEvent(event: IEvent) {
-    return this._http.post<Api<IEvent>>('api/event', event)
-      .pipe(map(response => response.content),
+    return this._http.post<IEvent>('api/event', event)
+      .pipe(
         tap(newEvent => this._events.next([ newEvent, ...this._events.value ]))
       );
   }
@@ -50,9 +47,8 @@ export class EventsService {
     //   }
     // ))
 
-    return this._http.patch<Api<IEvent>>(`api/event/${ eventId }`, event)
+    return this._http.patch<IEvent>(`api/event/${ eventId }`, event)
       .pipe(
-        map(response => response.content),
         tap(updatedEvent => {
           this._events.next(this._events.value
             .map(event => event.id === updatedEvent.id ? this._mapEvent(updatedEvent) : event));
@@ -62,8 +58,8 @@ export class EventsService {
 
 
   public deleteEvent(eventId: string) {
-    return this._http.delete<Api<IEvent>>(`api/event/${ eventId }`)
-      .pipe(map(response => response.content),
+    return this._http.delete<IEvent>(`api/event/${ eventId }`)
+      .pipe(
         tap(() => {
           const events = this._events.value.filter(event => event.id !== eventId);
           this._events.next(events);

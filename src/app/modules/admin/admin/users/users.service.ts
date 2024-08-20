@@ -1,7 +1,6 @@
 import { Injectable }                            from '@angular/core';
 import { HttpClient, HttpParams }                from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { Api }                                   from '@core/interfaces/api';
 import { Page }                                  from '@core/interfaces/page';
 import { CompanyUser, InvitationsResponse }      from '@modules/admin/admin/users/model/company-user.model';
 import { DEFAULT_PAGEABLE }                      from '@core/constants';
@@ -24,8 +23,8 @@ export class UsersService {
     });
     params = params.append('page', pageable.page).append('size', pageable.size);
 
-    return this._httpClient.get<Api<Page<CompanyUser>>>('api/company/members', { params }).pipe(
-      map(({ content }) => {
+    return this._httpClient.get<Page<CompanyUser>>('api/company/members', {params}).pipe(
+      map((content) => {
         const pageMembers: Page<CompanyUser> = {
           ...content,
           content: content.content.map((member) => ({...member, createdAt: new Date(member.createdAt)})),

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-
-import { Api }             from '@core/interfaces/api';
-import { IAlbum }          from '@modules/admin/apps/albums/interfaces/album.interface';
-import { BenefitCategory } from '@modules/admin/admin/benefits/models/benefit-category';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { IAlbum }                           from '@modules/admin/apps/albums/interfaces/album.interface';
+import { BenefitCategory }                  from '@modules/admin/admin/benefits/models/benefit-category';
 
 @Injectable({
   providedIn: 'root'
@@ -28,17 +26,15 @@ export class BenefitsService {
   }
 
   public getAll(): Observable<IAlbum[]> {
-    return this._httpClient.get<Api<IAlbum[]>>('api/benefits/benefit')
+    return this._httpClient.get<IAlbum[]>('api/benefits/benefit')
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(albums => this._benefits$.next(albums))
       );
   }
 
   public getOne(id: string): Observable<IAlbum> {
-    return this._httpClient.get<Api<IAlbum>>(`api/benefits/benefit/${ id }`)
+    return this._httpClient.get<IAlbum>(`api/benefits/benefit/${ id }`)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(album => this._benefit$.next(album))
       );
   }
@@ -50,9 +46,8 @@ export class BenefitsService {
     formData.append('description', album.description);
     formData.append('cover', album.cover, album.cover.name);
 
-    return this._httpClient.post<Api<IAlbum>>('api/albums', formData)
+    return this._httpClient.post<IAlbum>('api/albums', formData)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(newAlbum => this._benefits$.next([ newAlbum, ...this._benefits$.value ]))
       );
   }
@@ -64,9 +59,8 @@ export class BenefitsService {
     formData.append('description', album.description);
     formData.append('cover', album.cover[0], album.cover[0].name);
 
-    return this._httpClient.put<Api<IAlbum>>(`api/albums/${ id }`, formData)
+    return this._httpClient.put<IAlbum>(`api/albums/${ id }`, formData)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(updatedAlbum => {
           this._benefits$.next(this._benefits$.value.map(album => album.id === updatedAlbum.id ? updatedAlbum : album));
         })

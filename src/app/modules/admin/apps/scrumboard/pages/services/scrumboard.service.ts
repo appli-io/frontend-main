@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of, switchMap, take, tap, throwError, } from 'rxjs';
 
 import { Board, Card, Label, List } from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { Api }                      from '@core/interfaces/api';
 
 @Injectable({providedIn: 'root'})
 export class ScrumboardService {
@@ -56,8 +55,7 @@ export class ScrumboardService {
    * Get boards
    */
   getBoards(): Observable<Board[]> {
-    return this._httpClient.get<Api<Board[]>>('api/scrumboard/board').pipe(
-      map((response) => response.content),
+    return this._httpClient.get<Board[]>('api/scrumboard/board').pipe(
       map((response) => response.map((item) => new Board(item))),
       tap((boards) => this._boards.next(boards))
     );
@@ -70,9 +68,8 @@ export class ScrumboardService {
    */
   getBoard(id: string): Observable<Board> {
     return this._httpClient
-      .get<Api<Board>>('api/scrumboard/board/' + id)
+      .get<Board>('api/scrumboard/board/' + id)
       .pipe(
-        map((response) => response.content),
         map((response) => new Board(response)),
         tap((board) => this._board.next(board))
       );
@@ -88,9 +85,8 @@ export class ScrumboardService {
       take(1),
       switchMap((boards) =>
         this._httpClient
-          .post<Api<Board>>('api/scrumboard/board', board)
+          .post<Board>('api/scrumboard/board', board)
           .pipe(
-            map((response) => response.content),
             map((newBoard) => {
               // Update the boards with the new board
               this._boards.next([ newBoard, ...boards ]);
@@ -114,9 +110,8 @@ export class ScrumboardService {
       take(1),
       switchMap((boards) =>
         this._httpClient
-          .patch<Api<Board>>('api/scrumboard/board', {id, board})
+          .patch<Board>('api/scrumboard/board', {id, board})
           .pipe(
-            map((response) => response.content),
             map((updatedBoard) => {
               // Find the index of the updated board
               const index = boards.findIndex(
@@ -182,9 +177,8 @@ export class ScrumboardService {
    */
   createList(list: List): Observable<List> {
     return this._httpClient
-      .post<Api<List>>('api/scrumboard/list', list)
+      .post<List>('api/scrumboard/list', list)
       .pipe(
-        map((response) => response.content),
         map((response) => new List(response)),
         tap((newList) => {
           // Get the board value
@@ -209,9 +203,8 @@ export class ScrumboardService {
    */
   updateList(list: List): Observable<List> {
     return this._httpClient
-      .patch<Api<List>>('api/scrumboard/list/' + list.id, list)
+      .patch<List>('api/scrumboard/list/' + list.id, list)
       .pipe(
-        map((response) => response.content),
         map((response) => new List(response)),
         tap((updatedList) => {
           // Get the board value
@@ -241,9 +234,8 @@ export class ScrumboardService {
    */
   updateLists(lists: List[]): Observable<List[]> {
     return this._httpClient
-      .patch<Api<List[]>>('api/scrumboard/list/' + lists[0].id, lists[0])
+      .patch<List[]>('api/scrumboard/list/' + lists[0].id, lists[0])
       .pipe(
-        map((response) => response.content),
         map((response) => response.map((item) => new List(item))),
         tap((updatedLists) => {
           // Get the board value
@@ -338,9 +330,8 @@ export class ScrumboardService {
    */
   createCard(card: Card): Observable<Card> {
     return this._httpClient
-      .post<Api<Card>>('api/scrumboard/card', card)
+      .post<Card>('api/scrumboard/card', card)
       .pipe(
-        map((response) => response.content),
         map((response) => new Card(response)),
         tap((newCard) => {
           // Get the board value
@@ -373,9 +364,8 @@ export class ScrumboardService {
       take(1),
       switchMap((board) =>
         this._httpClient
-          .patch<Api<Card>>('api/scrumboard/card/' + id, card)
+          .patch<Card>('api/scrumboard/card/' + id, card)
           .pipe(
-            map((response) => response.content),
             map((updatedCard) => {
               // Find the card and update it
               board.lists.forEach((listItem) => {

@@ -2,10 +2,8 @@ import { Injectable }                           from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-
-import { Api }         from '@core/interfaces/api';
-import { IAlbum }      from '@modules/admin/apps/albums/interfaces/album.interface';
-import { IAlbumImage } from '@modules/admin/apps/albums/interfaces/album-image.interface';
+import { IAlbum }                                from '@modules/admin/apps/albums/interfaces/album.interface';
+import { IAlbumImage }                           from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,17 +23,15 @@ export class AlbumsService {
   }
 
   public getAlbums(): Observable<IAlbum[]> {
-    return this._httpClient.get<Api<IAlbum[]>>('api/albums')
+    return this._httpClient.get<IAlbum[]>('api/albums')
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(albums => this._albums.next(albums))
       );
   }
 
   public getAlbum(id: string): Observable<IAlbum> {
-    return this._httpClient.get<Api<IAlbum>>(`api/albums/${ id }`)
+    return this._httpClient.get<IAlbum>(`api/albums/${ id }`)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(album => this._album.next(album))
       );
   }
@@ -47,9 +43,8 @@ export class AlbumsService {
     formData.append('description', album.description);
     formData.append('cover', album.cover, album.cover.name);
 
-    return this._httpClient.post<Api<IAlbum>>('api/albums', formData)
+    return this._httpClient.post<IAlbum>('api/albums', formData)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(newAlbum => this._albums.next([ newAlbum, ...this._albums.value ]))
       );
   }
@@ -61,9 +56,8 @@ export class AlbumsService {
     formData.append('description', album.description);
     formData.append('cover', album.cover[0], album.cover[0].name);
 
-    return this._httpClient.put<Api<IAlbum>>(`api/albums/${ id }`, formData)
+    return this._httpClient.put<IAlbum>(`api/albums/${ id }`, formData)
       .pipe(
-        map(apiResponse => apiResponse.content),
         tap(updatedAlbum => {
           this._albums.next(this._albums.value.map(album => album.id === updatedAlbum.id ? updatedAlbum : album));
         })
@@ -75,7 +69,7 @@ export class AlbumsService {
 
     images.forEach(image => formData.append('images', image, image.name));
 
-    return this._httpClient.post<HttpEvent<Api<IAlbumImage[]>>>(`api/albums/${ id }/images`, formData, {
+    return this._httpClient.post<HttpEvent<IAlbumImage[]>>(`api/albums/${ id }/images`, formData, {
       reportProgress: true,
       observe     : 'events',
       responseType: 'json'
@@ -87,7 +81,7 @@ export class AlbumsService {
           case HttpEventType.ResponseHeader:
             return {};
           case HttpEventType.Response:
-            return {progress: 100, response: event.body.content};
+            return {progress: 100, response: event.body};
           default:
             return {progress: 0};
         }

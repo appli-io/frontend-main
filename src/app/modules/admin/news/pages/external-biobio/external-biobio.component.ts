@@ -3,10 +3,8 @@ import { NgIf }              from '@angular/common';
 import { HttpClient }        from '@angular/common/http';
 import { MatIcon }           from '@angular/material/icon';
 
-import { TranslocoDirective } from '@ngneat/transloco';
-import { lastValueFrom }      from 'rxjs';
-
-import { Api }                     from '@core/interfaces/api';
+import { TranslocoDirective }      from '@ngneat/transloco';
+import { lastValueFrom }           from 'rxjs';
 import { NewsCardComponent }       from '@modules/admin/news/components/news-card/news-card.component';
 import { NewsListHeaderComponent } from '@modules/admin/news/components/news-list-header/news-list-header.component';
 import { IBioBioNews }             from '@modules/admin/news/domain/interfaces/biobio-news.interface';
@@ -30,7 +28,7 @@ export class ExternalBiobioComponent implements OnInit {
   constructor(private readonly _httpClient: HttpClient) {}
 
   async ngOnInit() {
-    const response = await lastValueFrom(this._httpClient.get<Api<IBioBioNews[]>>('api/biobio')).then(res => res.content);
+    const response = await lastValueFrom(this._httpClient.get<IBioBioNews[]>('api/biobio'));
 
     response.map(bbn => {
       this.newsList.push({

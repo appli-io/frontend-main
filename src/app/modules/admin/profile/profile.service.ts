@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { IUser }       from '@modules/admin/profile/interfaces/user.interface';
-import { Api }         from '@core/interfaces/api';
 import { environment } from 'environments/environment';
 
 @Injectable({providedIn: 'root'})
@@ -13,7 +12,7 @@ export class ProfileService {
 
   constructor(private readonly _httpClient: HttpClient) {}
 
-  getProfile(userId: string): Observable<Api<IUser>> {
-    return this._httpClient.get<Api<IUser>>(`api/users/${ userId }`);
+  getProfile(userId: string): Observable<IUser> {
+    return this._httpClient.get<IUser>(`api/users/${ userId }`);
   }
 }

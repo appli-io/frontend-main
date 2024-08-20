@@ -3,7 +3,6 @@ import { inject, Injectable }                                                   
 import { AuthUtils }                                                                  from 'app/core/auth/auth.utils';
 import { UserService }                                                                from 'app/core/user/user.service';
 import { catchError, lastValueFrom, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { Api }                                                                        from '@core/interfaces/api';
 import { ICompany }                                                                   from '@core/domain/interfaces/company.interface';
 import { CreateUserDto }                                                              from '@core/auth/domain/create-user.dto';
 import { IUser }                                                                      from '@modules/admin/profile/interfaces/user.interface';
@@ -160,13 +159,13 @@ export class AuthService {
       password1: user.password,
       password2: user.password,
     };
-    return this._httpClient.post<Api<IUser>>('api/auth/sign-up', post);
+    return this._httpClient.post<IUser>('api/auth/sign-up', post);
   }
 
   validateEmail = (email: string): Observable<boolean> => this._httpClient
-    .post<Api<{ isValid: boolean }>>(`api/auth/sign-up/validate-email`, {email})
+    .post<{ isValid: boolean }>(`api/auth/sign-up/validate-email`, {email})
     .pipe(
-      map(({content}) => content.isValid),
+      map(({isValid}) => isValid),
       catchError(() => of(false))
     );
 
@@ -230,6 +229,5 @@ export class AuthService {
    * Validate if user is member of the company
    */
   isUserInCompany = (companyId: string): Observable<boolean> =>
-    this._httpClient.get<Api<boolean>>(`api/company-user/${ companyId }/validate-user`)
-      .pipe(map(({content}) => content));
+    this._httpClient.get<boolean>(`api/company-user/${ companyId }/validate-user`);
 }

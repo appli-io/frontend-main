@@ -8,7 +8,6 @@ import { BehaviorSubject, catchError, map, mergeMap, Observable, retry, tap, thr
 import { DEFAULT_PAGEABLE } from '@core/constants';
 import { INews }            from '@modules/admin/news/domain/interfaces/news.interface';
 import { Page }             from '@core/interfaces/page';
-import { Api }              from '@core/interfaces/api';
 import { INewsCategory }    from '@modules/admin/news/domain/interfaces/category.interface';
 
 @Injectable({providedIn: 'root'})
@@ -35,8 +34,8 @@ export class NewsService {
     });
     params = params.append('page', pageable.page).append('size', pageable.size);
 
-    return this._httpClient.get<Api<Page<any>>>('api/news', {params}).pipe(
-      map(({content}) => {
+    return this._httpClient.get<Page<any>>('api/news', {params}).pipe(
+      map((content) => {
         const pageNews: Page<INews> = {
           ...content,
           content: content.content.map(({publishedAt, updatedAt, ...news}) => ({
@@ -52,9 +51,8 @@ export class NewsService {
   }
 
   getCategories(): Observable<INewsCategory[]> {
-    return this._httpClient.get<Api<INewsCategory[]>>('api/news-category').pipe(
+    return this._httpClient.get<INewsCategory[]>('api/news-category').pipe(
       retry({count: 3, delay: 1000, resetOnSuccess: true}),
-      map(({content}) => content),
       tap(categories => this._categories$.next(categories))
     );
   }

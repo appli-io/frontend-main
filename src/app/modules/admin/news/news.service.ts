@@ -2,10 +2,8 @@ import { Injectable }             from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { BehaviorSubject, map, Observable } from 'rxjs';
-
-import { Api }           from '@core/interfaces/api';
-import { Page }          from '@core/interfaces/page';
-import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
+import { Page }                             from '@core/interfaces/page';
+import { INewsCategory }                    from '@modules/admin/news/domain/interfaces/category.interface';
 
 import { INews } from './domain/interfaces/news.interface';
 
@@ -48,8 +46,8 @@ export class NewsService {
     });
     params = params.append('page', pageable.page).append('size', pageable.size);
 
-    return this._httpClient.get<Api<Page<any>>>('api/news', {params}).pipe(
-      map(({content}) => {
+    return this._httpClient.get<Page<any>>('api/news', {params}).pipe(
+      map((content) => {
         const pageNews: Page<INews> = {
           ...content,
           content: content.content.map(({publishedAt, updatedAt, ...news}) => ({
@@ -67,8 +65,8 @@ export class NewsService {
   getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
     const headers = {};
 
-    return this._httpClient.get<Api<INews>>(`api/news/${ idOrSlug }`, {headers}).pipe(
-      map(({content}) => {
+    return this._httpClient.get<INews>(`api/news/${ idOrSlug }`, {headers}).pipe(
+      map((content) => {
         const {publishedAt, updatedAt, ...news} = content;
         return {
           ...news,
@@ -82,16 +80,13 @@ export class NewsService {
   getCategories(): Observable<any> {
     const headers = {};
 
-    return this._httpClient.get<Api<INewsCategory[]>>(`api/news-category`, {headers}).pipe(
-      map(({content}) => content)
-    );
+    return this._httpClient.get<INewsCategory[]>(`api/news-category`, {headers});
   }
 
   getHighlightedNews(): Observable<INews[]> {
     const headers = {};
 
-    return this._httpClient.get<Api<INews[]>>(`api/news/highlighted`, {headers}).pipe(
-      map(({content}) => content),
+    return this._httpClient.get<INews[]>(`api/news/highlighted`, {headers}).pipe(
       map((newsList) => {
         return newsList.map(({publishedAt, updatedAt, ...news}) => ({
           ...news,
