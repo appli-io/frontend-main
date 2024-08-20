@@ -404,16 +404,19 @@
           "company" : "Empresa",
           "discounts-count" : "Descuentos",
           "views" : "Vistas",
-          "actions" : "Acciones",
+          "actions" : "Acciones"
+        },
+        "table-actions" : {
           "view" : "Ver",
           "edit" : "Editar",
           "delete" : "Eliminar"
         }
       },
-      "new" : {
+      "create" : {
         "title" : "Nuevo Beneficio",
+        "subtitle" : "Crea un nuevo beneficio",
+        "description" : "Agrega un nuevo beneficio a la plataforma",
         "name" : "Nombre",
-        "description" : "Descripción",
         "category" : "Categoría",
         "subcategory" : "Subcategoría",
         "create" : "Crear"

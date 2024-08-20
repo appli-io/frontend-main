@@ -1,88 +1,14 @@
 <div *transloco="let t; read: 'news'" class="flex flex-col flex-auto min-w-0 min-h-full">
 
   <!-- Header -->
-  <div
-    [class.bg-card]="!news.portraitImage"
-    [class.bg-overlay]="news.portraitImage?.fileUrl"
-    [style.background-image]="news.portraitImage?.fileUrl? 'url(' + news.portraitImage.fileUrl + ')' : ''"
-    class="bg-cover"
-  >
-    <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto p-6 sm:p-8 relative z-10">
-      <div class="flex-1 min-w-0">
-        <!-- Breadcrumbs -->
-        <div>
-          <div class="hidden sm:flex flex-wrap items-center font-medium">
-            <div>
-              <a [routerLink]="'/news'" class="whitespace-nowrap text-primary-500">Noticias</a>
-            </div>
-            <div class="flex items-center ml-1 whitespace-nowrap">
-              <mat-icon
-                [svgIcon]="'heroicons_mini:chevron-right'"
-                class="icon-size-5 text-secondary"></mat-icon>
-              <span [innerHtml]="news.headline" class="ml-1 text-secondary"></span>
-            </div>
-          </div>
-          <div class="flex sm:hidden">
-            <a
-              [routerLink]="'/news'"
-              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
-              <mat-icon
-                [svgIcon]="'heroicons_solid:chevron-left'"
-                class="icon-size-5 text-secondary"></mat-icon>
-              <span class="ml-1">Back</span>
-            </a>
-          </div>
-        </div>
-        <!-- Title -->
-        <div class="mt-2">
-          <h2 [innerHtml]="news.headline" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h2>
-          <p [innerHtml]="news.abstract" class="mt-4 text-justify"></p>
-
-          <mat-divider class="my-5"></mat-divider>
-          <!-- Author and date -->
-          <div class="flex flex-col md:flex-row items-start md:items-center gap-x-4 gap-y-2">
-            <div class="flex-1 flex flex-row items-center gap-x-2">
-              @if (news.createdBy?.avatar?.fileUrl) {
-                <img
-                  [src]="news.createdBy?.avatar?.fileUrl"
-                  alt="Card cover image"
-                  class="w-8 h-8 rounded-full object-cover">
-              } @else {
-                <div class="ring-bg-card flex h-8 w-8 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium">
-                  {{ news.createdBy?.name.charAt(0) }}
-                </div>
-              }
-              <strong [innerText]="news.createdBy.name"></strong>
-            </div>
-            <div class="flex-0 flex flex-row md:flex-row-reverse items-center gap-x-2">
-              <mat-icon class="w-8 h-8 bg-primary rounded-full p-2 text-white" svgIcon="heroicons_outline:calendar"></mat-icon>
-              <strong>{{ news.publishedAt | date: "dd MMMM',' yyyy ' | ' HH:mm" }}</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Actions -->
-      <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
-        <button mat-stroked-button matTooltip="PENDING_NAME" matTooltipPosition="left">
-          <mat-icon
-            [svgIcon]="'heroicons_mini:pencil-square'"
-            class="icon-size-4"></mat-icon>
-          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-        </button>
-        <button
-          [color]="'primary'"
-          class=""
-          mat-flat-button
-          matTooltip="PENDING_NAME"
-          matTooltipPosition="left">
-          <mat-icon
-            [svgIcon]="'heroicons_mini:link'"
-            class="icon-size-4"></mat-icon>
-          <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <page-detail-header
+    [breadcrumbs]="[{ label: 'Noticias', url: '/news' }, { label: news.headline, url: '', last: true }]"
+    [createdBy]="news.createdBy"
+    [date]="news.publishedAt"
+    [portraitImage]="news.portraitImage"
+    [subtitle]="news.abstract"
+    [title]="news.headline"
+  ></page-detail-header>
 
   <!-- Main -->
   <div class="bg-card dark:bg-transparent flex flex-col justify-center w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">

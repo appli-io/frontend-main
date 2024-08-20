@@ -17,7 +17,7 @@ import { AlbumImageTableComponent } from '@modules/admin/admin/albums/components
 import { IAlbum }                   from '@modules/admin/apps/albums/interfaces/album.interface';
 import { IAlbumImage }              from '@modules/admin/apps/albums/interfaces/album-image.interface';
 import { NewOrEditComponent }       from '@modules/admin/admin/albums/dialogs/new-or-edit/new-or-edit.component';
-import { BenefitsService }          from '@modules/admin/admin/benefits/benefits.service';
+import { BenefitsService }          from '@modules/admin/admin/benefits/services/benefits.service';
 
 @Component({
   selector   : 'app-details',

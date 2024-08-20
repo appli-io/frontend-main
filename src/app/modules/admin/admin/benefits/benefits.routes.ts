@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 
 import { benefitResolver } from './resolvers/benefit.resolver';
-import { BenefitsService } from './benefits.service';
+import { BenefitsService } from './services/benefits.service';
 
 export default [
   {
@@ -22,6 +22,10 @@ export default [
           album: benefitResolver
         },
         loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
+      },
+      {
+        path         : 'create',
+        loadComponent: () => import('./pages/create/create.component').then(m => m.CreateComponent)
       }
       // {
       //   path: ':id',

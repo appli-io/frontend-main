@@ -5,15 +5,15 @@
     [title]="t('title')"
   ></page-header>
   <!-- Content -->
-  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10">
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
     <!-- Title and new album button -->
     <div class="flex flex-row w-full">
       <!-- Title -->
-      <h2 class="flex-1 font-bold text-gray-700 text-xl">{{ t('title') }}</h2>
+      <h2 class="flex-1 font-bold text-gray-700 text-xl self-center">{{ t('title') }}</h2>
 
       <!-- New album button -->
       <a
-        class="flex-1 md:flex-0 font-bold py-2 px-4 rounded"
+        class="flex-0 font-bold py-2 px-4 rounded"
         color="primary"
         [matTooltip]="'admin.albums.new.title' | transloco"
         mat-icon-button

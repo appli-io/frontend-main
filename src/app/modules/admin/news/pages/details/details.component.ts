@@ -21,11 +21,12 @@ import { INews }                                      from '../../domain/interfa
 import { LightGallery }                               from 'lightgallery/lightgallery';
 import lightGallery                                   from 'lightgallery';
 import { QuillViewComponent, QuillViewHTMLComponent } from 'ngx-quill';
+import { PageDetailHeaderComponent }                  from '@modules/shared/components/page-detail-header/page-detail-header.component';
 
 @Component({
   selector   : 'app-single-news',
   standalone : true,
-  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule, QuillViewHTMLComponent, QuillViewComponent ],
+  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule, QuillViewHTMLComponent, QuillViewComponent, PageDetailHeaderComponent ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './details.component.html',
   schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]

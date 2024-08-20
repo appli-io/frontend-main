@@ -22,6 +22,7 @@
   /* HTML and Body default styles */
   html,
   body {
+    font-size-adjust: .5;
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;

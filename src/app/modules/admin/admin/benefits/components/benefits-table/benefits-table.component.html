@@ -42,12 +42,12 @@
       </button>
       <mat-menu #menu="matMenu">
         <button (click)="openEditDialog(benefit)" mat-menu-item>
-          <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
-          <span>{{ t('table.edit') }}</span>
+          <mat-icon class="icon-size-4" svgIcon="heroicons_outline:pencil"></mat-icon>
+          <span>{{ t('list.table-actions.edit') }}</span>
         </button>
         <button (click)="openDeleteDialog(benefit)" mat-menu-item>
-          <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
-          <span>{{ t('table.delete') }}</span>
+          <mat-icon class="icon-size-4" color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
+          <span>{{ t('list.table-actions.delete') }}</span>
         </button>
       </mat-menu>
     </td>

@@ -15,7 +15,7 @@ import { mergeMap }                from 'rxjs';
 import { Notyf }                   from 'notyf';
 import { MatDivider }              from '@angular/material/divider';
 import { BenefitsTableComponent }  from '@modules/admin/admin/benefits/components/benefits-table/benefits-table.component';
-import { BenefitsService }         from '@modules/admin/admin/benefits/benefits.service';
+import { BenefitsService }         from '@modules/admin/admin/benefits/services/benefits.service';
 
 @Component({
   selector   : 'app-list',

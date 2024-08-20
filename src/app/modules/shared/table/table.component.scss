@@ -1,7 +1,7 @@
 // Must be wrapped in relative container, with overflow: auto, and max-width applying max-w-full of tailwind
 :host {
   @apply max-w-xs;
-  @apply md:max-w-full;
+  @apply sm:max-w-full;
   display: block;
   position: relative;
   overflow: auto;
