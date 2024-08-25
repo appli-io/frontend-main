@@ -1,1 +1,79 @@
-<p>category-new works!</p>
+<div *transloco="let t; read: 'admin.benefits.category.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
+  <!-- Header -->
+  <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+    <h2 class="text-lg font-medium">{{ t('title') }}</h2>
+    <button (click)="_matDialogRef.close()" mat-icon-button>
+      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <form [formGroup]="form" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
+    <!-- Name -->
+    <mat-form-field>
+      <mat-label [innerText]="t('name')"></mat-label>
+      <input formControlName="name" matInput/>
+    </mat-form-field>
+
+    <!-- Description -->
+    <mat-form-field>
+      <mat-label [innerText]="t('description')">Description</mat-label>
+      <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
+    </mat-form-field>
+
+    <!-- (File upload) -->
+    <div class="flex flex-col md:flex-row gap-x-4">
+      <mat-form-field class="flex-1 w-full">
+        <mat-label [innerText]="t('icon')"></mat-label>
+        <ngx-mat-dropzone>
+          <input accept="image/*" fileInput formControlName="icon" mode="replace" type="file"/>
+
+          @if (form.get('icon')?.value; as file) {
+            <mat-chip-row [removable]="false">{{ file.name }}</mat-chip-row>
+          }
+
+          <mat-icon matSuffix>paper-clip</mat-icon>
+
+        </ngx-mat-dropzone>
+        <mat-icon matSuffix>upload_file</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="flex-1 w-full">
+        <mat-label [innerText]="t('image')"></mat-label>
+        <ngx-mat-dropzone>
+          <input accept="image/*" fileInput formControlName="icon" mode="replace" type="file"/>
+
+          @if (form.get('icon')?.value; as file) {
+            <mat-chip-row [removable]="false">{{ file.name }}</mat-chip-row>
+          }
+
+          <mat-icon matSuffix>paper-clip</mat-icon>
+
+        </ngx-mat-dropzone>
+        <mat-icon matSuffix>upload_file</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <!-- Actions -->
+  <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
+    <!-- Discard -->
+    <button
+      (click)="_matDialogRef.close()"
+      class="w-full md:w-30 "
+      mat-stroked-button
+    >
+      Discard
+    </button>
+    <!-- Save as draft -->
+    <button
+      (click)="save()"
+      [disabled]="form.disabled"
+      class="w-full md:w-30"
+      color="primary"
+      mat-flat-button
+    >
+      <span *ngIf="!form.disabled" class="hyphens-auto">{{ t('save') }}</span>
+      <mat-progress-spinner *ngIf="form.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+    </button>
+  </div>
+</div>

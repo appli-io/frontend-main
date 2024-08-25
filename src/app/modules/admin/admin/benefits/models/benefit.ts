@@ -1,3 +1,4 @@
+import { ICompany }        from '@core/domain/interfaces/company.interface';
 import { BenefitTypeEnum } from '@modules/admin/admin/benefits/enums/benefit-type.enum';
 import { IFile }           from '@modules/admin/news/domain/interfaces/news.interface';
 import { BenefitCategory } from '@modules/admin/admin/benefits/models/benefit-category';
@@ -15,7 +16,7 @@ export interface Benefit {
   image?: IFile;
   benefitCompany?: any;
   category?: BenefitCategory;
-  company?: any;
+  company?: ICompany;
   createdBy?: CompanyUser;
   locations?: any;
   createdAt: Date;

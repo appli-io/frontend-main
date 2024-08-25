@@ -6,67 +6,112 @@
     class="shadow"
   ></page-detail-header>
   <!-- Content -->
-  <div class="flex-auto flex flex-col sm:flex-row w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
-    <!-- Form -->
-    <div class="md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none">
-      <mat-stepper [orientation]="'vertical'" class="">
-        <mat-step>
-          <!-- Step 1: Category selection -->
-          <ng-template matStepLabel>Categoría</ng-template>
-          <h2 class="text text-secondary">Seleccione una categoría de la lista, si no existe, puede crearla.</h2>
-          <mat-divider class="pb-4 mt-4"></mat-divider>
-          <!-- Mat autocomplete que si no existe en los items, abre un modal para crear una categoría -->
-          <div class="flex flex-col w-full">
+  <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
+    <div class="flex-1 flex flex-col sm:flex-row">
+      <!-- Form -->
+      <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
+        <form [formGroup]="form" class="w-full">
+          <div class="flex flex-col w-full space-y-4">
+            <!-- Name -->
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+              <mat-label>Nombre</mat-label>
+              <input formControlName="name" matInput/>
+            </mat-form-field>
+
+            <!-- Description -->
+            @defer {
+              <div class="flex flex-col">
+                <mat-label class="font-semibold text-accent dark:text-white">Description*</mat-label>
+                <quill-editor
+                  class="mt-2"
+                  [placeholder]="t('content-placeholder')"
+                  [modules]="quillModules"
+                  format="json"
+                  bounds="self"
+                  formControlName="body"
+                ></quill-editor>
+              </div>
+            } @placeholder {
+              <span>cargando editor...</span>
+            }
+
+            <h2 class="text-lg font-medium">Requisitos</h2>
+            <mat-divider class="pb-4 mt-4"></mat-divider>
+
             <mat-form-field class="w-full" subscriptSizing="dynamic">
               <mat-label>Categoría</mat-label>
               <input
                 #categoryInput
                 (input)="filter('category', $event.target)"
-                (keyup.enter)="openCategoryDialog($event, categoryInput.value)"
-                [matAutocomplete]="auto"
+                (keyup.enter)="openCategoryDialog($event, categoryInput.value);"
+                [matAutocomplete]="categoryAuto"
                 formControlName="category"
                 matInput
                 placeholder="Seleccione una categoría"
               />
               <button
-                (click)="openCategoryDialog($event)"
+                (click)="$event.stopPropagation(); $event.preventDefault(); openCategoryDialog($event, categoryInput.value)"
                 mat-icon-button
                 matSuffix>
                 <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
               </button>
-              <mat-autocomplete
-                #auto="matAutocomplete"
-                (optionSelected)="onCategorySelect($event.option.value)"
-                [displayWith]="displayWithFn('name')"
-              >
-                <mat-option *ngFor="let category of categoriesFiltered$ | async" [disabled]="$any(category).disabled" [value]="category">
-                  @if (category.parent) {
-                    <span>{{ category.parent.name }} > {{ category.name }}</span>
-                  } @else {
-                    <span>{{ category.name }}</span>
-                  }
-                </mat-option>
-              </mat-autocomplete>
+              <mat-hint>Seleccione una categoría de la lista, si no existe, puede crearla.</mat-hint>
             </mat-form-field>
+
+            <mat-form-field class="w-full" subscriptSizing="dynamic">
+              <mat-label>Empresa</mat-label>
+              <input
+                #companyInput
+                (input)="filter('company', $event.target)"
+                (keyup.enter)="openCompanyDialog($event, companyInput.value)"
+                [matAutocomplete]="companyAuto"
+                formControlName="company"
+                matInput
+                placeholder="Seleccione una empresa"
+              />
+              <button
+                (click)="$event.stopPropagation(); $event.preventDefault(); openCompanyDialog($event, companyInput.value);"
+                mat-icon-button
+                matSuffix>
+                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+              </button>
+              <mat-hint>Seleccione una empresa de la lista, si no existe, puede crearla.</mat-hint>
+            </mat-form-field>
+
+            <h2 class="text-lg font-medium">Detalle del beneficio</h2>
+            <mat-divider class="pb-4 mt-4"></mat-divider>
+
           </div>
-        </mat-step>
+        </form>
+      </div>
 
-        <mat-step>
-          <ng-template matStepLabel>Empresa</ng-template>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dolorum eos ipsa perspiciatis quidem repellendus tempore. A ex illo in minima, quasi saepe sint vitae voluptates. Doloribus earum et suscipit!
-        </mat-step>
+      <!-- Preview -->
+      <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
 
-        <mat-step>
-          <mat-step-header [label]="'text'"></mat-step-header>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dolorum eos ipsa perspiciatis quidem repellendus tempore. A ex illo in minima, quasi saepe sint vitae voluptates. Doloribus earum et suscipit!
-        </mat-step>
-      </mat-stepper>
+      </div>
     </div>
-
-    <!-- Preview -->
-    <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
-
-    </div>
-
   </div>
 </div>
+
+<mat-autocomplete
+  #categoryAuto="matAutocomplete"
+  (optionSelected)="onCategorySelect($event.option.value)"
+  [displayWith]="displayCategoryWithFn('name')"
+>
+  <mat-option *ngFor="let category of categoriesFiltered$ | async" [disabled]="$any(category).disabled" [value]="category">
+    @if (category.parent) {
+      <span class="ml-4">{{ category.name }}</span>
+    } @else {
+      <span>{{ category.name }}</span>
+    }
+  </mat-option>
+</mat-autocomplete>
+<mat-autocomplete
+  #companyAuto="matAutocomplete"
+  (optionSelected)="onCompanySelect($event.option.value)"
+  [displayWith]="displayCompanyWithFn('name')"
+>
+  <mat-option *ngFor="let company of companiesFiltered$ | async" [disabled]="$any(company).disabled" [value]="company">
+    <span>{{ company.name }}</span>
+  </mat-option>
+</mat-autocomplete>

@@ -28,3 +28,5 @@ export const DEFAULT_DATETIME_TIME_OPTIONS = {
   suppressMilliseconds: true,
   suppressSeconds     : true
 } as ToISOTimeOptions;
+export const DEFAULT_QUILL_EDITOR_MODULES = {toolbar: [ [ 'bold', 'italic', 'underline' ], [ 'blockquote', 'code-block' ], [ {header: [ 1, 2, 3, 4, 5, 6, false ]} ], [ {align: []}, {list: 'ordered'}, {list: 'bullet'} ], [ 'clean' ], [ 'link' ] ]};
+export const SIMPLE_QUILL_EDITOR_MODULES = {toolbar: [ [ 'bold', 'italic', 'underline' ], [ {align: []}, {list: 'ordered'}, {list: 'bullet'} ], [ 'clean' ], [ 'link' ] ]};

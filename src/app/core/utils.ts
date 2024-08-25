@@ -23,6 +23,6 @@ export function filterByValue<T>(array: T[], value: string, field: keyof T): T[]
  *
  * @returns {(item: any) => string}
  */
-export function displayWithFn(fieldName: string): (item: any) => string {
+export function displayWithFn<T>(fieldName: keyof T): (item: any) => string {
   return (item: any) => item ? item[fieldName] : '';
 }

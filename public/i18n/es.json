@@ -76,7 +76,6 @@
       "organizater" : "Organizador",
       "location" : "Ubicación",
       "startDate" : "Fecha de inicio"
-
     }
   },
   "news" : {
@@ -317,7 +316,7 @@
         "hour-end" : "Término",
         "location" : "Ubicación",
         "addUrl" : "Agregar URL",
-        "save" : "Guardar", 
+        "save" : "Guardar",
         "next" : "Siguiente",
         "back" : "Volver",
         "actions" : "Acciones",
@@ -378,11 +377,11 @@
           "other" : "Otro"
         },
         "step1Details" : "Agrega datos adicionales para la creación del evento",
-        "step1Title"   : "Nuevo evento",
+        "step1Title" : "Nuevo evento",
         "step2Details" : "Agrega datos adicionales sobre la ubicación",
-        "step2Title"   : "Detalles adicionales",
+        "step2Title" : "Detalles adicionales",
         "step3Details" : "Agrega datos adicionales sobre el organizador",
-        "step3Title"   : "Detalles del organizador"
+        "step3Title" : "Detalles del organizador"
       }
     },
     "benefits" : {
@@ -428,6 +427,17 @@
         "category" : "Categoría",
         "subcategory" : "Subcategoría",
         "update" : "Actualizar"
+      },
+      "category" : {
+        "title" : "Categoría",
+        "new" : {
+          "title" : "Nueva Categoría",
+          "name" : "Nombre",
+          "description" : "Descripción",
+          "icon" : "Icono",
+          "image" : "Imagen",
+          "save" : "Crear"
+        }
       }
     }
   },

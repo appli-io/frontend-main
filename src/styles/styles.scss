@@ -5,6 +5,10 @@
 @import './custom/patterns';
 @import 'assets/fonts/poppins/poppins.css';
 
+body {
+  zoom: 1;
+}
+
 .gradient-overlay {
   --gradient-color: var(--fuse-bg-dialog-rgb);
   --origin: to bottom;
