@@ -394,6 +394,7 @@
       },
       "list" : {
         "title" : "Lista de Beneficios",
+        "description" : "Lista de beneficios disponibles en la plataforma.",
         "no-content" : "No hay beneficios disponibles para mostrar",
         "table-columns" : {
           "id" : "ID",
