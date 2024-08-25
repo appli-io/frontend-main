@@ -5,41 +5,36 @@
   class="bg-cover relative object-center"
 >
   @if (!portraitImage) {
-    <!-- Rings -->
-    <svg class="absolute inset-0 pointer-events-none"
-         height="100%" preserveAspectRatio="xMidYMax slice" viewBox="0 0 960 540" width="100%" xmlns="http://www.w3.org/2000/svg">
-      <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="60">
-        <circle cx="196" cy="250" r="234" class="drop-shadow-lg"></circle>
-        <circle cx="790" cy="675" r="170" class="drop-shadow-lg"></circle>
-      </g>
-    </svg>
+    <bg-patterns pattern="waves"></bg-patterns>
   }
-  <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-5xl mx-auto py-4 sm:py-8 px-4 relative z-10">
+  <div class="flex flex-auto flex-col md:flex-row justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-6 sm:py-8 relative z-10 sm:px-4">
     <div class="flex-1 min-w-0">
       <!-- Breadcrumbs -->
-      <div>
-        <div class="hidden sm:flex flex-wrap items-center font-medium">
-          @for (breadcrumb of breadcrumbs; track breadcrumb.label) {
-            <a [routerLink]="breadcrumb.url" *ngIf="breadcrumb.url" class="whitespace-nowrap text-primary-500">{{ breadcrumb.label }}</a>
-            <span *ngIf="!breadcrumb.url" class="whitespace-nowrap text-secondary">{{ breadcrumb.label }}</span>
-            <div class="flex items-center ml-1 whitespace-nowrap" *ngIf="!$last">
+      @if (breadcrumbs) {
+        <div>
+          <div class="hidden sm:flex flex-wrap items-center font-medium">
+            @for (breadcrumb of breadcrumbs; track breadcrumb.label) {
+              <a [routerLink]="breadcrumb.url" *ngIf="breadcrumb.url" class="whitespace-nowrap text-primary-500">{{ breadcrumb.label }}</a>
+              <span *ngIf="!breadcrumb.url" class="whitespace-nowrap text-secondary">{{ breadcrumb.label }}</span>
+              <div class="flex items-center ml-1 whitespace-nowrap" *ngIf="!$last">
+                <mat-icon
+                  [svgIcon]="'heroicons_mini:chevron-right'"
+                  class="icon-size-5 text-secondary"></mat-icon>
+              </div>
+            }
+          </div>
+          <div class="flex sm:hidden">
+            <a
+              [routerLink]="breadcrumbs[0]?.url"
+              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
               <mat-icon
-                [svgIcon]="'heroicons_mini:chevron-right'"
+                [svgIcon]="'heroicons_solid:chevron-left'"
                 class="icon-size-5 text-secondary"></mat-icon>
-            </div>
-          }
+              <span class="ml-1">Back</span>
+            </a>
+          </div>
         </div>
-        <!--        <div class="flex sm:hidden">-->
-        <!--          <a-->
-        <!--            [routerLink]="breadcrumbs[0]?.url"-->
-        <!--            class="inline-flex items-center -ml-1.5 text-secondary font-medium">-->
-        <!--            <mat-icon-->
-        <!--              [svgIcon]="'heroicons_solid:chevron-left'"-->
-        <!--              class="icon-size-5 text-secondary"></mat-icon>-->
-        <!--            <span class="ml-1">Back</span>-->
-        <!--          </a>-->
-        <!--        </div>-->
-      </div>
+      }
       <!-- Title -->
       <div class="mt-2">
         <h2 [innerHtml]="title" class="text-3xl md:text-4xl font-extrabold leading-7 sm:leading-10"></h2>
@@ -71,23 +66,36 @@
     </div>
     <!-- Actions -->
     <div class="flex flex-col gap-5 shrink-0 justify-center sm:items-center mt-6 sm:mt-0 sm:ml-4">
-      <button mat-stroked-button matTooltip="PENDING_NAME" matTooltipPosition="left">
-        <mat-icon
-          [svgIcon]="'heroicons_mini:pencil-square'"
-          class="icon-size-4"></mat-icon>
-        <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-      </button>
-      <button
-        [color]="'primary'"
-        class=""
-        mat-flat-button
-        matTooltip="PENDING_NAME"
-        matTooltipPosition="left">
-        <mat-icon
-          [svgIcon]="'heroicons_mini:link'"
-          class="icon-size-4"></mat-icon>
-        <span class="ml-2 sm:hidden">PENDING_ACTION *</span>
-      </button>
+      @if (actions) {
+        <div class="flex flex-row gap-4">
+          @for (action of actions; track action.label) {
+            <button
+              [color]="action.color"
+              class="flex-1"
+              mat-flat-button
+              [routerLink]="action.url"
+              *ngIf="action.url"
+            >
+              <mat-icon
+                [svgIcon]="action.icon"
+                class="icon-size-4"></mat-icon>
+              <span class="ml-2 sm:hidden">{{ action.label }}</span>
+            </button>
+            <button
+              [color]="action.color"
+              class="flex-1"
+              mat-flat-button
+              *ngIf="!action.url"
+              (click)="action.action()"
+            >
+              <mat-icon
+                [svgIcon]="action.icon"
+                class="icon-size-4"></mat-icon>
+              <span class="ml-2 sm:hidden">{{ action.label }}</span>
+            </button>
+          }
+        </div>
+      }
     </div>
   </div>
 </div>
