@@ -1,46 +1,34 @@
-import { BooleanInput }                                 from '@angular/cdk/coercion';
-import {
-  NgClass,
-  NgTemplateOutlet
-}                                                       from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  forwardRef,
-  inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-}                                                       from '@angular/core';
-import { MatIconModule }                                from '@angular/material/icon';
+import { BooleanInput }                                                                                        from '@angular/cdk/coercion';
+import { NgClass, NgTemplateOutlet }                                                                           from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit, ViewChild, } from '@angular/core';
+import { MatIconModule }                                                                                       from '@angular/material/icon';
 import {
   MatMenu,
   MatMenuModule
-}                                                       from '@angular/material/menu';
-import { MatTooltipModule }                             from '@angular/material/tooltip';
-import { FuseHorizontalNavigationBasicItemComponent }   from '@fuse/components/navigation/horizontal/components/basic/basic.component';
-import { FuseHorizontalNavigationDividerItemComponent } from '@fuse/components/navigation/horizontal/components/divider/divider.component';
-import { FuseHorizontalNavigationComponent }            from '@fuse/components/navigation/horizontal/horizontal.component';
-import { FuseNavigationService }                        from '@fuse/components/navigation/navigation.service';
-import { FuseNavigationItem }                           from '@fuse/components/navigation/navigation.types';
-import { Subject, takeUntil }                           from 'rxjs';
+}                                                                                                              from '@angular/material/menu';
+import { MatTooltipModule }                                                                                    from '@angular/material/tooltip';
+import { FuseHorizontalNavigationBasicItemComponent }                                                          from '@fuse/components/navigation/horizontal/components/basic/basic.component';
+import { FuseHorizontalNavigationDividerItemComponent }                                                        from '@fuse/components/navigation/horizontal/components/divider/divider.component';
+import { FuseHorizontalNavigationComponent }                                                                   from '@fuse/components/navigation/horizontal/horizontal.component';
+import { FuseNavigationService }                                                                               from '@fuse/components/navigation/navigation.service';
+import { FuseNavigationItem }                                                                                  from '@fuse/components/navigation/navigation.types';
+import { Subject, takeUntil }                                                                                  from 'rxjs';
+import { TranslocoDirective }                                                                                  from '@ngneat/transloco';
 
 @Component({
   selector   : 'fuse-horizontal-navigation-branch-item',
   templateUrl: './branch.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone : true,
-  imports    : [
+  imports: [
     NgClass,
     MatMenuModule,
     NgTemplateOutlet,
     FuseHorizontalNavigationBasicItemComponent,
-    forwardRef(() => FuseHorizontalNavigationBranchItemComponent),
     FuseHorizontalNavigationDividerItemComponent,
     MatTooltipModule,
     MatIconModule,
+    TranslocoDirective,
   ],
 })
 export class FuseHorizontalNavigationBranchItemComponent

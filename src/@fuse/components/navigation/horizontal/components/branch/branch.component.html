@@ -101,10 +101,10 @@
 
       <!-- Title & Subtitle -->
       <div class="fuse-horizontal-navigation-item-title-wrapper">
-        <div class="fuse-horizontal-navigation-item-title">
-                    <span [ngClass]="item.classes?.title">
-                        {{ item.title }}
-                    </span>
+        <div *transloco="let t; read: 'menu'" class="fuse-horizontal-navigation-item-title">
+                <span [ngClass]="item.classes?.title">
+                    {{ t(item.id) }}
+                </span>
         </div>
         @if (item.subtitle) {
           <div

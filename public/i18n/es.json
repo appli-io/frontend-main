@@ -416,9 +416,20 @@
         "title" : "Nuevo Beneficio",
         "subtitle" : "Crea un nuevo beneficio",
         "description" : "Agrega un nuevo beneficio a la plataforma",
-        "name" : "Nombre",
-        "category" : "Categoría",
-        "subcategory" : "Subcategoría",
+        "fields" : {
+          "name" : "Nombre",
+          "name-placeholder" : "Escribe el nombre del beneficio",
+          "description" : "Descripción",
+          "description-placeholder" : "Escribe una descripción para tu beneficio",
+          "type" : "Tipo de beneficio",
+          "type-placeholder" : "Selecciona el tipo de beneficio",
+          "category" : "Categoría",
+          "subcategory" : "Subcategoría",
+          "requirements" : "Requisitos",
+          "requirements-placeholder" : "Escribe los requisitos para acceder al beneficio",
+          "conditions" : "Condiciones",
+          "conditions-placeholder" : "Escribe las condiciones para acceder al beneficio"
+        },
         "create" : "Crear"
       },
       "edit" : {
@@ -441,6 +452,23 @@
         }
       }
     }
+  },
+  "actions" : {
+    "save" : "Guardar",
+    "discard" : "Descartar",
+    "cancel" : "Cancelar",
+    "delete" : "Eliminar",
+    "edit" : "Editar",
+    "view" : "Ver",
+    "create" : "Crear",
+    "update" : "Actualizar",
+    "send" : "Enviar",
+    "resend" : "Reenviar",
+    "add" : "Agregar",
+    "upload" : "Subir",
+    "next" : "Siguiente",
+    "back" : "Volver",
+    "addUrl" : "Agregar URL"
   },
   "errors" : {
     "runtime" : {

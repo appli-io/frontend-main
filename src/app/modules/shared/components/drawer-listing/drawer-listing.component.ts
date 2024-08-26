@@ -55,8 +55,6 @@ export class DrawerListingComponent implements OnInit, OnDestroy {
   // type of one of the panels, like entries of Object
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   protected readonly trackByFn = trackByFn;
-  protected readonly DrawerHeaderComponent = DrawerHeaderComponent;
-  protected readonly DrawerContentComponent = DrawerContentComponent;
 
   constructor(
     private readonly _changeDetectorRef: ChangeDetectorRef,

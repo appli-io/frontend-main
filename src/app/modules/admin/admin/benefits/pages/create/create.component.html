@@ -12,33 +12,52 @@
       <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
         <form [formGroup]="form" class="w-full">
           <div class="flex flex-col w-full space-y-4">
+            <div>
+              <h2 class="text-lg font-medium">Información del beneficio</h2>
+              <span class="text-hint">Los siguientes campos son requeridos para la creación de un beneficio.</span>
+            </div>
+
+            <!-- Type -->
+            <mat-form-field class="w-full fuse-mat-dense" floatLabel="always" subscriptSizing="dynamic">
+              <mat-label [innerText]="t('fields.type')"></mat-label>
+              <mat-select [placeholder]="t('fields.type-placeholder')" formControlName="type">
+                <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+              @if (form.get('type').hasError('required')) {
+                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+              }
+            </mat-form-field>
+
             <!-- Name -->
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
-              <mat-label>Nombre</mat-label>
-              <input formControlName="name" matInput/>
+            <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">
+              <mat-label [innerText]="t('fields.name')"></mat-label>
+              <input [placeholder]="t('fields.name-placeholder')" formControlName="name" matInput/>
+              @if (form.get('name').hasError('required')) {
+                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+              }
             </mat-form-field>
 
             <!-- Description -->
-            @defer {
-              <div class="flex flex-col">
-                <mat-label class="font-semibold text-accent dark:text-white">Description*</mat-label>
+            <div class="flex flex-col">
+              <mat-label class="font-semibold text-accent dark:text-white">{{ t('fields.description') }}*</mat-label>
+              @defer {
                 <quill-editor
                   class="mt-2"
-                  [placeholder]="t('content-placeholder')"
+                  [placeholder]="t('fields.description-placeholder')"
                   [modules]="quillModules"
                   format="json"
                   bounds="self"
-                  formControlName="body"
+                  formControlName="description"
                 ></quill-editor>
-              </div>
-            } @placeholder {
-              <span>cargando editor...</span>
-            }
+                @if (form.get('description').hasError('required') && form.get('description').touched) {
+                  <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
+                }
+              } @placeholder {
+                <span>cargando editor...</span>
+              }
+            </div>
 
-            <h2 class="text-lg font-medium">Requisitos</h2>
-            <mat-divider class="pb-4 mt-4"></mat-divider>
-
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
+            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
               <mat-label>Categoría</mat-label>
               <input
                 #categoryInput
@@ -56,9 +75,12 @@
                 <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
               </button>
               <mat-hint>Seleccione una categoría de la lista, si no existe, puede crearla.</mat-hint>
+              @if (form.get('category').hasError('required')) {
+                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+              }
             </mat-form-field>
 
-            <mat-form-field class="w-full" subscriptSizing="dynamic">
+            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
               <mat-label>Empresa</mat-label>
               <input
                 #companyInput
@@ -76,11 +98,85 @@
                 <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
               </button>
               <mat-hint>Seleccione una empresa de la lista, si no existe, puede crearla.</mat-hint>
+              @if (form.get('company').hasError('required')) {
+                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+              }
             </mat-form-field>
 
-            <h2 class="text-lg font-medium">Detalle del beneficio</h2>
-            <mat-divider class="pb-4 mt-4"></mat-divider>
+            <mat-divider></mat-divider>
 
+            <div>
+              <h2 class="text-lg font-medium">Información adicional</h2>
+              <span class="text-hint">Los siguientes campos son opcionales.</span>
+            </div>
+
+            <!-- Image -->
+            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
+              <mat-label>Imagen</mat-label>
+              <input
+                accept=".jpeg,.jpg,.png"
+                formControlName="image"
+                matInput
+                type="file"
+              />
+              <mat-icon class="mr-2" matSuffix>cloud_upload</mat-icon>
+              <mat-hint class="mat-form-field-hint-end">JPEG / JPG / PNG</mat-hint>
+            </mat-form-field>
+
+            <!-- Requirements -->
+            <div class="flex flex-col">
+              <mat-label class="font-semibold text-accent dark:text-white">{{ t('fields.requirements') }}</mat-label>
+              @defer {
+                <quill-editor
+                  class="mt-2"
+                  [placeholder]="t('fields.requirements-placeholder')"
+                  [modules]="quillModules"
+                  format="json"
+                  bounds="self"
+                  formControlName="description"
+                ></quill-editor>
+              } @placeholder {
+                <span>cargando editor...</span>
+              }
+            </div>
+
+            <!-- Conditions -->
+            <div class="flex flex-col">
+              <mat-label class="font-semibold text-accent dark:text-white">{{ t('fields.conditions') }}</mat-label>
+              @defer {
+                <quill-editor
+                  class="mt-2"
+                  [placeholder]="t('fields.conditions-placeholder')"
+                  [modules]="quillModules"
+                  format="json"
+                  bounds="self"
+                  formControlName="description"
+                ></quill-editor>
+              } @placeholder {
+                <span>cargando editor...</span>
+              }
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 md:space-y-0 md:space-x-4 mt-4">
+            <!-- Discard -->
+            <button
+              (click)="discard()"
+              class="w-full md:w-30"
+              mat-stroked-button
+            >
+              {{ 'actions.discard' | transloco }}
+            </button>
+            <!-- Save -->
+            <button
+              (click)="save()"
+              class="w-full md:w-30"
+              color="primary"
+              mat-raised-button
+            >
+              {{ 'actions.save' | transloco }}
+            </button>
           </div>
         </form>
       </div>
@@ -91,6 +187,7 @@
       </div>
     </div>
   </div>
+  <pre class="text-wrap">{{ form.getRawValue() | json }}</pre>
 </div>
 
 <mat-autocomplete
@@ -115,3 +212,4 @@
     <span>{{ company.name }}</span>
   </mat-option>
 </mat-autocomplete>
+

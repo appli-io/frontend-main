@@ -10,13 +10,14 @@ import { FuseVerticalNavigationDividerItemComponent }                           
 import { FuseVerticalNavigationSpacerItemComponent }                                                            from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent }                                                                      from '@fuse/components/navigation/vertical/vertical.component';
 import { Subject, takeUntil }                                                                                   from 'rxjs';
+import { TranslocoDirective }                                                                                   from '@ngneat/transloco';
 
 @Component({
   selector   : 'fuse-vertical-navigation-group-item',
   templateUrl: './group.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone : true,
-  imports    : [
+  imports: [
     NgClass,
     MatIconModule,
     FuseVerticalNavigationBasicItemComponent,
@@ -24,6 +25,7 @@ import { Subject, takeUntil }                                                   
     FuseVerticalNavigationDividerItemComponent,
     forwardRef(() => FuseVerticalNavigationGroupItemComponent),
     FuseVerticalNavigationSpacerItemComponent,
+    TranslocoDirective,
   ],
 })
 export class FuseVerticalNavigationGroupItemComponent

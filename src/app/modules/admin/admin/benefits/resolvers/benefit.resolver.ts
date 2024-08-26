@@ -8,5 +8,5 @@ export const benefitResolver: ResolveFn<any> = (
   state: RouterStateSnapshot,
   service: BenefitsService = inject(BenefitsService)
 ) => {
-  return service.getOne(route.params.id);
+  return service.findOne(route.params.id);
 };

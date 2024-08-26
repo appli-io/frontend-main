@@ -1,28 +1,31 @@
-import { AsyncPipe, NgForOf }                                                from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup }         from '@angular/forms';
-import { MatAutocompleteModule }                                             from '@angular/material/autocomplete';
-import { MatIconButton }                                                     from '@angular/material/button';
-import { MatDialog }                                                         from '@angular/material/dialog';
-import { MatDivider }                                                        from '@angular/material/divider';
-import { MatFormFieldModule }                                                from '@angular/material/form-field';
-import { MatIcon }                                                           from '@angular/material/icon';
-import { MatInput }                                                          from '@angular/material/input';
+import { AsyncPipe, JsonPipe, NgForOf }                                          from '@angular/common';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild }     from '@angular/core';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteModule }                                                 from '@angular/material/autocomplete';
+import { MatButton, MatIconButton }                                              from '@angular/material/button';
+import { MatDialog }                                                             from '@angular/material/dialog';
+import { MatDivider }                                                            from '@angular/material/divider';
+import { MatFormFieldModule }                                                    from '@angular/material/form-field';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatInputModule }                                                        from '@angular/material/input';
+import { MatSelectModule }                                                       from '@angular/material/select';
 
 import { TranslocoDirective, TranslocoPipe }              from '@ngneat/transloco';
+import { QuillEditorComponent }                           from 'ngx-quill';
 import { BehaviorSubject, map, Subject, switchMap, take } from 'rxjs';
 
+import { SIMPLE_QUILL_EDITOR_MODULES }  from '@core/constants';
 import { LayoutEnum }                   from '@core/enums/layout.enum';
 import { displayWithFn, filterByValue } from '@core/utils';
 import { CategoryNewComponent }         from '@modules/admin/admin/benefits/dialogs/category-new/category-new.component';
+import { BenefitTypeEnum }              from '@modules/admin/admin/benefits/enums/benefit-type.enum';
 import { BenefitCategory }              from '@modules/admin/admin/benefits/models/benefit-category';
 import { BenefitCompany }               from '@modules/admin/admin/benefits/models/benefit-company';
 import { BenefitsService }              from '@modules/admin/admin/benefits/services/benefits.service';
 import { BenefitCategoryService }       from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { BenefitCompanyService }        from '@modules/admin/admin/benefits/services/benefit-company.service';
 import { PageDetailHeaderComponent }    from '@modules/shared/components/page-detail-header/page-detail-header.component';
-import { SIMPLE_QUILL_EDITOR_MODULES }  from '@core/constants';
-import { QuillEditorComponent }         from 'ngx-quill';
+import { BenefitMapper }                from '@modules/admin/admin/benefits/models/benefit';
 
 @Component({
   selector       : 'app-create',
@@ -36,11 +39,14 @@ import { QuillEditorComponent }         from 'ngx-quill';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatInput,
+    MatInputModule,
     NgForOf,
     MatDivider,
     AsyncPipe,
-    QuillEditorComponent
+    QuillEditorComponent,
+    MatButton,
+    JsonPipe,
+    MatSelectModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl    : './create.component.html'
@@ -50,6 +56,7 @@ export class CreateComponent implements OnInit {
   @ViewChild('companyInput') companyInput: ElementRef<HTMLInputElement>;
 
   public form: UntypedFormGroup;
+  public readonly benefitTypes = Object.values(BenefitTypeEnum);
   public readonly quillModules: any = SIMPLE_QUILL_EDITOR_MODULES;
   private _categories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
   private _categoriesFiltered$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
@@ -146,6 +153,22 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const formValue = BenefitMapper.fromForm(this.form.getRawValue());
+
+    this._benefitsService.create(formValue)
+      .subscribe((res) => {
+        console.log(res);
+        // this.form.reset();
+      });
+
+  }
+
   private _loadCategories() {
     this._benefitCategoryService.findAll(LayoutEnum.COMPACT)
       .pipe(take(1))
@@ -189,16 +212,15 @@ export class CreateComponent implements OnInit {
 
   private _loadForm() {
     this.form = this._formBuilder.group({
-      type        : [ '' ],
-      category    : [ '' ],
-      company     : [ '' ],
-      name        : [ '' ],
-      description : [ '' ],
-      requirements: [ '' ],
-      conditions  : [ '' ],
-      dueDate     : [ '' ],
-      image       : [ '' ],
-
+      name        : [ null, [ Validators.required ] ],
+      description : [ null, [ Validators.required ] ],
+      type        : [ null, [ Validators.required ] ],
+      category    : [ null, [ Validators.required ] ],
+      company     : [ null, [ Validators.required ] ],
+      requirements: [ null ],
+      conditions  : [ null ],
+      dueDate     : [ null, [ Validators.required ] ],
+      image       : [ null ],
     });
   }
 }

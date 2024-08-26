@@ -22,3 +22,27 @@ export interface Benefit {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export class BenefitMapper {
+  static fromForm(rawForm: any, isNew: boolean = true): Benefit {
+    return {
+      ...rawForm,
+      category: rawForm.category ? rawForm.category.id : undefined,
+      company : rawForm.company ? rawForm.company.id : undefined,
+    };
+  }
+
+  static toFormData(benefit: Benefit): FormData {
+    const formData: FormData = new FormData();
+
+    Object.keys(benefit).forEach((key) => {
+      if (benefit[key] instanceof File) {
+        formData.append(key, benefit[key]);
+      } else {
+        formData.append(key, JSON.stringify(benefit[key]));
+      }
+    });
+
+    return formData;
+  }
+}

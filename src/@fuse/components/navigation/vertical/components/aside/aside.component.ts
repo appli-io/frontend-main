@@ -26,13 +26,14 @@ import { FuseVerticalNavigationGroupItemComponent }       from '@fuse/components
 import { FuseVerticalNavigationSpacerItemComponent }      from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent }                from '@fuse/components/navigation/vertical/vertical.component';
 import { filter, Subject, takeUntil }                     from 'rxjs';
+import { TranslocoDirective }                             from '@ngneat/transloco';
 
 @Component({
   selector   : 'fuse-vertical-navigation-aside-item',
   templateUrl: './aside.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone : true,
-  imports    : [
+  imports: [
     NgClass,
     MatTooltipModule,
     MatIconModule,
@@ -41,6 +42,7 @@ import { filter, Subject, takeUntil }                     from 'rxjs';
     FuseVerticalNavigationDividerItemComponent,
     FuseVerticalNavigationGroupItemComponent,
     FuseVerticalNavigationSpacerItemComponent,
+    TranslocoDirective,
   ],
 })
 export class FuseVerticalNavigationAsideItemComponent

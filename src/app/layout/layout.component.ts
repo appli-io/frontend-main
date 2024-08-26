@@ -92,6 +92,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
               ]
               ? 'dark'
               : 'light';
+
+            // Save the scheme to the local storage
+            localStorage.setItem('wwt-scheme', options.scheme);
           }
 
           const localStorageScheme = localStorage.getItem('wwt-scheme');

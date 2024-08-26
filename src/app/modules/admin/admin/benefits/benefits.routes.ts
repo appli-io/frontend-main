@@ -1,7 +1,5 @@
-import { Routes } from '@angular/router';
-import { inject } from '@angular/core';
-
-import { benefitResolver } from './resolvers/benefit.resolver';
+import { Routes }          from '@angular/router';
+import { inject }          from '@angular/core';
 import { BenefitsService } from './services/benefits.service';
 
 export default [
@@ -12,16 +10,9 @@ export default [
       {
         path         : '',
         resolve      : {
-          benefits: () => inject(BenefitsService).getAll()
+          benefits: () => inject(BenefitsService).findAll()
         },
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
-      },
-      {
-        path         : 'edit/:id',
-        resolve      : {
-          album: benefitResolver
-        },
-        loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
       },
       {
         path         : 'create',

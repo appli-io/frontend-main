@@ -50,6 +50,7 @@
                 "output" : "/"
               }
             ],
+            "watch" : true,
             "stylePreprocessorOptions" : {
               "includePaths" : [
                 "src/@fuse/styles"

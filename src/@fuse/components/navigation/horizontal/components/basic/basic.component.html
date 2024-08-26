@@ -123,7 +123,7 @@
   <div class="fuse-horizontal-navigation-item-title-wrapper">
     <div class="fuse-horizontal-navigation-item-title">
       <span *transloco="let t; read: 'menu'" [ngClass]="item.classes?.title">
-        {{ item.id | titlecase }}
+        {{ t(item.id) }}
       </span>
     </div>
     @if (item.subtitle) {

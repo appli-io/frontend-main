@@ -5,9 +5,7 @@ import { BenefitCompany } from '@modules/admin/admin/benefits/models/benefit-com
 import { Observable }     from 'rxjs';
 import { LayoutEnum }     from '@core/enums/layout.enum';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class BenefitCompanyService implements BaseService<BenefitCompany> {
 
   constructor(private readonly _httpClient: HttpClient) { }
