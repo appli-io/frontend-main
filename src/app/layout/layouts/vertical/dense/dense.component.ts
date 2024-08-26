@@ -42,6 +42,7 @@ import { CompanySelectorComponent }                                from '@layout
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy {
   isScreenSmall: boolean;
+  isDarkMode: boolean;
   navigation: Navigation;
   navigationAppearance: 'default' | 'dense' = 'dense';
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -55,7 +56,12 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     private _navigationService: NavigationService,
     private _fuseMediaWatcherService: FuseMediaWatcherService,
     private _fuseNavigationService: FuseNavigationService
-  ) {}
+  ) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      console.log('dark mode changed', event);
+      this.isDarkMode = event.matches;
+    });
+  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors

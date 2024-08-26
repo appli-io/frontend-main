@@ -71,28 +71,19 @@ import { delay, filter, merge, ReplaySubject, Subject, Subscription, takeUntil, 
     FuseVerticalNavigationSpacerItemComponent,
   ],
 })
-export class FuseVerticalNavigationComponent
-  implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class FuseVerticalNavigationComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   /* eslint-disable @typescript-eslint/naming-convention */
   static ngAcceptInputType_inner: BooleanInput;
   static ngAcceptInputType_opened: BooleanInput;
   static ngAcceptInputType_transparentOverlay: BooleanInput;
   /* eslint-enable @typescript-eslint/naming-convention */
 
-  @Output()
-  readonly appearanceChanged: EventEmitter<FuseVerticalNavigationAppearance> =
-    new EventEmitter<FuseVerticalNavigationAppearance>();
-  @Output() readonly modeChanged: EventEmitter<FuseVerticalNavigationMode> =
-    new EventEmitter<FuseVerticalNavigationMode>();
-  @Output() readonly openedChanged: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
-  @Output()
-  readonly positionChanged: EventEmitter<FuseVerticalNavigationPosition> =
-    new EventEmitter<FuseVerticalNavigationPosition>();
-  onCollapsableItemCollapsed: ReplaySubject<FuseNavigationItem> =
-    new ReplaySubject<FuseNavigationItem>(1);
-  onCollapsableItemExpanded: ReplaySubject<FuseNavigationItem> =
-    new ReplaySubject<FuseNavigationItem>(1);
+  @Output() readonly appearanceChanged: EventEmitter<FuseVerticalNavigationAppearance> = new EventEmitter<FuseVerticalNavigationAppearance>();
+  @Output() readonly modeChanged: EventEmitter<FuseVerticalNavigationMode> = new EventEmitter<FuseVerticalNavigationMode>();
+  @Output() readonly openedChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() readonly positionChanged: EventEmitter<FuseVerticalNavigationPosition> = new EventEmitter<FuseVerticalNavigationPosition>();
+  onCollapsableItemCollapsed: ReplaySubject<FuseNavigationItem> = new ReplaySubject<FuseNavigationItem>(1);
+  onCollapsableItemExpanded: ReplaySubject<FuseNavigationItem> = new ReplaySubject<FuseNavigationItem>(1);
   private _animationBuilder = inject(AnimationBuilder);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _document = inject(DOCUMENT);
@@ -124,8 +115,7 @@ export class FuseVerticalNavigationComponent
   private _mutationObserver: MutationObserver;
   private _overlay: HTMLElement;
   private _player: AnimationPlayer;
-  private _scrollStrategy: ScrollStrategy =
-    this._scrollStrategyOptions.block();
+  private _scrollStrategy: ScrollStrategy = this._scrollStrategyOptions.block();
 
   /**
    * Constructor
@@ -764,9 +754,7 @@ export class FuseVerticalNavigationComponent
    * @private
    */
   private _hideAsideOverlay(): void {
-    if (!this._asideOverlay) {
-      return;
-    }
+    if (!this._asideOverlay) return;
 
     // Create the leave animation and attach it to the player
     this._player = this._animationBuilder

@@ -79,6 +79,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this._unsubscribeAll),
         map(([ config, mql ]) => {
+          console.log('config', config);
           const options = {
             scheme: config.scheme,
             theme : config.theme,
@@ -92,6 +93,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
               ]
               ? 'dark'
               : 'light';
+          }
+
+          const localStorageScheme = localStorage.getItem('wwt-scheme');
+
+          console.log('localStorageScheme', localStorageScheme);
+
+          if (localStorageScheme && [ 'dark', 'light' ].includes(localStorageScheme)) {
+            options.scheme = localStorageScheme as 'dark' | 'light';
           }
 
           return options;

@@ -110,6 +110,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param scheme
    */
   setScheme(scheme: Scheme): void {
+    localStorage.setItem('wwt-scheme', scheme);
     this._fuseConfigService.config = {scheme};
   }
 

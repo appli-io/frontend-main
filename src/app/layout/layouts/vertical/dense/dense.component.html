@@ -8,13 +8,17 @@
   [name]="'mainNavigation'"
   [navigation]="navigation.default"
   [opened]="!isScreenSmall"
-  class="dark bg-gray-900 print:hidden"
+  class="bg-stone-100 dark:bg-gray-900 print:hidden"
 >
   <!-- Navigation header hook -->
   <ng-container fuseVerticalNavigationContentHeader>
     <!-- Logo -->
     <div class="flex h-20 items-center justify-center">
-      <img alt="Logo image" class="w-8" src="images/logo/logo.svg"/>
+      @if (isDarkMode) {
+        <img alt="Logo image" class="w-8" src="images/logo/logo-dark.svg"/>
+      } @else {
+        <img alt="Logo image" class="w-8" src="images/logo/logo.svg"/>
+      }
     </div>
   </ng-container>
 </fuse-vertical-navigation>
