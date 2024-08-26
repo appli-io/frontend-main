@@ -14,7 +14,7 @@
   <ng-container fuseVerticalNavigationContentHeader>
     <!-- Logo -->
     <div class="flex h-20 items-center justify-center">
-      @if (isDarkMode) {
+      @if ((_fuseConfigService.config$ | async).scheme === 'dark') {
         <img alt="Logo image" class="w-8" src="images/logo/logo-dark.svg"/>
       } @else {
         <img alt="Logo image" class="w-8" src="images/logo/logo.svg"/>

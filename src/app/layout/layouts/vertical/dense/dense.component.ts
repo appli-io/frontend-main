@@ -1,27 +1,30 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation }         from '@angular/core';
-import { MatButtonModule }                                         from '@angular/material/button';
-import { MatIconModule }                                           from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterOutlet }                    from '@angular/router';
-import { FuseFullscreenComponent }                                 from '@fuse/components/fullscreen';
-import { FuseLoadingBarComponent }                                 from '@fuse/components/loading-bar';
-import { FuseNavigationService, FuseVerticalNavigationComponent, } from '@fuse/components/navigation';
-import { FuseMediaWatcherService }                                 from '@fuse/services/media-watcher';
-import { NavigationService }                                       from 'app/core/navigation/navigation.service';
-import { Navigation }                                              from 'app/core/navigation/navigation.types';
-import { LanguagesComponent }                                      from 'app/layout/components/languages/languages.component';
-import { MessagesComponent }                                       from 'app/layout/components/messages/messages.component';
-import { NotificationsComponent }                                  from 'app/layout/components/notifications/notifications.component';
-import { QuickChatComponent }                                      from 'app/layout/components/quick-chat/quick-chat.component';
-import { SearchComponent }                                         from 'app/layout/components/search/search.component';
-import { ShortcutsComponent }                                      from 'app/layout/components/shortcuts/shortcuts.component';
-import { UserComponent }                                           from 'app/layout/components/user/user.component';
-import { Subject, takeUntil }                                      from 'rxjs';
-import { CompanySelectorComponent }                                from '@layout/components/company-selector/company-selector.component';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule }                                                          from '@angular/material/button';
+import { MatIconModule }                                                            from '@angular/material/icon';
+import { ActivatedRoute, Router, RouterOutlet }                                     from '@angular/router';
+import { FuseFullscreenComponent }                                                  from '@fuse/components/fullscreen';
+import { FuseLoadingBarComponent }                                                  from '@fuse/components/loading-bar';
+import { FuseNavigationService, FuseVerticalNavigationComponent, }                  from '@fuse/components/navigation';
+import { FuseMediaWatcherService }                                                  from '@fuse/services/media-watcher';
+import { NavigationService }                                                        from 'app/core/navigation/navigation.service';
+import { Navigation }                                                               from 'app/core/navigation/navigation.types';
+import { LanguagesComponent }                                                       from 'app/layout/components/languages/languages.component';
+import { MessagesComponent }                                                        from 'app/layout/components/messages/messages.component';
+import { NotificationsComponent }                                                   from 'app/layout/components/notifications/notifications.component';
+import { QuickChatComponent }                                                       from 'app/layout/components/quick-chat/quick-chat.component';
+import { SearchComponent }                                                          from 'app/layout/components/search/search.component';
+import { ShortcutsComponent }                                                       from 'app/layout/components/shortcuts/shortcuts.component';
+import { UserComponent }                                                            from 'app/layout/components/user/user.component';
+import { Subject, takeUntil }                                                       from 'rxjs';
+import { CompanySelectorComponent }                                                 from '@layout/components/company-selector/company-selector.component';
+import { FuseConfigService }                                                        from '../../../../../@fuse/services/config';
+import { AsyncPipe }                                                                from '@angular/common';
 
 @Component({
   selector   : 'dense-layout',
   templateUrl: './dense.component.html',
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone : true,
   imports: [
     FuseLoadingBarComponent,
@@ -38,6 +41,7 @@ import { CompanySelectorComponent }                                from '@layout
     RouterOutlet,
     QuickChatComponent,
     CompanySelectorComponent,
+    AsyncPipe,
   ],
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy {
@@ -51,17 +55,13 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
    * Constructor
    */
   constructor(
+    public _fuseConfigService: FuseConfigService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _navigationService: NavigationService,
     private _fuseMediaWatcherService: FuseMediaWatcherService,
-    private _fuseNavigationService: FuseNavigationService
-  ) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      console.log('dark mode changed', event);
-      this.isDarkMode = event.matches;
-    });
-  }
+    private _fuseNavigationService: FuseNavigationService,
+  ) {}
 
   // -----------------------------------------------------------------------------------------------------
   // @ Accessors
