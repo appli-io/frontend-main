@@ -36,7 +36,6 @@ export class CalendarComponent implements AfterViewInit {
       .getEvents()
       .pipe(take(1))
       .subscribe((events) => {
-        console.log(events);
         this.events = events.map((event) => {
           return {
             ...event,
