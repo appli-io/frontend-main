@@ -389,8 +389,9 @@
       "subtitle" : "Administra los Beneficios de la Plataforma",
       "description" : "Administra los beneficios de la plataforma, crea y actualiza beneficios, y mantén informados a los usuarios sobre los programas de bienestar y descuentos disponibles. Asegúrate de que cada miembro de la organización pueda acceder a los beneficios y aprovechar al máximo su experiencia laboral con nosotros.",
       "types" : {
-        "PRESENTIAL" : "Presencial",
-        "ONLINE" : "Online"
+        "presential" : "Presencial",
+        "virtual" : "Virtual",
+        "hybrid" : "Híbrido"
       },
       "list" : {
         "title" : "Lista de Beneficios",
@@ -422,6 +423,11 @@
           "description" : "Descripción",
           "description-placeholder" : "Escribe una descripción para tu beneficio",
           "type" : "Tipo de beneficio",
+          "type-options" : {
+            "presential" : "Presencial",
+            "virtual" : "Virtual",
+            "hybrid" : "Híbrido"
+          },
           "type-placeholder" : "Selecciona el tipo de beneficio",
           "category" : "Categoría",
           "subcategory" : "Subcategoría",
@@ -439,6 +445,14 @@
         "category" : "Categoría",
         "subcategory" : "Subcategoría",
         "update" : "Actualizar"
+      },
+      "delete" : {
+        "title" : "Eliminar Beneficio",
+        "message" : "¿Estás seguro de que deseas eliminar este beneficio? <span class=\"font-medium\">No podrás deshacer esta acción.</span>",
+        "cancel" : "Cancelar",
+        "delete" : "Eliminar",
+        "success" : "El beneficio ha sido eliminado con éxito",
+        "error" : "Se ha producido un error al eliminar el beneficio"
       },
       "category" : {
         "title" : "Categoría",

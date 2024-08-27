@@ -79,6 +79,10 @@
   }
 }
 
+quill-view .ql-container {
+  max-height: unset !important;
+}
+
 .ql-container {
   overflow: auto;
   min-height: 160px;

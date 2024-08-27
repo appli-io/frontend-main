@@ -219,7 +219,7 @@ export class CreateComponent implements OnInit {
       company     : [ null, [ Validators.required ] ],
       requirements: [ null ],
       conditions  : [ null ],
-      dueDate     : [ null, [ Validators.required ] ],
+      dueDate: [ null ],
       image       : [ null ],
     });
   }

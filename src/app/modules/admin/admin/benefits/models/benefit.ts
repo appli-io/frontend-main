@@ -27,8 +27,8 @@ export class BenefitMapper {
   static fromForm(rawForm: any, isNew: boolean = true): Benefit {
     return {
       ...rawForm,
-      category: rawForm.category ? rawForm.category.id : undefined,
-      company : rawForm.company ? rawForm.company.id : undefined,
+      categoryId: rawForm.category ? rawForm.category.id : undefined,
+      companyId : rawForm.company ? rawForm.company.id : undefined,
     };
   }
 

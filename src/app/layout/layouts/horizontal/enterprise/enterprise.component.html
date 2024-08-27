@@ -13,11 +13,14 @@
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
       <!-- Logo -->
-      <div class="flex h-20 items-center px-8 pt-6">
+      <div class="flex h-20 items-center justify-center px-8 py-6">
         <img
-          class="w-24"
+          class="w-24 dark:hidden"
+          src="images/logo/logo-text.svg"
+        />
+        <img
+          class="hidden w-36 dark:flex"
           src="images/logo/logo-text-on-dark.svg"
-          alt="Logo image"
         />
       </div>
     </ng-container>
@@ -25,23 +28,17 @@
 }
 
 <!-- Wrapper -->
-<div
-  class="flex w-full min-w-0 flex-auto flex-col items-center bg-gray-200 dark:bg-card"
->
+<div class="flex w-full min-w-0 flex-auto flex-col items-center bg-gray-200 dark:bg-card max-h-screen overflow-y-auto">
   <!-- Header -->
-  <div
-    class="relative z-49 flex h-16 w-full flex-0 flex-col justify-center overflow-hidden shadow dark:shadow-none sm:h-20 md:h-36 print:hidden"
-  >
+  <div class="relative z-49 flex h-16 w-full flex-0 flex-col justify-center overflow-hidden shadow dark:shadow-none sm:h-20 md:h-36 print:hidden">
     <!-- Top bar -->
-    <div
-      class="dark relative flex w-full flex-auto justify-center bg-gray-800 px-4 dark:bg-gray-900 md:px-8"
-    >
+    <div class="dark relative flex w-full flex-auto justify-center bg-gray-800 px-4 dark:bg-gray-900 md:px-8">
       <div class="flex h-16 w-full max-w-360 items-center sm:h-20">
         <!-- Logo -->
         @if (!isScreenSmall) {
           <div class="flex items-center">
             <img
-              class="w-24"
+              class="w-36"
               src="images/logo/logo-text-on-dark.svg"
               alt="Logo image"
             />
@@ -96,7 +93,7 @@
   <!-- Content -->
   <div class="flex w-full flex-auto justify-center sm:p-6 md:p-8">
     <div
-      class="bg-default flex w-full flex-auto flex-col sm:max-w-360 sm:overflow-hidden sm:rounded-lg sm:shadow-lg"
+      class="bg-default flex w-full flex-auto flex-col sm:max-w-360 sm:overflow-hidden sm:rounded-lg light:sm:shadow-lg"
     >
       <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
            Otherwise, layout changes won't be registered and the view won't be updated! -->

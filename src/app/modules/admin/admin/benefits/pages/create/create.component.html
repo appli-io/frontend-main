@@ -21,7 +21,7 @@
             <mat-form-field class="w-full fuse-mat-dense" floatLabel="always" subscriptSizing="dynamic">
               <mat-label [innerText]="t('fields.type')"></mat-label>
               <mat-select [placeholder]="t('fields.type-placeholder')" formControlName="type">
-                <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ type }}</mat-option>
+                <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ t('fields.type-options.' + type) }}</mat-option>
               </mat-select>
               @if (form.get('type').hasError('required')) {
                 <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
@@ -170,7 +170,7 @@
             </button>
             <!-- Save -->
             <button
-              (click)="save()"
+              (click)="submit()"
               class="w-full md:w-30"
               color="primary"
               mat-raised-button

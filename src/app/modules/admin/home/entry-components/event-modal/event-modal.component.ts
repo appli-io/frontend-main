@@ -41,7 +41,6 @@ export class EventModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('Evento en el modal: ', this._data);
     this._data.event.url.forEach((url) => {
       if (url.platform === 'maps') {
         const initialState = {lng: url.longitude, lat: url.latitude, zoom: 17};
@@ -57,8 +56,7 @@ export class EventModalComponent implements OnInit, AfterViewInit {
         const tileLayerUrl = isRetina ? retinaUrl : baseUrl;
 
         tileLayer(tileLayerUrl, {
-          attribution:
-            'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> contributors',
+          attribution: '&sdot;',
           maxZoom: 20,
         }).addTo(this.leafletMap);
 
@@ -67,7 +65,6 @@ export class EventModalComponent implements OnInit, AfterViewInit {
         this.leafletMap.on('click', this.onMapClick);
         //@TODO : Delete this const and console.log
         const lat = marker([ url.latitude, url.longitude ]).getLatLng();
-        console.log('lat', lat);
       }
     });
   }
@@ -78,7 +75,6 @@ export class EventModalComponent implements OnInit, AfterViewInit {
   }
 
   closeDialog(): void {
-    console.log('Leaftletmap', this.leafletMap);
     this._matDialogRef.close();
   }
 }

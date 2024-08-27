@@ -17,6 +17,7 @@ import { IUser }                from '@modules/admin/profile/interfaces/user.int
 import { IEconomicIndicator }   from '@modules/admin/home/interface/economic-indicator.interface';
 import { ShortcutsComponent }   from '@modules/admin/home/components/shortcuts/shortcuts.component';
 import { CalendarComponent }    from '@modules/admin/home/components/calendar/calendar.component';
+import { BgPatternsComponent }  from '@modules/shared/components/bg-patterns/bg-patterns.component';
 
 @Component({
   selector     : 'home',
@@ -39,7 +40,8 @@ import { CalendarComponent }    from '@modules/admin/home/components/calendar/ca
     MatProgressBar,
     CalendarComponent,
     UpperCasePipe,
-    HlmSkeletonComponent
+    HlmSkeletonComponent,
+    BgPatternsComponent
   ],
 })
 export class HomeComponent implements AfterViewInit {
