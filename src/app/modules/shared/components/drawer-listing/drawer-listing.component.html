@@ -1,4 +1,4 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+<div class="absolute inset-0 flex min-w-0 flex-col sm:overflow-hidden">
   <mat-drawer-container class="h-full flex-auto relative">
     <!-- Drawer -->
     <mat-drawer
@@ -9,7 +9,7 @@
       class="dark:bg-gray-900 sm:w-96"
     >
       <!-- Header -->
-      <div class="bg-card flex flex-0 flex-col border-b p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8">
+      <div class="flex flex-0 p-8 pr-6 items-center justify-between sm:py-10 bg-hover">
         <!-- Title -->
         <h2 [innerText]="title" class="text-3xl font-extrabold leading-none tracking-tight"></h2>
         <!-- Close button -->
@@ -25,11 +25,13 @@
       <div class="flex flex-col divide-y border-b border-t">
         @for (panel of panels; track trackByFn($index, panel)) {
           @if (panel.children && panel.children.length) {
-            <div class="py-5 px-8">
-              <h3 class="text-lg font-semibold text-primary">{{ panel.title }}</h3>
-              @if (!panel.description) {
-                <span class="py-5 text-secondary">{{ panel.description }}</span>
+            <div class="py-5 px-8 flex">
+              @if (panel.icon) {
+                <mat-icon class="text-hint mr-3" [svgIcon]="panel.icon"></mat-icon>
               }
+              <div class="">
+                <h3 class="text-lg font-semibold text-primary">{{ panel.title }}</h3>
+              </div>
             </div>
 
             @for (child of panel.children; track trackByFn($index, child)) {

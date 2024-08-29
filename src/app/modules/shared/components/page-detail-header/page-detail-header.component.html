@@ -12,7 +12,7 @@
       <!-- Breadcrumbs -->
       @if (breadcrumbs) {
         <div>
-          <div class="hidden sm:flex flex-wrap items-center font-medium">
+          <div class="flex flex-wrap items-center font-medium">
             @for (breadcrumb of breadcrumbs; track breadcrumb.label) {
               <a [routerLink]="breadcrumb.url" *ngIf="breadcrumb.url" class="whitespace-nowrap text-primary-500">{{ breadcrumb.label }}</a>
               <span *ngIf="!breadcrumb.url" class="whitespace-nowrap text-secondary">{{ breadcrumb.label }}</span>
@@ -22,16 +22,6 @@
                   class="icon-size-5 text-secondary"></mat-icon>
               </div>
             }
-          </div>
-          <div class="flex sm:hidden">
-            <a
-              [routerLink]="breadcrumbs[0]?.url"
-              class="inline-flex items-center -ml-1.5 text-secondary font-medium">
-              <mat-icon
-                [svgIcon]="'heroicons_solid:chevron-left'"
-                class="icon-size-5 text-secondary"></mat-icon>
-              <span class="ml-1">Back</span>
-            </a>
           </div>
         </div>
       }

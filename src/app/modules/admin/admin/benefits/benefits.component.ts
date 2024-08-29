@@ -27,6 +27,7 @@ export class BenefitsComponent {
   constructor(private readonly translateService: TranslocoService) {
     this.panels = [
       {
+        icon: 'heroicons_outline:gift',
         title      : this.translateService.translate('admin.benefits.title'),
         description: this.translateService.translate('admin.benefits.description'),
         children   : [
@@ -47,12 +48,13 @@ export class BenefitsComponent {
         ]
       },
       {
+        icon       : 'heroicons_outline:cube',
         title      : this.translateService.translate('admin.benefits.category.title'),
         description: this.translateService.translate('admin.benefits.category.description'),
         children   : [
           {
             id         : 'list-categories',
-            icon       : 'heroicons_outline:folder',
+            icon: 'heroicons_outline:list-bullet',
             title      : this.translateService.translate('admin.benefits.category.list.title'),
             description: this.translateService.translate('admin.benefits.category.list.description'),
             link       : '/admin/benefits/category'
@@ -67,12 +69,13 @@ export class BenefitsComponent {
         ]
       },
       {
+        icon       : 'heroicons_outline:building-office',
         title      : this.translateService.translate('admin.benefits.company.title'),
         description: this.translateService.translate('admin.benefits.company.description'),
         children   : [
           {
             id         : 'list-companies',
-            icon       : 'heroicons_outline:building-storefront',
+            icon: 'heroicons_outline:list-bullet',
             title      : this.translateService.translate('admin.benefits.company.list.title'),
             description: this.translateService.translate('admin.benefits.company.list.description'),
             link       : '/admin/benefits/company'

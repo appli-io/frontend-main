@@ -386,7 +386,6 @@
     },
     "benefits" : {
       "title" : "Beneficios",
-      "description" : "Administra los Beneficios de la Plataforma",
       "types" : {
         "presential" : "Presencial",
         "virtual" : "Virtual",
@@ -394,6 +393,7 @@
       },
       "list" : {
         "title" : "Lista de Beneficios",
+        "subtitle" : "Administra los Beneficios de la Plataforma",
         "description" : "Lista de beneficios disponibles en la plataforma.",
         "no-content" : "No hay beneficios disponibles para mostrar",
         "table-columns" : {
@@ -453,7 +453,7 @@
         "error" : "Se ha producido un error al eliminar el beneficio"
       },
       "category" : {
-        "title" : "Categoría",
+        "title" : "Categorías",
         "description" : "Administra las categorías de beneficios disponibles en la plataforma",
         "list" : {
           "title" : "Lista de Categorías",
@@ -483,7 +483,7 @@
         }
       },
       "company" : {
-        "title" : "Empresa",
+        "title" : "Empresas",
         "description" : "Administra las empresas asociadas a los beneficios disponibles en la plataforma",
         "list" : {
           "title" : "Lista de Empresas",
