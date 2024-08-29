@@ -15,11 +15,12 @@ import { trackByFn }               from '@libs/ui/utils/utils';
 import { PanelType }               from '@modules/shared/components/drawer-listing/panel.type';
 import { DrawerHeaderComponent }   from './components/drawer-header.component';
 import { DrawerContentComponent }  from './components/drawer-content.component';
+import { CdkScrollable }           from '@angular/cdk/overlay';
 
 @Component({
   selector       : 'drawer-listing',
   standalone     : true,
-  imports        : [
+  imports: [
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
@@ -28,6 +29,7 @@ import { DrawerContentComponent }  from './components/drawer-content.component';
     NgTemplateOutlet,
     NgComponentOutlet,
     RouterLinkActive,
+    CdkScrollable,
   ],
   templateUrl    : './drawer-listing.component.html',
   styles         : `:host {

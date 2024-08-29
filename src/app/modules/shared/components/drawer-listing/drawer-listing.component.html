@@ -1,5 +1,5 @@
-<div class="flex flex-col w-full h-full">
-  <mat-drawer-container class="flex-auto sm:h-full">
+<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+  <mat-drawer-container class="h-full flex-auto relative">
     <!-- Drawer -->
     <mat-drawer
       #drawer
@@ -9,7 +9,7 @@
       class="dark:bg-gray-900 sm:w-96"
     >
       <!-- Header -->
-      <div class="m-8 mr-6 flex items-center justify-between sm:my-10">
+      <div class="bg-card flex flex-0 flex-col border-b p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8">
         <!-- Title -->
         <h2 [innerText]="title" class="text-3xl font-extrabold leading-none tracking-tight"></h2>
         <!-- Close button -->
@@ -55,14 +55,14 @@
       </div>
     </mat-drawer>
 
-    <!-- Drawer content -->
-    <mat-drawer-content class="flex flex-col bg-transparent">
+    <!-- Drawer content, should scroll, no grow -->
+    <mat-drawer-content class="flex flex-col bg-transparent h-full overflow-hidden">
       @if (headerComponent) {
         <ng-content select="drawer-header"></ng-content>
       }
 
       <!-- Main -->
-      <div class="flex flex-col w-full">
+      <div cdkScrollable class="flex-auto flex flex-col overflow-y-auto">
         <!-- Panel header -->
         <div class="lg:hidden flex flex-row items-center w-full max-w-xs sm:max-w-5xl m-4">
           <!-- Drawer toggle -->
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Load settings panel -->
-        <div class="">
+        <div>
           @if (contentComponent) {
             <ng-content select="drawer-content"></ng-content>
           }

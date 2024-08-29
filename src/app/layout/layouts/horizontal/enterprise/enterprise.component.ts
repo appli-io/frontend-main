@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation }                                            from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewEncapsulation }                              from '@angular/core';
 import { MatButtonModule }                                                                            from '@angular/material/button';
 import { MatIconModule }                                                                              from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet }                                                       from '@angular/router';
@@ -57,20 +57,12 @@ export class EnterpriseLayoutComponent implements OnInit, OnDestroy {
     private _fuseNavigationService: FuseNavigationService
   ) {}
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Accessors
-  // -----------------------------------------------------------------------------------------------------
-
   /**
    * Getter for current year
    */
   get currentYear(): number {
     return new Date().getFullYear();
   }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
 
   /**
    * On init
@@ -101,9 +93,19 @@ export class EnterpriseLayoutComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
+  @HostListener('window:scroll', [ '$event' ])
+  onWindowScroll(e: Event): void {
+    // Get the scroll position
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+    // Toggle the class based on the scroll position
+    if (scrollPosition > 100) {
+      document.body.classList.add('scroll-top');
+      document.body.classList.add('group/body');
+    } else {
+      document.body.classList.remove('scroll-top');
+    }
+  }
 
   /**
    * Toggle navigation

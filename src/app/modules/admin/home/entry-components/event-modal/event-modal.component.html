@@ -2,11 +2,22 @@
 <div class="flex max-h-screen flex-col md:min-w-160 h-full overflow-hidden">
   <!-- Header -->
   <div class="flex-0 flex justify-between items-center p-4 border-b shadow-md">
-    <h2 [innerText]="event.title" class="text-2xl font-medium uppercase"></h2>
+    <h2 [innerText]="event.title" class="text-lg sm:text-2xl font-medium uppercase"></h2>
     <button (click)="closeDialog()" mat-icon-button>
       <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
     </button>
   </div>
+
+  <!-- OSM Map -->
+  @if (neededMaps) {
+    <div class="relative group/maps">
+      <div class="map-container h-36 hover:h-96 transition-all duration-300 z-0" #map></div>
+      <div class="absolute inset-0 bg-neutral-800/25 z-10 group-hover/maps:-z-1 flex justify-center items-center">
+        <span class="font-medium text-lg items-center hidden md:flex drop-shadow-md text-white">Hover to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
+        <span class="font-medium text-lg flex items-center md:hidden drop-shadow-md text-white">Click to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
+      </div>
+    </div>
+  }
 
   <!-- Content -->
   <div class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh] px-4 pt-4">
@@ -48,14 +59,6 @@
         </div>
       </div>
     </div>
-
-    <!-- OSM Map -->
-    @if (neededMaps) {
-      <div>
-        <h3 class="text-md font-semibold">Mapa:</h3>
-        <div class="map-container" #map></div>
-      </div>
-    }
 
     <!-- URLs -->
     @if (event.url?.length) {
