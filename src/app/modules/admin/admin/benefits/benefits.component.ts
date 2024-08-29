@@ -27,18 +27,64 @@ export class BenefitsComponent {
   constructor(private readonly translateService: TranslocoService) {
     this.panels = [
       {
-        id         : 'list',
-        icon       : 'heroicons_outline:list-bullet',
-        title      : this.translateService.translate('admin.benefits.list.title'),
-        description: this.translateService.translate('admin.benefits.list.description'),
-        link       : '/admin/benefits/'
+        title      : this.translateService.translate('admin.benefits.title'),
+        description: this.translateService.translate('admin.benefits.description'),
+        children   : [
+          {
+            id         : 'list',
+            icon       : 'heroicons_outline:list-bullet',
+            title      : this.translateService.translate('admin.benefits.list.title'),
+            description: this.translateService.translate('admin.benefits.list.description'),
+            link       : '/admin/benefits/'
+          },
+          {
+            id         : 'create',
+            icon       : 'heroicons_outline:plus-circle',
+            title      : this.translateService.translate('admin.benefits.create.title'),
+            description: this.translateService.translate('admin.benefits.create.description'),
+            link       : '/admin/benefits/create'
+          },
+        ]
       },
       {
-        id         : 'create',
-        icon       : 'heroicons_outline:plus-circle',
-        title      : this.translateService.translate('admin.benefits.create.title'),
-        description: this.translateService.translate('admin.benefits.create.description'),
-        link       : '/admin/benefits/create'
+        title      : this.translateService.translate('admin.benefits.category.title'),
+        description: this.translateService.translate('admin.benefits.category.description'),
+        children   : [
+          {
+            id         : 'list-categories',
+            icon       : 'heroicons_outline:folder',
+            title      : this.translateService.translate('admin.benefits.category.list.title'),
+            description: this.translateService.translate('admin.benefits.category.list.description'),
+            link       : '/admin/benefits/category'
+          },
+          {
+            id         : 'create-category',
+            icon       : 'heroicons_outline:plus-circle',
+            title      : this.translateService.translate('admin.benefits.category.create.title'),
+            description: this.translateService.translate('admin.benefits.category.create.description'),
+            link       : '/admin/benefits/category/create'
+          },
+        ]
+      },
+      {
+        title      : this.translateService.translate('admin.benefits.company.title'),
+        description: this.translateService.translate('admin.benefits.company.description'),
+        children   : [
+          {
+            id         : 'list-companies',
+            icon       : 'heroicons_outline:building-storefront',
+            title      : this.translateService.translate('admin.benefits.company.list.title'),
+            description: this.translateService.translate('admin.benefits.company.list.description'),
+            link       : '/admin/benefits/company'
+          },
+          {
+            id         : 'create-company',
+            icon       : 'heroicons_outline:plus-circle',
+            title      : this.translateService.translate('admin.benefits.company.create.title'),
+            description: this.translateService.translate('admin.benefits.company.create.description'),
+            link       : '/admin/benefits/company/create'
+          }
+        ]
       }
     ];
   }

@@ -24,33 +24,72 @@
       <!-- Panel links -->
       <div class="flex flex-col divide-y border-b border-t">
         @for (panel of panels; track trackByFn($index, panel)) {
-          <a
-            class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100"
-            [routerLink]="panel.link"
-            [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="goToPanel(panel.id)"
-            [disabled]="panel.disabled"
-          >
-            <mat-icon
-              class="text-hint"
-              [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+          @if (panel.children && panel.children.length) {
+            <div class="py-5 px-8">
+              <h3 class="text-lg font-semibold text-primary">{{ panel.title }}</h3>
+              @if (!panel.description) {
+                <span class="py-5 text-secondary">{{ panel.description }}</span>
+              }
+            </div>
+
+            @for (child of panel.children; track trackByFn($index, child)) {
+              <a
+                class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100"
+                [routerLink]="child.link"
+                [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="goToPanel(panel.id)"
+                [disabled]="child.disabled"
+              >
+                <mat-icon
+                  class="text-hint"
+                  [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  [svgIcon]="child.icon"
+                ></mat-icon>
+                <div class="ml-3">
+                  <div
+                    class="font-medium leading-6"
+                    [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                  >
+                    {{ child.title }}
+                  </div>
+                  <div class="text-secondary mt-0.5">
+                    {{ child.description }}
+                  </div>
+                </div>
+              </a>
+            }
+          } @else {
+            <a
+              class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100"
+              [routerLink]="panel.link"
+              [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
               [routerLinkActiveOptions]="{ exact: true }"
-              [svgIcon]="panel.icon"
-            ></mat-icon>
-            <div class="ml-3">
-              <div
-                class="font-medium leading-6"
+              (click)="goToPanel(panel.id)"
+              [disabled]="panel.disabled"
+            >
+              <mat-icon
+                class="text-hint"
                 [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
                 [routerLinkActiveOptions]="{ exact: true }"
-              >
-                {{ panel.title }}
+                [svgIcon]="panel.icon"
+              ></mat-icon>
+              <div class="ml-3">
+                <div
+                  class="font-medium leading-6"
+                  [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  {{ panel.title }}
+                </div>
+                <div class="text-secondary mt-0.5">
+                  {{ panel.description }}
+                </div>
               </div>
-              <div class="text-secondary mt-0.5">
-                {{ panel.description }}
-              </div>
-            </div>
-          </a>
+            </a>
+          }
         }
       </div>
     </mat-drawer>

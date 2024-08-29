@@ -386,8 +386,7 @@
     },
     "benefits" : {
       "title" : "Beneficios",
-      "subtitle" : "Administra los Beneficios de la Plataforma",
-      "description" : "Administra los beneficios de la plataforma, crea y actualiza beneficios, y mantén informados a los usuarios sobre los programas de bienestar y descuentos disponibles. Asegúrate de que cada miembro de la organización pueda acceder a los beneficios y aprovechar al máximo su experiencia laboral con nosotros.",
+      "description" : "Administra los Beneficios de la Plataforma",
       "types" : {
         "presential" : "Presencial",
         "virtual" : "Virtual",
@@ -415,7 +414,6 @@
       },
       "create" : {
         "title" : "Nuevo Beneficio",
-        "subtitle" : "Crea un nuevo beneficio",
         "description" : "Agrega un nuevo beneficio a la plataforma",
         "fields" : {
           "name" : "Nombre",
@@ -456,13 +454,63 @@
       },
       "category" : {
         "title" : "Categoría",
-        "new" : {
+        "description" : "Administra las categorías de beneficios disponibles en la plataforma",
+        "list" : {
+          "title" : "Lista de Categorías",
+          "description" : "Lista de categorías disponibles en la plataforma.",
+          "no-content" : "No hay categorías disponibles para mostrar",
+          "table-columns" : {
+            "id" : "ID",
+            "name" : "Nombre",
+            "description" : "Descripción",
+            "benefits-count" : "Beneficios",
+            "actions" : "Acciones"
+          },
+          "table-actions" : {
+            "view" : "Ver",
+            "edit" : "Editar",
+            "delete" : "Eliminar"
+          }
+        },
+        "create" : {
           "title" : "Nueva Categoría",
-          "name" : "Nombre",
-          "description" : "Descripción",
-          "icon" : "Icono",
-          "image" : "Imagen",
-          "save" : "Crear"
+          "description" : "Crea una nueva categoría para organizar los beneficios",
+          "fields" : {
+            "name" : "Nombre",
+            "description" : "Descripción",
+            "save" : "Crear"
+          }
+        }
+      },
+      "company" : {
+        "title" : "Empresa",
+        "description" : "Administra las empresas asociadas a los beneficios disponibles en la plataforma",
+        "list" : {
+          "title" : "Lista de Empresas",
+          "description" : "Lista de empresas disponibles en la plataforma.",
+          "no-content" : "No hay empresas disponibles para mostrar",
+          "table-columns" : {
+            "id" : "ID",
+            "name" : "Nombre",
+            "description" : "Descripción",
+            "benefits-count" : "Beneficios",
+            "actions" : "Acciones"
+          },
+          "table-actions" : {
+            "view" : "Ver",
+            "edit" : "Editar",
+            "delete" : "Eliminar"
+          }
+        },
+        "create" : {
+          "title" : "Nueva Empresa",
+          "description" : "Crea una nueva empresa para asociar con los beneficios",
+          "fields" : {
+            "name" : "Nombre",
+            "description" : "Descripción",
+            "logo" : "Logo",
+            "save" : "Crear"
+          }
         }
       }
     }
