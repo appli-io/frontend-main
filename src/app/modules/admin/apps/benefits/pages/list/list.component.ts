@@ -8,6 +8,8 @@ import { RouterLink }                        from '@angular/router';
 import { BenefitCategory }                   from '@modules/admin/apps/benefits/pages/category-detail/category-detail.component';
 import { fakerES }                           from '@faker-js/faker';
 import { BenefitCategoryCardComponent }      from '@modules/admin/apps/benefits/components/benefit-category-card/benefit-category-card.component';
+import { BenefitCategoryService }            from '@modules/admin/admin/benefits/services/benefit-category.service';
+import { lastValueFrom }                     from 'rxjs';
 
 @Component({
   selector   : 'app-list',
@@ -25,6 +27,8 @@ import { BenefitCategoryCardComponent }      from '@modules/admin/apps/benefits/
   templateUrl: './list.component.html'
 })
 export class ListComponent {
+  public categories$ = this._benefitCategoryService.categories$;
+
   benefits: BenefitCategory[] = [
     {
       id         : fakerES.string.uuid(),
@@ -40,4 +44,10 @@ export class ListComponent {
       order      : 0,
     }
   ];
+
+  constructor(private readonly _benefitCategoryService: BenefitCategoryService) {}
+
+  ngOnInit(): void {
+    lastValueFrom(this._benefitCategoryService.findAll()).then();
+  }
 }
