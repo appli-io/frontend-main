@@ -15,13 +15,14 @@ import { PageHeaderComponent }     from '@layout/components/page-header/page-hea
 import { BenefitsTableComponent }  from '@modules/admin/admin/benefits/components/benefits-table/benefits-table.component';
 import { trackByFn }               from '@libs/ui/utils/utils';
 import { fakerES }                 from '@faker-js/faker';
+import { ImgFallbackDirective } from '@core/directives/imgFallback.directive';
 
 
 @Component({
   selector       : 'app-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone     : true,
-  imports        : [
+  imports: [
     BenefitsTableComponent,
     PageHeaderComponent,
     TranslocoDirective,
@@ -40,7 +41,8 @@ import { fakerES }                 from '@faker-js/faker';
     RouterOutlet,
     NgClass,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImgFallbackDirective
   ],
   templateUrl    : './list.component.html',
 })

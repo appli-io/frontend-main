@@ -67,17 +67,13 @@
                         [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedFile || selectedFile.id !== file.id,
                                 'bg-primary-50 dark:bg-hover': selectedFile && selectedFile.id === file.id}"
                         class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b">
-                        <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+                        <div class="flex flex-0 items-center justify-center h-10 overflow-hidden">
                           <ng-container *ngIf="file.fileUrl">
                             <img
-                              [src]="file.fileUrl"
+                              [src]="'images/file-types/' + file.mimetype.toLowerCase() + '.svg'"
+                              [imgFallback]="'images/mimetypes/' + file.mimetype.toLowerCase() + '.svg'"
                               alt="Contact avatar"
                               class="object-cover w-full h-full"/>
-                          </ng-container>
-                          <ng-container *ngIf="!file.fileUrl">
-                            <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                              {{ file.fileName.charAt(0) }}
-                            </div>
                           </ng-container>
                         </div>
                         <div class="min-w-0 ml-4">
