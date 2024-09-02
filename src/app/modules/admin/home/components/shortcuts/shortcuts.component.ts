@@ -18,7 +18,7 @@ export class ShortcutsComponent {
 
   constructor() {
     this.shortcuts = [
-      {id: 'calendar', svgIcon: 'heroicons_solid:calendar', link: '/apps/calendar', useRouter: true},
+      {id: 'files-library', svgIcon: 'heroicons_solid:document', link: '/apps/files-library', useRouter: true},
       {id: 'scrumboards', svgIcon: 'heroicons_solid:rectangle-stack', link: '/apps/scrumboards', useRouter: true},
       {id: 'benefits', svgIcon: 'heroicons_solid:gift', link: '/apps/benefits', useRouter: true},
       {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true}

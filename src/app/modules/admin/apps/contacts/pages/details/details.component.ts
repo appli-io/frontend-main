@@ -8,7 +8,7 @@ import { RouterLink }                                                           
 
 import { Subject, takeUntil } from 'rxjs';
 
-import { FuseFindByKeyPipe }     from '../../../../../../../@fuse/pipes/find-by-key/find-by-key.pipe';
+import { FuseFindByKeyPipe }     from '@fuse/pipes/find-by-key/find-by-key.pipe';
 import { Contact, Country }      from '@modules/admin/apps/contacts/contacts.types';
 import { ContactsListComponent } from '@modules/admin/apps/contacts/pages/list/list.component';
 import { ContactsService }       from '@modules/admin/apps/contacts/contacts.service';

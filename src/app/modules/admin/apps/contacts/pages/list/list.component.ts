@@ -1,4 +1,4 @@
-import { AsyncPipe, DOCUMENT, I18nPluralPipe, NgClass, NgFor, NgIf }    from '@angular/common';
+import { AsyncPipe, DOCUMENT, I18nPluralPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,33 +8,33 @@ import {
   OnInit,
   ViewChild,
   ViewEncapsulation
-}                                                                       from '@angular/core';
+}                                                                    from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
   UntypedFormControl
-}                                                                       from '@angular/forms';
-import { MatButtonModule }                                              from '@angular/material/button';
-import { MatFormFieldModule }                                           from '@angular/material/form-field';
-import { MatIconModule }                                                from '@angular/material/icon';
-import { MatInputModule }                                               from '@angular/material/input';
+}                                                                    from '@angular/forms';
+import { MatButtonModule }                                           from '@angular/material/button';
+import { MatFormFieldModule }                                        from '@angular/material/form-field';
+import { MatIconModule }                                             from '@angular/material/icon';
+import { MatInputModule }                                            from '@angular/material/input';
 import {
   MatDrawer,
   MatSidenavModule
-}                                                                       from '@angular/material/sidenav';
+}                                                                    from '@angular/material/sidenav';
 import {
   ActivatedRoute,
   Router,
   RouterLink,
   RouterOutlet
-}                                                                       from '@angular/router';
-import { FuseMediaWatcherService }                                      from '../../../../../../../@fuse/services/media-watcher';
-import { ContactsService }                                              from '../../contacts.service';
+}                                                                    from '@angular/router';
+import { FuseMediaWatcherService }                                   from '../../../../../../../@fuse/services/media-watcher';
+import { ContactsService }                                           from '../../contacts.service';
 import {
   Contact,
   Country
-}                                                                       from '../../contacts.types';
-import { filter, fromEvent, Observable, Subject, switchMap, takeUntil } from 'rxjs';
+}                                                                    from '../../contacts.types';
+import { Observable, Subject, switchMap, takeUntil }                 from 'rxjs';
 
 @Component({
   selector       : 'contacts-list',
@@ -50,7 +50,6 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   contacts$: Observable<Contact[]>;
 
   contactsCount: number = 0;
-  contactsTableColumns: string[] = [ 'name', 'email', 'phoneNumber', 'job' ];
   countries: Country[];
   drawerMode: 'side' | 'over';
   searchInputControl: UntypedFormControl = new UntypedFormControl();
@@ -149,19 +148,6 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         // Mark for check
         this._changeDetectorRef.markForCheck();
       });
-
-    // Listen for shortcuts
-    fromEvent(this._document, 'keydown')
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        filter<KeyboardEvent>(event =>
-          (event.ctrlKey === true || event.metaKey) // Ctrl or Cmd
-          && (event.key === '/'), // '/'
-        ),
-      )
-      .subscribe(() => {
-        this.createContact();
-      });
   }
 
   /**
@@ -186,20 +172,6 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
     // Mark for check
     this._changeDetectorRef.markForCheck();
-  }
-
-  /**
-   * Create contact
-   */
-  createContact(): void {
-    // Create the contact
-    this._contactsService.createContact().subscribe((newContact) => {
-      // Go to the new contact
-      this._router.navigate([ './', newContact.id ], {relativeTo: this._activatedRoute});
-
-      // Mark for check
-      this._changeDetectorRef.markForCheck();
-    });
   }
 
   /**

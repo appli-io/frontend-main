@@ -50,6 +50,8 @@ const canDeactivateContactsDetails = (
   currentRoute: ActivatedRouteSnapshot,
   currentState: RouterStateSnapshot,
   nextState: RouterStateSnapshot) => {
+  return component.closeDrawer().then(() => true);
+
   // Get the next route
   let nextRoute: ActivatedRouteSnapshot = nextState.root;
   while (nextRoute.firstChild) {

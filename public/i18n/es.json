@@ -58,7 +58,8 @@
         "calendar" : "Calendario",
         "to-do" : "Tareas",
         "security" : "Seguridad",
-        "benefits" : "Beneficios"
+        "benefits" : "Beneficios",
+        "files-library" : "Biblioteca de archivos"
       }
     },
     "calendar" : {
@@ -169,6 +170,16 @@
       "benefits" : {
         "title-list" : "Lista de Beneficios"
       }
+    }
+  },
+  "files-library" : {
+    "title" : "Biblioteca de Archivos",
+    "subtitle" : "Explora y Descarga Archivos Importantes",
+    "description" : "Explora y descarga archivos importantes y documentos de la empresa. Desde manuales y políticas hasta presentaciones y formularios, nuestra biblioteca de archivos te permite acceder a la información que necesitas para realizar tu trabajo de manera eficiente y efectiva.",
+    "list" : {
+      "title" : "Lista de Archivos",
+      "no-content" : "No hay archivos disponibles para mostrar en este momento",
+      "search-placeholder" : "Buscar archivos..."
     }
   },
   "admin" : {
