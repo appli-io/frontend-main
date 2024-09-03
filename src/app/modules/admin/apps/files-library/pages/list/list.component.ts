@@ -15,7 +15,7 @@ import { PageHeaderComponent }     from '@layout/components/page-header/page-hea
 import { BenefitsTableComponent }  from '@modules/admin/admin/benefits/components/benefits-table/benefits-table.component';
 import { trackByFn }               from '@libs/ui/utils/utils';
 import { fakerES }                 from '@faker-js/faker';
-import { ImgFallbackDirective } from '@core/directives/imgFallback.directive';
+import { ImgFallbackDirective }    from '@core/directives/imgFallback.directive';
 
 
 @Component({
@@ -71,8 +71,9 @@ export class ListComponent implements OnInit, OnDestroy {
   set selectedFile(value: any) {
     this._selectedFile = value;
 
-    this._changeDetectorRef.markForCheck();
-    console.log('marking for check');
+    setTimeout(() => {
+      this._changeDetectorRef.markForCheck();
+    });
   }
 
   get files$(): Observable<any[]> {
@@ -108,11 +109,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
     // Mark for check
     this._changeDetectorRef.markForCheck();
-  }
-
-  t(s: any) {
-    console.log(s);
-    return s;
   }
 
   selectFile(file: any) {

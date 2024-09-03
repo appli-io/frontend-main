@@ -1,17 +1,26 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ListComponent }                                   from '@modules/admin/apps/files-library/pages/list/list.component';
-import { FilesLibraryService }                             from '@modules/admin/apps/files-library/files-library.service';
-import { Subject }                                         from 'rxjs';
-import { ActivatedRoute, RouterLink }                      from '@angular/router';
-import { MatDrawerToggleResult }                           from '@angular/material/sidenav';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ListComponent }                                                            from '@modules/admin/apps/files-library/pages/list/list.component';
+import { FilesLibraryService }                                                      from '@modules/admin/apps/files-library/files-library.service';
+import { Subject }                                                                  from 'rxjs';
+import { ActivatedRoute, RouterLink }                                               from '@angular/router';
+import { MatDrawerToggleResult }                                                    from '@angular/material/sidenav';
+import { MatIcon }                                                                  from '@angular/material/icon';
+import { MatButton, MatIconAnchor, MatIconButton }                                  from '@angular/material/button';
+import { MatTooltip }                                                               from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-details',
   standalone : true,
-  imports    : [
+  imports        : [
+    MatIcon,
+    MatIconButton,
+    MatButton,
+    MatIconAnchor,
+    MatTooltip,
     RouterLink
   ],
-  templateUrl: './details.component.html'
+  templateUrl    : './details.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -25,10 +34,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._filesListComponent.selectedFile = {id: this._route.snapshot.params.id};
-    console.log(this._filesListComponent.selectedFile);
     // Open the drawer
-    console.log(this._filesListComponent);
     this._filesListComponent.matDrawer.open();
+    this._changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -37,6 +45,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   closeDrawer(): Promise<MatDrawerToggleResult> {
+    this._filesListComponent.selectedFile = null;
+    this._changeDetectorRef.markForCheck();
     return this._filesListComponent.matDrawer.close();
   }
 }
