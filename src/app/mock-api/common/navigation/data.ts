@@ -91,6 +91,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:queue-list'
       },
       {
+        id   : 'apps.files-library',
+        title: 'Files Library',
+        type : 'basic',
+        link : '/apps/files-library',
+        icon : 'heroicons_outline:folder'
+      },
+      {
         id   : 'apps.benefits',
         title: 'Benefits',
         type : 'basic',
