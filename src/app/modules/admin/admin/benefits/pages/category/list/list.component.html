@@ -1,0 +1,47 @@
+<div *transloco="let t; read: 'admin.benefits.category'" class="flex flex-col min-w-0 w-full">
+  <page-header
+    [description]="t('list.description')"
+    [subtitle]="t('list.title')"
+  ></page-header>
+  <!-- Content -->
+  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-4 gap-y-4 sm:px-4">
+    <wwt-table
+      [data]="benefitCategories$"
+      [displayedColumns]="columns"
+      [messageNoData]="t('list.no-content')"
+      class="w-full"
+    >
+      <ng-container matColumnDef="name" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ t('list.table-columns.name') }}</th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.name" class="line-clamp-1">{{ benefit.name }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="active" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.active') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.category?.name" class="line-clamp-1">{{ benefit.category?.name || 'Sin definir' }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="order" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.order') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.benefitCompany?.name" class="line-clamp-1">{{ benefit.benefitCompany?.name || 'Sin definir' }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('list.table-columns.actions') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell>
+          <div class="flex">
+            <button (click)="openEditDialog(benefit)">
+              <mat-icon class="icon-size-4" svgIcon="heroicons_outline:pencil"></mat-icon>
+              <span>{{ t('list.table-actions.edit') }}</span>
+            </button>
+            <button (click)="delete(benefit)">
+              <mat-icon class="icon-size-4" color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
+              <span>{{ t('list.table-actions.delete') }}</span>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+    </wwt-table>
+
+  </div>
+</div>

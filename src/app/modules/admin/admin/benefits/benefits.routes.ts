@@ -17,12 +17,15 @@ export default [
       {
         path         : 'create',
         loadComponent: () => import('./pages/create/create.component').then(m => m.CreateComponent)
+      },
+      {
+        path        : 'company',
+        loadChildren: () => import('./pages/company/company.routes').then(m => m.default)
+      },
+      {
+        path        : 'category',
+        loadChildren: () => import('./pages/category/category.routes').then(m => m.default)
       }
-      // {
-      //   path: ':id',
-      //   // resolve: {},
-      //   loadComponent: () => import('./pages/details/details.component').then(m => m.DetailsComponent)
-      // }
     ]
   }
 ] as Routes;

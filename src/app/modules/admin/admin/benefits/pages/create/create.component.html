@@ -9,7 +9,7 @@
   <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
     <div class="flex-1 flex flex-col sm:flex-row">
       <!-- Form -->
-      <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
+      <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
         <form [formGroup]="form" class="w-full">
           <div class="flex flex-col w-full space-y-4">
             <div>
@@ -17,9 +17,8 @@
               <span class="text-hint">Los siguientes campos son requeridos para la creación de un beneficio.</span>
             </div>
 
-            <div class="flex flex-col md:flex-row gap-4">
               <!-- Type -->
-              <mat-form-field class="md:w-2/5 fuse-mat-dense " floatLabel="always" subscriptSizing="dynamic">
+            <mat-form-field class="w-full fuse-mat-dense" floatLabel="always" subscriptSizing="dynamic">
                 <mat-label [innerText]="t('fields.type')"></mat-label>
                 <mat-select [placeholder]="t('fields.type-placeholder')" formControlName="type">
                   <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ t('fields.type-options.' + type) }}</mat-option>
@@ -37,7 +36,6 @@
                   <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
                 }
               </mat-form-field>
-            </div>
 
             <!-- Description -->
             <div class="flex flex-col">
@@ -59,8 +57,7 @@
               }
             </div>
 
-            <div class="flex flex-col md:flex-row gap-4">
-              <mat-form-field class="fuse-mat-dense fuse-mat-emphasized-affix md:w-1/2" subscriptSizing="dynamic">
+            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
                 <mat-label>Categoría</mat-label>
                 <input
                   #categoryInput
@@ -83,7 +80,7 @@
                 }
               </mat-form-field>
 
-              <mat-form-field class="fuse-mat-dense fuse-mat-emphasized-affix md:w-1/2" subscriptSizing="dynamic">
+            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
                 <mat-label>Empresa</mat-label>
                 <input
                   #companyInput
@@ -105,7 +102,6 @@
                   <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
                 }
               </mat-form-field>
-            </div>
 
             <mat-divider></mat-divider>
 
@@ -115,20 +111,31 @@
             </div>
 
             <!-- Image -->
-            <mat-form-field class="w-full md:w-1/2 fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
-              <mat-label>Imagen</mat-label>
+            <!--              <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">-->
+            <!--                <mat-label>Imagen</mat-label>-->
+            <!--                <input-->
+            <!--                  accept=".jpeg,.jpg,.png"-->
+            <!--                  formControlName="image"-->
+            <!--                  matInput-->
+            <!--                  type="file"-->
+            <!--                />-->
+            <!--                <mat-hint class="mat-form-field-hint-end">JPEG / JPG / PNG</mat-hint>-->
+            <!--              </mat-form-field>-->
+
+            <div class="w-full">
+              <label class="mat-label" for="file-upload">{{ t('fields.image') }}*</label>
               <input
+                class="file-input"
+                id="file-upload"
                 accept=".jpeg,.jpg,.png"
                 formControlName="image"
-                matInput
                 type="file"
               />
-              <mat-hint class="mat-form-field-hint-end">JPEG / JPG / PNG</mat-hint>
-            </mat-form-field>
+              <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
+            </div>
 
-            <div class="flex flex-col md:flex-row gap-4 w-full">
               <!-- Requirements -->
-              <div class="flex flex-col w-full h-full">
+            <div class="flex flex-col">
                 <mat-label class="font-medium text-default dark:text-white">{{ t('fields.requirements') }}</mat-label>
                 @defer {
                   <quill-editor
@@ -137,7 +144,7 @@
                     [modules]="quillModules"
                     format="json"
                     bounds="self"
-                    formControlName="description"
+                    formControlName="requirements"
                   ></quill-editor>
                 } @placeholder {
                   <span>cargando editor...</span>
@@ -145,7 +152,7 @@
               </div>
 
               <!-- Conditions -->
-              <div class="flex flex-col w-full h-full">
+            <div class="flex flex-col">
                 <mat-label class="font-medium text-default dark:text-white">{{ t('fields.conditions') }}</mat-label>
                 @defer {
                   <quill-editor
@@ -154,25 +161,16 @@
                     [modules]="quillModules"
                     format="json"
                     bounds="self"
-                    formControlName="description"
+                    formControlName="conditions"
                   ></quill-editor>
                 } @placeholder {
                   <span>cargando editor...</span>
                 }
               </div>
             </div>
-          </div>
 
           <!-- Actions -->
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 md:space-y-0 md:space-x-4 mt-4">
-            <!-- Discard -->
-            <button
-              (click)="discard()"
-              class="w-full md:w-30"
-              mat-stroked-button
-            >
-              {{ 'actions.discard' | transloco }}
-            </button>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
             <!-- Save -->
             <button
               (click)="submit()"
@@ -187,9 +185,9 @@
       </div>
 
       <!-- Preview -->
-      <!--      <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">-->
+      <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
 
-      <!--      </div>-->
+      </div>
     </div>
   </div>
 </div>
@@ -216,4 +214,5 @@
     <span>{{ company.name }}</span>
   </mat-option>
 </mat-autocomplete>
+
 

@@ -29,20 +29,20 @@ export class BenefitsComponent {
       {
         icon: 'heroicons_outline:gift',
         title      : this.translateService.translate('admin.benefits.title'),
-        description: this.translateService.translate('admin.benefits.description'),
+        description: this.translateService.translate('admin.benefits.subtitle'),
         children   : [
           {
             id         : 'list',
             icon       : 'heroicons_outline:list-bullet',
             title      : this.translateService.translate('admin.benefits.list.title'),
-            description: this.translateService.translate('admin.benefits.list.description'),
+            description: this.translateService.translate('admin.benefits.list.subtitle'),
             link       : '/admin/benefits/'
           },
           {
             id         : 'create',
             icon       : 'heroicons_outline:plus-circle',
             title      : this.translateService.translate('admin.benefits.create.title'),
-            description: this.translateService.translate('admin.benefits.create.description'),
+            description: this.translateService.translate('admin.benefits.create.subtitle'),
             link       : '/admin/benefits/create'
           },
         ]
@@ -50,20 +50,20 @@ export class BenefitsComponent {
       {
         icon       : 'heroicons_outline:cube',
         title      : this.translateService.translate('admin.benefits.category.title'),
-        description: this.translateService.translate('admin.benefits.category.description'),
+        description: this.translateService.translate('admin.benefits.category.subtitle'),
         children   : [
           {
             id         : 'list-categories',
             icon: 'heroicons_outline:list-bullet',
             title      : this.translateService.translate('admin.benefits.category.list.title'),
-            description: this.translateService.translate('admin.benefits.category.list.description'),
+            description: this.translateService.translate('admin.benefits.category.list.subtitle'),
             link       : '/admin/benefits/category'
           },
           {
             id         : 'create-category',
             icon       : 'heroicons_outline:plus-circle',
             title      : this.translateService.translate('admin.benefits.category.create.title'),
-            description: this.translateService.translate('admin.benefits.category.create.description'),
+            description: this.translateService.translate('admin.benefits.category.create.subtitle'),
             link       : '/admin/benefits/category/create'
           },
         ]
@@ -71,20 +71,20 @@ export class BenefitsComponent {
       {
         icon       : 'heroicons_outline:building-office',
         title      : this.translateService.translate('admin.benefits.company.title'),
-        description: this.translateService.translate('admin.benefits.company.description'),
+        description: this.translateService.translate('admin.benefits.company.subtitle'),
         children   : [
           {
             id         : 'list-companies',
             icon: 'heroicons_outline:list-bullet',
             title      : this.translateService.translate('admin.benefits.company.list.title'),
-            description: this.translateService.translate('admin.benefits.company.list.description'),
+            description: this.translateService.translate('admin.benefits.company.list.subtitle'),
             link       : '/admin/benefits/company'
           },
           {
             id         : 'create-company',
             icon       : 'heroicons_outline:plus-circle',
             title      : this.translateService.translate('admin.benefits.company.create.title'),
-            description: this.translateService.translate('admin.benefits.company.create.description'),
+            description: this.translateService.translate('admin.benefits.company.create.subtitle'),
             link       : '/admin/benefits/company/create'
           }
         ]

@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/angular';
 
 import { AppComponent } from 'app/app.component';
 import { appConfig }    from 'app/app.config';
+import { environment }  from './environments/environment';
 
 Sentry.init({
   dsn         : 'https://506a79677510e4799487506470da5688@o4507732277395456.ingest.us.sentry.io/4507739816394752',
@@ -21,6 +22,9 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 });
 
-enableProdMode();
+if (environment.production) {
+  enableProdMode();
+}
+
 bootstrapApplication(AppComponent, appConfig)
   .catch(err => console.error(err));

@@ -1,19 +1,19 @@
 import { Component }                           from '@angular/core';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
 import { MatDialog }                           from '@angular/material/dialog';
+import { MatDivider }                          from '@angular/material/divider';
 import { MatIcon }                             from '@angular/material/icon';
 import { MatTooltip }                          from '@angular/material/tooltip';
 import { RouterLink }                          from '@angular/router';
 
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+import { mergeMap }                          from 'rxjs';
+import { Notyf }                             from 'notyf';
 
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
 import { NewOrEditComponent }      from '@modules/admin/admin/albums/dialogs/new-or-edit/new-or-edit.component';
 import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
-import { mergeMap }                from 'rxjs';
-import { Notyf }                   from 'notyf';
-import { MatDivider }              from '@angular/material/divider';
 import { BenefitsTableComponent }  from '@modules/admin/admin/benefits/components/benefits-table/benefits-table.component';
 import { BenefitsService }         from '@modules/admin/admin/benefits/services/benefits.service';
 

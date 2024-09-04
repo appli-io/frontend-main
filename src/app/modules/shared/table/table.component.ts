@@ -7,6 +7,7 @@ import {
   MatColumnDef,
   MatHeaderRow,
   MatHeaderRowDef,
+  MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTable,
@@ -29,14 +30,19 @@ import { trackByFn } from '@libs/ui/utils/utils';
     MatHeaderRow,
     MatHeaderRowDef,
     MatRow,
-    MatRowDef
+    MatRowDef,
+    MatNoDataRow
   ],
   styleUrls: [ './table.component.scss' ],
-  templateUrl: './table.component.html'
+  templateUrl: './table.component.html',
+  styles     : [ `:host {
+    position: relative;
+    display: block;
+  }` ]
 })
 export class Table<T> implements OnInit, AfterContentInit {
   @Input('data') data$!: Observable<T[]>;
-  @Input() displayedColumns!: string[];
+  @Input() displayedColumns!: Array<keyof T | string>;
   @Input() messageNoData: string = 'No hay resultados que mostrar';
   @Input() loading: Observable<boolean> = new Observable<boolean>();
   @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();

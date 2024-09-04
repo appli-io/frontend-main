@@ -1,10 +1,10 @@
-import { AsyncPipe, JsonPipe, TitleCasePipe }     from '@angular/common';
+import { AsyncPipe, TitleCasePipe }               from '@angular/common';
 import { Component, OnInit }                      from '@angular/core';
 import { takeUntilDestroyed }                     from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule }       from '@angular/forms';
 import { MatIconAnchor, MatIconButton }           from '@angular/material/button';
 import { MatDialog }                              from '@angular/material/dialog';
-import { MatFormField }                           from '@angular/material/form-field';
+import { MatFormField, MatHint }                  from '@angular/material/form-field';
 import { MatIcon }                                from '@angular/material/icon';
 import { MatInput }                               from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
@@ -27,7 +27,7 @@ import { MatDivider }              from '@angular/material/divider';
 @Component({
   selector  : 'app-users',
   standalone: true,
-  imports: [
+  imports   : [
     PageHeaderComponent,
     TranslocoDirective,
     MatFormField,
@@ -42,8 +42,8 @@ import { MatDivider }              from '@angular/material/divider';
     MatTooltip,
     ReactiveFormsModule,
     AsyncPipe,
-    JsonPipe,
-    MatDivider
+    MatDivider,
+    MatHint
   ],
   templateUrl: './users.component.html'
 })
@@ -61,7 +61,6 @@ export class UsersComponent implements OnInit {
   ) {
     this._subscribeToSearchControl();
     this._usersService.membersPage$.pipe(takeUntilDestroyed()).subscribe((members) => {
-      console.log('Members', members);
       this.members$.next(members);
     });
   }

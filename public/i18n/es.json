@@ -406,7 +406,7 @@
       "list" : {
         "title" : "Lista de Beneficios",
         "subtitle" : "Administra los Beneficios de la Plataforma",
-        "description" : "Lista de beneficios disponibles en la plataforma.",
+        "description" : "Administra los beneficios de la plataforma, crea y actualiza beneficios, y mantén informados a los usuarios sobre las oportunidades y descuentos disponibles. Asegúrate de que cada miembro de la organización pueda acceder a los beneficios y aprovechar al máximo su experiencia laboral con nosotros.",
         "no-content" : "No hay beneficios disponibles para mostrar",
         "table-columns" : {
           "id" : "ID",
@@ -426,6 +426,7 @@
       },
       "create" : {
         "title" : "Nuevo Beneficio",
+        "subtitle" : "Crea un nuevo beneficio para la plataforma",
         "description" : "Agrega un nuevo beneficio a la plataforma",
         "fields" : {
           "name" : "Nombre",
@@ -441,6 +442,7 @@
           "type-placeholder" : "Selecciona el tipo de beneficio",
           "category" : "Categoría",
           "subcategory" : "Subcategoría",
+          "image" : "Imagen",
           "requirements" : "Requisitos",
           "requirements-placeholder" : "Escribe los requisitos para acceder al beneficio",
           "conditions" : "Condiciones",
@@ -466,16 +468,16 @@
       },
       "category" : {
         "title" : "Categorías",
-        "description" : "Administra las categorías de beneficios disponibles en la plataforma",
         "list" : {
           "title" : "Lista de Categorías",
-          "description" : "Lista de categorías disponibles en la plataforma.",
+          "description" : "Administra las categorías de beneficios disponibles en la plataforma, crea y actualiza categorías para organizar los beneficios. Asegúrate de que cada beneficio esté asociado a una categoría relevante y sea fácilmente accesible para los usuarios.",
+          "subtitle" : "Lista de categorías disponibles en la plataforma",
           "no-content" : "No hay categorías disponibles para mostrar",
           "table-columns" : {
             "id" : "ID",
             "name" : "Nombre",
-            "description" : "Descripción",
-            "benefits-count" : "Beneficios",
+            "active" : "Activo",
+            "order" : "Orden",
             "actions" : "Acciones"
           },
           "table-actions" : {
@@ -486,7 +488,8 @@
         },
         "create" : {
           "title" : "Nueva Categoría",
-          "description" : "Crea una nueva categoría para organizar los beneficios",
+          "subtitle" : "Crea una nueva categoría para organizar los beneficios",
+          "description" : "Agrega una nueva categoría para organizar los beneficios disponibles en la plataforma",
           "fields" : {
             "name" : "Nombre",
             "description" : "Descripción",
@@ -516,7 +519,8 @@
         },
         "create" : {
           "title" : "Nueva Empresa",
-          "description" : "Crea una nueva empresa para asociar con los beneficios",
+          "subtitle" : "Crea una nueva empresa para asociar con los beneficios",
+          "description" : "Agrega una nueva empresa para asociar con los beneficios disponibles en la plataforma",
           "fields" : {
             "name" : "Nombre",
             "description" : "Descripción",
