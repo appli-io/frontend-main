@@ -7,7 +7,7 @@ import { Observable }                           from 'rxjs';
 
 import { trackByFn }                            from '@libs/ui/utils/utils';
 import { Benefit }                              from '@modules/admin/admin/benefits/models/benefit';
-import { Table }                                from '@modules/shared/table/table.component';
+import { Table }                                from '@modules/shared/components/table/table.component';
 import { MatIcon }                              from '@angular/material/icon';
 import { MatIconButton }                        from '@angular/material/button';
 import { MatTooltip }                           from '@angular/material/tooltip';

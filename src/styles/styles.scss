@@ -250,8 +250,12 @@ quill-view {
 
 
 .file-input {
-  @apply bg-gray-100 text-secondary font-normal;
+  @apply bg-white text-secondary font-normal;
   @apply border border-gray-300 border-opacity-100 #{'!important'};
+
+  .dark & {
+    @apply bg-gray-100;
+  }
 
   padding: 8px 16px;
   border-radius: 6px;

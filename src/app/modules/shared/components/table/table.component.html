@@ -17,6 +17,6 @@
   ></tr>
   <!-- No data row -->
   <tr *matNoDataRow class="text-center">
-    <td [attr.colspan]="displayedColumns.length" class="italic text-secondary select-none py-4 hover:bg-accent-400/5 transition-all duration-300 ease-in-out">{{ messageNoData }}</td>
+    <td [attr.colspan]="displayedColumns.length" class="italic text-secondary select-none py-4 hover:bg-accent-400/5 transition-all duration-300 ease-in-out">{{ messageNoData || 'No data' }}</td>
   </tr>
 </table>

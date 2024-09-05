@@ -13,7 +13,7 @@ import { Notyf }                                from 'notyf';
 import { FuseConfirmationService }                                                      from '@fuse/services/confirmation';
 import { PageHeaderComponent }                                                          from '@layout/components/page-header/page-header.component';
 import { NewNewsComponent }                                                             from '@modules/admin/admin/news/dialogs/new-news/new-news.component';
-import { Table }                                                                        from '@modules/shared/table/table.component';
+import { Table }                                                                        from '@modules/shared/components/table/table.component';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, mergeMap, of, switchMap } from 'rxjs';
 import { INews }                                                                        from '@modules/admin/news/domain/interfaces/news.interface';
 import { Pageable }                                                                     from '@core/interfaces/pageable';

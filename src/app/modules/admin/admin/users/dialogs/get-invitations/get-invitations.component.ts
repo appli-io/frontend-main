@@ -1,19 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule, JsonPipe } from '@angular/common';
-import { MatDialogRef } from '@angular/material/dialog';
-import { UsersService } from '@modules/admin/admin/users/users.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { NgIf } from '@angular/common';
-import { Table } from '@modules/shared/table/table.component';
-import { MatTableModule } from '@angular/material/table';
+import { Component, OnDestroy, OnInit }         from '@angular/core';
+import { CommonModule, JsonPipe, NgIf }         from '@angular/common';
+import { MatDialogModule, MatDialogRef }        from '@angular/material/dialog';
+import { UsersService }                         from '@modules/admin/admin/users/users.service';
+import { MatButtonModule }                      from '@angular/material/button';
+import { Table }                                from '@modules/shared/components/table/table.component';
+import { MatTableModule }                       from '@angular/material/table';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
-import { CompanyUser, InvitationsResponse } from '../../model/company-user.model';
-import { MatIconModule } from '@angular/material/icon';
+import { CompanyUser, InvitationsResponse }     from '../../model/company-user.model';
+import { MatIconModule }                        from '@angular/material/icon';
 
-import { Notyf } from 'notyf';
-import { takeUntil } from 'rxjs/operators';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Notyf }                    from 'notyf';
+import { takeUntil }                from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-get-invitations',

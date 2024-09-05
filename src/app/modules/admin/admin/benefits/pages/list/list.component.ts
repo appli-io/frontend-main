@@ -1,6 +1,5 @@
 import { Component }                           from '@angular/core';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
-import { MatDialog }                           from '@angular/material/dialog';
 import { MatDivider }                          from '@angular/material/divider';
 import { MatIcon }                             from '@angular/material/icon';
 import { MatTooltip }                          from '@angular/material/tooltip';
@@ -12,10 +11,9 @@ import { Notyf }                             from 'notyf';
 
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageHeaderComponent }     from '@layout/components/page-header/page-header.component';
-import { NewOrEditComponent }      from '@modules/admin/admin/albums/dialogs/new-or-edit/new-or-edit.component';
-import { IAlbum }                  from '@modules/admin/apps/albums/interfaces/album.interface';
 import { BenefitsTableComponent }  from '@modules/admin/admin/benefits/components/benefits-table/benefits-table.component';
 import { BenefitsService }         from '@modules/admin/admin/benefits/services/benefits.service';
+import { Benefit }                 from '@modules/admin/admin/benefits/models/benefit';
 
 @Component({
   selector   : 'app-list',
@@ -41,26 +39,19 @@ export class ListComponent {
 
   constructor(
     private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _benefitsService: BenefitsService,
-    private readonly _matDialog: MatDialog
+    private readonly _benefitsService: BenefitsService
   ) {}
 
-  openNewDialog() {
-    this._matDialog.open(NewOrEditComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-    });
+  edit(benefit: Benefit) {
+    console.log('Edit benefit', benefit);
   }
 
-  edit(album: IAlbum) {
-    console.log('Edit album', album);
-  }
-
-  delete(album: IAlbum) {
-    console.log('Delete album', album);
+  delete(benefit: Benefit) {
+    console.log('Delete benefit', benefit);
     const confirmation = this._fuseConfirmationService.open({
-      title  : 'Delete album',
+      title  : 'Delete benefit',
       message:
-        'Are you sure you want to delete the album? This action cannot be undone.',
+        'Are you sure you want to delete the benefit? This action cannot be undone.',
       actions: {
         confirm: {
           label: 'Delete',
@@ -75,7 +66,7 @@ export class ListComponent {
           // If the confirm button pressed...
           if (result === 'confirmed') {
             // Delete the album
-            return this._benefitsService.delete(album.id);
+            return this._benefitsService.delete(benefit.id);
           }
           return [];
         })
