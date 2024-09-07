@@ -1,20 +1,16 @@
 import { Notyf }                   from 'notyf';
-import { mergeMap, Observable }    from 'rxjs';
+import { mergeMap }                from 'rxjs';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { inject }                  from '@angular/core';
 
-export abstract class AbstractListComponent<T> {
-  public items$: Observable<T[]>;
+export abstract class AbstractCreateComponent<T> {
   abstract columns: Array<keyof T | string>;
   protected _notyf = new Notyf();
   protected confirmationService: FuseConfirmationService = inject(FuseConfirmationService);
 
   protected constructor(
     private readonly service: { delete: (id: string) => any },
-    private readonly items: any,
-  ) {
-    this.items$ = items;
-  }
+  ) {}
 
   abstract edit(item: T): void;
 

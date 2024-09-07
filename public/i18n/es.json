@@ -445,8 +445,10 @@
           "image" : "Imagen",
           "requirements" : "Requisitos",
           "requirements-placeholder" : "Escribe los requisitos para acceder al beneficio",
+          "requirements-hint" : "Ejemplo: Presentar la tarjeta de identificación de la empresa",
           "conditions" : "Condiciones",
-          "conditions-placeholder" : "Escribe las condiciones para acceder al beneficio"
+          "conditions-placeholder" : "Escribe las condiciones para acceder al beneficio",
+          "conditions-hint" : "Ejemplo: Válido solo para compras en línea"
         },
         "create" : "Crear"
       },
@@ -492,7 +494,13 @@
           "description" : "Agrega una nueva categoría para organizar los beneficios disponibles en la plataforma",
           "fields" : {
             "name" : "Nombre",
+            "name-placeholder" : "Escribe el nombre de la categoría",
             "description" : "Descripción",
+            "description-placeholder" : "Escribe una descripción para tu categoría",
+            "icon" : "Icono",
+            "icon-hint" : "Icono que se mostrará en la lista de categorías",
+            "image" : "Imagen",
+            "image-hint" : "Imagen que se mostrará en el detalle de la categoría",
             "save" : "Crear"
           }
         }
@@ -502,7 +510,8 @@
         "description" : "Administra las empresas asociadas a los beneficios disponibles en la plataforma",
         "list" : {
           "title" : "Lista de Empresas",
-          "description" : "Lista de empresas disponibles en la plataforma.",
+          "subtitle" : "Lista de empresas disponibles en la plataforma.",
+          "description" : "Administra las empresas asociadas a los beneficios disponibles en la plataforma, crea y actualiza empresas para asociar con los beneficios. Asegúrate de que cada beneficio esté asociado a una empresa relevante y sea fácilmente accesible para los usuarios.",
           "no-content" : "No hay empresas disponibles para mostrar",
           "table-columns" : {
             "id" : "ID",
@@ -521,9 +530,17 @@
           "title" : "Nueva Empresa",
           "subtitle" : "Crea una nueva empresa para asociar con los beneficios",
           "description" : "Agrega una nueva empresa para asociar con los beneficios disponibles en la plataforma",
+          "field-groups" : {
+            "information" : "Información del beneficio",
+            "information-description" : "Los siguientes campos son requeridos para la creación de un beneficio.",
+            "additional" : "Información adicional",
+            "additional-description" : "Los siguientes campos son opcionales y pueden ser completados si es necesario."
+          },
           "fields" : {
             "name" : "Nombre",
+            "name-placeholder" : "Escribe el nombre de la empresa",
             "description" : "Descripción",
+            "description-placeholder" : "Escribe una descripción de la empresa",
             "logo" : "Logo",
             "save" : "Crear"
           }
@@ -534,6 +551,7 @@
   "actions" : {
     "save" : "Guardar",
     "discard" : "Descartar",
+    "reset" : "Limpiar",
     "cancel" : "Cancelar",
     "delete" : "Eliminar",
     "edit" : "Editar",
@@ -583,6 +601,12 @@
     "news-category" : {
       "title" : "Categoría de Noticias",
       "no-categories" : "No hay categorías disponibles"
+    },
+    "benefit-category" : {
+      "title" : "Categorías",
+      "placeholder" : "Selecciona una categoría",
+      "no-data" : "No hay categorías disponibles",
+      "hint-parent" : "Si corresponde a una subcategoria, selecciona la categoría padre"
     }
   },
   "messages" : {

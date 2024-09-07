@@ -50,9 +50,8 @@ export class CreateComponent {
     this.form = this._formBuilder.group({
       name       : [ null ],
       description: [ null ],
-      type       : [ null ],
-      category   : [ null ],
-      company    : [ null ]
+      icon : [ null ],
+      image: [ null ],
     });
   }
 }

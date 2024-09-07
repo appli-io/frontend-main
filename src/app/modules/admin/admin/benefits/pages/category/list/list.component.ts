@@ -10,7 +10,6 @@ import { Table }                                                              fr
 import { BenefitCategory }                                                    from '@modules/admin/admin/benefits/models/benefit-category';
 import { BenefitCategoryService }                                             from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { AbstractListComponent }                                              from '@modules/shared/components/abstracts/abstract-list.component';
-import { FuseConfirmationService }                                            from '../../../../../../../../@fuse/services/confirmation';
 
 @Component({
   selector   : 'app-list',
@@ -38,11 +37,9 @@ export class ListComponent extends AbstractListComponent<BenefitCategory> {
   public columns: Array<keyof BenefitCategory | string> = [ 'name', 'active', 'order', 'actions' ];
 
   constructor(
-    private readonly _confirmationService: FuseConfirmationService,
-    private readonly _benefitCategoryService: BenefitCategoryService
+    private readonly _benefitCategoryService: BenefitCategoryService,
   ) {
     super(
-      _confirmationService,
       _benefitCategoryService,
       _benefitCategoryService.categories$
     );

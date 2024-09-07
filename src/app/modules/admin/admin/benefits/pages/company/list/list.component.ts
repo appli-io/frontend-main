@@ -8,6 +8,8 @@ import { MatMenu, MatMenuItem, MatMenuTrigger }                               fr
 import { MatSort, MatSortHeader }                                             from '@angular/material/sort';
 import { Table }                                                              from '@modules/shared/components/table/table.component';
 import { BenefitCompany }                                                     from '@modules/admin/admin/benefits/models/benefit-company';
+import { BenefitCompanyService }                                              from '@modules/admin/admin/benefits/services/benefit-company.service';
+import { AbstractListComponent }                                              from '@modules/shared/components/abstracts/abstract-list.component';
 
 @Component({
   selector   : 'app-list',
@@ -32,6 +34,19 @@ import { BenefitCompany }                                                     fr
   ],
   templateUrl: './list.component.html'
 })
-export class ListComponent {
+export class ListComponent extends AbstractListComponent<BenefitCompany> {
   public columns: Array<keyof BenefitCompany | string> = [ 'name', 'actions' ];
+
+  constructor(
+    private readonly _benefitCompanyService: BenefitCompanyService
+  ) {
+    super(
+      _benefitCompanyService,
+      _benefitCompanyService.companies$
+    );
+  }
+
+  edit(item: BenefitCompany) {
+    console.log('Edit item', item);
+  }
 }

@@ -10,9 +10,9 @@ import { MatIcon }                                                              
 import { MatInputModule }                                                        from '@angular/material/input';
 import { MatSelectModule }                                                       from '@angular/material/select';
 
-import { TranslocoDirective, TranslocoPipe }              from '@ngneat/transloco';
-import { QuillEditorComponent }                           from 'ngx-quill';
-import { BehaviorSubject, map, Subject, switchMap, take } from 'rxjs';
+import { TranslocoDirective, TranslocoPipe }                        from '@ngneat/transloco';
+import { QuillEditorComponent }                                     from 'ngx-quill';
+import { BehaviorSubject, firstValueFrom, map, Subject, switchMap } from 'rxjs';
 
 import { SIMPLE_QUILL_EDITOR_MODULES }  from '@core/constants';
 import { LayoutEnum }                   from '@core/enums/layout.enum';
@@ -170,18 +170,16 @@ export class CreateComponent implements OnInit {
   }
 
   private _loadCategories() {
-    this._benefitCategoryService.findAll(LayoutEnum.COMPACT)
-      .pipe(take(1))
-      .subscribe((categories) => {
+    firstValueFrom(this._benefitCategoryService.findAll(LayoutEnum.SELECTOR))
+      .then((categories) => {
         this._categories$.next(categories);
         this._categoriesFiltered$.next(categories);
       });
   }
 
   private _loadCompanies() {
-    this._benefitsCompanyService.findAll(LayoutEnum.COMPACT)
-      .pipe(take(1))
-      .subscribe((companies) => {
+    firstValueFrom(this._benefitsCompanyService.findAll(LayoutEnum.SELECTOR))
+      .then((companies) => {
         this._companies$.next(companies);
         this._companiesFiltered$.next(companies);
       });
