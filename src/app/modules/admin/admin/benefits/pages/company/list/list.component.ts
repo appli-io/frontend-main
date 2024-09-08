@@ -10,12 +10,13 @@ import { Table }                                                              fr
 import { BenefitCompany }                                                     from '@modules/admin/admin/benefits/models/benefit-company';
 import { BenefitCompanyService }                                              from '@modules/admin/admin/benefits/services/benefit-company.service';
 import { AbstractListComponent }                                              from '@modules/shared/components/abstracts/abstract-list.component';
+import { MatTooltip }                                                         from '@angular/material/tooltip';
 
 @Component({
   selector   : 'app-list',
   standalone : true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports        : [
+  imports: [
     TranslocoDirective,
     PageHeaderComponent,
     MatCell,
@@ -30,7 +31,8 @@ import { AbstractListComponent }                                              fr
     MatSortHeader,
     Table,
     MatHeaderCellDef,
-    MatMenuTrigger
+    MatMenuTrigger,
+    MatTooltip
   ],
   templateUrl: './list.component.html'
 })
@@ -38,7 +40,7 @@ export class ListComponent extends AbstractListComponent<BenefitCompany> {
   public columns: Array<keyof BenefitCompany | string> = [ 'name', 'actions' ];
 
   constructor(
-    private readonly _benefitCompanyService: BenefitCompanyService
+    private readonly _benefitCompanyService: BenefitCompanyService,
   ) {
     super(
       _benefitCompanyService,

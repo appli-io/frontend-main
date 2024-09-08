@@ -19,14 +19,12 @@
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('list.table-columns.actions') }}</span></th>
         <td *matCellDef="let benefit" mat-cell>
-          <div class="flex">
-            <button (click)="openEditDialog(benefit)">
-              <mat-icon class="icon-size-4" svgIcon="heroicons_outline:pencil"></mat-icon>
-              <span>{{ t('list.table-actions.edit') }}</span>
+          <div class="flex items-center gap-x-2">
+            <button (click)="edit(benefit)" [matTooltip]="t('list.table-actions.edit')" class="group/button" mat-icon-button>
+              <mat-icon class="transition-all duration-300 group-hover/button:text-primary" svgIcon="heroicons_outline:pencil"></mat-icon>
             </button>
-            <button (click)="delete(benefit)">
-              <mat-icon class="icon-size-4" color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
-              <span>{{ t('list.table-actions.delete') }}</span>
+            <button (click)="delete(benefit)" [matTooltip]="t('list.table-actions.delete')" class="group/button" mat-icon-button>
+              <mat-icon class="transition-all duration-300 group-hover/button:text-warn" svgIcon="heroicons_outline:trash"></mat-icon>
             </button>
           </div>
         </td>

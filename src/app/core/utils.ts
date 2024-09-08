@@ -31,13 +31,16 @@ export function displayWithFn<T>(fieldName: keyof T): (item: any) => string {
 export function formDataFromObject<T>(object: T): FormData {
   const formData = new FormData();
 
-  Object.keys(formData).forEach((key) => {
-    if (formData[key] instanceof File) {
-      formData.append(key, formData[key]);
-    } else if (formData[key] instanceof Object) {
-      formData.append(key, JSON.stringify(formData[key]));
-    } else {
-      formData.append(key, formData[key]);
+  Object.keys(object).forEach((key) => {
+    if (object[key] !== undefined && object[key] !== null) {
+      console.log(object[key]);
+      if (object[key] instanceof File) {
+        formData.append(key, object[key], object[key].name);
+      } else if (object[key] instanceof Object) {
+        formData.append(key, JSON.stringify(object[key]));
+      } else {
+        formData.append(key, object[key]);
+      }
     }
   });
 

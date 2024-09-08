@@ -428,6 +428,12 @@
         "title" : "Nuevo Beneficio",
         "subtitle" : "Crea un nuevo beneficio para la plataforma",
         "description" : "Agrega un nuevo beneficio a la plataforma",
+        "field-groups" : {
+          "information" : "Información del beneficio",
+          "information-description" : "Los siguientes campos son requeridos para la creación de un beneficio.",
+          "additional" : "Información adicional",
+          "additional-description" : "Los siguientes campos son opcionales y pueden ser completados si es necesario."
+        },
         "fields" : {
           "name" : "Nombre",
           "name-placeholder" : "Escribe el nombre del beneficio",
@@ -478,6 +484,7 @@
           "table-columns" : {
             "id" : "ID",
             "name" : "Nombre",
+            "parent" : "Padre",
             "active" : "Activo",
             "order" : "Orden",
             "actions" : "Acciones"
@@ -492,6 +499,10 @@
           "title" : "Nueva Categoría",
           "subtitle" : "Crea una nueva categoría para organizar los beneficios",
           "description" : "Agrega una nueva categoría para organizar los beneficios disponibles en la plataforma",
+          "field-groups" : {
+            "information" : "Información de la categoría",
+            "information-description" : "Los siguientes campos son requeridos para la creación de una categoría."
+          },
           "fields" : {
             "name" : "Nombre",
             "name-placeholder" : "Escribe el nombre de la categoría",
@@ -531,17 +542,16 @@
           "subtitle" : "Crea una nueva empresa para asociar con los beneficios",
           "description" : "Agrega una nueva empresa para asociar con los beneficios disponibles en la plataforma",
           "field-groups" : {
-            "information" : "Información del beneficio",
-            "information-description" : "Los siguientes campos son requeridos para la creación de un beneficio.",
-            "additional" : "Información adicional",
-            "additional-description" : "Los siguientes campos son opcionales y pueden ser completados si es necesario."
+            "information" : "Información de la empresa",
+            "information-description" : "Los siguientes campos son requeridos para la creación de una empresa."
           },
           "fields" : {
             "name" : "Nombre",
             "name-placeholder" : "Escribe el nombre de la empresa",
             "description" : "Descripción",
             "description-placeholder" : "Escribe una descripción de la empresa",
-            "logo" : "Logo",
+            "image" : "Imagen",
+            "image-hint" : "Se mostrará en el resumen y detalle del beneficio.",
             "save" : "Crear"
           }
         }
@@ -615,5 +625,13 @@
   },
   "welcome-back" : "Bienvenido de nuevo",
   "Project" : "Proyecto",
-  "Analytics" : "Analítica"
+  "Analytics" : "Analítica",
+  "modal" : {
+    "delete-confirmation" : {
+      "title" : "Eliminar",
+      "message" : "¿Estás seguro de que deseas eliminar este elemento?, <span class=\"font-medium\">No podrás deshacer esta acción.</span>",
+      "cancel" : "Cancelar",
+      "confirm" : "Eliminar"
+    }
+  }
 }

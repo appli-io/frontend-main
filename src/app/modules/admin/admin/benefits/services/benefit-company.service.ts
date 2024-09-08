@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { LayoutEnum }     from '@core/enums/layout.enum';
 import { BaseService }    from '@core/interfaces/base-service.interface';
@@ -19,7 +19,8 @@ export class BenefitCompanyService implements BaseService<BenefitCompany> {
   }
 
   findAll(layout: LayoutEnum = LayoutEnum.FULL): Observable<BenefitCompany[]> {
-    return this._httpClient.get<BenefitCompany[]>(this._baseUrl, {params: {layout}});
+    return this._httpClient.get<BenefitCompany[]>(this._baseUrl, {params: {layout}})
+      .pipe(tap((companies) => this._companies$.next(companies)));
   }
 
   findOne(id: string): Observable<BenefitCompany> {

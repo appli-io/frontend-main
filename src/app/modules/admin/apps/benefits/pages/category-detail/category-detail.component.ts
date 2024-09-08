@@ -10,22 +10,7 @@ import { NgxSkeletonLoaderModule }           from 'ngx-skeleton-loader';
 
 import { FuseCardComponent }            from '@fuse/components/card';
 import { BenefitCategoryCardComponent } from '@modules/admin/apps/benefits/components/benefit-category-card/benefit-category-card.component';
-import { SubcategoryCardComponent }     from '@modules/admin/apps/benefits/components/subcategory-card/subcategory-card.component';
-import { IFile }                        from '@modules/admin/news/domain/interfaces/news.interface';
-
-export interface BenefitCategory {
-  id: string;
-  name: string;
-  description?: string;
-  active: boolean;
-  order: number;
-  icon: IFile;
-  image?: IFile;
-  metadata?: Record<string, any>;
-  parent?: BenefitCategory;
-  subCategories?: BenefitCategory[];
-  benefits?: any[];
-}
+import { BenefitCategory }              from '@modules/admin/admin/benefits/models/benefit-category';
 
 @Component({
   selector   : 'app-category-detail',
@@ -41,7 +26,6 @@ export interface BenefitCategory {
     BenefitCategoryCardComponent,
     NgxSkeletonLoaderModule,
     MatIconAnchor,
-    SubcategoryCardComponent,
     FuseCardComponent,
     MatAnchor
   ],

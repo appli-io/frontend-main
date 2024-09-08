@@ -1,17 +1,20 @@
-import { Component }                                                              from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { PageDetailHeaderComponent }                                              from '@modules/shared/components/page-detail-header/page-detail-header.component';
-import { TranslocoDirective, TranslocoPipe }                                      from '@ngneat/transloco';
-import { SIMPLE_QUILL_EDITOR_MODULES }                                            from '@core/constants';
-import { MatAutocompleteTrigger, MatOption }                                      from '@angular/material/autocomplete';
-import { MatButton, MatIconButton }                                               from '@angular/material/button';
-import { MatDivider }                                                             from '@angular/material/divider';
-import { MatError, MatFormField, MatHint, MatLabel, MatSuffix }                   from '@angular/material/form-field';
-import { MatIcon }                                                                from '@angular/material/icon';
-import { MatInput }                                                               from '@angular/material/input';
-import { MatSelect }                                                              from '@angular/material/select';
-import { NgForOf }                                                                from '@angular/common';
-import { QuillEditorComponent }                                                   from 'ngx-quill';
+import { Component }                                            from '@angular/core';
+import { FormsModule, ReactiveFormsModule, Validators }         from '@angular/forms';
+import { PageDetailHeaderComponent }                            from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { TranslocoDirective, TranslocoPipe }                    from '@ngneat/transloco';
+import { SIMPLE_QUILL_EDITOR_MODULES }                          from '@core/constants';
+import { MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
+import { MatButton, MatIconButton }                             from '@angular/material/button';
+import { MatDivider }                                           from '@angular/material/divider';
+import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon }                                              from '@angular/material/icon';
+import { MatInput }                                             from '@angular/material/input';
+import { MatSelect }                                            from '@angular/material/select';
+import { NgForOf }                                              from '@angular/common';
+import { QuillEditorComponent }                                 from 'ngx-quill';
+import { AbstractCreateComponent }                              from '@modules/shared/components/abstracts/abstract-create.component';
+import { BenefitCompany }                                       from '@modules/admin/admin/benefits/models/benefit-company';
+import { BenefitCompanyService }                                from '@modules/admin/admin/benefits/services/benefit-company.service';
 
 @Component({
   selector   : 'app-create',
@@ -40,18 +43,20 @@ import { QuillEditorComponent }                                                 
   ],
   templateUrl: './create.component.html'
 })
-export class CreateComponent {
-  public form: UntypedFormGroup;
+export class CreateComponent extends AbstractCreateComponent<BenefitCompany> {
   protected readonly quillModules = SIMPLE_QUILL_EDITOR_MODULES;
 
-  constructor(private readonly _formBuilder: UntypedFormBuilder) {}
+  constructor(
+    private readonly _benefitCompanyService: BenefitCompanyService,
+  ) {
+    super(_benefitCompanyService);
+  }
 
-  ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      name       : [ null ],
-      description: [ null ],
-      icon : [ null ],
-      image: [ null ],
+  initForm() {
+    this.form = this.formBuilder.group({
+      description: [ null, [ Validators.required, Validators.minLength(3) ] ],
+      name       : [ null, [ Validators.required, Validators.minLength(3) ] ],
+      image      : [ null, [ Validators.required ] ],
     });
   }
 }

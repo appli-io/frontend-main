@@ -1,51 +1,38 @@
-import { Component, OnInit }                                                                  from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { PageDetailHeaderComponent }                                                          from '@modules/shared/components/page-detail-header/page-detail-header.component';
-import { TranslocoDirective, TranslocoPipe }                                                  from '@ngneat/transloco';
-import { MatAutocompleteTrigger, MatOption }                                                  from '@angular/material/autocomplete';
-import { MatButton, MatIconButton }                                                           from '@angular/material/button';
-import { MatDivider }                                                                         from '@angular/material/divider';
-import { MatError, MatFormField, MatHint, MatLabel, MatPrefix, MatSuffix }                    from '@angular/material/form-field';
-import { MatIcon }                                                                            from '@angular/material/icon';
-import { MatInput }                                                                           from '@angular/material/input';
-import { MatSelect }                                                                          from '@angular/material/select';
-import { AsyncPipe, JsonPipe, NgForOf }                                                       from '@angular/common';
-import { QuillEditorComponent }                                                               from 'ngx-quill';
-import { SIMPLE_QUILL_EDITOR_MODULES }                                                        from '@core/constants';
-import { BenefitCategorySelector }                                                            from '@modules/shared/selectors/components/benefit-categories-selector/benefit-category-selector.component';
-import { BenefitCategoryService }                                                             from '@modules/admin/admin/benefits/services/benefit-category.service';
-import { MatProgressSpinner }                                                                 from '@angular/material/progress-spinner';
-import { fuseAnimations }                                                                     from '../../../../../../../../@fuse/animations';
+import { Component, OnInit }                                                     from '@angular/core';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { PageDetailHeaderComponent }                                             from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { TranslocoDirective, TranslocoPipe }                                     from '@ngneat/transloco';
+import { MatButton }                                                             from '@angular/material/button';
+import { MatError, MatFormField, MatHint, MatLabel }                             from '@angular/material/form-field';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatInput }                                                              from '@angular/material/input';
+import { QuillEditorComponent }                                                  from 'ngx-quill';
+import { SIMPLE_QUILL_EDITOR_MODULES }                                           from '@core/constants';
+import { BenefitCategorySelector }                                               from '@modules/shared/selectors/components/benefit-categories-selector/benefit-category-selector.component';
+import { BenefitCategoryService }                                                from '@modules/admin/admin/benefits/services/benefit-category.service';
+import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
+import { fuseAnimations }                                                        from '../../../../../../../../@fuse/animations';
+import { lastValueFrom }                                                         from 'rxjs';
+import { Router }                                                                from '@angular/router';
 
 @Component({
   selector   : 'app-create',
   standalone : true,
-  imports    : [
-    FormsModule,
+  imports: [
     PageDetailHeaderComponent,
     TranslocoDirective,
     TranslocoPipe,
-    MatAutocompleteTrigger,
-    MatButton,
-    MatDivider,
-    MatError,
-    MatFormField,
-    MatHint,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    MatSuffix,
-    NgForOf,
-    QuillEditorComponent,
     ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    QuillEditorComponent,
+    MatError,
+    MatHint,
     BenefitCategorySelector,
-    JsonPipe,
+    MatButton,
     MatProgressSpinner,
-    MatPrefix,
-    AsyncPipe
+    MatInput,
+    MatIcon
   ],
   templateUrl: './create.component.html',
   animations : fuseAnimations,
@@ -57,15 +44,16 @@ export class CreateComponent implements OnInit {
   constructor(
     private readonly _formBuilder: UntypedFormBuilder,
     private readonly _benefitCategoryService: BenefitCategoryService,
+    private readonly _router: Router
   ) {}
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      name       : [ null, [ Validators.required, Validators.minLength(3) ] ],
-      description: [ null, [ Validators.required, Validators.minLength(10) ] ],
-      icon       : [ null, [ Validators.required ] ],
-      image      : [ null ],
-      parent     : [ null ]
+      name       : [ undefined, [ Validators.required, Validators.minLength(3) ] ],
+      description: [ undefined, [ Validators.required, Validators.minLength(10) ] ],
+      icon       : [ undefined, [ Validators.required ] ],
+      image      : [ undefined, [ Validators.required ] ],
+      parent     : [ undefined ]
     });
   }
 
@@ -73,6 +61,21 @@ export class CreateComponent implements OnInit {
     if (this.form.invalid) this.form.markAllAsTouched();
 
     this.form.disable();
-    this._benefitCategoryService.create(this.form.getRawValue());
+    lastValueFrom(this._benefitCategoryService.create(this.form.getRawValue()))
+      .then(() => {
+        this.form.enable();
+        this.form.reset();
+        this._router.navigate([ '/admin/benefits/category' ]);
+      })
+      .catch(() => this.form.enable());
+  }
+
+  public onFileChange(event: Event, controlName: 'icon' | 'image'): void {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.item(0);
+
+    if (!file) return;
+
+    this.form.patchValue({[controlName]: file});
   }
 }

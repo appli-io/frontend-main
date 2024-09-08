@@ -13,8 +13,8 @@
         <form [formGroup]="form" class="w-full">
           <div class="flex flex-col w-full space-y-4">
             <div>
-              <h2 class="text-lg font-medium">Información de la compañía</h2>
-              <span class="text-hint">Los siguientes campos son requeridos para la creación de una compañía.</span>
+              <h2 [innerHtml]="t('field-groups.information')" class="text-lg font-medium"></h2>
+              <span [innerHtml]="t('field-groups.information-description')" class="text-hint"></span>
             </div>
 
             <!-- Name -->
@@ -45,10 +45,33 @@
                 <span>cargando editor...</span>
               }
             </div>
+
+            <div class="w-full flex flex-col">
+              <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
+              <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
+              <input
+                accept=".jpeg,.jpg,.png"
+                class="file-input"
+                formControlName="image"
+                id="file-image"
+                type="file"
+              />
+              <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
+            </div>
           </div>
 
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
+            <!-- Reset -->
+            <button
+              (click)="form.reset()"
+              class="w-full md:w-30 shadow-none"
+              color="default"
+              mat-raised-button
+            >
+              {{ 'actions.reset' | transloco }}
+            </button>
+
             <!-- Save -->
             <button
               (click)="submit()"

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
 
-import { BaseService }        from '@core/interfaces/base-service.interface';
-import { BenefitCategory }    from '@modules/admin/admin/benefits/models/benefit-category';
-import { LayoutEnum }         from '@core/enums/layout.enum';
-import { Selector }           from '@modules/shared/selectors/model/selector';
-import { formDataFromObject } from '@core/utils';
+import { BaseService }                            from '@core/interfaces/base-service.interface';
+import { BenefitCategory, BenefitCategoryMapper } from '@modules/admin/admin/benefits/models/benefit-category';
+import { LayoutEnum }                             from '@core/enums/layout.enum';
+import { Selector }                               from '@modules/shared/selectors/model/selector';
+import { formDataFromObject }                     from '@core/utils';
 
 @Injectable({providedIn: 'root'})
 export class BenefitCategoryService implements BaseService<BenefitCategory> {
@@ -31,15 +31,12 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
   findAll(layout: LayoutEnum = LayoutEnum.FULL): Observable<BenefitCategory[]> {
     return this._httpClient.get<BenefitCategory[]>(this._baseUrl, {params: {layout}})
       .pipe(tap((categories) => {
-        if (layout === LayoutEnum.SELECTOR) {
-          this._selector$.next({
-            categories  : categories.map((category) => ({
-              label : category.name,
-              value : category.id,
-              parent: category.parent
-            })), loading: false
-          });
-          return;
+        switch (layout) {
+          case LayoutEnum.SELECTOR:
+            this._selector$.next({categories: categories.map(BenefitCategoryMapper.toSelector), loading: false});
+            break;
+          default:
+            this._categories$.next(categories);
         }
       }));
   }
@@ -48,10 +45,14 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
     return this._httpClient.get<BenefitCategory>(`${ this._baseUrl }/${ id }`);
   }
 
-  create(data: BenefitCategory): Observable<BenefitCategory> {
-    const formData: FormData = formDataFromObject<BenefitCategory>(data);
+  create(data: any): Observable<BenefitCategory> {
+    try {
+      const formData: FormData = formDataFromObject<BenefitCategory>(data);
 
-    return this._httpClient.post<BenefitCategory>(this._baseUrl, formData);
+      return this._httpClient.post<BenefitCategory>(this._baseUrl, formData);
+    } catch (error) {
+      return throwError(() => new Error('Error creating category'));
+    }
   }
 
   update(data: BenefitCategory): Observable<BenefitCategory> {
@@ -59,6 +60,11 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
   }
 
   delete(id: string): Observable<void> {
-    return this._httpClient.delete<void>(`${ this._baseUrl }/${ id }`);
+    return this._httpClient.delete<void>(`${ this._baseUrl }/${ id }`)
+      .pipe(
+        tap(() => {
+          this._categories$.next(this._categories$.value.filter((category) => category.id !== id));
+        })
+      );
   }
 }

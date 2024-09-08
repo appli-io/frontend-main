@@ -2,12 +2,14 @@ import { Notyf }                   from 'notyf';
 import { mergeMap, Observable }    from 'rxjs';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { inject }                  from '@angular/core';
+import { TranslocoService }        from '@ngneat/transloco';
 
 export abstract class AbstractListComponent<T> {
   public items$: Observable<T[]>;
   abstract columns: Array<keyof T | string>;
   protected _notyf = new Notyf();
   protected confirmationService: FuseConfirmationService = inject(FuseConfirmationService);
+  protected translationService: TranslocoService = inject(TranslocoService);
 
   protected constructor(
     private readonly service: { delete: (id: string) => any },
@@ -20,12 +22,15 @@ export abstract class AbstractListComponent<T> {
 
   delete(item: T) {
     const confirmation = this.confirmationService.open({
-      title  : 'Delete item',
-      message: 'Are you sure you want to delete this item? This action cannot be undone.',
+      title  : this.translationService.translate('modal.delete-confirmation.title'),
+      message: this.translationService.translate('modal.delete-confirmation.message'),
       actions: {
         confirm: {
-          label: 'Delete',
+          label: this.translationService.translate('modal.delete-confirmation.confirm'),
         },
+        cancel : {
+          label: this.translationService.translate('modal.delete-confirmation.cancel'),
+        }
       },
     });
 

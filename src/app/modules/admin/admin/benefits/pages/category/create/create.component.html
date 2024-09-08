@@ -13,8 +13,8 @@
         <form [formGroup]="form" class="w-full">
           <div class="flex flex-col w-full space-y-4">
             <div>
-              <h2 class="text-lg font-medium">Información de la categoría</h2>
-              <span class="text-hint">Los siguientes campos son requeridos para la creación de un beneficio.</span>
+              <h2 [innerHtml]="t('field-groups.information')" class="text-lg font-medium"></h2>
+              <span [innerHtml]="t('field-groups.information-description')" class="text-hint"></span>
             </div>
 
             <!-- Name -->
@@ -50,9 +50,10 @@
               <label class="mat-label" for="file-icon">{{ t('fields.icon') }}*</label>
               <span [innerText]="t('fields.icon-hint')" class="mat-hint"></span>
               <input
+                (change)="onFileChange($event, 'icon')"
+                [value]="form.get('icon').value"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
-                formControlName="icon"
                 id="file-icon"
                 type="file"
               />
@@ -63,9 +64,10 @@
               <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
               <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
               <input
+                (change)="onFileChange($event, 'image')"
+                [value]="form.get('image').value"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
-                formControlName="image"
                 id="file-image"
                 type="file"
               />
@@ -74,7 +76,7 @@
 
             <div>
               <benefit-category-selector
-                [formControl]="form.get('parent')"
+                [formControl]="$any(form.get('parent'))"
                 filterParent="true"
                 formControlName="parent">
               </benefit-category-selector>
@@ -112,7 +114,6 @@
                   <mat-spinner @slideInLeft diameter="20" class="ml-2"></mat-spinner>
                 }
               </span>
-
             </button>
           </div>
         </form>
@@ -120,7 +121,28 @@
 
       <!-- Preview -->
       <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
-        <pre>{{ form.getRawValue() | json }}</pre>
+        <div class="flex flex-col items-center justify-center w-full h-full">
+          <mat-icon class="text-6xl" svgIcon="heroicons_outline:camera"></mat-icon>
+          <span class="text-lg font-medium mt-4">{{ t('preview.title') }}</span>
+          <span class="text-hint">{{ t('preview.description') }}</span>
+
+          <div class="flex flex-col mt-4">
+            <span class="text-sm font-medium">{{ t('fields.name') }}</span>
+            <span class="text-hint">{{ form.get('name').value || 'Sin definir' }}</span>
+
+            <span class="text-sm font-medium mt-2">{{ t('fields.description') }}</span>
+            <span class="text-hint">{{ form.get('description').value || 'Sin definir' }}</span>
+
+            <span class="text-sm font-medium mt-2">{{ t('fields.icon') }}</span>
+            <span class="text-hint">{{ form.get('icon').value || 'Sin definir' }}</span>
+
+            <span class="text-sm font-medium mt-2">{{ t('fields.image') }}</span>
+            <span class="text-hint">{{ form.get('image').value || 'Sin definir' }}</span>
+
+            <span class="text-sm font-medium mt-2">{{ t('fields.parent') }}</span>
+            <span class="text-hint">{{ form.get('parent').value || 'Sin definir' }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

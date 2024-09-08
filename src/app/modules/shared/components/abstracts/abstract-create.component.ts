@@ -1,37 +1,38 @@
-import { Notyf }                   from 'notyf';
-import { mergeMap }                from 'rxjs';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { inject }                  from '@angular/core';
+import { Notyf }                                from 'notyf';
+import { FuseConfirmationService }              from '@fuse/services/confirmation';
+import { inject }                               from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 export abstract class AbstractCreateComponent<T> {
-  abstract columns: Array<keyof T | string>;
-  protected _notyf = new Notyf();
   protected confirmationService: FuseConfirmationService = inject(FuseConfirmationService);
+  protected formBuilder: UntypedFormBuilder = inject(UntypedFormBuilder);
+  protected notyf = new Notyf();
+  protected form: UntypedFormGroup;
 
   protected constructor(
-    private readonly service: { delete: (id: string) => any },
-  ) {}
+    private readonly service: { create: (data: any) => any },
+  ) {
+    this.initForm();
+  }
 
-  abstract edit(item: T): void;
+  abstract initForm(): void;
 
-  delete(item: T) {
-    const confirmation = this.confirmationService.open({
-      title  : 'Delete item',
-      message: 'Are you sure you want to delete this item? This action cannot be undone.',
-      actions: {
-        confirm: {
-          label: 'Delete',
-        },
-      },
-    });
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-    confirmation.afterClosed()
-      .pipe(
-        mergeMap((result) => result === 'confirmed' ? this.service.delete(item['id']) : [])
-      )
-      .subscribe({
-        next : () => this._notyf.success('Item deleted'),
-        error: (error) => this._notyf.error('Error deleting item'),
+    this.form.disable();
+    this.service.create(this.form.getRawValue())
+      .then(() => {
+        this.form.enable();
+        this.form.reset();
+        this.notyf.success('Created successfully');
+      })
+      .catch(() => {
+        this.form.enable();
+        this.notyf.error('Error creating');
       });
   }
 }

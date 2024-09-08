@@ -11,12 +11,10 @@
       <h2 class="flex-1 font-bold text-accent dark:text-accent-50 text-xl">{{ t('list.title') }}</h2>
     </div>
 
-    <ul class="flex flex-wrap justify-center min-w-full gap-x-6 gap-y-8">
-      @for (benefit of benefits; track benefit.id) {
-        <li class="inline-block overflow-hidden relative shadow-lg rounded-2xl text-center cursor-pointer transition-all duration-500 bg-card hover:bg-gray-200 dark:hover:bg-gray-700 hover:-translate-y-4 flex-0 flex-grow-1 basis-[18%] select-none">
-          <benefit-card [category]="benefit"></benefit-card>
-        </li>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (category of categories$ | async; track category.id) {
+        <benefit-card [category]="category" class="text-center"></benefit-card>
       }
-    </ul>
+    </div>
   </div>
 </div>

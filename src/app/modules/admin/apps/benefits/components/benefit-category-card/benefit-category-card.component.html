@@ -1,8 +1,15 @@
-<a [routerLink]="['id', category.id]" class="p-8 flex flex-col justify-center items-center">
-  <img
-    [alt]="category.name"
-    [src]="category.icon.fileUrl"
-    class="w-16 h-16 object-contain mb-2 mx-auto"
-  />
-  <span class="text-blue-950 dark:text-gray-300 text-lg">{{ category.name }}</span>
+<a [routerLink]="['id', category.id]">
+  <fuse-card class="group flex flex-col max-w-80 w-full h-full relative">
+    <div class="relative flex-0">
+      <img
+        [src]="category.image?.fileUrl || 'https://picsum.photos/500/300?random=' + 1"
+        alt="Card cover image"
+        class="h-40 object-cover">
+      <div class="gradient-overlay"></div>
+    </div>
+    <div class="flex-1 px-4 py-6 -mt-4 z-10 flex flex-col">
+      <h2 [title]="category.name" class="text-4xl font-bold leading-tight line-clamp-2">{{ category.name }}</h2>
+      <p [matTooltip]="category.description" class="mt-4 text-secondary line-clamp-4">{{ category.description | deltaToHtml }}</p>
+    </div>
+  </fuse-card>
 </a>

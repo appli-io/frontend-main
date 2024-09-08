@@ -1,6 +1,7 @@
 import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
 import { IFile }       from '@modules/admin/news/domain/interfaces/news.interface';
 import { DateTime }    from 'luxon';
+import { Selector }    from '@modules/shared/selectors/model/selector';
 
 export interface BenefitCategory {
   id?: string;
@@ -20,4 +21,14 @@ export interface BenefitCategory {
   createdAt?: DateTime;
   updatedAt?: DateTime;
   deletedAt?: DateTime;
+}
+
+export class BenefitCategoryMapper {
+  static toSelector(category: BenefitCategory): Selector {
+    return {
+      label : category.name,
+      value : category.id,
+      parent: category.parent
+    };
+  }
 }

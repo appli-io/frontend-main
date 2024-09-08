@@ -48,26 +48,6 @@
   <div class="flex flex-col justify-center md:justify-start w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
     @if (category.subCategories && category.subCategories.length > 0) {
       <h2 class="font-bold text-accent dark:text-accent-50 text-xl">{{ t('subcategory.title-list') }}</h2>
-
-      <div class="flex flex-row flex-wrap justify-start py-8 gap-8">
-        @for (subcategory of category.subCategories; track subcategory.id) {
-          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
-            <subcategory-card [subCategory]="subcategory"></subcategory-card>
-          </div>
-          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
-            <subcategory-card [subCategory]="subcategory"></subcategory-card>
-          </div>
-          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
-            <subcategory-card [subCategory]="subcategory"></subcategory-card>
-          </div>
-          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
-            <subcategory-card [subCategory]="subcategory"></subcategory-card>
-          </div>
-          <div class="inline-block overflow-hidden relative shadow-lg rounded-2xl flex-0 flex-grow-1 basis-full md:basis-[48%] lg:basis-[31%] select-none bg-card">
-            <subcategory-card [subCategory]="subcategory"></subcategory-card>
-          </div>
-        }
-      </div>
     }
 
     <div class="flex flex-col w-full">
