@@ -22,8 +22,12 @@ export class BenefitsService implements BaseService<Benefit> {
     this._benefits$.next(value);
   }
 
-  findAll(layout: LayoutEnum = LayoutEnum.FULL): Observable<Benefit[]> {
-    return this._httpClient.get<Benefit[]>('/api/benefits/benefit', {params: {layout}})
+  findAll(layout: LayoutEnum = LayoutEnum.FULL, query: any = undefined): Observable<Benefit[]> {
+    const params = {layout};
+
+    if (query) Object.assign(params, query);
+
+    return this._httpClient.get<Benefit[]>('/api/benefits/benefit', {params: params})
       .pipe(tap((benefits) => this._benefits$.next(benefits)));
   }
 
@@ -34,7 +38,7 @@ export class BenefitsService implements BaseService<Benefit> {
   create(data: Benefit): Observable<Benefit> {
     const formData: FormData = formDataFromObject<Benefit>(data);
 
-    return this._httpClient.post<Benefit>('/api/benefits/benefit', data);
+    return this._httpClient.post<Benefit>('/api/benefits/benefit', formData);
   }
 
   update(data: Benefit): Observable<Benefit> {

@@ -1,21 +1,31 @@
-import { Notyf }                                from 'notyf';
-import { FuseConfirmationService }              from '@fuse/services/confirmation';
 import { inject }                               from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Router }                               from '@angular/router';
+
+import { TranslocoService } from '@ngneat/transloco';
+import { Notyf }            from 'notyf';
+import { lastValueFrom }    from 'rxjs';
+
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 export abstract class AbstractCreateComponent<T> {
-  protected confirmationService: FuseConfirmationService = inject(FuseConfirmationService);
-  protected formBuilder: UntypedFormBuilder = inject(UntypedFormBuilder);
-  protected notyf = new Notyf();
-  protected form: UntypedFormGroup;
+  protected readonly router: Router = inject(Router);
+  protected readonly formBuilder: UntypedFormBuilder = inject(UntypedFormBuilder);
+  protected readonly translationService: TranslocoService = inject(TranslocoService);
+  protected readonly confirmationService: FuseConfirmationService = inject(FuseConfirmationService);
+  protected readonly notyf = new Notyf();
+  protected readonly form: UntypedFormGroup;
+  private readonly redirectOnSuccess: string;
 
   protected constructor(
     private readonly service: { create: (data: any) => any },
+    private readonly redirectOnSuccessRoute: string,
   ) {
-    this.initForm();
+    this.form = this._initForm();
+    this.redirectOnSuccess = redirectOnSuccessRoute;
   }
 
-  abstract initForm(): void;
+  abstract _initForm(): UntypedFormGroup;
 
   submit(): void {
     if (this.form.invalid) {
@@ -24,15 +34,17 @@ export abstract class AbstractCreateComponent<T> {
     }
 
     this.form.disable();
-    this.service.create(this.form.getRawValue())
+    lastValueFrom(this.service.create(this.form.getRawValue()))
       .then(() => {
         this.form.enable();
         this.form.reset();
-        this.notyf.success('Created successfully');
+        this.notyf.success(this.translationService.translate('notyf-modal.create.success'));
+        this.router.navigate([ this.redirectOnSuccess ]);
       })
       .catch(() => {
         this.form.enable();
         this.notyf.error('Error creating');
-      });
+      })
+      .finally(() => this.form.enable());
   }
 }

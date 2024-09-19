@@ -50,9 +50,9 @@
               <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
               <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
               <input
+                (change)="onFileChange($event)"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
-                formControlName="image"
                 id="file-image"
                 type="file"
               />
@@ -65,6 +65,7 @@
             <!-- Reset -->
             <button
               (click)="form.reset()"
+              type="reset"
               class="w-full md:w-30 shadow-none"
               color="default"
               mat-raised-button

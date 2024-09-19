@@ -153,6 +153,15 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  onFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.item(0);
+
+    if (!file) return;
+
+    this.form.patchValue({image: file});
+  }
+
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

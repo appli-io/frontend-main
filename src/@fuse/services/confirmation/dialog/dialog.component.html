@@ -14,6 +14,7 @@
   <!-- Content -->
   <div
     class="flex flex-auto flex-col items-center p-8 pb-6 sm:flex-row sm:items-start sm:pb-8"
+    [style.padding-bottom]="data.hint ? '0 !important' : 'inherit'"
   >
     <!-- Icon -->
     @if (data.icon.show) {
@@ -52,7 +53,7 @@
         <!-- Title -->
         @if (data.title) {
           <div
-            [innerHTML]="data.title"
+            [innerHTML]="data.title | transloco"
             class="text-xl font-medium leading-6"
           ></div>
         }
@@ -60,13 +61,41 @@
         <!-- Message -->
         @if (data.message) {
           <div
-            [innerHTML]="data.message"
+            [innerHTML]="data.message | transloco"
             class="text-secondary"
           ></div>
         }
       </div>
     }
   </div>
+
+  @if (data.hint) {
+    <div class="flex items-center justify-center px-8 py-4 pb-6">
+      <div
+        class="flex flex-0 items-center justify-center rounded-lg p-2 w-full"
+        [ngClass]="{
+    'bg-primary-100 text-primary-600 dark:bg-primary-600 dark:text-primary-50':
+    data.hint.color === 'primary',
+    'bg-accent-100 text-accent-600 dark:bg-accent-600 dark:text-accent-50':
+    data.hint.color === 'accent',
+    'bg-warn-100 text-warn-600 dark:bg-warn-600 dark:text-warn-50':
+    data.hint.color === 'warn',
+    'bg-gray-100 text-gray-600 dark:bg-gray-600 dark:text-gray-50':
+    data.hint.color === 'basic',
+    'bg-blue-100 text-blue-600 dark:bg-blue-600 dark:text-blue-50':
+    data.hint.color === 'info',
+    'bg-green-100 text-green-500 dark:bg-green-500 dark:text-green-50':
+    data.hint.color === 'success',
+    'bg-amber-100 text-amber-500 dark:bg-amber-500 dark:text-amber-50':
+    data.hint.color === 'warning',
+    'bg-red-100 text-red-600 dark:bg-red-600 dark:text-red-50':
+    data.hint.color === 'error',
+    }"
+        [innerHtml]="data.hint.message | transloco"
+      >
+      </div>
+    </div>
+  }
 
   <!-- Actions -->
   @if (data.actions.confirm.show || data.actions.cancel.show) {
@@ -76,7 +105,7 @@
       <!-- Cancel -->
       @if (data.actions.cancel.show) {
         <button [matDialogClose]="'cancelled'" mat-stroked-button>
-          {{ data.actions.cancel.label }}
+          {{ data.actions.cancel.label | transloco }}
         </button>
       }
 
@@ -87,7 +116,7 @@
           [matDialogClose]="'confirmed'"
           mat-flat-button
         >
-          {{ data.actions.confirm.label }}
+          {{ data.actions.confirm.label | transloco }}
         </button>
       }
     </div>

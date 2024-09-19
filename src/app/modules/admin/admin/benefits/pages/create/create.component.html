@@ -106,9 +106,9 @@
             <div class="w-full">
               <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
               <input
+                (change)="onFileChange($event)"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
-                formControlName="image"
                 id="file-image"
                 type="file"
               />
@@ -167,6 +167,7 @@
               class="w-full md:w-30 shadow-none"
               color="default"
               mat-raised-button
+              type="reset"
             >
               {{ 'actions.reset' | transloco }}
             </button>
@@ -190,6 +191,7 @@
       </div>
     </div>
   </div>
+  <pre>{{ form.getRawValue() | json }}</pre>
 </div>
 
 <mat-autocomplete

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component }                                 from '@angular/core';
-import { TranslocoDirective }                                                 from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoService }                               from '@ngneat/transloco';
 import { PageHeaderComponent }                                                from '@layout/components/page-header/page-header.component';
 import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef } from '@angular/material/table';
 import { MatIcon }                                                            from '@angular/material/icon';
@@ -41,10 +41,28 @@ export class ListComponent extends AbstractListComponent<BenefitCompany> {
 
   constructor(
     private readonly _benefitCompanyService: BenefitCompanyService,
+    readonly translationService: TranslocoService
   ) {
     super(
       _benefitCompanyService,
-      _benefitCompanyService.companies$
+      _benefitCompanyService.companies$,
+      {
+        title  : translationService.translate('admin.benefits.company.delete.title'),
+        message: translationService.translate('admin.benefits.company.delete.message'),
+        hint   : {
+          color  : 'warn',
+          message: translationService.translate('admin.benefits.company.delete.hint'),
+        },
+        actions: {
+          confirm: {
+            label: translationService.translate('actions.delete'),
+          },
+          cancel : {
+            label: translationService.translate('actions.cancel'),
+          }
+        },
+      }
+
     );
   }
 

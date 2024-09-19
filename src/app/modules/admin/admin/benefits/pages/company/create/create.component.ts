@@ -49,14 +49,26 @@ export class CreateComponent extends AbstractCreateComponent<BenefitCompany> {
   constructor(
     private readonly _benefitCompanyService: BenefitCompanyService,
   ) {
-    super(_benefitCompanyService);
+    super(
+      _benefitCompanyService,
+      'admin/benefits/company',
+    );
   }
 
-  initForm() {
-    this.form = this.formBuilder.group({
+  override _initForm() {
+    return this.formBuilder.group({
       description: [ null, [ Validators.required, Validators.minLength(3) ] ],
       name       : [ null, [ Validators.required, Validators.minLength(3) ] ],
       image      : [ null, [ Validators.required ] ],
     });
+  }
+
+  onFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.item(0);
+
+    if (!file) return;
+
+    this.form.patchValue({image: file});
   }
 }

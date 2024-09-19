@@ -51,7 +51,6 @@
               <span [innerText]="t('fields.icon-hint')" class="mat-hint"></span>
               <input
                 (change)="onFileChange($event, 'icon')"
-                [value]="form.get('icon').value"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
                 id="file-icon"
@@ -65,7 +64,6 @@
               <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
               <input
                 (change)="onFileChange($event, 'image')"
-                [value]="form.get('image').value"
                 accept=".jpeg,.jpg,.png"
                 class="file-input"
                 id="file-image"
@@ -93,6 +91,7 @@
             <!-- Reset -->
             <button
               (click)="form.reset()"
+              type="reset"
               class="w-full md:w-30 shadow-none"
               color="default"
               mat-raised-button

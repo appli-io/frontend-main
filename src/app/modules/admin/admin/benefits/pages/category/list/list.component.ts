@@ -1,5 +1,5 @@
 import { Component }                                                          from '@angular/core';
-import { TranslocoDirective }                                                 from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoService }                               from '@ngneat/transloco';
 import { PageHeaderComponent }                                                from '@layout/components/page-header/page-header.component';
 import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef } from '@angular/material/table';
 import { MatIcon }                                                            from '@angular/material/icon';
@@ -43,10 +43,27 @@ export class ListComponent extends AbstractListComponent<BenefitCategory> {
 
   constructor(
     private readonly _benefitCategoryService: BenefitCategoryService,
+    translationService: TranslocoService
   ) {
     super(
       _benefitCategoryService,
-      _benefitCategoryService.categories$
+      _benefitCategoryService.categories$,
+      {
+        title  : translationService.translate('admin.benefits.category.delete.title'),
+        message: translationService.translate('admin.benefits.category.delete.message'),
+        hint   : {
+          color  : 'warn',
+          message: 'admin.benefits.category.delete.hint',
+        },
+        actions: {
+          confirm: {
+            label: translationService.translate('actions.delete'),
+          },
+          cancel : {
+            label: translationService.translate('actions.cancel'),
+          },
+        },
+      }
     );
   }
 

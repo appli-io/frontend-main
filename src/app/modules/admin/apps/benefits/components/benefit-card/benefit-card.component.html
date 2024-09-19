@@ -1,0 +1,18 @@
+<a>
+  <fuse-card class="group flex flex-col max-w-80 w-full relative">
+    <div class="relative">
+      <img
+        [src]="benefit.image?.fileUrl || 'https://picsum.photos/500/300?random=' + index"
+        alt="Card cover image"
+        class="h-50 object-cover">
+      <div class="gradient-overlay"></div>
+    </div>
+    <div class="flex-1 m-8 -mt-8 z-10 text-center">
+      <h5 class="text-sm font-medium leading-none tracking-wide text-primary mb-2">{{ benefit.category?.name | uppercase }}</h5>
+      <h4 class="text-xl font-extrabold leading-tight line-clamp-1">{{ benefit.company?.name }}</h4>
+      <h3 class="text-2xl font-medium text-default leading-tight line-clamp-2">{{ benefit.name }}</h3>
+      <p class="mt-2 text-secondary line-clamp-4">{{ benefit.description | deltaToHtml }}</p>
+    </div>
+    <div class="w-12 mx-8 h-1 my-6 border-t-2"></div>
+  </fuse-card>
+</a>

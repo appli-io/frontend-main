@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-import { LayoutEnum }     from '@core/enums/layout.enum';
-import { BaseService }    from '@core/interfaces/base-service.interface';
-import { BenefitCompany } from '@modules/admin/admin/benefits/models/benefit-company';
+import { LayoutEnum }         from '@core/enums/layout.enum';
+import { BaseService }        from '@core/interfaces/base-service.interface';
+import { BenefitCompany }     from '@modules/admin/admin/benefits/models/benefit-company';
+import { formDataFromObject } from '@core/utils';
 
 @Injectable({providedIn: 'root'})
 export class BenefitCompanyService implements BaseService<BenefitCompany> {
@@ -28,7 +29,9 @@ export class BenefitCompanyService implements BaseService<BenefitCompany> {
   }
 
   create(data: BenefitCompany): Observable<BenefitCompany> {
-    return this._httpClient.post<BenefitCompany>(this._baseUrl, data);
+    const formData = formDataFromObject(data);
+
+    return this._httpClient.post<BenefitCompany>(this._baseUrl, formData);
   }
 
   update(data: BenefitCompany): Observable<BenefitCompany> {
@@ -36,6 +39,11 @@ export class BenefitCompanyService implements BaseService<BenefitCompany> {
   }
 
   delete(id: string): Observable<void> {
-    return this._httpClient.delete<void>(`${ this._baseUrl }/${ id }`);
+    return this._httpClient.delete<void>(`${ this._baseUrl }/${ id }`)
+      .pipe(
+        tap(() =>
+          this._companies$.next(this._companies$.value.filter((company) => company.id !== id))
+        )
+      );
   }
 }

@@ -8,8 +8,8 @@ import { merge }                           from 'lodash-es';
 export class FuseConfirmationService {
   private _matDialog: MatDialog = inject(MatDialog);
   private _defaultConfig: FuseConfirmationConfig = {
-    title  : 'Confirm action',
-    message: 'Are you sure you want to confirm this action?',
+    title  : 'modal.confirmation-default.title',
+    message: 'modal.confirmation-default.message',
     icon   : {
       show: true,
       name: 'heroicons_outline:exclamation-triangle',
@@ -18,12 +18,12 @@ export class FuseConfirmationService {
     actions: {
       confirm: {
         show: true,
-        label: 'Confirm',
+        label: 'modal.confirmation-default.confirm',
         color: 'warn',
       },
       cancel : {
         show: true,
-        label: 'Cancel',
+        label: 'modal.confirmation-default.cancel',
       },
     },
     dismissible: false,

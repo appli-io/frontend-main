@@ -3,20 +3,21 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
 
-import { BaseService }                            from '@core/interfaces/base-service.interface';
-import { BenefitCategory, BenefitCategoryMapper } from '@modules/admin/admin/benefits/models/benefit-category';
-import { LayoutEnum }                             from '@core/enums/layout.enum';
-import { Selector }                               from '@modules/shared/selectors/model/selector';
-import { formDataFromObject }                     from '@core/utils';
+import { BaseService }        from '@core/interfaces/base-service.interface';
+import { BenefitCategory }    from '@modules/admin/admin/benefits/models/benefit-category';
+import { LayoutEnum }         from '@core/enums/layout.enum';
+import { formDataFromObject } from '@core/utils';
+import { Benefit }            from '@modules/admin/admin/benefits/models/benefit';
 
 @Injectable({providedIn: 'root'})
 export class BenefitCategoryService implements BaseService<BenefitCategory> {
-  private _baseUrl = 'api/benefits/category';
+  private _baseUrl = 'api/benefit-category';
   private _categories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
-  private _selector$: BehaviorSubject<{ categories: Selector[], loading: boolean }> = new BehaviorSubject<{
-    categories: Selector[],
-    loading: boolean
-  }>({categories: [], loading: true});
+  private _selectedCategory$: BehaviorSubject<BenefitCategory> = new BehaviorSubject<BenefitCategory>(null);
+
+  get selectedCategory$(): Observable<BenefitCategory> {
+    return this._selectedCategory$.asObservable();
+  }
 
   constructor(private readonly _httpClient: HttpClient) { }
 
@@ -24,16 +25,17 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
     return this._categories$.asObservable();
   }
 
-  get selector$(): Observable<{ categories: Selector[], loading: boolean }> {
-    return this._selector$.asObservable();
+  private _selectedCategoryBenefits$: BehaviorSubject<Benefit[]> = new BehaviorSubject<Benefit[]>([]);
+
+  get selectedCategoryBenefits$(): Observable<Benefit[]> {
+    return this._selectedCategoryBenefits$.asObservable();
   }
 
-  findAll(layout: LayoutEnum = LayoutEnum.FULL): Observable<BenefitCategory[]> {
-    return this._httpClient.get<BenefitCategory[]>(this._baseUrl, {params: {layout}})
+  findAll(layout: LayoutEnum = LayoutEnum.FULL, ...args: any): Observable<BenefitCategory[]> {
+    return this._httpClient.get<BenefitCategory[]>(this._baseUrl, {params: {layout, ...args as any}})
       .pipe(tap((categories) => {
         switch (layout) {
           case LayoutEnum.SELECTOR:
-            this._selector$.next({categories: categories.map(BenefitCategoryMapper.toSelector), loading: false});
             break;
           default:
             this._categories$.next(categories);
@@ -42,7 +44,13 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
   }
 
   findOne(id: string): Observable<BenefitCategory> {
-    return this._httpClient.get<BenefitCategory>(`${ this._baseUrl }/${ id }`);
+    return this._httpClient.get<BenefitCategory>(`${ this._baseUrl }/${ id }`)
+      .pipe(tap((category) => this._selectedCategory$.next(category)));
+  }
+
+  findOneBenefits(id: string): Observable<Benefit[]> {
+    return this._httpClient.get<Benefit[]>(`${ this._baseUrl }/${ id }/benefits`)
+      .pipe(tap((benefits) => this._selectedCategoryBenefits$.next(benefits)));
   }
 
   create(data: any): Observable<BenefitCategory> {

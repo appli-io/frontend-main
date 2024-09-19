@@ -1,9 +1,10 @@
-import { NgClass }                              from '@angular/common';
+import { NgClass, NgStyle }                     from '@angular/common';
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule }                      from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule }     from '@angular/material/dialog';
 import { MatIconModule }                        from '@angular/material/icon';
 import { FuseConfirmationConfig }               from '@fuse/services/confirmation/confirmation.types';
+import { TranslocoPipe }                        from '@ngneat/transloco';
 
 @Component({
   selector   : 'fuse-confirmation-dialog',
@@ -25,7 +26,7 @@ import { FuseConfirmationConfig }               from '@fuse/services/confirmatio
   ],
   encapsulation: ViewEncapsulation.None,
   standalone : true,
-  imports    : [ MatButtonModule, MatDialogModule, MatIconModule, NgClass ],
+  imports: [ MatButtonModule, MatDialogModule, MatIconModule, NgClass, NgStyle, TranslocoPipe ],
 })
 export class FuseConfirmationDialogComponent {
   data: FuseConfirmationConfig = inject(MAT_DIALOG_DATA);

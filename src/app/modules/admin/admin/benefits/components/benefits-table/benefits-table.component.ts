@@ -3,7 +3,7 @@ import { MatSort, MatSortHeader, Sort }                                         
 import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef }         from '@angular/material/table';
 
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
-import { Observable }                           from 'rxjs';
+import { lastValueFrom, Observable }            from 'rxjs';
 
 import { trackByFn }                            from '@libs/ui/utils/utils';
 import { Benefit }                              from '@modules/admin/admin/benefits/models/benefit';
@@ -13,6 +13,7 @@ import { MatIconButton }                        from '@angular/material/button';
 import { MatTooltip }                           from '@angular/material/tooltip';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { FuseConfirmationService }              from '../../../../../../../@fuse/services/confirmation';
+import { BenefitsService }                      from '@modules/admin/admin/benefits/services/benefits.service';
 
 @Component({
   selector       : 'benefit-table',
@@ -53,7 +54,8 @@ export class BenefitsTableComponent {
 
   constructor(
     private readonly _confirmationService: FuseConfirmationService,
-    private readonly _translateService: TranslocoService
+    private readonly _translateService: TranslocoService,
+    private readonly _benefitService: BenefitsService
   ) {}
 
   openActions({$event, row}: { $event: MouseEvent, row: Benefit }) {
@@ -61,7 +63,7 @@ export class BenefitsTableComponent {
     console.log('Action', row);
   }
 
-  delete(benefitId: string) {
+  delete(benefit: Benefit) {
     const confirmation = this._confirmationService.open({
       title  : this._translateService.translate('admin.benefits.delete.title'),
       message: this._translateService.translate('admin.benefits.delete.message'),
@@ -70,6 +72,13 @@ export class BenefitsTableComponent {
           label: this._translateService.translate('admin.benefits.delete.delete'),
         },
       },
+    });
+
+    confirmation.afterClosed().subscribe((result) => {
+      console.log('Result', result);
+      if (result === 'confirmed') {
+        lastValueFrom(this._benefitService.delete(benefit.id));
+      }
     });
   }
 }

@@ -6,6 +6,10 @@ export interface FuseConfirmationConfig {
     name?: string;
     color?: 'primary' | 'accent' | 'warn' | 'basic' | 'info' | 'success' | 'warning' | 'error';
   };
+  hint?: {
+    color?: 'primary' | 'accent' | 'warn' | 'basic' | 'info' | 'success' | 'warning' | 'error';
+    message?: string;
+  };
   actions?: {
     confirm?: {
       show?: boolean;

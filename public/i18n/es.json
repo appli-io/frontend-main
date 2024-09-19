@@ -160,7 +160,8 @@
     "description" : "Desde programas de bienestar y salud hasta descuentos y oportunidades de desarrollo profesional, nuestra empresa se preocupa por tu bienestar y crecimiento personal. Explora los beneficios disponibles y aprovecha al máximo tu experiencia laboral con nosotros.",
     "no-content" : "No hay beneficios disponibles para mostrar en este momento",
     "list" : {
-      "title" : "Lista de Beneficios"
+      "title" : "Lista de Beneficios",
+      "main-categories" : "Principales Categorías"
     },
     "category-detail" : {
       "title" : "Detalle de la Categoría",
@@ -514,6 +515,15 @@
             "image-hint" : "Imagen que se mostrará en el detalle de la categoría",
             "save" : "Crear"
           }
+        },
+        "delete" : {
+          "title" : "Eliminar Categoría",
+          "message" : "¿Estás seguro de que deseas eliminar esta categoría? <span class=\"font-medium\">No podrás deshacer esta acción.</span>",
+          "hint" : "<span class=\"font-medium\">Todos los beneficios asociados a esta categoría serán eliminados.</span>",
+          "cancel" : "Cancelar",
+          "delete" : "Eliminar",
+          "success" : "La categoría ha sido eliminada con éxito",
+          "error" : "Se ha producido un error al eliminar la categoría"
         }
       },
       "company" : {
@@ -554,6 +564,15 @@
             "image-hint" : "Se mostrará en el resumen y detalle del beneficio.",
             "save" : "Crear"
           }
+        },
+        "delete" : {
+          "title" : "Eliminar Empresa",
+          "message" : "¿Estás seguro de que deseas eliminar esta empresa? <span class=\"font-medium\">No podrás deshacer esta acción.</span>",
+          "hint" : "<span class=\"font-medium\">Todos los beneficios asociados a esta empresa serán eliminados.</span>",
+          "cancel" : "Cancelar",
+          "delete" : "Eliminar",
+          "success" : "La empresa ha sido eliminada con éxito",
+          "error" : "Se ha producido un error al eliminar la empresa"
         }
       }
     }
@@ -627,11 +646,23 @@
   "Project" : "Proyecto",
   "Analytics" : "Analítica",
   "modal" : {
+    "confirmation-default" : {
+      "title" : "Confirmación de acción",
+      "message" : "¿Estás seguro de que deseas realizar esta acción?",
+      "cancel" : "Cancelar",
+      "confirm" : "Confirmar"
+    },
     "delete-confirmation" : {
       "title" : "Eliminar",
       "message" : "¿Estás seguro de que deseas eliminar este elemento?, <span class=\"font-medium\">No podrás deshacer esta acción.</span>",
       "cancel" : "Cancelar",
       "confirm" : "Eliminar"
+    }
+  },
+  "notyf-modal" : {
+    "create" : {
+      "success" : "Creación exitosa",
+      "error" : "Error al crear"
     }
   }
 }

@@ -17,6 +17,7 @@ import { MatIconButton }                           from '@angular/material/butto
 import { MatInput }                                from '@angular/material/input';
 import { displayWithFn, filterByValue }            from '@core/utils';
 import { MatProgressSpinner }                      from '@angular/material/progress-spinner';
+import { BenefitCategoryMapper }                   from '@modules/admin/admin/benefits/models/benefit-category';
 
 @Component({
   selector   : 'benefit-category-selector',
@@ -73,15 +74,14 @@ export class BenefitCategorySelector implements ControlValueAccessor, OnInit, On
   }
 
   ngOnInit() {
-    this._benefitCategoryService.selector$
-      .subscribe(data => {
-        const {loading, categories} = data;
+    this._benefitCategoryService.findAll(LayoutEnum.SELECTOR)
+      .subscribe(categories => {
         // remove categories that have parent
         const categoriesFiltered = this.filterParent ? categories.filter(category => !category.parent) : categories;
 
-        this.loading = loading;
-        this.categories = categoriesFiltered;
-        this._categoriesFiltered$.next(categoriesFiltered);
+        this.loading = false;
+        this.categories = categoriesFiltered.map(BenefitCategoryMapper.toSelector);
+        this._categoriesFiltered$.next(this.categories);
       });
   }
 
