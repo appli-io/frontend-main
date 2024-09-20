@@ -25,8 +25,10 @@ export class BenefitCategoriesListComponent {
   constructor() {
     firstValueFrom(this.categories$).then((categories: BenefitCategory[]) => {
       if (this._route.snapshot.queryParams.category) {
-        this.selectedCategory = categories.find((category: BenefitCategory) => category.subCategories.some((subCategory: BenefitCategory) => subCategory.id === this._route.snapshot.queryParams.category));
-        this.selectSubCategory(this.selectedCategory);
+        const selectedCategory = categories.find((category: BenefitCategory) => category.subCategories.some((subCategory: BenefitCategory) => subCategory.id === this._route.snapshot.queryParams.category));
+
+        this.selectedCategory = selectedCategory;
+        this.selectSubCategory(selectedCategory);
       } else {
         this.selectedCategory = this._route.snapshot.params.id ? categories.find((category: BenefitCategory) => category.id === this._route.snapshot.params.id) : categories[0];
       }

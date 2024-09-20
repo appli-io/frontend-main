@@ -1,5 +1,5 @@
 import { Component, inject }                   from '@angular/core';
-import { ActivatedRoute, RouterLink }          from '@angular/router';
+import { RouterLink }                          from '@angular/router';
 import { MatDivider }                          from '@angular/material/divider';
 import { MatIcon }                             from '@angular/material/icon';
 import { MatAnchor, MatButton, MatIconAnchor } from '@angular/material/button';
@@ -48,5 +48,4 @@ export class CategoryDetailComponent {
   private readonly _benefitCategoryService: BenefitCategoryService = inject(BenefitCategoryService);
   public category$: Observable<BenefitCategory> = this._benefitCategoryService.selectedCategory$;
   public benefits$: Observable<Benefit[]> = this._benefitCategoryService.selectedCategoryBenefits$;
-  private readonly _route: ActivatedRoute = inject(ActivatedRoute);
 }

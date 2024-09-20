@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { BenefitCategoryService }         from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { inject }                         from '@angular/core';
 import { LayoutEnum }                     from '@core/enums/layout.enum';
+import { BenefitsService }                from '@modules/admin/admin/benefits/services/benefits.service';
 
 export default [
   {
@@ -14,6 +15,13 @@ export default [
       {
         path         : '',
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
+      },
+      {
+        path         : 'id/:id',
+        resolve      : {
+          benefit: (route: ActivatedRouteSnapshot) => inject(BenefitsService).findOne(route.params.id)
+        },
+        loadComponent: () => import('./pages/benefit-detail/benefit-detail.component').then(m => m.BenefitDetailComponent)
       },
       {
         path   : 'category/:id',

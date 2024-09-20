@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
 
-import { BaseService }        from '@core/interfaces/base-service.interface';
-import { BenefitCategory }    from '@modules/admin/admin/benefits/models/benefit-category';
-import { LayoutEnum }         from '@core/enums/layout.enum';
-import { formDataFromObject } from '@core/utils';
-import { Benefit }            from '@modules/admin/admin/benefits/models/benefit';
+import { BaseService }             from '@core/interfaces/base-service.interface';
+import { BenefitCategory }         from '@modules/admin/admin/benefits/models/benefit-category';
+import { LayoutEnum }              from '@core/enums/layout.enum';
+import { formDataFromObject }      from '@core/utils';
+import { Benefit }                 from '@modules/admin/admin/benefits/models/benefit';
+import { FuseSplashScreenService } from '../../../../../../@fuse/services/splash-screen';
 
 @Injectable({providedIn: 'root'})
 export class BenefitCategoryService implements BaseService<BenefitCategory> {
@@ -15,11 +16,11 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
   private _categories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
   private _selectedCategory$: BehaviorSubject<BenefitCategory> = new BehaviorSubject<BenefitCategory>(null);
 
+  constructor(private readonly _httpClient: HttpClient, private readonly _ss: FuseSplashScreenService) { }
+
   get selectedCategory$(): Observable<BenefitCategory> {
     return this._selectedCategory$.asObservable();
   }
-
-  constructor(private readonly _httpClient: HttpClient) { }
 
   get categories$(): Observable<BenefitCategory[]> {
     return this._categories$.asObservable();
@@ -45,10 +46,14 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
 
   findOne(id: string): Observable<BenefitCategory> {
     return this._httpClient.get<BenefitCategory>(`${ this._baseUrl }/${ id }`)
-      .pipe(tap((category) => this._selectedCategory$.next(category)));
+      .pipe(tap((category) => {
+        this._selectedCategory$.next(category);
+      }));
   }
 
   findOneBenefits(id: string): Observable<Benefit[]> {
+    this._selectedCategoryBenefits$.next(undefined);
+
     return this._httpClient.get<Benefit[]>(`${ this._baseUrl }/${ id }/benefits`)
       .pipe(tap((benefits) => this._selectedCategoryBenefits$.next(benefits)));
   }
