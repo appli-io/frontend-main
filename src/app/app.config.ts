@@ -1,12 +1,17 @@
-import { provideHttpClient }                                                                                    from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject }                        from '@angular/core';
+import { provideHttpClient }                                                             from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS }                                                 from '@angular/material/core';
+import { LuxonDateAdapter }                                                              from '@angular/material-luxon-adapter';
+import { provideAnimations }                                                             from '@angular/platform-browser/animations';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS
-}                                                                                                               from '@angular/material/core';
-import { LuxonDateAdapter }                                                                                     from '@angular/material-luxon-adapter';
-import { provideAnimations }                                                                                    from '@angular/platform-browser/animations';
-import { PreloadAllModules, provideRouter, Router, withInMemoryScrolling, withPreloading, withViewTransitions } from '@angular/router';
+  PreloadAllModules,
+  provideRouter,
+  Router,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+  withPreloading,
+  withViewTransitions
+}                                                                                        from '@angular/router';
 
 import { IonicStorageModule }                                 from '@ionic/storage-angular';
 import { provideTransloco, TranslocoService }                 from '@ngneat/transloco';
@@ -57,8 +62,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     provideRouter(appRoutes,
+      withComponentInputBinding(),
       withPreloading(PreloadAllModules),
-      withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
+      withInMemoryScrolling({scrollPositionRestoration: 'disabled'}),
       withViewTransitions()
     ),
     importProvidersFrom(
