@@ -6,7 +6,6 @@
         (click)="selectedCategory = category"
         [routerLink]="['/apps/benefits/category', category.id]"
         [routerLinkActive]="'border-primary text-primary border-2'"
-        [routerLinkActiveOptions]="{paths: 'subset', fragment: 'ignored', matrixParams: 'ignored', queryParams: 'subset'}"
         class="shrink-0 w-24 h-24 p-4 bg-card shadow rounded-lg flex flex-col justify-center items-center border">
         <img [src]="category.icon.fileUrl" class="aspect-square object-contain w-10 drop-shadow">
         <span [innerText]="category.name" class="font-extrabold mt-2 uppercase"></span>
@@ -15,9 +14,11 @@
   }
 </div>
 <div class="w-full flex gap-4 overflow-x-auto p-2">
-  @if (selectedCategory$ | async; as selectedCategory) {
-    @for (category of selectedCategory.subCategories; track category.id) {
-      <ng-container *ngTemplateOutlet="subCategoryTemplate; context: {$implicit: category}"></ng-container>
+  @if (categoryId) {
+    @if (selectedCategory$ | async; as selectedCategory) {
+      @for (category of selectedCategory?.subCategories; track category.id) {
+        <ng-container *ngTemplateOutlet="subCategoryTemplate; context: {$implicit: category}"></ng-container>
+      }
     }
   }
 </div>

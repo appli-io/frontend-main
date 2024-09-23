@@ -21,11 +21,50 @@
 
     <benefit-categories-list class="w-full"></benefit-categories-list>
 
-    <h2 class="flex-1 font-bold text-5xl self-center mt-4">{{ t('list.main-categories') }}</h2>
+    <h2 class="flex-1 font-bold text-5xl self-center mt-4">{{ t('list.main-categories.title') }}</h2>
     <div class="w-full">
-      <div class="flex flex-row gap-6 snap-x snap-mandatory md:snap-none w-full overflow-x-auto rounded-2xl p-2">
-        @for (category of categories$ | async; track category.id) {
-          <benefit-category-card [category]="category" class="text-center snap-center shrink-0 md:shrink"></benefit-category-card>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-start gap-8 w-full rounded-2xl p-2">
+        @if (mostViewedCategories | async; as categories) {
+          @if (categories.length > 0) {
+            @for (category of categories; track category.id) {
+              <benefit-category-card [category]="category" class="text-center snap-center shrink-0 md:shrink"></benefit-category-card>
+            }
+          } @else {
+            <div class="col-span-3 flex flex-col flex-wrap items-center justify-center gap-2 w-full">
+              <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="w-12 h-12 first text-primary-500"></mat-icon>
+              <div class="text-center">
+                <p class="text-lg font-semibold">{{ t('list.main-categories.no-content') }}</p>
+                <p class="text-sm text-secondary">{{ t('list.main-categories.no-content-description') }}</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <h2 class="flex-1 font-bold text-5xl self-center mt-4">{{ t('list.main-benefits.title') }}</h2>
+    <div class="w-full">
+      <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid gap-8 py-8 justify-items-start">
+        @if (mostViewedBenefits | async; as benefits) {
+          @if (benefits.length) {
+            @for (benefit of benefits; track benefit.id) {
+              <a [routerLink]="['/apps/benefits/id', benefit.id]">
+                <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
+              </a>
+            }
+          } @else {
+            <div class="col-span-3 flex flex-col flex-wrap items-center justify-center gap-2 w-full">
+              <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="w-12 h-12 first text-primary-500"></mat-icon>
+              <div class="text-center">
+                <p class="text-lg font-semibold">{{ t('list.main-benefits.no-content') }}</p>
+                <p class="text-sm text-secondary">{{ t('list.main-benefits.no-content-description') }}</p>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="flex flex-row flex-wrap justify-center gap-8">
+            <mat-spinner class="w-12 h-12"></mat-spinner>
+          </div>
         }
       </div>
     </div>

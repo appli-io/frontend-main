@@ -161,7 +161,16 @@
     "no-content" : "No hay beneficios disponibles para mostrar en este momento",
     "list" : {
       "title" : "Lista de Beneficios",
-      "main-categories" : "Principales Categorías"
+      "main-categories" : {
+        "title" : "Categorías destacadas",
+        "no-content" : "Sin categorías",
+        "no-content-description" : "No hay categorías disponibles para mostrar en este momento."
+      },
+      "main-benefits" : {
+        "title" : "Beneficios destacados",
+        "no-content" : "Sin beneficios",
+        "no-content-description" : "No hay beneficios disponibles para mostrar en este momento."
+      }
     },
     "category-detail" : {
       "title" : "Detalle de la Categoría",
@@ -172,6 +181,13 @@
       },
       "benefits" : {
         "title-list" : "Lista de Beneficios"
+      }
+    },
+    "benefit-detail" : {
+      "main-benefits" : {
+        "title" : "Beneficios destacados",
+        "no-content" : "Sin beneficios",
+        "no-content-description" : "No hay beneficios disponibles para mostrar en este momento."
       }
     }
   },

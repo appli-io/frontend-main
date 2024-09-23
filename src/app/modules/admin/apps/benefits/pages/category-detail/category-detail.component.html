@@ -43,9 +43,8 @@
 
     <!-- Benefits -->
     <div class="flex flex-col justify-center md:justify-start w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
-      <benefit-categories-list></benefit-categories-list>
+      <benefit-categories-list [categoryId]="categoryId"></benefit-categories-list>
       <div class="flex flex-col w-full">
-        <!-- Title -->
         <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid gap-8 py-8 justify-items-start">
           @if (benefits$ | async; as benefits) {
             @if (benefits.length) {
@@ -53,8 +52,6 @@
                 <a [routerLink]="['/apps/benefits/id', benefit.id]">
                   <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
                 </a>
-                <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
-                <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
               }
             } @else {
               <div class="col-span-3 flex flex-col flex-wrap items-center justify-center gap-2 w-full">

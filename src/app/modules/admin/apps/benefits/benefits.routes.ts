@@ -17,17 +17,17 @@ export default [
         loadComponent: () => import('./pages/list/list.component').then(m => m.ListComponent)
       },
       {
-        path         : 'id/:id',
+        path         : 'id/:benefitId',
         resolve      : {
-          benefit: (route: ActivatedRouteSnapshot) => inject(BenefitsService).findOne(route.params.id)
+          benefit: (route: ActivatedRouteSnapshot) => inject(BenefitsService).findOne(route.params.benefitId)
         },
         loadComponent: () => import('./pages/benefit-detail/benefit-detail.component').then(m => m.BenefitDetailComponent)
       },
       {
-        path   : 'category/:id',
+        path   : 'category/:categoryId',
         resolve: {
-          category: (route: ActivatedRouteSnapshot) => inject(BenefitCategoryService).findOne(route.queryParams.category ? route.queryParams.category : route.params.id),
-          benefits: (route: ActivatedRouteSnapshot) => inject(BenefitCategoryService).findOneBenefits(route.queryParams.category ? route.queryParams.category : route.params.id)
+          category: (route: ActivatedRouteSnapshot) => inject(BenefitCategoryService).findOne(route.queryParams.category ? route.queryParams.category : route.params.categoryId),
+          benefits: (route: ActivatedRouteSnapshot) => inject(BenefitCategoryService).findOneBenefits(route.queryParams.category ? route.queryParams.category : route.params.categoryId)
         },
         loadComponent: () => import('./pages/category-detail/category-detail.component').then(m => m.CategoryDetailComponent)
       }

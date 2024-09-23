@@ -1,4 +1,4 @@
-import { Component, inject }                            from '@angular/core';
+import { Component, inject, Input }                     from '@angular/core';
 import { BenefitCategoryService }                       from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { AsyncPipe, JsonPipe, NgTemplateOutlet }        from '@angular/common';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
@@ -18,6 +18,7 @@ import { BenefitCategory }                              from '@modules/admin/adm
   templateUrl: './benefit-categories-list.component.html'
 })
 export class BenefitCategoriesListComponent {
+  @Input('categoryId') categoryId: string;
   private _route: ActivatedRoute = inject(ActivatedRoute);
   private _benefitCategoryService: BenefitCategoryService = inject(BenefitCategoryService);
   public categories$ = this._benefitCategoryService.categories$;
@@ -42,6 +43,10 @@ export class BenefitCategoriesListComponent {
   }
 
   set selectedCategory(category: BenefitCategory) {
+    if (category.id === this.categoryId) {
+      firstValueFrom(this._benefitCategoryService.findOne(category.id)).then();
+      firstValueFrom(this._benefitCategoryService.findOneBenefits(category.id)).then();
+    }
     this._selectedCategory$.next(category);
   }
 

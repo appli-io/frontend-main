@@ -1,4 +1,4 @@
-import { Component, inject }                   from '@angular/core';
+import { Component, inject, Input, OnDestroy } from '@angular/core';
 import { RouterLink }                          from '@angular/router';
 import { MatDivider }                          from '@angular/material/divider';
 import { MatIcon }                             from '@angular/material/icon';
@@ -44,8 +44,14 @@ import { BenefitCategoryService }         from '@modules/admin/admin/benefits/se
   ],
   templateUrl: './category-detail.component.html'
 })
-export class CategoryDetailComponent {
+export class CategoryDetailComponent implements OnDestroy {
+  @Input('categoryId') categoryId: string;
   private readonly _benefitCategoryService: BenefitCategoryService = inject(BenefitCategoryService);
   public category$: Observable<BenefitCategory> = this._benefitCategoryService.selectedCategory$;
   public benefits$: Observable<Benefit[]> = this._benefitCategoryService.selectedCategoryBenefits$;
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
+    this._benefitCategoryService.removeSelectedCategory();
+  }
 }

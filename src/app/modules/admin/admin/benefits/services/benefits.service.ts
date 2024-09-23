@@ -48,4 +48,9 @@ export class BenefitsService implements BaseService<Benefit> {
   delete(id: string): Observable<void> {
     return this._httpClient.delete<void>(`/api/benefits/benefit/${ id }`);
   }
+
+  // Custom methods
+  findMostViewed() {
+    return this._httpClient.get<Benefit[]>('/api/benefits/benefit/most-viewed', {params: {limit: 3}});
+  }
 }

@@ -80,4 +80,13 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
         })
       );
   }
+
+  findMostViewed() {
+    return this._httpClient.get<BenefitCategory[]>(`${ this._baseUrl }/most-viewed`, {params: {limit: 3}});
+  }
+
+  removeSelectedCategory() {
+    this._selectedCategory$.next(undefined);
+    console.log(this._selectedCategory$.value);
+  }
 }
