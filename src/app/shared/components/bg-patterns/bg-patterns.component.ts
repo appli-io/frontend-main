@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BgPatternType }                             from '@modules/shared/types/bg-pattern.type';
+import { BgPatternType }                             from '../../types/bg-pattern.type';
 
 @Component({
   selector       : 'bg-patterns',

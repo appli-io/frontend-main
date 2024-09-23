@@ -1,6 +1,6 @@
 import { Routes }           from '@angular/router';
-import { ProfileComponent } from '@modules/admin/profile/profile.component';
-import { profileResolver }  from '@modules/admin/profile/resolver/profile.resolver';
+import { ProfileComponent } from '@modules/admin/user/profile/profile.component';
+import { profileResolver }  from '@modules/admin/user/profile/resolver/profile.resolver';
 
 export default [
   {

@@ -1,6 +1,6 @@
 import { Component, OnInit }                                                     from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { PageDetailHeaderComponent }                                             from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { PageDetailHeaderComponent }                                             from '../../../../../../../shared/components/page-detail-header/page-detail-header.component';
 import { TranslocoDirective, TranslocoPipe }                                     from '@ngneat/transloco';
 import { MatButton }                                                             from '@angular/material/button';
 import { MatError, MatFormField, MatHint, MatLabel }                             from '@angular/material/form-field';
@@ -8,7 +8,7 @@ import { MatIcon }                                                              
 import { MatInput }                                                              from '@angular/material/input';
 import { QuillEditorComponent }                                                  from 'ngx-quill';
 import { SIMPLE_QUILL_EDITOR_MODULES }                                           from '@core/constants';
-import { BenefitCategorySelector }                                               from '@modules/shared/selectors/components/benefit-categories-selector/benefit-category-selector.component';
+import { BenefitCategorySelector }                                               from '../../../../../../../shared/selectors/components/benefit-categories-selector/benefit-category-selector.component';
 import { BenefitCategoryService }                                                from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { fuseAnimations }                                                        from '../../../../../../../../@fuse/animations';

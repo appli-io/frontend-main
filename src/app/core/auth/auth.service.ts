@@ -5,7 +5,7 @@ import { UserService }                                                          
 import { catchError, lastValueFrom, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { ICompany }                                                                   from '@core/domain/interfaces/company.interface';
 import { CreateUserDto }                                                              from '@core/auth/domain/create-user.dto';
-import { IUser }                                                                      from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }                                                                      from '@modules/admin/user/profile/interfaces/user.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {

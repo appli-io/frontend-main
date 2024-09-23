@@ -1,7 +1,7 @@
 import { CompanyUser } from '@modules/admin/admin/users/model/company-user.model';
 import { IFile }       from '@modules/admin/news/domain/interfaces/news.interface';
 import { DateTime }    from 'luxon';
-import { Selector }    from '@modules/shared/selectors/model/selector';
+import { Selector }    from '../../../../../shared/selectors/model/selector';
 
 export interface BenefitCategory {
   id?: string;

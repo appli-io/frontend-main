@@ -6,7 +6,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Notyf }            from 'notyf';
 import { lastValueFrom }    from 'rxjs';
 
-import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { FuseConfirmationService } from '../../../../@fuse/services/confirmation';
 
 export abstract class AbstractCreateComponent<T> {
   protected readonly router: Router = inject(Router);

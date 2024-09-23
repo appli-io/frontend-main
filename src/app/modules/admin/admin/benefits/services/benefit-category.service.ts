@@ -3,12 +3,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
 
-import { BaseService }             from '@core/interfaces/base-service.interface';
-import { BenefitCategory }         from '@modules/admin/admin/benefits/models/benefit-category';
-import { LayoutEnum }              from '@core/enums/layout.enum';
-import { formDataFromObject }      from '@core/utils';
-import { Benefit }                 from '@modules/admin/admin/benefits/models/benefit';
-import { FuseSplashScreenService } from '../../../../../../@fuse/services/splash-screen';
+import { BaseService }        from '@core/interfaces/base-service.interface';
+import { BenefitCategory }    from '@modules/admin/admin/benefits/models/benefit-category';
+import { LayoutEnum }         from '@core/enums/layout.enum';
+import { formDataFromObject } from '@core/utils';
+import { Benefit }            from '@modules/admin/admin/benefits/models/benefit';
 
 @Injectable({providedIn: 'root'})
 export class BenefitCategoryService implements BaseService<BenefitCategory> {
@@ -16,7 +15,7 @@ export class BenefitCategoryService implements BaseService<BenefitCategory> {
   private _categories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
   private _selectedCategory$: BehaviorSubject<BenefitCategory> = new BehaviorSubject<BenefitCategory>(null);
 
-  constructor(private readonly _httpClient: HttpClient, private readonly _ss: FuseSplashScreenService) { }
+  constructor(private readonly _httpClient: HttpClient) { }
 
   get selectedCategory$(): Observable<BenefitCategory> {
     return this._selectedCategory$.asObservable();

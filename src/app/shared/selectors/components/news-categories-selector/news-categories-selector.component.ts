@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { NewsCategoryService } from './news-category.service';
 import { JsonPipe }            from '@angular/common';
-import { Selector }            from '@modules/shared/selectors/model/selector';
+import { Selector }            from '../../model/selector';
 import { TranslocoPipe }       from '@ngneat/transloco';
 
 @Component({

@@ -3,7 +3,7 @@ import { IEventUrl }       from '@modules/admin/home/interface/event-url.interfa
 import { IEventOrganizer } from '@modules/admin/home/interface/event-organizer.interface';
 import { EventTypeEnum }   from '@modules/admin/home/enums/event-type.enum';
 import { EventStatusEnum } from '@modules/admin/home/enums/event-status.enum';
-import { IUser }           from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }           from '@modules/admin/user/profile/interfaces/user.interface';
 
 export class IEvent {
   public id: string;

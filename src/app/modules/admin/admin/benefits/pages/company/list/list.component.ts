@@ -6,10 +6,10 @@ import { MatIcon }                                                            fr
 import { MatIconButton }                                                      from '@angular/material/button';
 import { MatMenu, MatMenuItem, MatMenuTrigger }                               from '@angular/material/menu';
 import { MatSort, MatSortHeader }                                             from '@angular/material/sort';
-import { Table }                                                              from '@modules/shared/components/table/table.component';
+import { Table }                                                              from '../../../../../../../shared/components/table/table.component';
 import { BenefitCompany }                                                     from '@modules/admin/admin/benefits/models/benefit-company';
 import { BenefitCompanyService }                                              from '@modules/admin/admin/benefits/services/benefit-company.service';
-import { AbstractListComponent }                                              from '@modules/shared/components/abstracts/abstract-list.component';
+import { AbstractListComponent }                                              from '../../../../../../../shared/components/abstracts/abstract-list.component';
 import { MatTooltip }                                                         from '@angular/material/tooltip';
 
 @Component({

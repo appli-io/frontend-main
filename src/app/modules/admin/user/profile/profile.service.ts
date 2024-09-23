@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { IUser }       from '@modules/admin/profile/interfaces/user.interface';
-import { environment } from 'environments/environment';
+import { IUser }       from '@modules/admin/user/profile/interfaces/user.interface';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {

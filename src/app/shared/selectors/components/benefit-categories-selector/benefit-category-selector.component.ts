@@ -9,7 +9,7 @@ import { BehaviorSubject, firstValueFrom }   from 'rxjs';
 
 import { LayoutEnum }                              from '@core/enums/layout.enum';
 import { BenefitCategoryService }                  from '@modules/admin/admin/benefits/services/benefit-category.service';
-import { Selector }                                from '@modules/shared/selectors/model/selector';
+import { Selector }                                from '../../model/selector';
 import { AsyncPipe, NgForOf }                      from '@angular/common';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatIcon }                                 from '@angular/material/icon';

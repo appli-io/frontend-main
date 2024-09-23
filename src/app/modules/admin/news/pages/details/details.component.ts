@@ -21,7 +21,7 @@ import { INews }                                      from '../../domain/interfa
 import { LightGallery }                               from 'lightgallery/lightgallery';
 import lightGallery                                   from 'lightgallery';
 import { QuillViewComponent, QuillViewHTMLComponent } from 'ngx-quill';
-import { PageDetailHeaderComponent }                  from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { PageDetailHeaderComponent }                  from '../../../../../shared/components/page-detail-header/page-detail-header.component';
 
 @Component({
   selector   : 'app-single-news',

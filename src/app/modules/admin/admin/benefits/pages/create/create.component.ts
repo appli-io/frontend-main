@@ -24,7 +24,7 @@ import { BenefitCompany }               from '@modules/admin/admin/benefits/mode
 import { BenefitsService }              from '@modules/admin/admin/benefits/services/benefits.service';
 import { BenefitCategoryService }       from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { BenefitCompanyService }        from '@modules/admin/admin/benefits/services/benefit-company.service';
-import { PageDetailHeaderComponent }    from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { PageDetailHeaderComponent }    from '../../../../../../shared/components/page-detail-header/page-detail-header.component';
 import { BenefitMapper }                from '@modules/admin/admin/benefits/models/benefit';
 
 @Component({

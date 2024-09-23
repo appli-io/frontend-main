@@ -1,5 +1,5 @@
 import { INewsCategory } from '@modules/admin/news/domain/interfaces/category.interface';
-import { IUser }         from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }         from '@modules/admin/user/profile/interfaces/user.interface';
 
 export interface INews {
   id?: string;

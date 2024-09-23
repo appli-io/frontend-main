@@ -1,7 +1,7 @@
 import { Routes }              from '@angular/router';
 import { inject }              from '@angular/core';
 import { NewsService }         from '@modules/admin/admin/news/news.service';
-import { NewsCategoryService } from '@modules/shared/selectors/components/news-categories-selector/news-category.service';
+import { NewsCategoryService } from '../../../../shared/selectors/components/news-categories-selector/news-category.service';
 
 export default [
   {

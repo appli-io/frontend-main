@@ -2,7 +2,7 @@ import { HttpClient }         from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { map, Observable, ReplaySubject } from 'rxjs';
-import { IUser }                          from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }                          from '@modules/admin/user/profile/interfaces/user.interface';
 import { ICompany }                       from '@core/domain/interfaces/company.interface';
 import { environment }                    from 'environments/environment';
 

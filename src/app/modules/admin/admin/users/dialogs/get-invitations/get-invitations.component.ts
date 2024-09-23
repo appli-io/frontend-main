@@ -3,7 +3,7 @@ import { CommonModule, JsonPipe, NgIf }         from '@angular/common';
 import { MatDialogModule, MatDialogRef }        from '@angular/material/dialog';
 import { UsersService }                         from '@modules/admin/admin/users/users.service';
 import { MatButtonModule }                      from '@angular/material/button';
-import { Table }                                from '@modules/shared/components/table/table.component';
+import { Table }                                from '../../../../../../shared/components/table/table.component';
 import { MatTableModule }                       from '@angular/material/table';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { CompanyUser, InvitationsResponse }     from '../../model/company-user.model';

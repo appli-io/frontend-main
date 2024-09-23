@@ -1,11 +1,11 @@
 import { Component }                                           from '@angular/core';
 import { RouterOutlet }                                        from '@angular/router';
-import { DrawerListingComponent }                              from '@modules/shared/components/drawer-listing/drawer-listing.component';
-import { PanelType }                                           from '@modules/shared/components/drawer-listing/panel.type';
+import { DrawerListingComponent }                              from '../../../../shared/components/drawer-listing/drawer-listing.component';
+import { PanelType }                                           from '../../../../shared/components/drawer-listing/panel.type';
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { PageHeaderComponent }                                 from '@layout/components/page-header/page-header.component';
-import { DrawerContentComponent }                              from '@modules/shared/components/drawer-listing/components/drawer-content.component';
-import { DrawerHeaderComponent }                               from '@modules/shared/components/drawer-listing/components/drawer-header.component';
+import { DrawerContentComponent }                              from '../../../../shared/components/drawer-listing/components/drawer-content.component';
+import { DrawerHeaderComponent }                               from '../../../../shared/components/drawer-listing/components/drawer-header.component';
 
 @Component({
   selector: 'app-benefits',

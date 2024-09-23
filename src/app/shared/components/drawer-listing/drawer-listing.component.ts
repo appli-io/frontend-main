@@ -10,9 +10,9 @@ import { NgClass, NgComponentOutlet, NgTemplateOutlet }                         
 
 import { Subject, takeUntil } from 'rxjs';
 
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { FuseMediaWatcherService } from '../../../../@fuse/services/media-watcher';
 import { trackByFn }               from '@libs/ui/utils/utils';
-import { PanelType }               from '@modules/shared/components/drawer-listing/panel.type';
+import { PanelType }               from './panel.type';
 import { DrawerHeaderComponent }   from './components/drawer-header.component';
 import { DrawerContentComponent }  from './components/drawer-content.component';
 import { CdkScrollable }           from '@angular/cdk/overlay';

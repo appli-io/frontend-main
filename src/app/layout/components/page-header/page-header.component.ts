@@ -1,6 +1,6 @@
 import { Component, Input }    from '@angular/core';
 import { UpperCasePipe }       from '@angular/common';
-import { BgPatternsComponent } from '@modules/shared/components/bg-patterns/bg-patterns.component';
+import { BgPatternsComponent } from '../../../shared/components/bg-patterns/bg-patterns.component';
 
 @Component({
   selector   : 'page-header',

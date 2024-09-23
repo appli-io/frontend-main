@@ -16,7 +16,7 @@ import { MatChipsModule }                                                       
 import { DropzoneCdkModule }                                                     from '@ngx-dropzone/cdk';
 import { ImageUploadPreviewComponent }                                           from '@modules/admin/admin/albums/components/image-upload-preview/image-upload-preview.component';
 import { MatCard }                                                               from '@angular/material/card';
-import { NewsCategoriesSelectorComponent }                                       from '@modules/shared/selectors/components/news-categories-selector/news-categories-selector.component';
+import { NewsCategoriesSelectorComponent }                                       from '../../../../../../shared/selectors/components/news-categories-selector/news-categories-selector.component';
 import { INotyfNotificationOptions, Notyf }                                      from 'notyf';
 import { imageCompressor }                                                       from 'quill-image-compress';
 

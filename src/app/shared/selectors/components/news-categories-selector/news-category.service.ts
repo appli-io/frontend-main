@@ -1,7 +1,7 @@
 import { Injectable }                              from '@angular/core';
 import { HttpClient }                              from '@angular/common/http';
 import { BehaviorSubject, Observable, retry, tap } from 'rxjs';
-import { Selector }                                from '@modules/shared/selectors/model/selector';
+import { Selector }                                from '../../model/selector';
 
 @Injectable({providedIn: 'root'})
 export class NewsCategoryService {

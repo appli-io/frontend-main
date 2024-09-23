@@ -13,11 +13,11 @@ import { relativeTime }         from '@core/utils';
 import { FuseCardComponent }    from '@fuse/components/card';
 import { HlmSkeletonComponent } from '@libs/ui/ui-skeleton-helm/src';
 import { INews }                from '@modules/admin/news/domain/interfaces/news.interface';
-import { IUser }                from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }                from '@modules/admin/user/profile/interfaces/user.interface';
 import { IEconomicIndicator }   from '@modules/admin/home/interface/economic-indicator.interface';
 import { ShortcutsComponent }   from '@modules/admin/home/components/shortcuts/shortcuts.component';
 import { CalendarComponent }    from '@modules/admin/home/components/calendar/calendar.component';
-import { BgPatternsComponent }  from '@modules/shared/components/bg-patterns/bg-patterns.component';
+import { BgPatternsComponent }  from '../../../shared/components/bg-patterns/bg-patterns.component';
 
 @Component({
   selector     : 'home',

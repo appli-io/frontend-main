@@ -8,7 +8,7 @@ import { MatMenuModule }                                                        
 import { Router, RouterLink }                                                                                 from '@angular/router';
 import { UserService }                                                                                        from 'app/core/user/user.service';
 import { Subject, takeUntil }                                                                                 from 'rxjs';
-import { IUser }                                                                                              from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }                                                                                              from '@modules/admin/user/profile/interfaces/user.interface';
 import { TranslocoDirective }                                                                                 from '@ngneat/transloco';
 
 @Component({

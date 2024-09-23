@@ -9,8 +9,8 @@ import { MatInputModule }                                        from '@angular/
 import { MatMenuModule }                                         from '@angular/material/menu';
 import { MatTooltipModule }                                      from '@angular/material/tooltip';
 import { ActivatedRoute, RouterLink, RouterLinkActive }          from '@angular/router';
-import { FuseCardComponent }                                     from '@fuse/components/card';
-import { IUser }                                                 from '@modules/admin/profile/interfaces/user.interface';
+import { FuseCardComponent }                                     from '../../../../../@fuse/components/card';
+import { IUser }                                                 from '@modules/admin/user/profile/interfaces/user.interface';
 import { TranslocoDirective }                                    from '@ngneat/transloco';
 
 @Component({

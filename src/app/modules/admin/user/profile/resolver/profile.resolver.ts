@@ -4,7 +4,7 @@ import { ResolveFn } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { UserService }    from '@core/user/user.service';
-import { ProfileService } from '@modules/admin/profile/profile.service';
+import { ProfileService } from '@modules/admin/user/profile/profile.service';
 
 export const profileResolver: ResolveFn<any> = (route, state) => {
   const _userService = inject(UserService);

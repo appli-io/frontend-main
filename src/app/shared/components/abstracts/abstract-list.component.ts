@@ -1,6 +1,6 @@
 import { Notyf }                                           from 'notyf';
 import { mergeMap, Observable }                            from 'rxjs';
-import { FuseConfirmationConfig, FuseConfirmationService } from '@fuse/services/confirmation';
+import { FuseConfirmationConfig, FuseConfirmationService } from '../../../../@fuse/services/confirmation';
 import { inject }                                          from '@angular/core';
 import { TranslocoService }                                from '@ngneat/transloco';
 

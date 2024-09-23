@@ -1,6 +1,6 @@
 import { Component }                                            from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators }         from '@angular/forms';
-import { PageDetailHeaderComponent }                            from '@modules/shared/components/page-detail-header/page-detail-header.component';
+import { PageDetailHeaderComponent }                            from '../../../../../../../shared/components/page-detail-header/page-detail-header.component';
 import { TranslocoDirective, TranslocoPipe }                    from '@ngneat/transloco';
 import { SIMPLE_QUILL_EDITOR_MODULES }                          from '@core/constants';
 import { MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
@@ -12,7 +12,7 @@ import { MatInput }                                             from '@angular/m
 import { MatSelect }                                            from '@angular/material/select';
 import { NgForOf }                                              from '@angular/common';
 import { QuillEditorComponent }                                 from 'ngx-quill';
-import { AbstractCreateComponent }                              from '@modules/shared/components/abstracts/abstract-create.component';
+import { AbstractCreateComponent }                              from '../../../../../../../shared/components/abstracts/abstract-create.component';
 import { BenefitCompany }                                       from '@modules/admin/admin/benefits/models/benefit-company';
 import { BenefitCompanyService }                                from '@modules/admin/admin/benefits/services/benefit-company.service';
 

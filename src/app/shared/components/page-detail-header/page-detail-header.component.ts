@@ -7,8 +7,8 @@ import { MatButton }                                 from '@angular/material/but
 import { MatTooltip }                                from '@angular/material/tooltip';
 
 import { IFile }               from '@modules/admin/news/domain/interfaces/news.interface';
-import { BgPatternType }       from '@modules/shared/types/bg-pattern.type';
-import { BgPatternsComponent } from '@modules/shared/components/bg-patterns/bg-patterns.component';
+import { BgPatternType }       from '../../types/bg-pattern.type';
+import { BgPatternsComponent } from '../bg-patterns/bg-patterns.component';
 
 @Component({
   selector       : 'page-detail-header',

@@ -18,7 +18,7 @@ import { SearchComponent }                                        from 'app/layo
 import { ShortcutsComponent }                                     from 'app/layout/components/shortcuts/shortcuts.component';
 import { UserComponent }                                          from 'app/layout/components/user/user.component';
 import { Subject, takeUntil }                                     from 'rxjs';
-import { IUser }                                                  from '@modules/admin/profile/interfaces/user.interface';
+import { IUser }                                                  from '@modules/admin/user/profile/interfaces/user.interface';
 
 @Component({
   selector   : 'classy-layout',
