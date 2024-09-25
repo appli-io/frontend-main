@@ -1,0 +1,150 @@
+<div *transloco="let t; read: 'user.settings.personal-information'" class="flex flex-col min-w-0 w-full">
+  <page-header
+    [description]="t('subtitle')"
+    [subtitle]="t('title')"
+  ></page-header>
+  <!-- Content -->
+  <div class="flex flex-col justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
+    <div class="flex flex-col space-y-4">
+      <div class="">
+        <h2 [innerText]="t('user-detail')" class="font-semibold text-xl"></h2>
+        <p [innerText]="t('user-detail-description')" class="text-hint"></p>
+      </div>
+      <form>
+        <div class="bg-card flex flex-col overflow-hidden rounded p-8 pb-4 shadow w-full">
+          <div class="w-full flex flex-col md:flex-row gap-12">
+            <!-- Preview -->
+            <div class="shrink-0 flex justify-center">
+              @if (imageSrc) {
+                <img [src]="imageSrc" class="rounded-full w-32 h-32 ring-bg-card">
+              } @else {
+                <div class="ring-bg-card flex w-32 h-32 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium text-3xl">
+                  {{ (user$ | async)?.name.charAt(0) }}
+                </div>
+              }
+            </div>
+
+            <div class="flex flex-col w-full space-y-4">
+              <div class="w-full">
+                <label class="mat-label" for="file-image">{{ t('fields.avatar') }}*</label>
+                <input
+                  (change)="onFileChange($event)"
+                  accept=".jpeg,.jpg,.png"
+                  class="file-input"
+                  id="file-image"
+                  type="file"
+                />
+                <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
+              </div>
+              <div class="flex justify-start md:justify-end">
+                <button
+                  [disabled]="form.invalid || form.pending || form.disabled || !form.dirty"
+                  class="w-full md:w-30 shadow-none"
+                  color="primary"
+                  mat-raised-button
+                  type="submit"
+                >
+              <span class="flex items-center">
+              {{ 'actions.upload' | transloco }}
+                @if (form.disabled) {
+                  <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
+                }
+              </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="bg-card flex flex-col overflow-hidden rounded p-8 pb-4 shadow w-full">
+        <form (ngSubmit)="submit()" [formGroup]="form" class="w-full flex flex-col space-y-4">
+          <!-- Full name & gender -->
+          <div class="w-full flex flex-col md:flex-row gap-4">
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.firstname')"></mat-label>
+              <input formControlName="firstname" matInput type="text">
+              <mat-error *ngIf="form.get('firstname').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.lastname')"></mat-label>
+              <input formControlName="lastname" matInput type="text">
+              <mat-error *ngIf="form.get('lastname').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.gender')"></mat-label>
+              <mat-select formControlName="gender" placeholder="Seleccione un sexo">
+                <mat-option value="M">Hombre</mat-option>
+                <mat-option value="F">Mujer</mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.get('gender').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Email -->
+          <mat-form-field class="w-full" floatLabel="always">
+            <mat-label [innerText]="t('fields.email')"></mat-label>
+            <input formControlName="email" matInput readonly type="email">
+          </mat-form-field>
+
+          <!-- City, country and birth date -->
+          <div class="w-full flex flex-col md:flex-row gap-4">
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.city')"></mat-label>
+              <input formControlName="city" matInput type="text">
+              <mat-error *ngIf="form.get('city').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.country')"></mat-label>
+              <mat-select formControlName="country">
+                <mat-option value="CL">Chile</mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.get('country').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" floatLabel="always">
+              <mat-label [innerText]="t('fields.birth-date')"></mat-label>
+              <input [matDatepicker]="picker1" formControlName="birthdate" matInput/>
+              <mat-datepicker-toggle [for]="picker1" matIconSuffix></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <mat-error *ngIf="form.get('birthdate').hasError('required')">
+                {{ 'errors.form.required' | transloco }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex md:justify-end">
+            <button
+              [disabled]="form.invalid || form.pending || form.disabled || !form.dirty"
+              class="w-full md:w-30 shadow-none"
+              color="primary"
+              mat-raised-button
+              type="submit"
+            >
+              <span class="flex items-center">
+              {{ 'actions.save' | transloco }}
+                @if (form.disabled) {
+                  <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
+                }
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

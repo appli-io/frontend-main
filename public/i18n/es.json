@@ -201,6 +201,29 @@
       "search-placeholder" : "Buscar archivos..."
     }
   },
+  "user" : {
+    "settings" : {
+      "title" : "Configuración",
+      "personal-information" : {
+        "title" : "Información personal",
+        "description" : "Completa tu información personal",
+        "subtitle" : "Edita tu información personal para que sea más fácil para tus compañeros de trabajo encontrarte en la plataforma.",
+        "user-detail" : "Detalles del usuario",
+        "user-detail-description" : "Aquí puedes ver y editar la información personal de un usuario, que es la información que se muestra en su perfil.",
+        "fields" : {
+          "avatar" : "Foto de perfil",
+          "firstname" : "Nombres",
+          "lastname" : "Apellidos",
+          "email" : "Correo",
+          "phone" : "Teléfono",
+          "city" : "Ciudad",
+          "country" : "País",
+          "birth-date" : "Fecha de nacimiento",
+          "gender" : "Sexo"
+        }
+      }
+    }
+  },
   "admin" : {
     "users" : {
       "title" : "Usuarios",
@@ -640,7 +663,8 @@
     "form" : {
       "min-length" : "El contenido debe tener al menos {{length}} caracteres",
       "max-length" : "El contenido no debe exceder los {{length}} caracteres",
-      "required" : "Este campo es obligatorio"
+      "required" : "Este campo es obligatorio",
+      "invalid" : "El formulario contiene uno o más errores"
     }
   },
   "selectors" : {

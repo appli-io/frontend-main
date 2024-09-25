@@ -4,7 +4,7 @@ import { takeUntilDestroyed }                     from '@angular/core/rxjs-inter
 import { FormControl, ReactiveFormsModule }       from '@angular/forms';
 import { MatIconAnchor, MatIconButton }           from '@angular/material/button';
 import { MatDialog }                              from '@angular/material/dialog';
-import { MatFormField, MatHint }                  from '@angular/material/form-field';
+import { MatFormFieldModule, MatHint }            from '@angular/material/form-field';
 import { MatIcon }                                from '@angular/material/icon';
 import { MatInput }                               from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectTrigger } from '@angular/material/select';
@@ -30,7 +30,7 @@ import { MatDivider }              from '@angular/material/divider';
   imports   : [
     PageHeaderComponent,
     TranslocoDirective,
-    MatFormField,
+    MatFormFieldModule,
     MatIcon,
     MatInput,
     MatIconButton,

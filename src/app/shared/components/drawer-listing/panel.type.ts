@@ -3,7 +3,7 @@ export interface PanelType {
   icon?: string,
   title: string,
   description: string,
-  link?: string,
+  link?: string | Array<string>,
   disabled?: boolean,
   children?: PanelType[]
 }

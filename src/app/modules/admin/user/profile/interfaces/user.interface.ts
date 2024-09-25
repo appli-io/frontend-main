@@ -4,10 +4,15 @@ import { IFile }    from '@modules/admin/news/domain/interfaces/news.interface';
 export interface IUser {
   id?: string;
   name?: string;
+  firstname?: string;
+  lastname?: string;
   username?: string;
   email?: string;
   avatar?: IFile;
-  location?: string;
+  birthdate?: string;
+  city?: string;
+  country?: string;
+  gender?: 'M' | 'F';
   positions?: { position: string, companyId: string };
   assignedCompanies?: Partial<ICompany>[];
   settings?: Record<string, any>;
