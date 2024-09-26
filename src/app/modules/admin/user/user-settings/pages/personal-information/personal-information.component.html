@@ -10,7 +10,7 @@
         <h2 [innerText]="t('user-detail')" class="font-semibold text-xl"></h2>
         <p [innerText]="t('user-detail-description')" class="text-hint"></p>
       </div>
-      <form>
+      <form (ngSubmit)="submitAvatar()" [formGroup]="avatarForm">
         <div class="bg-card flex flex-col overflow-hidden rounded p-8 pb-4 shadow w-full">
           <div class="w-full flex flex-col md:flex-row gap-12">
             <!-- Preview -->
@@ -38,18 +38,18 @@
               </div>
               <div class="flex justify-start md:justify-end">
                 <button
-                  [disabled]="form.invalid || form.pending || form.disabled || !form.dirty"
+                  [disabled]="avatarForm.invalid || avatarForm.pending || avatarForm.disabled"
                   class="w-full md:w-30 shadow-none"
                   color="primary"
                   mat-raised-button
                   type="submit"
                 >
-              <span class="flex items-center">
-              {{ 'actions.upload' | transloco }}
-                @if (form.disabled) {
-                  <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
-                }
-              </span>
+                  <span class="inline-flex items-center gap-x-4">
+                    {{ 'actions.upload' | transloco }}
+                    @if (avatarForm.disabled) {
+                      <mat-spinner @slideInLeft @slideOutRight diameter="20"></mat-spinner>
+                    }
+                  </span>
                 </button>
               </div>
             </div>
@@ -135,8 +135,8 @@
               mat-raised-button
               type="submit"
             >
-              <span class="flex items-center">
-              {{ 'actions.save' | transloco }}
+              <span class="inline-flex items-center gap-x-4">
+                {{ 'actions.save' | transloco }}
                 @if (form.disabled) {
                   <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
                 }

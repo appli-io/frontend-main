@@ -9,6 +9,10 @@ export class UserService {
     return this._httpClient.patch('api/users/me', data);
   }
 
+  public updateAvatar(data: FormData) {
+    return this._httpClient.patch('api/users/avatar', data);
+  }
+
   public getCurrentUser() {
     return this._httpClient.get('api/auth/me');
   }

@@ -50,7 +50,7 @@ import { MatDivider }                                                           
 })
 export class PersonalInformationComponent {
   public form: UntypedFormGroup;
-  public pictureForm: UntypedFormGroup;
+  public avatarForm: UntypedFormGroup;
 
   public imageSrc = null;
 
@@ -70,7 +70,7 @@ export class PersonalInformationComponent {
     this.imageSrc = user.avatar?.fileUrl;
 
     this.form = this._buildForm(user);
-    this.pictureForm = this._buildPictureForm();
+    this.avatarForm = this._buildPictureForm();
   }
 
   private _user$: BehaviorSubject<IUser> = new BehaviorSubject(undefined);
@@ -85,7 +85,7 @@ export class PersonalInformationComponent {
 
     if (!file) return;
 
-    // this.form.patchValue({image: file});
+    this.avatarForm.patchValue({avatar: file});
     this.imageSrc = URL.createObjectURL(file);
   }
 
@@ -119,6 +119,27 @@ export class PersonalInformationComponent {
     });
   }
 
+  public submitAvatar() {
+    if (this.avatarForm.invalid) return;
+
+    this.avatarForm.disable();
+
+    const formData = new FormData();
+    const form = this.avatarForm.getRawValue();
+
+    formData.append('avatar', form.avatar);
+
+    this._userService.updateAvatar(formData).subscribe({
+      next    : (user: IUser) => {
+        location.reload();
+      },
+      error   : (error: any) => {
+        this._notyf.error({message: 'Ha ocurrido un error al subir el avatar'});
+      },
+      complete: () => this.avatarForm.enable()
+    });
+  }
+
   private _buildForm(user: IUser) {
     const birthdate = user.birthdate && DateTime.fromFormat(user.birthdate, 'yyyy-MM-dd');
 
@@ -135,7 +156,7 @@ export class PersonalInformationComponent {
 
   private _buildPictureForm() {
     return this._fb.group({
-      image: []
+      avatar: [ undefined, Validators.required ],
     });
   }
 }
