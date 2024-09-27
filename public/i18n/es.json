@@ -208,6 +208,8 @@
         "title" : "Información personal",
         "description" : "Completa tu información personal",
         "subtitle" : "Edita tu información personal para que sea más fácil para tus compañeros de trabajo encontrarte en la plataforma.",
+        "user-avatar" : "Sube tu foto de perfil",
+        "user-avatar-description" : "Aquí podrás actualizar tu avatar, la cual se mostrará en todos los lugares que aparezca tu nombre",
         "user-detail" : "Detalles del usuario",
         "user-detail-description" : "Aquí puedes ver y editar la información personal de un usuario, que es la información que se muestra en su perfil.",
         "fields" : {
@@ -221,6 +223,38 @@
           "birth-date" : "Fecha de nacimiento",
           "gender" : "Sexo"
         }
+      },
+      "password-update" : {
+        "title" : "Actualizar Contraseña",
+        "subtitle" : "Mantén tu cuenta segura actualizando tu contraseña periódicamente.",
+        "description" : "Modifica tu contraseña de acceso para mantener tu cuenta segura.",
+        "fields" : {
+          "current-password" : "Contraseña Actual",
+          "new-password" : "Nueva Contraseña",
+          "confirm-password" : "Confirmar Nueva Contraseña"
+        },
+        "update" : "Actualizar Contraseña",
+        "success" : "La contraseña ha sido actualizada con éxito",
+        "error" : "Se ha producido un error al actualizar la contraseña"
+      },
+      "contacts" : {
+        "title" : "Contactos",
+        "subtitle" : "Gestiona la información de tus contactos",
+        "description" : "Añade, elimina y actualiza la información de tus contactos para mantener tu libreta de direcciones al día.",
+        "email-list" : "Administra tus correos de contacto",
+        "email-list-description" : "Aquí puedes ver y administrar los correos electrónicos de tus contactos.",
+        "phone-list" : "Administra tus números de contacto",
+        "phone-list-description" : "Aquí puedes ver y administrar los números de teléfono de tus contactos.",
+        "fields" : {
+          "type" : "Tipo de contacto",
+          "email" : "Correo",
+          "number" : "Número",
+          "label" : "Etiqueta"
+        },
+        "add-contact" : "Agregar Contacto",
+        "remove-contact" : "Eliminar Contacto",
+        "update-contact" : "Actualizar Contacto",
+        "no-contacts" : "No hay contactos disponibles en este momento."
       }
     }
   },
@@ -664,7 +698,8 @@
       "min-length" : "El contenido debe tener al menos {{length}} caracteres",
       "max-length" : "El contenido no debe exceder los {{length}} caracteres",
       "required" : "Este campo es obligatorio",
-      "invalid" : "El formulario contiene uno o más errores"
+      "invalid" : "El formulario contiene uno o más errores",
+      "password-must-match" : "Las contraseñas deben coincidir"
     }
   },
   "selectors" : {

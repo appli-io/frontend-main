@@ -28,6 +28,20 @@ export class UserSettingsComponent {
         title      : this._translateService.translate('user.settings.personal-information.title'),
         description: this._translateService.translate('user.settings.personal-information.description'),
         link       : [ '/user', 'settings', 'personal-information' ]
+      },
+      {
+        id         : 'password-update',
+        icon       : 'heroicons_outline:key',
+        title      : this._translateService.translate('user.settings.password-update.title'),
+        description: this._translateService.translate('user.settings.password-update.description'),
+        link       : [ '/user', 'settings', 'password-update' ]
+      },
+      {
+        id         : 'contacts',
+        icon       : 'heroicons_outline:at-symbol',
+        title      : this._translateService.translate('user.settings.contacts.title'),
+        description: this._translateService.translate('user.settings.contacts.description'),
+        link       : [ '/user', 'settings', 'contacts' ]
       }
     ];
   }

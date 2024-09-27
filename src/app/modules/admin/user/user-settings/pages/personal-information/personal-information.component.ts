@@ -134,9 +134,9 @@ export class PersonalInformationComponent {
         location.reload();
       },
       error   : (error: any) => {
+        this.avatarForm.enable();
         this._notyf.error({message: 'Ha ocurrido un error al subir el avatar'});
-      },
-      complete: () => this.avatarForm.enable()
+      }
     });
   }
 
