@@ -4,11 +4,11 @@ root = true
 [*]
 charset = utf-8
 end_of_line = crlf
-indent_size = 2
+indent_size = 4
 indent_style = space
 insert_final_newline = true
 max_line_length = 500
-tab_width = 2
+tab_width = 4
 single_quote = true
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
@@ -46,8 +46,8 @@ ij_editorconfig_space_before_comma = false
 ij_editorconfig_spaces_around_assignment_operators = true
 
 [{*.ats,*.ts}]
-max_line_length = 140
-ij_continuation_indent_size = 2
+max_line_length = 240
+ij_continuation_indent_size = 4
 ij_typescript_align_imports = true
 ij_typescript_align_multiline_array_initializer_expression = false
 ij_typescript_align_multiline_binary_operation = false

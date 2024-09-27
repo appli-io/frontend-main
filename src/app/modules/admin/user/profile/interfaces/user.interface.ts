@@ -10,6 +10,7 @@ export interface IUser {
   email?: string;
   avatar?: IFile;
   birthdate?: string;
+    location?: string;
   city?: string;
   country?: string;
   gender?: 'M' | 'F';
@@ -17,6 +18,8 @@ export interface IUser {
   assignedCompanies?: Partial<ICompany>[];
   settings?: Record<string, any>;
   portrait?: string;
+    contacts?: any[];
+    bio?: string;
 
   // Application state (not from the API)
   status?: string;

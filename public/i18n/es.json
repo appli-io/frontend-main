@@ -221,7 +221,8 @@
           "city" : "Ciudad",
           "country" : "País",
           "birth-date" : "Fecha de nacimiento",
-          "gender" : "Sexo"
+            "gender" : "Sexo",
+            "bio" : "Información adicional"
         }
       },
       "password-update" : {
@@ -242,9 +243,11 @@
         "subtitle" : "Gestiona la información de tus contactos",
         "description" : "Añade, elimina y actualiza la información de tus contactos para mantener tu libreta de direcciones al día.",
         "email-list" : "Administra tus correos de contacto",
-        "email-list-description" : "Aquí puedes ver y administrar los correos electrónicos de tus contactos.",
+          "email-list-description" : "Aquí puedes ver y administrar tus correos electrónicos.",
         "phone-list" : "Administra tus números de contacto",
-        "phone-list-description" : "Aquí puedes ver y administrar los números de teléfono de tus contactos.",
+          "phone-list-description" : "Aquí puedes ver y administrar tus números de teléfono.",
+          "social-list" : "Administra tus redes sociales",
+          "social-list-description" : "Aquí puedes ver y administrar tus redes sociales.",
         "fields" : {
           "type" : "Tipo de contacto",
           "email" : "Correo",
@@ -653,6 +656,7 @@
   },
   "actions" : {
     "save" : "Guardar",
+      "save-changes" : "Guardar cambios",
     "discard" : "Descartar",
     "reset" : "Limpiar",
     "cancel" : "Cancelar",

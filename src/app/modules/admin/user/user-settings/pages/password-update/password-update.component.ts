@@ -11,47 +11,47 @@ import { MatButton, MatIconButton }                                             
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 
 @Component({
-  selector   : 'app-pasword-update',
-  standalone : true,
-  imports    : [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    PageHeaderComponent,
-    TranslocoDirective,
-    MatInput,
-    TranslocoPipe,
-    MatIcon,
-    MatIconButton,
-    MatButton,
-    MatProgressSpinner
-  ],
-  templateUrl: './password-update.component.html'
+    selector   : 'app-pasword-update',
+    standalone : true,
+    imports    : [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        PageHeaderComponent,
+        TranslocoDirective,
+        MatInput,
+        TranslocoPipe,
+        MatIcon,
+        MatIconButton,
+        MatButton,
+        MatProgressSpinner
+    ],
+    templateUrl: './password-update.component.html'
 })
 export class PasswordUpdateComponent {
-  public form: UntypedFormGroup;
+    public form: UntypedFormGroup;
 
-  constructor(
-    private readonly _fb: UntypedFormBuilder,
-    private readonly _userService: UserService,
-    private readonly _ts: TranslocoService,
-  ) {
-    this.form = this._buildForm();
-  }
+    constructor(
+        private readonly _fb: UntypedFormBuilder,
+        private readonly _userService: UserService,
+        private readonly _ts: TranslocoService,
+    ) {
+        this.form = this._buildForm();
+    }
 
-  public submit() {
-    return;
-  }
+    public submit() {
+        return;
+    }
 
-  private _buildForm() {
-    return this._fb.group({
-      currentPassword: [ undefined, Validators.required ],
-      newPassword    : [ undefined, Validators.required ],
-      confirmPassword: [ undefined, Validators.required ],
-    }, {
-      validators: FuseValidators.mustMatch(
-        'newPassword',
-        'confirmPassword'
-      ),
-    });
-  }
+    private _buildForm() {
+        return this._fb.group({
+            currentPassword: [ undefined, Validators.required ],
+            newPassword    : [ undefined, Validators.required ],
+            confirmPassword: [ undefined, Validators.required ],
+        }, {
+            validators: FuseValidators.mustMatch(
+                'newPassword',
+                'confirmPassword'
+            ),
+        });
+    }
 }
