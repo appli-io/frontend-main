@@ -1,175 +1,175 @@
 @if (benefit | async; as benefit) {
-  <div *transloco="let t; read: 'benefits.benefit-detail'" class="flex flex-col flex-auto min-w-0 min-h-full">
-    <!-- Header -->
-    <div class="bg-card border-b">
-      <div class="flex flex-wrap w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
-        <!-- Breadcrumbs -->
-        <div class="hidden sm:flex flex-wrap items-center font-medium basis-full">
-          <div>
-            <a [routerLink]="'./../..'" class="whitespace-nowrap text-primary-500">{{ 'benefits.title' | transloco }}</a>
-          </div>
-          <div class="flex items-center ml-1 whitespace-nowrap">
-            <mat-icon [svgIcon]="'heroicons_mini:chevron-right'" class="icon-size-5 text-secondary"></mat-icon>
-            @if (benefit.category.parent) {
-              <a [routerLink]="['/apps', 'benefits', 'category', benefit.category.parent]" [queryParams]="{category: benefit.category.id}" [innerText]="benefit.category.name" class="whitespace-nowrap text-primary-500"></a>
-            } @else {
-              <a [routerLink]="['/apps', 'benefits', 'category', benefit.category.id]" [innerText]="benefit.category.name" class="whitespace-nowrap text-primary-500"></a>
-            }
-          </div>
-          <div class="flex items-center ml-1 whitespace-nowrap">
-            <mat-icon [svgIcon]="'heroicons_mini:chevron-right'" class="icon-size-5 text-secondary"></mat-icon>
-            <span [innerHtml]="benefit.name" class="ml-1 text-secondary"></span>
-          </div>
-        </div>
-        <div class="basis-1/2 p-4">
-          @if (benefit.image) {
-            <img [src]="benefit.image.fileUrl" alt="BannerImage" class="h-full w-full object-cover rounded-lg"/>
-          }
-        </div>
-        <div class="basis-1/2 px-4 space-y-4">
-          <div class="flex sm:hidden">
-            <a [routerLink]="'./../..'" class="inline-flex items-center -ml-1.5 text-secondary font-medium">
-              <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="icon-size-5 text-secondary"></mat-icon>
-              <span class="ml-1">Back</span>
-            </a>
-          </div>
-          <!-- Company information -->
-          <div class="flex flex-col">
-            <img [src]="benefit.benefitCompany?.image?.fileUrl" alt="CompanyLogo" class="h-14 object-contain object-left rounded-full drop-shadow"/>
-            <h2 [innerHtml]="benefit.benefitCompany?.name" class="text-md font-light"></h2>
-          </div>
-          <div>
-            <h1 [innerHtml]="benefit.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h1>
-            <p [innerHtml]="benefit.description | deltaToHtml" class="mt-4 text-justify"></p>
-          </div>
-          <div class="inline-flex gap-x-4">
-            <button mat-icon-button>
-              <mat-icon svgIcon="heroicons_outline:share"></mat-icon>
-            </button>
-            <button color="primary" mat-flat-button>Obtener beneficio</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col justify-center md:justify-start w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
-      <div class="flex justify-around pb-4">
-        <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'details'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
-          <div class="rounded-full p-2 group-aria-[current]:bg-white">
-            <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          DETALLES
-        </a>
-
-        <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'requirements'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
-          <div class="rounded-full p-2 group-aria-[current]:bg-white">
-            <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-            </svg>
-          </div>
-          COMO OBTENER
-        </a>
-
-        <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'conditions'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
-          <div class="rounded-full p-2 group-aria-[current]:bg-white">
-            <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          CONDICIONES
-        </a>
-
-        <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'how-to-arrive'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
-          <div class="rounded-full p-2 group-aria-[current]:bg-white">
-            <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          COMO LLEGAR
-        </a>
-
-        <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'validity'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
-          <div class="rounded-full p-2 group-aria-[current]:bg-white">
-            <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-            </svg>
-          </div>
-          VIGENCIA
-        </a>
-      </div>
-      <mat-divider></mat-divider>
-
-      <div class="py-8 max-w-sm md:max-w-2xl mx-auto">
-        @switch (tab) {
-          @case ('details') {
-            @if (benefit.description) {
-              <p class="whitespace-pre-wrap" [innerHtml]="benefit.description | deltaToHtml"></p>
-            } @else {
-              <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'DETALLES'}"></ng-container>
-            }
-          }
-          @case ('requirements') {
-            @if (benefit.requirements) {
-              <p class="whitespace-pre-wrap" [innerHtml]="benefit.requirements | deltaToHtml"></p>
-            } @else {
-              <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'COMO OBTENER'}"></ng-container>
-            }
-          }
-          @case ('conditions') {
-            @if (benefit.conditions) {
-              <p class="whitespace-pre-wrap" [innerHtml]="benefit.conditions | deltaToHtml"></p>
-            } @else {
-              <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'CONDICIONES'}"></ng-container>
-            }
-          }
-          @case ('how-to-arrive') {
-            @if (benefit.locations) {
-            } @else {
-              <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'COMO LLEGAR'}"></ng-container>
-            }
-          }
-        }
-      </div>
-
-      <h3 class="text-center w-full text-3xl font-bold">Beneficios relacionados</h3>
-      <div class="w-full">
-        <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid gap-8 py-8 justify-items-start">
-          @if (mostViewedBenefits | async; as benefits) {
-            @if (benefits.length) {
-              @for (benefit of benefits; track benefit.id) {
-                <a [routerLink]="['/apps/benefits/id', benefit.id]">
-                  <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
-                </a>
-              }
-            } @else {
-              <div class="col-span-3 flex flex-col flex-wrap items-center justify-center gap-2 w-full">
-                <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="w-12 h-12 first text-primary-500"></mat-icon>
-                <div class="text-center">
-                  <p class="text-lg font-semibold">{{ t('main-benefits.no-content') }}</p>
-                  <p class="text-sm text-secondary">{{ t('main-benefits.no-content-description') }}</p>
+    <div *transloco="let t; read: 'benefits.benefit-detail'" class="flex flex-col flex-auto min-w-0 min-h-full">
+        <!-- Header -->
+        <div class="bg-card border-b">
+            <div class="flex flex-wrap w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
+                <!-- Breadcrumbs -->
+                <div class="hidden sm:flex flex-wrap items-center font-medium basis-full">
+                    <div>
+                        <a [routerLink]="'./../..'" class="whitespace-nowrap text-primary-500">{{ 'benefits.title' | transloco }}</a>
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon [svgIcon]="'heroicons_mini:chevron-right'" class="icon-size-5 text-secondary"></mat-icon>
+                        @if (benefit.category.parent) {
+                            <a [routerLink]="['/apps', 'benefits', 'category', benefit.category.parent]" [queryParams]="{category: benefit.category.id}" [innerText]="benefit.category.name" class="whitespace-nowrap text-primary-500"></a>
+                        } @else {
+                            <a [routerLink]="['/apps', 'benefits', 'category', benefit.category.id]" [innerText]="benefit.category.name" class="whitespace-nowrap text-primary-500"></a>
+                        }
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon [svgIcon]="'heroicons_mini:chevron-right'" class="icon-size-5 text-secondary"></mat-icon>
+                        <span [innerHtml]="benefit.name" class="ml-1 text-secondary"></span>
+                    </div>
                 </div>
-              </div>
-            }
-          } @else {
-            <div class="flex flex-row flex-wrap justify-center gap-8">
-              <mat-spinner class="w-12 h-12"></mat-spinner>
+                <div class="basis-1/2 p-4">
+                    @if (benefit.image) {
+                        <img [src]="benefit.image.fileUrl" alt="BannerImage" class="h-full w-full object-cover rounded-lg"/>
+                    }
+                </div>
+                <div class="basis-1/2 px-4 space-y-4">
+                    <div class="flex sm:hidden">
+                        <a [routerLink]="'./../..'" class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+                            <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="icon-size-5 text-secondary"></mat-icon>
+                            <span class="ml-1">Back</span>
+                        </a>
+                    </div>
+                    <!-- Company information -->
+                    <div class="flex flex-col">
+                        <img [src]="benefit.benefitCompany?.image?.fileUrl" alt="CompanyLogo" class="h-14 object-contain object-left rounded-full drop-shadow"/>
+                        <h2 [innerHtml]="benefit.benefitCompany?.name" class="text-md font-light"></h2>
+                    </div>
+                    <div>
+                        <h1 [innerHtml]="benefit.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h1>
+                        <p [innerHtml]="benefit.description | deltaToHtml" class="mt-4 text-justify"></p>
+                    </div>
+                    <div class="inline-flex gap-x-4">
+                        <button mat-icon-button>
+                            <mat-icon svgIcon="heroicons_outline:share"></mat-icon>
+                        </button>
+                        <button color="primary" mat-flat-button>Obtener beneficio</button>
+                    </div>
+                </div>
             </div>
-          }
         </div>
-      </div>
+        <div class="flex flex-col justify-center md:justify-start w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
+            <div class="flex justify-around pb-4">
+                <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'details'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
+                    <div class="rounded-full p-2 group-aria-[current]:bg-white">
+                        <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    DETALLES
+                </a>
+
+                <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'requirements'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
+                    <div class="rounded-full p-2 group-aria-[current]:bg-white">
+                        <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    COMO OBTENER
+                </a>
+
+                <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'conditions'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
+                    <div class="rounded-full p-2 group-aria-[current]:bg-white">
+                        <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    CONDICIONES
+                </a>
+
+                <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'how-to-arrive'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
+                    <div class="rounded-full p-2 group-aria-[current]:bg-white">
+                        <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    COMO LLEGAR
+                </a>
+
+                <a [queryParamsHandling]="'merge'" [queryParams]="{tab: 'validity'}" [routerLinkActive]="['!text-primary', 'font-medium']" ariaCurrentWhenActive="page" class="flex flex-col items-center text-secondary text-md gap-y-2 text-nowrap group" routerLink=".">
+                    <div class="rounded-full p-2 group-aria-[current]:bg-white">
+                        <svg class="icon-size-12 stroke-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    VIGENCIA
+                </a>
+            </div>
+            <mat-divider></mat-divider>
+
+            <div class="py-8 max-w-sm md:max-w-2xl mx-auto">
+                @switch (tab) {
+                    @case ('details') {
+                        @if (benefit.description) {
+                            <p class="whitespace-pre-wrap" [innerHtml]="benefit.description | deltaToHtml"></p>
+                        } @else {
+                            <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'DETALLES'}"></ng-container>
+                        }
+                    }
+                    @case ('requirements') {
+                        @if (benefit.requirements) {
+                            <p class="whitespace-pre-wrap" [innerHtml]="benefit.requirements | deltaToHtml"></p>
+                        } @else {
+                            <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'COMO OBTENER'}"></ng-container>
+                        }
+                    }
+                    @case ('conditions') {
+                        @if (benefit.conditions) {
+                            <p class="whitespace-pre-wrap" [innerHtml]="benefit.conditions | deltaToHtml"></p>
+                        } @else {
+                            <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'CONDICIONES'}"></ng-container>
+                        }
+                    }
+                    @case ('how-to-arrive') {
+                        @if (benefit.locations) {
+                        } @else {
+                            <ng-container *ngTemplateOutlet="noInformation; context: {$implicit: 'COMO LLEGAR'}"></ng-container>
+                        }
+                    }
+                }
+            </div>
+
+            <h3 class="text-center w-full text-3xl font-bold">Beneficios relacionados</h3>
+            <div class="w-full">
+                <div class="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid gap-8 py-8 justify-items-start">
+                    @if (mostViewedBenefits | async; as benefits) {
+                        @if (benefits.length) {
+                            @for (benefit of benefits; track benefit.id) {
+                                <a [routerLink]="['/apps/benefits/id', benefit.id]">
+                                    <benefit-card [benefit]="benefit" class="col-span-1"></benefit-card>
+                                </a>
+                            }
+                        } @else {
+                            <div class="col-span-3 flex flex-col flex-wrap items-center justify-center gap-2 w-full">
+                                <mat-icon [svgIcon]="'heroicons_outline:inbox'" class="w-12 h-12 first text-primary-500"></mat-icon>
+                                <div class="text-center">
+                                    <p class="text-lg font-semibold">{{ t('main-benefits.no-content') }}</p>
+                                    <p class="text-sm text-secondary">{{ t('main-benefits.no-content-description') }}</p>
+                                </div>
+                            </div>
+                        }
+                    } @else {
+                        <div class="flex flex-row flex-wrap justify-center gap-8">
+                            <mat-spinner class="w-12 h-12"></mat-spinner>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 }
 
 <ng-template #noInformation let-fieldName>
-  <div class="mt-4 flex items-center justify-center text-gray-700">
-    <span class="text-hint text-lg">No hay información disponible sobre "<i class="font-medium">{{ fieldName }}</i>"</span>
-  </div>
+    <div class="mt-4 flex items-center justify-center text-gray-700">
+        <span class="text-hint text-lg">No hay información disponible sobre "<i class="font-medium">{{ fieldName }}</i>"</span>
+    </div>
 </ng-template>

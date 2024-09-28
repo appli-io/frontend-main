@@ -1,25 +1,25 @@
 <div *transloco="let t; read: 'admin.events'" class="flex flex-col min-w-0 w-full">
-  <page-header
-    [description]="t('description')"
-    [subtitle]="t('subtitle')"
-    [title]="t('title')"
-  ></page-header>
-  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
-    @if (event) {
-    <div class="event-details">
-      <h1>{{ event.title }}</h1>
-      <p>{{ event.description }}</p>
-      <p><strong>Localizacion: </strong> {{ event.location }}</p>
-      <p><strong>Fecha: </strong> {{ event.startDate | date }}</p>
-      <p><strong>Fecha de fin: </strong> {{ event.endDate | date }}</p>
-      <p><strong>Organizador: </strong> {{ event.organizer.name }} ({{ event.organizer.email }})</p>
-    </div>
-    }
+    <page-header
+        [description]="t('description')"
+        [subtitle]="t('subtitle')"
+        [title]="t('title')"
+    ></page-header>
+    <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
+        @if (event) {
+            <div class="event-details">
+                <h1>{{ event.title }}</h1>
+                <p>{{ event.description }}</p>
+                <p><strong>Localizacion: </strong> {{ event.location }}</p>
+                <p><strong>Fecha: </strong> {{ event.startDate | date }}</p>
+                <p><strong>Fecha de fin: </strong> {{ event.endDate | date }}</p>
+                <p><strong>Organizador: </strong> {{ event.organizer.name }} ({{ event.organizer.email }})</p>
+            </div>
+        }
 
-    @if (!event){
-    <div>
-      <p>No hay evento</p>
+        @if (!event) {
+            <div>
+                <p>No hay evento</p>
+            </div>
+        }
     </div>
-  }
-  </div>
 </div>

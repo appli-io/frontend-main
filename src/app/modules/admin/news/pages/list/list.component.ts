@@ -22,37 +22,37 @@ import { NewsCardComponent }         from '@modules/admin/news/components/news-c
 import { NewsCategoryCardComponent } from '@modules/admin/news/components/news-category-card/news-category-card.component';
 
 @Component({
-  selector   : 'app-news-all',
-  standalone : true,
-  imports: [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent, AsyncPipe, NewsListHeaderComponent, NewsCardComponent, NewsCategoryCardComponent ],
-  templateUrl: './list.component.html',
-  animations : fuseAnimations
+    selector   : 'app-news-all',
+    standalone : true,
+    imports    : [ RouterOutlet, TranslocoDirective, MatIconModule, NgIf, UpperCasePipe, FuseFindByKeyPipe, NgClass, NgForOf, MatTooltipModule, MatButtonModule, RouterLink, FuseCardComponent, AsyncPipe, NewsListHeaderComponent, NewsCardComponent, NewsCategoryCardComponent ],
+    templateUrl: './list.component.html',
+    animations : fuseAnimations
 })
 export class ListComponent implements OnInit {
-  categories: INewsCategory[];
-  newsList$: Observable<Page<INews>>;
+    categories: INewsCategory[];
+    newsList$: Observable<Page<INews>>;
 
-  categoriesExpanded: boolean = false;
+    categoriesExpanded: boolean = false;
 
-  constructor(
-    private readonly _route: ActivatedRoute,
-    private readonly _newsService: NewsService
-  ) {
-    this.subscribeToQueryParamsChanges();
-  }
+    constructor(
+        private readonly _route: ActivatedRoute,
+        private readonly _newsService: NewsService
+    ) {
+        this.subscribeToQueryParamsChanges();
+    }
 
-  ngOnInit(): void {
-    this.newsList$ = this._newsService.news;
-    this.categories = this._route.snapshot.data.categories;
-  }
+    ngOnInit(): void {
+        this.newsList$ = this._newsService.news;
+        this.categories = this._route.snapshot.data.categories;
+    }
 
-  subscribeToQueryParamsChanges(): void {
-    this._route.queryParams.pipe(
-      skip(1),
-      distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
-      takeUntilDestroyed()
-    ).subscribe((params: any) => {
-      lastValueFrom(this._newsService.getNews({query: params})).then();
-    });
-  }
+    subscribeToQueryParamsChanges(): void {
+        this._route.queryParams.pipe(
+            skip(1),
+            distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+            takeUntilDestroyed()
+        ).subscribe((params: any) => {
+            lastValueFrom(this._newsService.getNews({query: params})).then();
+        });
+    }
 }

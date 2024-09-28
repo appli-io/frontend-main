@@ -8,20 +8,20 @@ import { TranslocoDirective } from '@ngneat/transloco';
 import { Shortcut } from '@modules/admin/home/components/shortcuts/shortcut.type';
 
 @Component({
-  selector   : 'home-shortcuts',
-  standalone : true,
-  imports    : [ TranslocoDirective, JsonPipe, MatIcon, NgIf, RouterLink, NgTemplateOutlet ],
-  templateUrl: './shortcuts.component.html'
+    selector   : 'home-shortcuts',
+    standalone : true,
+    imports    : [ TranslocoDirective, JsonPipe, MatIcon, NgIf, RouterLink, NgTemplateOutlet ],
+    templateUrl: './shortcuts.component.html'
 })
 export class ShortcutsComponent {
-  shortcuts: Shortcut[];
+    shortcuts: Shortcut[];
 
-  constructor() {
-    this.shortcuts = [
-      {id: 'files-library', svgIcon: 'heroicons_solid:document', link: '/apps/files-library', useRouter: true},
-      {id: 'scrumboards', svgIcon: 'heroicons_solid:rectangle-stack', link: '/apps/scrumboards', useRouter: true},
-      {id: 'benefits', svgIcon: 'heroicons_solid:gift', link: '/apps/benefits', useRouter: true},
-      {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true}
-    ];
-  }
+    constructor() {
+        this.shortcuts = [
+            {id: 'files-library', svgIcon: 'heroicons_solid:document', link: '/apps/files-library', useRouter: true},
+            {id: 'scrumboards', svgIcon: 'heroicons_solid:rectangle-stack', link: '/apps/scrumboards', useRouter: true},
+            {id: 'benefits', svgIcon: 'heroicons_solid:gift', link: '/apps/benefits', useRouter: true},
+            {id: 'contacts', svgIcon: 'heroicons_solid:user-group', link: '/apps/contacts', useRouter: true}
+        ];
+    }
 }

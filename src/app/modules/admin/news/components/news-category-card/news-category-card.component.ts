@@ -7,21 +7,21 @@ import { FuseCardComponent } from '@fuse/components/card';
 import { INewsCategory }     from '@modules/admin/news/domain/interfaces/category.interface';
 
 @Component({
-  selector   : 'news-category-card',
-  standalone : true,
-  imports    : [
-    FuseCardComponent,
-    UpperCasePipe,
-    RouterLink,
-    MatTooltip
-  ],
-  templateUrl: './news-category-card.component.html'
+    selector   : 'news-category-card',
+    standalone : true,
+    imports    : [
+        FuseCardComponent,
+        UpperCasePipe,
+        RouterLink,
+        MatTooltip
+    ],
+    templateUrl: './news-category-card.component.html'
 })
 export class NewsCategoryCardComponent {
-  @Input() category: INewsCategory;
-  @Input() index: number;
+    @Input() category: INewsCategory;
+    @Input() index: number;
 
-  @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
+    constructor() { }
 }

@@ -17,58 +17,58 @@ import { BenefitCompany }                                       from '@modules/a
 import { BenefitCompanyService }                                from '@modules/admin/admin/benefits/services/benefit-company.service';
 
 @Component({
-  selector   : 'app-create',
-  standalone : true,
-  imports: [
-    FormsModule,
-    PageDetailHeaderComponent,
-    TranslocoDirective,
-    TranslocoPipe,
-    MatAutocompleteTrigger,
-    MatButton,
-    MatDivider,
-    MatError,
-    MatFormField,
-    MatHint,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    MatSuffix,
-    NgForOf,
-    QuillEditorComponent,
-    ReactiveFormsModule
-  ],
-  templateUrl: './create.component.html'
+    selector   : 'app-create',
+    standalone : true,
+    imports    : [
+        FormsModule,
+        PageDetailHeaderComponent,
+        TranslocoDirective,
+        TranslocoPipe,
+        MatAutocompleteTrigger,
+        MatButton,
+        MatDivider,
+        MatError,
+        MatFormField,
+        MatHint,
+        MatIcon,
+        MatIconButton,
+        MatInput,
+        MatLabel,
+        MatOption,
+        MatSelect,
+        MatSuffix,
+        NgForOf,
+        QuillEditorComponent,
+        ReactiveFormsModule
+    ],
+    templateUrl: './create.component.html'
 })
 export class CreateComponent extends AbstractCreateComponent<BenefitCompany> {
-  protected readonly quillModules = SIMPLE_QUILL_EDITOR_MODULES;
+    protected readonly quillModules = SIMPLE_QUILL_EDITOR_MODULES;
 
-  constructor(
-    private readonly _benefitCompanyService: BenefitCompanyService,
-  ) {
-    super(
-      _benefitCompanyService,
-      'admin/benefits/company',
-    );
-  }
+    constructor(
+        private readonly _benefitCompanyService: BenefitCompanyService,
+    ) {
+        super(
+            _benefitCompanyService,
+            'admin/benefits/company',
+        );
+    }
 
-  override _initForm() {
-    return this.formBuilder.group({
-      description: [ null, [ Validators.required, Validators.minLength(3) ] ],
-      name       : [ null, [ Validators.required, Validators.minLength(3) ] ],
-      image      : [ null, [ Validators.required ] ],
-    });
-  }
+    override _initForm() {
+        return this.formBuilder.group({
+            description: [ null, [ Validators.required, Validators.minLength(3) ] ],
+            name       : [ null, [ Validators.required, Validators.minLength(3) ] ],
+            image      : [ null, [ Validators.required ] ],
+        });
+    }
 
-  onFileChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const file = target.files?.item(0);
+    onFileChange(event: Event) {
+        const target = event.target as HTMLInputElement;
+        const file = target.files?.item(0);
 
-    if (!file) return;
+        if (!file) return;
 
-    this.form.patchValue({image: file});
-  }
+        this.form.patchValue({image: file});
+    }
 }

@@ -1,220 +1,220 @@
 <div *transloco="let t; read: 'admin.benefits.create'" class="flex flex-col min-w-0 w-full">
-  <page-detail-header
-    [breadcrumbs]="[ { label: ('admin.benefits.title' | transloco), url: '/admin/benefits' }, { label: ('admin.benefits.create.title' | transloco), url: undefined } ]"
-    [subtitle]="t('description')"
-    [title]="t('title')"
-    class="shadow"
-  ></page-detail-header>
-  <!-- Content -->
-  <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
-    <div class="flex-1 flex flex-col sm:flex-row">
-      <!-- Form -->
-      <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
-        <form [formGroup]="form" class="w-full">
-          <div class="flex flex-col w-full space-y-4">
-            <div>
-              <h2 class="text-lg font-medium">{{ t('field-groups.information') }}</h2>
-              <span class="text-hint">{{ t('field-groups.information-description') }}</span>
+    <page-detail-header
+        [breadcrumbs]="[ { label: ('admin.benefits.title' | transloco), url: '/admin/benefits' }, { label: ('admin.benefits.create.title' | transloco), url: undefined } ]"
+        [subtitle]="t('description')"
+        [title]="t('title')"
+        class="shadow"
+    ></page-detail-header>
+    <!-- Content -->
+    <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
+        <div class="flex-1 flex flex-col sm:flex-row">
+            <!-- Form -->
+            <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
+                <form [formGroup]="form" class="w-full">
+                    <div class="flex flex-col w-full space-y-4">
+                        <div>
+                            <h2 class="text-lg font-medium">{{ t('field-groups.information') }}</h2>
+                            <span class="text-hint">{{ t('field-groups.information-description') }}</span>
+                        </div>
+
+                        <!-- Type -->
+                        <mat-form-field class="w-full fuse-mat-dense" floatLabel="always" subscriptSizing="dynamic">
+                            <mat-label [innerText]="t('fields.type')"></mat-label>
+                            <mat-select [placeholder]="t('fields.type-placeholder')" formControlName="type">
+                                <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ t('fields.type-options.' + type) }}</mat-option>
+                            </mat-select>
+                            @if (form.get('type').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <!-- Name -->
+                        <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">
+                            <mat-label [innerText]="t('fields.name')"></mat-label>
+                            <input [placeholder]="t('fields.name-placeholder')" formControlName="name" matInput/>
+                            @if (form.get('name').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <!-- Description -->
+                        <div class="flex flex-col">
+                            <mat-label class="font-medium text-default dark:text-white">{{ t('fields.description') }}*</mat-label>
+                            @defer {
+                                <quill-editor
+                                    class="mt-2"
+                                    [placeholder]="t('fields.description-placeholder')"
+                                    [modules]="quillModules"
+                                    format="json"
+                                    bounds="self"
+                                    formControlName="description"
+                                ></quill-editor>
+                                @if (form.get('description').hasError('required') && form.get('description').touched) {
+                                    <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
+                                }
+                            } @placeholder {
+                                <span>cargando editor...</span>
+                            }
+                        </div>
+
+                        <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
+                            <mat-label>Categoría</mat-label>
+                            <input
+                                #categoryInput
+                                (input)="filter('category', $event.target)"
+                                (keyup.enter)="openCategoryDialog($event, categoryInput.value);"
+                                [matAutocomplete]="categoryAuto"
+                                formControlName="category"
+                                matInput
+                                placeholder="Seleccione una categoría"
+                            />
+                            <button
+                                (click)="$event.stopPropagation(); $event.preventDefault(); openCategoryDialog($event, categoryInput.value)"
+                                mat-icon-button
+                                matSuffix>
+                                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                            </button>
+                            <mat-hint>Seleccione una categoría de la lista, si no existe, puede crearla.</mat-hint>
+                            @if (form.get('category').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
+                            <mat-label>Empresa</mat-label>
+                            <input
+                                #companyInput
+                                (input)="filter('company', $event.target)"
+                                (keyup.enter)="openCompanyDialog($event, companyInput.value)"
+                                [matAutocomplete]="companyAuto"
+                                formControlName="company"
+                                matInput
+                                placeholder="Seleccione una empresa"
+                            />
+                            <button
+                                (click)="$event.stopPropagation(); $event.preventDefault(); openCompanyDialog($event, companyInput.value);"
+                                mat-icon-button
+                                matSuffix>
+                                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
+                            </button>
+                            <mat-hint>Seleccione una empresa de la lista, si no existe, puede crearla.</mat-hint>
+                            @if (form.get('company').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </mat-form-field>
+
+                        <div class="w-full">
+                            <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
+                            <input
+                                (change)="onFileChange($event)"
+                                accept=".jpeg,.jpg,.png"
+                                class="file-input"
+                                id="file-image"
+                                type="file"
+                            />
+                            <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div>
+                            <h2 class="text-lg font-medium">{{ t('field-groups.additional') }}</h2>
+                            <span class="text-hint">{{ t('field-groups.additional-description') }}</span>
+                        </div>
+
+                        <!-- Requirements -->
+                        <div class="flex flex-col">
+                            <mat-label class="font-medium text-default dark:text-white">{{ t('fields.requirements') }}</mat-label>
+                            @defer {
+                                <quill-editor
+                                    class="mt-2"
+                                    [placeholder]="t('fields.requirements-placeholder')"
+                                    [modules]="quillModules"
+                                    format="json"
+                                    bounds="self"
+                                    formControlName="requirements"
+                                ></quill-editor>
+                                <mat-hint [innerHtml]="t('fields.requirements-hint')" class="mat-hint"></mat-hint>
+                            } @placeholder {
+                                <span>cargando editor...</span>
+                            }
+                        </div>
+
+                        <!-- Conditions -->
+                        <div class="flex flex-col">
+                            <mat-label class="font-medium text-default dark:text-white">{{ t('fields.conditions') }}</mat-label>
+                            @defer {
+                                <quill-editor
+                                    class="mt-2"
+                                    [placeholder]="t('fields.conditions-placeholder')"
+                                    [modules]="quillModules"
+                                    format="json"
+                                    bounds="self"
+                                    formControlName="conditions"
+                                ></quill-editor>
+                                <mat-hint [innerHtml]="t('fields.conditions-hint')" class="mat-hint"></mat-hint>
+                            } @placeholder {
+                                <span>cargando editor...</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
+                        <!-- Reset -->
+                        <button
+                            (click)="form.reset()"
+                            class="w-full md:w-30 shadow-none"
+                            color="default"
+                            mat-raised-button
+                            type="reset"
+                        >
+                            {{ 'actions.reset' | transloco }}
+                        </button>
+
+                        <!-- Save -->
+                        <button
+                            (click)="submit()"
+                            class="w-full md:w-30"
+                            color="primary"
+                            mat-raised-button
+                        >
+                            {{ 'actions.save' | transloco }}
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <!-- Type -->
-            <mat-form-field class="w-full fuse-mat-dense" floatLabel="always" subscriptSizing="dynamic">
-              <mat-label [innerText]="t('fields.type')"></mat-label>
-              <mat-select [placeholder]="t('fields.type-placeholder')" formControlName="type">
-                <mat-option *ngFor="let type of benefitTypes" [value]="type">{{ t('fields.type-options.' + type) }}</mat-option>
-              </mat-select>
-              @if (form.get('type').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </mat-form-field>
+            <!-- Preview -->
+            <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
 
-            <!-- Name -->
-            <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">
-              <mat-label [innerText]="t('fields.name')"></mat-label>
-              <input [placeholder]="t('fields.name-placeholder')" formControlName="name" matInput/>
-              @if (form.get('name').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </mat-form-field>
-
-            <!-- Description -->
-            <div class="flex flex-col">
-              <mat-label class="font-medium text-default dark:text-white">{{ t('fields.description') }}*</mat-label>
-              @defer {
-                <quill-editor
-                  class="mt-2"
-                  [placeholder]="t('fields.description-placeholder')"
-                  [modules]="quillModules"
-                  format="json"
-                  bounds="self"
-                  formControlName="description"
-                ></quill-editor>
-                @if (form.get('description').hasError('required') && form.get('description').touched) {
-                  <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
-                }
-              } @placeholder {
-                <span>cargando editor...</span>
-              }
             </div>
-
-            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
-              <mat-label>Categoría</mat-label>
-              <input
-                #categoryInput
-                (input)="filter('category', $event.target)"
-                (keyup.enter)="openCategoryDialog($event, categoryInput.value);"
-                [matAutocomplete]="categoryAuto"
-                formControlName="category"
-                matInput
-                placeholder="Seleccione una categoría"
-              />
-              <button
-                (click)="$event.stopPropagation(); $event.preventDefault(); openCategoryDialog($event, categoryInput.value)"
-                mat-icon-button
-                matSuffix>
-                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
-              </button>
-              <mat-hint>Seleccione una categoría de la lista, si no existe, puede crearla.</mat-hint>
-              @if (form.get('category').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </mat-form-field>
-
-            <mat-form-field class="w-full fuse-mat-dense fuse-mat-emphasized-affix" subscriptSizing="dynamic">
-              <mat-label>Empresa</mat-label>
-              <input
-                #companyInput
-                (input)="filter('company', $event.target)"
-                (keyup.enter)="openCompanyDialog($event, companyInput.value)"
-                [matAutocomplete]="companyAuto"
-                formControlName="company"
-                matInput
-                placeholder="Seleccione una empresa"
-              />
-              <button
-                (click)="$event.stopPropagation(); $event.preventDefault(); openCompanyDialog($event, companyInput.value);"
-                mat-icon-button
-                matSuffix>
-                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
-              </button>
-              <mat-hint>Seleccione una empresa de la lista, si no existe, puede crearla.</mat-hint>
-              @if (form.get('company').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </mat-form-field>
-
-            <div class="w-full">
-              <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
-              <input
-                (change)="onFileChange($event)"
-                accept=".jpeg,.jpg,.png"
-                class="file-input"
-                id="file-image"
-                type="file"
-              />
-              <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
-            </div>
-
-            <mat-divider></mat-divider>
-
-            <div>
-              <h2 class="text-lg font-medium">{{ t('field-groups.additional') }}</h2>
-              <span class="text-hint">{{ t('field-groups.additional-description') }}</span>
-            </div>
-
-            <!-- Requirements -->
-            <div class="flex flex-col">
-              <mat-label class="font-medium text-default dark:text-white">{{ t('fields.requirements') }}</mat-label>
-              @defer {
-                <quill-editor
-                  class="mt-2"
-                  [placeholder]="t('fields.requirements-placeholder')"
-                  [modules]="quillModules"
-                  format="json"
-                  bounds="self"
-                  formControlName="requirements"
-                ></quill-editor>
-                <mat-hint [innerHtml]="t('fields.requirements-hint')" class="mat-hint"></mat-hint>
-              } @placeholder {
-                <span>cargando editor...</span>
-              }
-            </div>
-
-            <!-- Conditions -->
-            <div class="flex flex-col">
-              <mat-label class="font-medium text-default dark:text-white">{{ t('fields.conditions') }}</mat-label>
-              @defer {
-                <quill-editor
-                  class="mt-2"
-                  [placeholder]="t('fields.conditions-placeholder')"
-                  [modules]="quillModules"
-                  format="json"
-                  bounds="self"
-                  formControlName="conditions"
-                ></quill-editor>
-                <mat-hint [innerHtml]="t('fields.conditions-hint')" class="mat-hint"></mat-hint>
-              } @placeholder {
-                <span>cargando editor...</span>
-              }
-            </div>
-          </div>
-
-          <!-- Actions -->
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
-            <!-- Reset -->
-            <button
-              (click)="form.reset()"
-              class="w-full md:w-30 shadow-none"
-              color="default"
-              mat-raised-button
-              type="reset"
-            >
-              {{ 'actions.reset' | transloco }}
-            </button>
-
-            <!-- Save -->
-            <button
-              (click)="submit()"
-              class="w-full md:w-30"
-              color="primary"
-              mat-raised-button
-            >
-              {{ 'actions.save' | transloco }}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Preview -->
-      <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
-
-      </div>
+        </div>
     </div>
-  </div>
-  <pre>{{ form.getRawValue() | json }}</pre>
+    <pre>{{ form.getRawValue() | json }}</pre>
 </div>
 
 <mat-autocomplete
-  #categoryAuto="matAutocomplete"
-  (optionSelected)="onCategorySelect($event.option.value)"
-  [displayWith]="displayCategoryWithFn('name')"
+    #categoryAuto="matAutocomplete"
+    (optionSelected)="onCategorySelect($event.option.value)"
+    [displayWith]="displayCategoryWithFn('name')"
 >
-  <mat-option *ngFor="let category of categoriesFiltered$ | async" [disabled]="$any(category).disabled" [value]="category">
-    @if (category.parent) {
-      <span class="ml-4">{{ category.name }}</span>
-    } @else {
-      <span>{{ category.name }}</span>
-    }
-  </mat-option>
+    <mat-option *ngFor="let category of categoriesFiltered$ | async" [disabled]="$any(category).disabled" [value]="category">
+        @if (category.parent) {
+            <span class="ml-4">{{ category.name }}</span>
+        } @else {
+            <span>{{ category.name }}</span>
+        }
+    </mat-option>
 </mat-autocomplete>
 <mat-autocomplete
-  #companyAuto="matAutocomplete"
-  (optionSelected)="onCompanySelect($event.option.value)"
-  [displayWith]="displayCompanyWithFn('name')"
+    #companyAuto="matAutocomplete"
+    (optionSelected)="onCompanySelect($event.option.value)"
+    [displayWith]="displayCompanyWithFn('name')"
 >
-  <mat-option *ngFor="let company of companiesFiltered$ | async" [disabled]="$any(company).disabled" [value]="company">
-    <span>{{ company.name }}</span>
-  </mat-option>
+    <mat-option *ngFor="let company of companiesFiltered$ | async" [disabled]="$any(company).disabled" [value]="company">
+        <span>{{ company.name }}</span>
+    </mat-option>
 </mat-autocomplete>
 
 

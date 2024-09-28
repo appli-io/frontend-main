@@ -22,67 +22,67 @@ import { Benefit }                                    from '@modules/admin/admin
 import { SubComponent }                               from '@layout/components/sub-component/sub-component';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports: [
-    PageHeaderComponent,
-    TranslocoDirective,
-    MatIcon,
-    MatIconAnchor,
-    TranslocoPipe,
-    MatTooltip,
-    BenefitCategoryCardComponent,
-    RouterLink,
-    AsyncPipe,
-    MatError,
-    MatFormField,
-    MatHint,
-    MatInput,
-    MatPrefix,
-    ReactiveFormsModule,
-    BenefitCategoriesListComponent,
-    BenefitCardComponent,
-    MatProgressSpinner
-  ],
-  templateUrl: './list.component.html'
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        PageHeaderComponent,
+        TranslocoDirective,
+        MatIcon,
+        MatIconAnchor,
+        TranslocoPipe,
+        MatTooltip,
+        BenefitCategoryCardComponent,
+        RouterLink,
+        AsyncPipe,
+        MatError,
+        MatFormField,
+        MatHint,
+        MatInput,
+        MatPrefix,
+        ReactiveFormsModule,
+        BenefitCategoriesListComponent,
+        BenefitCardComponent,
+        MatProgressSpinner
+    ],
+    templateUrl: './list.component.html'
 })
 export class ListComponent extends SubComponent {
-  public categories$ = this._benefitCategoryService.categories$;
-  public searchControl: UntypedFormControl = new UntypedFormControl('');
+    public categories$ = this._benefitCategoryService.categories$;
+    public searchControl: UntypedFormControl = new UntypedFormControl('');
 
-  private _mostViewedCategories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
-  private _mostViewedBenefits$: BehaviorSubject<Benefit[]> = new BehaviorSubject<Benefit[]>([]);
+    private _mostViewedCategories$: BehaviorSubject<BenefitCategory[]> = new BehaviorSubject<BenefitCategory[]>([]);
+    private _mostViewedBenefits$: BehaviorSubject<Benefit[]> = new BehaviorSubject<Benefit[]>([]);
 
-  constructor(
-    private readonly _benefitCategoryService: BenefitCategoryService,
-    private readonly _benefitsService: BenefitsService,
-  ) {
-    super();
-    this._findMostViewedBenefits();
-    this._findMostViewedCategories();
-  }
+    constructor(
+        private readonly _benefitCategoryService: BenefitCategoryService,
+        private readonly _benefitsService: BenefitsService,
+    ) {
+        super();
+        this._findMostViewedBenefits();
+        this._findMostViewedCategories();
+    }
 
-  get mostViewedCategories() {
-    return this._mostViewedCategories$.asObservable();
-  }
+    get mostViewedCategories() {
+        return this._mostViewedCategories$.asObservable();
+    }
 
-  get mostViewedBenefits(): Observable<Benefit[]> {
-    return this._mostViewedBenefits$.asObservable();
-  }
+    get mostViewedBenefits(): Observable<Benefit[]> {
+        return this._mostViewedBenefits$.asObservable();
+    }
 
-  private _findMostViewedBenefits() {
-    this._benefitsService.findMostViewed()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (value) => this._mostViewedBenefits$.next(value)
-      });
-  }
+    private _findMostViewedBenefits() {
+        this._benefitsService.findMostViewed()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (value) => this._mostViewedBenefits$.next(value)
+            });
+    }
 
-  private _findMostViewedCategories() {
-    this._benefitCategoryService.findMostViewed()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (value) => this._mostViewedCategories$.next(value)
-      });
-  }
+    private _findMostViewedCategories() {
+        this._benefitCategoryService.findMostViewed()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (value) => this._mostViewedCategories$.next(value)
+            });
+    }
 }

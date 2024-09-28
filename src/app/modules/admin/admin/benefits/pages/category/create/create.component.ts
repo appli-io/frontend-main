@@ -16,66 +16,66 @@ import { lastValueFrom }                                                        
 import { Router }                                                                from '@angular/router';
 
 @Component({
-  selector   : 'app-create',
-  standalone : true,
-  imports: [
-    PageDetailHeaderComponent,
-    TranslocoDirective,
-    TranslocoPipe,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    QuillEditorComponent,
-    MatError,
-    MatHint,
-    BenefitCategorySelector,
-    MatButton,
-    MatProgressSpinner,
-    MatInput,
-    MatIcon
-  ],
-  templateUrl: './create.component.html',
-  animations : fuseAnimations,
+    selector   : 'app-create',
+    standalone : true,
+    imports    : [
+        PageDetailHeaderComponent,
+        TranslocoDirective,
+        TranslocoPipe,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        QuillEditorComponent,
+        MatError,
+        MatHint,
+        BenefitCategorySelector,
+        MatButton,
+        MatProgressSpinner,
+        MatInput,
+        MatIcon
+    ],
+    templateUrl: './create.component.html',
+    animations : fuseAnimations,
 })
 export class CreateComponent implements OnInit {
-  public form: UntypedFormGroup;
-  protected readonly quillModules = SIMPLE_QUILL_EDITOR_MODULES;
+    public form: UntypedFormGroup;
+    protected readonly quillModules = SIMPLE_QUILL_EDITOR_MODULES;
 
-  constructor(
-    private readonly _formBuilder: UntypedFormBuilder,
-    private readonly _benefitCategoryService: BenefitCategoryService,
-    private readonly _router: Router
-  ) {}
+    constructor(
+        private readonly _formBuilder: UntypedFormBuilder,
+        private readonly _benefitCategoryService: BenefitCategoryService,
+        private readonly _router: Router
+    ) {}
 
-  ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      name       : [ undefined, [ Validators.required, Validators.minLength(3) ] ],
-      description: [ undefined, [ Validators.required, Validators.minLength(10) ] ],
-      icon       : [ undefined, [ Validators.required ] ],
-      image      : [ undefined, [ Validators.required ] ],
-      parent     : [ undefined ]
-    });
-  }
+    ngOnInit(): void {
+        this.form = this._formBuilder.group({
+            name       : [ undefined, [ Validators.required, Validators.minLength(3) ] ],
+            description: [ undefined, [ Validators.required, Validators.minLength(10) ] ],
+            icon       : [ undefined, [ Validators.required ] ],
+            image      : [ undefined, [ Validators.required ] ],
+            parent     : [ undefined ]
+        });
+    }
 
-  public submit(): void {
-    if (this.form.invalid) this.form.markAllAsTouched();
+    public submit(): void {
+        if (this.form.invalid) this.form.markAllAsTouched();
 
-    this.form.disable();
-    lastValueFrom(this._benefitCategoryService.create(this.form.getRawValue()))
-      .then(() => {
-        this.form.enable();
-        this.form.reset();
-        this._router.navigate([ '/admin/benefits/category' ]);
-      })
-      .catch(() => this.form.enable());
-  }
+        this.form.disable();
+        lastValueFrom(this._benefitCategoryService.create(this.form.getRawValue()))
+            .then(() => {
+                this.form.enable();
+                this.form.reset();
+                this._router.navigate([ '/admin/benefits/category' ]);
+            })
+            .catch(() => this.form.enable());
+    }
 
-  public onFileChange(event: Event, controlName: 'icon' | 'image'): void {
-    const target = event.target as HTMLInputElement;
-    const file = target.files?.item(0);
+    public onFileChange(event: Event, controlName: 'icon' | 'image'): void {
+        const target = event.target as HTMLInputElement;
+        const file = target.files?.item(0);
 
-    if (!file) return;
+        if (!file) return;
 
-    this.form.patchValue({[controlName]: file});
-  }
+        this.form.patchValue({[controlName]: file});
+    }
 }

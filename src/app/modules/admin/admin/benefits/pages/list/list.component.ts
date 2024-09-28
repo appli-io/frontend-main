@@ -16,73 +16,73 @@ import { BenefitsService }         from '@modules/admin/admin/benefits/services/
 import { Benefit }                 from '@modules/admin/admin/benefits/models/benefit';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports    : [
-    PageHeaderComponent,
-    TranslocoDirective,
-    BenefitsTableComponent,
-    MatAnchor,
-    RouterLink,
-    MatButton,
-    MatIconAnchor,
-    MatIcon,
-    MatTooltip,
-    TranslocoPipe,
-    MatDivider
-  ],
-  templateUrl: './list.component.html'
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        PageHeaderComponent,
+        TranslocoDirective,
+        BenefitsTableComponent,
+        MatAnchor,
+        RouterLink,
+        MatButton,
+        MatIconAnchor,
+        MatIcon,
+        MatTooltip,
+        TranslocoPipe,
+        MatDivider
+    ],
+    templateUrl: './list.component.html'
 })
 export class ListComponent {
-  public benefits$ = this._benefitsService.benefits$;
-  private _notyf = new Notyf();
+    public benefits$ = this._benefitsService.benefits$;
+    private _notyf = new Notyf();
 
-  constructor(
-    private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _benefitsService: BenefitsService
-  ) {}
+    constructor(
+        private readonly _fuseConfirmationService: FuseConfirmationService,
+        private readonly _benefitsService: BenefitsService
+    ) {}
 
-  edit(benefit: Benefit) {
-    console.log('Edit benefit', benefit);
-  }
+    edit(benefit: Benefit) {
+        console.log('Edit benefit', benefit);
+    }
 
-  delete(benefit: Benefit) {
-    console.log('Delete benefit', benefit);
-    const confirmation = this._fuseConfirmationService.open({
-      title  : 'Delete benefit',
-      message:
-        'Are you sure you want to delete the benefit? This action cannot be undone.',
-      actions: {
-        confirm: {
-          label: 'Delete',
-        },
-      },
-    });
+    delete(benefit: Benefit) {
+        console.log('Delete benefit', benefit);
+        const confirmation = this._fuseConfirmationService.open({
+            title  : 'Delete benefit',
+            message:
+                'Are you sure you want to delete the benefit? This action cannot be undone.',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
 
-    // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed()
-      .pipe(
-        mergeMap((result) => {
-          // If the confirm button pressed...
-          if (result === 'confirmed') {
-            // Delete the album
-            return this._benefitsService.delete(benefit.id);
-          }
-          return [];
-        })
-      )
-      .subscribe({
-        next : () => {
-          this._notyf.success('Album deleted');
-        },
-        error: (error) => {
-          console.error('Delete album error', error);
-          this._notyf.error('Error deleting album');
-        }
-      });
-  }
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed()
+            .pipe(
+                mergeMap((result) => {
+                    // If the confirm button pressed...
+                    if (result === 'confirmed') {
+                        // Delete the album
+                        return this._benefitsService.delete(benefit.id);
+                    }
+                    return [];
+                })
+            )
+            .subscribe({
+                next : () => {
+                    this._notyf.success('Album deleted');
+                },
+                error: (error) => {
+                    console.error('Delete album error', error);
+                    this._notyf.error('Error deleting album');
+                }
+            });
+    }
 
-  pageChange(event: any) {
-    console.log('Page change', event);
-  }
+    pageChange(event: any) {
+        console.log('Page change', event);
+    }
 }

@@ -5,12 +5,12 @@ import AES                                                     from 'crypto-js/a
 import { environment }                                         from '../../../../../environments/environment';
 
 export function emailAsyncValidator(authService: AuthService): AsyncValidatorFn {
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    const encryptedEmail = AES.encrypt(control.value, environment.ENCRYPTION_KEY).toString();
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        const encryptedEmail = AES.encrypt(control.value, environment.ENCRYPTION_KEY).toString();
 
-    return authService.validateEmail(encryptedEmail).pipe(
-      map(isValid => (isValid ? null : {invalidEmail: true})),
-      catchError(() => null) // Handle errors and return null to indicate no validation error
-    );
-  };
+        return authService.validateEmail(encryptedEmail).pipe(
+            map(isValid => (isValid ? null : {invalidEmail: true})),
+            catchError(() => null) // Handle errors and return null to indicate no validation error
+        );
+    };
 }

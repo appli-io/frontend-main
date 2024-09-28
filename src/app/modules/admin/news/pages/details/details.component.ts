@@ -24,87 +24,87 @@ import { QuillViewComponent, QuillViewHTMLComponent } from 'ngx-quill';
 import { PageDetailHeaderComponent }                  from '../../../../../shared/components/page-detail-header/page-detail-header.component';
 
 @Component({
-  selector   : 'app-single-news',
-  standalone : true,
-  imports: [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule, QuillViewHTMLComponent, QuillViewComponent, PageDetailHeaderComponent ],
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: './details.component.html',
-  schemas    : [ CUSTOM_ELEMENTS_SCHEMA ]
+    selector     : 'app-single-news',
+    standalone   : true,
+    imports      : [ CommonModule, MatButtonModule, RouterLink, MatIconModule, CdkScrollable, MatDividerModule, MatTooltipModule, FuseCardComponent, MatInputModule, SwiperDirective, NgOptimizedImage, TranslocoDirective, LightgalleryModule, QuillViewHTMLComponent, QuillViewComponent, PageDetailHeaderComponent ],
+    encapsulation: ViewEncapsulation.None,
+    templateUrl  : './details.component.html',
+    schemas      : [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DetailsComponent implements AfterViewInit {
-  @ViewChild('lightGallery') lightGallery: { _elementRef: { nativeElement: any; }; };
-  inlineGallery: LightGallery;
-  news: INews;
-  settings = {};
+    @ViewChild('lightGallery') lightGallery: { _elementRef: { nativeElement: any; }; };
+    inlineGallery: LightGallery;
+    news: INews;
+    settings = {};
 
-  public config: SwiperOptions = {
-    modules      : [ Navigation, Pagination, A11y, Mousewheel ],
-    autoHeight   : false,
-    navigation   : true,
-    loop         : true,
-    pagination   : {clickable: false, dynamicBullets: true},
-    slidesPerView: 1,
-    centeredSlides: true,
-    breakpoints  : {
-      400: {
-        slidesPerView: 1,
-        centeredSlides: true
-      },
+    public config: SwiperOptions = {
+        modules       : [ Navigation, Pagination, A11y, Mousewheel ],
+        autoHeight    : false,
+        navigation    : true,
+        loop          : true,
+        pagination    : {clickable: false, dynamicBullets: true},
+        slidesPerView : 1,
+        centeredSlides: true,
+        breakpoints   : {
+            400: {
+                slidesPerView : 1,
+                centeredSlides: true
+            },
+        }
+    };
+
+    constructor(
+        private readonly route: ActivatedRoute,
+        public readonly userService: UserService
+    ) {
+        this.news = this.route.snapshot.data.news;
     }
-  };
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    public readonly userService: UserService
-  ) {
-    this.news = this.route.snapshot.data.news;
-  }
+    ngAfterViewInit() {
+        const lgContainer = this.lightGallery._elementRef.nativeElement;
 
-  ngAfterViewInit() {
-    const lgContainer = this.lightGallery._elementRef.nativeElement;
+        const items = [];
 
-    const items = [];
-
-    if (this.news.portraitImage)
-      items.push({
-        src  : this.news.portraitImage.fileUrl,
-        thumb: this.news.portraitImage.fileUrl,
-        download: this.news.portraitImage.name,
-        subHtml : `<div class="lightGallery-captions">
+        if (this.news.portraitImage)
+            items.push({
+                src     : this.news.portraitImage.fileUrl,
+                thumb   : this.news.portraitImage.fileUrl,
+                download: this.news.portraitImage.name,
+                subHtml : `<div class="lightGallery-captions">
                 <h4>${ this.news.portraitImage.name }</h4>
             </div>`
-      });
+            });
 
-    if (this.news.images?.length > 0)
-      items.push(
-        ...this.news.images?.map((image) => ({
-          src  : image.fileUrl,
-          thumb: image.fileUrl,
-          download: image.name,
-          subHtml: `<div class="lightGallery-captions">
+        if (this.news.images?.length > 0)
+            items.push(
+                ...this.news.images?.map((image) => ({
+                    src     : image.fileUrl,
+                    thumb   : image.fileUrl,
+                    download: image.name,
+                    subHtml : `<div class="lightGallery-captions">
                 <h4>${ image.name }</h4>
                 <p>Description of the slide 1</p>
             </div>`
-        }))
-      );
+                }))
+            );
 
-    this.inlineGallery = lightGallery(lgContainer, {
-      loop      : true,
-      actualSize: true,
-      dynamic   : true,
-      // Turn off hash plugin in case if you are using it
-      // as we don't want to change the url on slide change
-      hash: false,
-      // Do not allow users to close the gallery
-      closable        : true,
-      appendSubHtmlTo : '.lg-item',
-      dynamicEl       : [ ...items ],
-      autoplay        : true,
-      autoplayControls: true
-    });
-  }
+        this.inlineGallery = lightGallery(lgContainer, {
+            loop      : true,
+            actualSize: true,
+            dynamic   : true,
+            // Turn off hash plugin in case if you are using it
+            // as we don't want to change the url on slide change
+            hash: false,
+            // Do not allow users to close the gallery
+            closable        : true,
+            appendSubHtmlTo : '.lg-item',
+            dynamicEl       : [ ...items ],
+            autoplay        : true,
+            autoplayControls: true
+        });
+    }
 
-  openGallery(index) {
-    this.inlineGallery.openGallery(index);
-  }
+    openGallery(index) {
+        this.inlineGallery.openGallery(index);
+    }
 }

@@ -8,15 +8,15 @@ import { Observable, of }                                      from 'rxjs';
  * @param {string} controlName
  */
 export function requiredIfFalse(controlName: string): AsyncValidatorFn {
-  return (control: AbstractControl): Observable<ValidationErrors> => {
-    const controlToCheck = control?.parent?.get(controlName);
+    return (control: AbstractControl): Observable<ValidationErrors> => {
+        const controlToCheck = control?.parent?.get(controlName);
 
-    if (!controlToCheck)
-      return of(null);
+        if (!controlToCheck)
+            return of(null);
 
-    if (!controlToCheck || controlToCheck.value === false) {
-      return of({requiredIfFalse: true});
-    }
-    return of(null);
-  }
+        if (!controlToCheck || controlToCheck.value === false) {
+            return of({requiredIfFalse: true});
+        }
+        return of(null);
+    };
 }

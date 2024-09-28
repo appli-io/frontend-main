@@ -1,17 +1,17 @@
 <drawer-listing
-  *transloco="let t; read: 'admin.benefits'"
-  [panels]="panels"
-  [selectedPanel]="'list'"
-  [title]="'admin.benefits.title' | transloco"
+    *transloco="let t; read: 'admin.benefits'"
+    [panels]="panels"
+    [selectedPanel]="'list'"
+    [title]="'admin.benefits.title' | transloco"
 >
-  <!--  <drawer-header>-->
-  <!--    <page-header-->
-  <!--      [description]="t('description')"-->
-  <!--      [subtitle]="t('subtitle')"-->
-  <!--      [title]="t('title')"-->
-  <!--    ></page-header>-->
-  <!--  </drawer-header>-->
-  <drawer-content>
-    <router-outlet></router-outlet>
-  </drawer-content>
+    <!--  <drawer-header>-->
+    <!--    <page-header-->
+    <!--      [description]="t('description')"-->
+    <!--      [subtitle]="t('subtitle')"-->
+    <!--      [title]="t('title')"-->
+    <!--    ></page-header>-->
+    <!--  </drawer-header>-->
+    <drawer-content>
+        <router-outlet></router-outlet>
+    </drawer-content>
 </drawer-listing>

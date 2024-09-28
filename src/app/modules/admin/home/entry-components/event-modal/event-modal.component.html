@@ -1,80 +1,80 @@
 <div *transloco="let t; read: ''"></div>
 <div class="flex max-h-screen flex-col md:min-w-160 h-full overflow-hidden">
-  <!-- Header -->
-  <div class="flex-0 flex justify-between items-center p-4 border-b shadow-md">
-    <h2 [innerText]="event.title" class="text-lg sm:text-2xl font-medium uppercase"></h2>
-    <button (click)="closeDialog()" mat-icon-button>
-      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
-    </button>
-  </div>
-
-  <!-- OSM Map -->
-  @if (neededMaps) {
-    <div class="relative group/maps">
-      <div class="map-container h-36 hover:h-96 transition-all duration-300 z-0" #map></div>
-      <div class="absolute inset-0 bg-neutral-800/25 z-10 group-hover/maps:-z-1 flex justify-center items-center">
-        <span class="font-medium text-lg items-center hidden md:flex drop-shadow-md text-white">Hover to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
-        <span class="font-medium text-lg flex items-center md:hidden drop-shadow-md text-white">Click to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
-      </div>
-    </div>
-  }
-
-  <!-- Content -->
-  <div class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh] px-4 pt-4">
-    <!-- Organizer -->
-    <h3 class="font-medium text-md mb-1 text-orange-600">ORGANIZADOR</h3>
-    <div class="flex flex-row items-center mb-4 gap-2">
-      <span class="bg-orange-600 p-2 text-white text-lg font-medium max-w-3/4 truncate">{{ event.organizer.name }}</span>
-      <a href="mailto:{{event.organizer.email}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:envelope"></mat-icon></span></a>
-      <a href="tel:{{event.organizer.phone.countryCode}}{{event.organizer.phone.number}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:phone"></mat-icon></span></a>
+    <!-- Header -->
+    <div class="flex-0 flex justify-between items-center p-4 border-b shadow-md">
+        <h2 [innerText]="event.title" class="text-lg sm:text-2xl font-medium uppercase"></h2>
+        <button (click)="closeDialog()" mat-icon-button>
+            <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
+        </button>
     </div>
 
-    <!-- Date -->
-    <h3 class="font-medium text-md mb-1 text-green-600">CUANDO</h3>
-    <div class="flex flex-row items-center mb-4 gap-2">
-      <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISODate() }}</span>
-      <span class="bg-green-600 p-2 text-white text-lg font-medium">
-        {{ DateTime.fromISO($any(event.startDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}
-        {{ !event.isAllDay ? ' - ' + DateTime.fromISO($any(event.endDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : '' }}
-      </span>
-    </div>
-
-    <!-- Description -->
-    <h3 class="font-medium text-md mb-1 text-blue-600">DESCRIPCIÓN</h3>
-    <p class="text-justify mb-2 whitespace-pre-wrap">{{ event.description }}</p>
-
-    <div class="flex flex-row gap-2">
-      <div>
-        <h3 class="font-medium text-md mb-1">ESTADO</h3>
-        <div class="flex flex-row items-center mb-4 gap-2">
-          <span class="bg-gray-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:pencil"></mat-icon>
-            {{ event.status }}</span>
+    <!-- OSM Map -->
+    @if (neededMaps) {
+        <div class="relative group/maps">
+            <div class="map-container h-36 hover:h-96 transition-all duration-300 z-0" #map></div>
+            <div class="absolute inset-0 bg-neutral-800/25 z-10 group-hover/maps:-z-1 flex justify-center items-center">
+                <span class="font-medium text-lg items-center hidden md:flex drop-shadow-md text-white">Hover to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
+                <span class="font-medium text-lg flex items-center md:hidden drop-shadow-md text-white">Click to expand <mat-icon class="ml-2 text-current" svgIcon="heroicons_outline:arrows-up-down"></mat-icon></span>
+            </div>
         </div>
-      </div>
-      <div>
-        <h3 class="font-medium text-md mb-1">TIPO DE EVENTO</h3>
-        <div class="flex flex-row items-center mb-4 gap-2">
-          <span class="bg-amber-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:wrench-screwdriver"></mat-icon>
-            {{ event.type }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- URLs -->
-    @if (event.url?.length) {
-      <div>
-        <h3 class="text-md font-semibold">Enlaces:</h3>
-        <ul class="list-disc list-inside">
-          <li *ngFor="let link of event.url">
-            <a [href]="link.url" target="_blank" class="text-blue-600 underline">{{ link.label }}</a>
-          </li>
-        </ul>
-      </div>
     }
-  </div>
 
-  <!-- Footer - Actions -->
-  <div class="p-4 flex items-center justify-end">
-    <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Cerrar</button>
-  </div>
+    <!-- Content -->
+    <div class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh] px-4 pt-4">
+        <!-- Organizer -->
+        <h3 class="font-medium text-md mb-1 text-orange-600">ORGANIZADOR</h3>
+        <div class="flex flex-row items-center mb-4 gap-2">
+            <span class="bg-orange-600 p-2 text-white text-lg font-medium max-w-3/4 truncate">{{ event.organizer.name }}</span>
+            <a href="mailto:{{event.organizer.email}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:envelope"></mat-icon></span></a>
+            <a href="tel:{{event.organizer.phone.countryCode}}{{event.organizer.phone.number}}"><span class="bg-orange-600 p-2 text-lg font-medium flex justify-center items-center"><mat-icon class="text-white" svgIcon="heroicons_outline:phone"></mat-icon></span></a>
+        </div>
+
+        <!-- Date -->
+        <h3 class="font-medium text-md mb-1 text-green-600">CUANDO</h3>
+        <div class="flex flex-row items-center mb-4 gap-2">
+            <span class="bg-green-600 p-2 text-white text-lg font-medium">{{ DateTime.fromISO($any(event.startDate)).toISODate() }}</span>
+            <span class="bg-green-600 p-2 text-white text-lg font-medium">
+        {{ DateTime.fromISO($any(event.startDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) }}
+                {{ !event.isAllDay ? ' - ' + DateTime.fromISO($any(event.endDate)).toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : '' }}
+      </span>
+        </div>
+
+        <!-- Description -->
+        <h3 class="font-medium text-md mb-1 text-blue-600">DESCRIPCIÓN</h3>
+        <p class="text-justify mb-2 whitespace-pre-wrap">{{ event.description }}</p>
+
+        <div class="flex flex-row gap-2">
+            <div>
+                <h3 class="font-medium text-md mb-1">ESTADO</h3>
+                <div class="flex flex-row items-center mb-4 gap-2">
+          <span class="bg-gray-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:pencil"></mat-icon>
+              {{ event.status }}</span>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-medium text-md mb-1">TIPO DE EVENTO</h3>
+                <div class="flex flex-row items-center mb-4 gap-2">
+          <span class="bg-amber-600 p-2 text-white text-lg font-medium flex items-center gap-2 uppercase"><mat-icon class="text-white" svgIcon="heroicons_outline:wrench-screwdriver"></mat-icon>
+              {{ event.type }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- URLs -->
+        @if (event.url?.length) {
+            <div>
+                <h3 class="text-md font-semibold">Enlaces:</h3>
+                <ul class="list-disc list-inside">
+                    <li *ngFor="let link of event.url">
+                        <a [href]="link.url" target="_blank" class="text-blue-600 underline">{{ link.label }}</a>
+                    </li>
+                </ul>
+            </div>
+        }
+    </div>
+
+    <!-- Footer - Actions -->
+    <div class="p-4 flex items-center justify-end">
+        <button (click)="closeDialog()" [color]="'accent'" mat-flat-button>Cerrar</button>
+    </div>
 </div>

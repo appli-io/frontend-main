@@ -1,55 +1,55 @@
 <wwt-table
-  (contextMenu)="openActions($event)"
-  *transloco="let t; read: 'admin.benefits'"
-  [data]="benefits$"
-  [displayedColumns]="columns"
-  [messageNoData]="t('list.no-content')"
+    (contextMenu)="openActions($event)"
+    *transloco="let t; read: 'admin.benefits'"
+    [data]="benefits$"
+    [displayedColumns]="columns"
+    [messageNoData]="t('list.no-content')"
 >
-  <ng-container matColumnDef="title" matSort>
-    <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ t('list.table-columns.title') }}</th>
-    <td *matCellDef="let benefit" mat-cell><span [title]="benefit.name" class="line-clamp-1">{{ benefit.name }}</span></td>
-  </ng-container>
+    <ng-container matColumnDef="title" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ t('list.table-columns.title') }}</th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.name" class="line-clamp-1">{{ benefit.name }}</span></td>
+    </ng-container>
 
-  <ng-container matColumnDef="type" matSort>
-    <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.type') }}</span></th>
-    <td *matCellDef="let benefit" mat-cell><span [title]="benefit.type" class="line-clamp-1">{{ t('types.' + benefit.type) }}</span></td>
-  </ng-container>
+    <ng-container matColumnDef="type" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.type') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.type" class="line-clamp-1">{{ t('types.' + benefit.type) }}</span></td>
+    </ng-container>
 
-  <ng-container matColumnDef="category" matSort>
-    <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.category') }}</span></th>
-    <td *matCellDef="let benefit" mat-cell><span [title]="benefit.category?.name" class="line-clamp-1">{{ benefit.category?.name || 'Sin definir' }}</span></td>
-  </ng-container>
+    <ng-container matColumnDef="category" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.category') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.category?.name" class="line-clamp-1">{{ benefit.category?.name || 'Sin definir' }}</span></td>
+    </ng-container>
 
-  <ng-container matColumnDef="company" matSort>
-    <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.company') }}</span></th>
-    <td *matCellDef="let benefit" mat-cell><span [title]="benefit.benefitCompany?.name" class="line-clamp-1">{{ benefit.benefitCompany?.name || 'Sin definir' }}</span></td>
-  </ng-container>
+    <ng-container matColumnDef="company" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.company') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span [title]="benefit.benefitCompany?.name" class="line-clamp-1">{{ benefit.benefitCompany?.name || 'Sin definir' }}</span></td>
+    </ng-container>
 
-  <ng-container matColumnDef="discountsCount" matSort>
-    <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.discounts-count') }}</span></th>
-    <td *matCellDef="let benefit" mat-cell><span class="line-clamp-1">{{ benefit.discounts?.length || 0 }}</span></td>
-  </ng-container>
+    <ng-container matColumnDef="discountsCount" matSort>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header><span class="select-none">{{ t('list.table-columns.discounts-count') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell><span class="line-clamp-1">{{ benefit.discounts?.length || 0 }}</span></td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('list.table-columns.actions') }}</span></th>
-    <td *matCellDef="let benefit" mat-cell>
-      <button
-        (click)="$event.stopPropagation()"
-        [matMenuTriggerFor]="menu"
-        mat-icon-button
-      >
-        <mat-icon svgIcon="heroicons_solid:ellipsis-vertical"></mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button (click)="openEditDialog(benefit)" mat-menu-item>
-          <mat-icon class="icon-size-4" svgIcon="heroicons_outline:pencil"></mat-icon>
-          <span>{{ t('list.table-actions.edit') }}</span>
-        </button>
-        <button (click)="delete(benefit)" mat-menu-item>
-          <mat-icon class="icon-size-4" color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
-          <span>{{ t('list.table-actions.delete') }}</span>
-        </button>
-      </mat-menu>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell><span class="select-none">{{ t('list.table-columns.actions') }}</span></th>
+        <td *matCellDef="let benefit" mat-cell>
+            <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerFor]="menu"
+                mat-icon-button
+            >
+                <mat-icon svgIcon="heroicons_solid:ellipsis-vertical"></mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button (click)="openEditDialog(benefit)" mat-menu-item>
+                    <mat-icon class="icon-size-4" svgIcon="heroicons_outline:pencil"></mat-icon>
+                    <span>{{ t('list.table-actions.edit') }}</span>
+                </button>
+                <button (click)="delete(benefit)" mat-menu-item>
+                    <mat-icon class="icon-size-4" color="warn" svgIcon="heroicons_outline:trash"></mat-icon>
+                    <span>{{ t('list.table-actions.delete') }}</span>
+                </button>
+            </mat-menu>
+        </td>
+    </ng-container>
 </wwt-table>

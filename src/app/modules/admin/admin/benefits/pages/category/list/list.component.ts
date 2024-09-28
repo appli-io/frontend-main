@@ -14,60 +14,60 @@ import { AsyncPipe, JsonPipe }                                                fr
 import { MatTooltip }                                                         from '@angular/material/tooltip';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports: [
-    TranslocoDirective,
-    PageHeaderComponent,
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatHeaderCell,
-    MatIcon,
-    MatIconButton,
-    MatMenu,
-    MatMenuItem,
-    MatSort,
-    MatSortHeader,
-    Table,
-    MatHeaderCellDef,
-    MatMenuTrigger,
-    AsyncPipe,
-    JsonPipe,
-    MatTooltip
-  ],
-  templateUrl: './list.component.html'
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        TranslocoDirective,
+        PageHeaderComponent,
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatIcon,
+        MatIconButton,
+        MatMenu,
+        MatMenuItem,
+        MatSort,
+        MatSortHeader,
+        Table,
+        MatHeaderCellDef,
+        MatMenuTrigger,
+        AsyncPipe,
+        JsonPipe,
+        MatTooltip
+    ],
+    templateUrl: './list.component.html'
 })
 export class ListComponent extends AbstractListComponent<BenefitCategory> {
-  public columns: Array<keyof BenefitCategory | string> = [ 'name', 'parent', 'active', 'order', 'actions' ];
+    public columns: Array<keyof BenefitCategory | string> = [ 'name', 'parent', 'active', 'order', 'actions' ];
 
-  constructor(
-    private readonly _benefitCategoryService: BenefitCategoryService,
-    translationService: TranslocoService
-  ) {
-    super(
-      _benefitCategoryService,
-      _benefitCategoryService.categories$,
-      {
-        title  : translationService.translate('admin.benefits.category.delete.title'),
-        message: translationService.translate('admin.benefits.category.delete.message'),
-        hint   : {
-          color  : 'warn',
-          message: 'admin.benefits.category.delete.hint',
-        },
-        actions: {
-          confirm: {
-            label: translationService.translate('actions.delete'),
-          },
-          cancel : {
-            label: translationService.translate('actions.cancel'),
-          },
-        },
-      }
-    );
-  }
+    constructor(
+        private readonly _benefitCategoryService: BenefitCategoryService,
+        translationService: TranslocoService
+    ) {
+        super(
+            _benefitCategoryService,
+            _benefitCategoryService.categories$,
+            {
+                title  : translationService.translate('admin.benefits.category.delete.title'),
+                message: translationService.translate('admin.benefits.category.delete.message'),
+                hint   : {
+                    color  : 'warn',
+                    message: 'admin.benefits.category.delete.hint',
+                },
+                actions: {
+                    confirm: {
+                        label: translationService.translate('actions.delete'),
+                    },
+                    cancel : {
+                        label: translationService.translate('actions.cancel'),
+                    },
+                },
+            }
+        );
+    }
 
-  edit(item: BenefitCategory): void {
-    console.log('Edit item', item);
-  }
+    edit(item: BenefitCategory): void {
+        console.log('Edit item', item);
+    }
 }

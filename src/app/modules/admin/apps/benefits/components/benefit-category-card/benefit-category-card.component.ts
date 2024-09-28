@@ -7,17 +7,17 @@ import { BenefitCategory }   from '@modules/admin/admin/benefits/models/benefit-
 import { DeltaToHtmlPipe }   from '@core/pipe/delta-to-html.pipe';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports        : [
-    RouterLink,
-    FuseCardComponent,
-    UpperCasePipe,
-    DeltaToHtmlPipe
-  ],
-  selector       : 'benefit-category-card',
-  standalone     : true,
-  templateUrl    : './benefit-category-card.component.html'
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports        : [
+        RouterLink,
+        FuseCardComponent,
+        UpperCasePipe,
+        DeltaToHtmlPipe
+    ],
+    selector       : 'benefit-category-card',
+    standalone     : true,
+    templateUrl    : './benefit-category-card.component.html'
 })
 export class BenefitCategoryCardComponent {
-  @Input() category: BenefitCategory;
+    @Input() category: BenefitCategory;
 }

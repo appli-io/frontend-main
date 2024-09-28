@@ -1,262 +1,262 @@
 <div *transloco="let t; read: 'admin.events.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full overflow-hidden">
-  <!-- Header -->
-  <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
-    <div [innerText]="t('title')" class="text-lg font-medium"></div>
-    <button (click)="discard()" mat-icon-button>
-      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
-    </button>
-  </div>
+    <!-- Header -->
+    <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+        <div [innerText]="t('title')" class="text-lg font-medium"></div>
+        <button (click)="discard()" mat-icon-button>
+            <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
+        </button>
+    </div>
 
-  <!-- Content -->
-  <form (keydown.enter)="false" [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh]">
-    <mat-vertical-stepper linear="true">
-      <!-- Step 1: New Event -->
-      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step1')" formGroupName="step1">
-        <ng-template matStepLabel>{{ t("step1Title") }}</ng-template>
-        <!-- Step 1: New Event Details -->
-        <h2 class="text-lg text-secondary">{{ t("step1Details") }}</h2>
-        <mat-divider class="pb-4 mt-4"></mat-divider>
-        <div class="flex flex-col gap-2 mt-2">
-          <!-- Title of event -->
-          <mat-form-field>
-            <mat-label [innerText]="t('name')"></mat-label>
-            <input formControlName="title" matInput/>
-            <mat-error *ngIf="eventForm.get('step1.title').hasError('required')">
-              {{ 'errors.form.required' | transloco }}
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Description -->
-          <mat-form-field>
-            <mat-label [innerText]="t('description')"></mat-label>
-            <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
-            <mat-error *ngIf="eventForm.get('step1.description').hasError('required')">
-              {{ 'errors.form.required' | transloco }}
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Start Date  -->
-          <div class="flex flex-wrap gap-x-4">
-            <mat-form-field class="flex-auto">
-              <mat-label [innerText]="t('date')"></mat-label>
-              <input [matDatepicker]="picker1" formControlName="startDate" matInput/>
-              <mat-datepicker-toggle [for]="picker1" matIconSuffix></mat-datepicker-toggle>
-              <mat-datepicker #picker1></mat-datepicker>
-              <mat-error *ngIf="eventForm.get('step1.startDate').hasError('required')">
-                {{ 'errors.form.required' | transloco }}
-              </mat-error>
-            </mat-form-field>
-
-            <div class="flex gap-x-4 w-full md:w-[unset]">
-              <!-- Time Picker -->
-              <mat-form-field class="basis-[48%] md:basis-auto">
-                <mat-label [innerText]="t('hour-start')"></mat-label>
-                <input formControlName="startDateTime" matInput type="time"/>
-                <mat-icon matSuffix>schedule</mat-icon>
-                <mat-error *ngIf="eventForm.get('step1.startDateTime').hasError('required')">
-                  {{ 'errors.form.required' | transloco }}
-                </mat-error>
-              </mat-form-field>
-
-              <!-- End Date -->
-              @if (!eventForm.get('step1.isAllDay').value) {
-                <mat-form-field class="basis-[48%] md:basis-auto">
-                  <mat-label [innerText]="t('hour-end')"></mat-label>
-                  <input formControlName="endDateTime" matInput type="time" [required]="eventForm.get('step1.isAllDay').value === false"/>
-                  <mat-icon matSuffix>schedule</mat-icon>
-                  <mat-error *ngIf="eventForm.get('step1.endDateTime').hasError('required')">
-                    {{ 'errors.form.required' | transloco }}
-                  </mat-error>
-                </mat-form-field>
-              }
-            </div>
-          </div>
-        </div>
-
-        <!-- Is All Day -->
-        <mat-checkbox class="-ml-2 mb-3" formControlName="isAllDay">{{ t("isAllDay") }}</mat-checkbox>
-        <div class="flex justify-end">
-          <button [innerText]="t('next')" color="primary" mat-flat-button matStepperNext></button>
-        </div>
-      </mat-step>
-
-      <!-- Step 2: Details Additional -->
-      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step2')" formGroupName="step2">
-        <ng-template matStepLabel>{{ t("step2Title") }}</ng-template>
-
-        <!-- Step 2: Details -->
-        <h2 class="text-lg text-secondary">{{ t("step2Details") }}</h2>
-        <mat-divider class="pb-4 mt-4"></mat-divider>
-        <!-- Location -->
-        <div class="flex flex-col gap-2 mt-2">
-          <mat-form-field>
-            <mat-label [innerText]="t('location')"></mat-label>
-            <input formControlName="location" matInput/>
-            <mat-error *ngIf="eventForm.get('step2.location').hasError('required')">
-              {{ 'errors.form.required' | transloco }}
-            </mat-error>
-          </mat-form-field>
-          <!-- URL -->
-          <div class="space-y-4" formArrayName="url">
-            @if (urlArray.controls && urlArray.controls.length) {
-              <mat-accordion>
-                @for (url of urlArray.controls; track trackByFn($index, url)) {
-                  <mat-expansion-panel hideToggle [expanded]="$last">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        <h2>URL de evento {{ $index + 1 }}</h2>
-                        <span class="ml-2 text-hint text-md">{{ url.value?.platform ? '(' + url.value.platform + ')' : '' }}</span>
-                      </mat-panel-title>
-                      <button (click)="removeUrl($index)" mat-icon-button>
-                        <mat-icon svgIcon="heroicons_outline:trash" color="warn" class="icon-size-5"></mat-icon>
-                      </button>
-                    </mat-expansion-panel-header>
-                    <!-- Content -->
-                    <div [formGroupName]="$index" class="flex flex-col gap-2">
-                      <mat-form-field>
-                        <mat-label>{{ t("url.platform") }}</mat-label>
-                        <mat-select formControlName="platform" (selectionChange)="onPlatformSelected($index, $event)">
-                          @for (platform of getAvailablePlatforms($index); track trackByFn($index, platform)) {
-                            <mat-option [value]="platform">
-                              {{ t("platforms." + platform) }}
-                            </mat-option>
-                          }
-                        </mat-select>
-                        <mat-error *ngIf="urlArray.get($index + '.platform').hasError('required')">
-                          {{ 'errors.form.required' | transloco }}
+    <!-- Content -->
+    <form (keydown.enter)="false" [formGroup]="eventForm" class="flex-1 flex flex-col overflow-y-auto h-full max-h-[80vh]">
+        <mat-vertical-stepper linear="true">
+            <!-- Step 1: New Event -->
+            <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step1')" formGroupName="step1">
+                <ng-template matStepLabel>{{ t("step1Title") }}</ng-template>
+                <!-- Step 1: New Event Details -->
+                <h2 class="text-lg text-secondary">{{ t("step1Details") }}</h2>
+                <mat-divider class="pb-4 mt-4"></mat-divider>
+                <div class="flex flex-col gap-2 mt-2">
+                    <!-- Title of event -->
+                    <mat-form-field>
+                        <mat-label [innerText]="t('name')"></mat-label>
+                        <input formControlName="title" matInput/>
+                        <mat-error *ngIf="eventForm.get('step1.title').hasError('required')">
+                            {{ 'errors.form.required' | transloco }}
                         </mat-error>
-                      </mat-form-field>
+                    </mat-form-field>
 
-                      @if (eventForm.value['step2'].url[$index]?.platform) {
-                        <div class="flex gap-x-4">
-                          <mat-form-field class="w-full">
-                            <mat-label>{{ t("url.label") }}</mat-label>
-                            <input formControlName="label" matInput/>
-                          </mat-form-field>
+                    <!-- Description -->
+                    <mat-form-field>
+                        <mat-label [innerText]="t('description')"></mat-label>
+                        <textarea cdkTextareaAutosize formControlName="description" matInput></textarea>
+                        <mat-error *ngIf="eventForm.get('step1.description').hasError('required')">
+                            {{ 'errors.form.required' | transloco }}
+                        </mat-error>
+                    </mat-form-field>
 
-                          @if (eventForm.value['step2'].url[$index]?.platform !== "maps") {
-                            <mat-form-field class="w-full">
-                              <mat-label>{{ t("url.url") }}</mat-label>
-                              <input formControlName="url" matInput/>
+                    <!-- Start Date  -->
+                    <div class="flex flex-wrap gap-x-4">
+                        <mat-form-field class="flex-auto">
+                            <mat-label [innerText]="t('date')"></mat-label>
+                            <input [matDatepicker]="picker1" formControlName="startDate" matInput/>
+                            <mat-datepicker-toggle [for]="picker1" matIconSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                            <mat-error *ngIf="eventForm.get('step1.startDate').hasError('required')">
+                                {{ 'errors.form.required' | transloco }}
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="flex gap-x-4 w-full md:w-[unset]">
+                            <!-- Time Picker -->
+                            <mat-form-field class="basis-[48%] md:basis-auto">
+                                <mat-label [innerText]="t('hour-start')"></mat-label>
+                                <input formControlName="startDateTime" matInput type="time"/>
+                                <mat-icon matSuffix>schedule</mat-icon>
+                                <mat-error *ngIf="eventForm.get('step1.startDateTime').hasError('required')">
+                                    {{ 'errors.form.required' | transloco }}
+                                </mat-error>
                             </mat-form-field>
-                          }
+
+                            <!-- End Date -->
+                            @if (!eventForm.get('step1.isAllDay').value) {
+                                <mat-form-field class="basis-[48%] md:basis-auto">
+                                    <mat-label [innerText]="t('hour-end')"></mat-label>
+                                    <input formControlName="endDateTime" matInput type="time" [required]="eventForm.get('step1.isAllDay').value === false"/>
+                                    <mat-icon matSuffix>schedule</mat-icon>
+                                    <mat-error *ngIf="eventForm.get('step1.endDateTime').hasError('required')">
+                                        {{ 'errors.form.required' | transloco }}
+                                    </mat-error>
+                                </mat-form-field>
+                            }
                         </div>
-
-                        @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
-                          @defer (on viewport) {
-                            <app-open-street-map
-                              mapContainer="w-full h-64"
-                              searchBar="true"
-                              (locationSelected)="onLocationSelected($index, $event)"
-                              [latitude]="eventForm.value['step2'].url[$index]?.latitude || -33.437862717498135"
-                              [longitude]="eventForm.value['step2'].url[$index]?.longitude || -70.65009359000236"
-                              [marker]="{ lat: eventForm.value['step2'].url[$index]?.latitude, lng: eventForm.value['step2'].url[$index]?.longitude }"
-                            >
-                            </app-open-street-map>
-                          } @placeholder {
-                            <div>cargando</div>
-                          }
-
-                          <div class="flex gap-x-4">
-                            <mat-form-field class="basis-[48%] md:basis-auto w-full">
-                              <mat-label [innerText]="t('url.latitude')"></mat-label>
-                              <input formControlName="latitude" matInput readonly/>
-                            </mat-form-field>
-
-                            <mat-form-field class="basis-[48%] md:basis-auto w-full">
-                              <mat-label [innerText]="t('url.longitude')"></mat-label>
-                              <input formControlName="longitude" matInput readonly/>
-                            </mat-form-field>
-                          </div>
-                        }
-                      }
                     </div>
-                  </mat-expansion-panel>
-                }
-              </mat-accordion>
-            }
-            <button (click)="addUrl()" mat-stroked-button>
-              <mat-icon>add</mat-icon>
-              <span>{{ t("addUrl") }}</span>
-            </button>
-          </div>
-          <!-- Image -->
-          <mat-form-field>
-            <mat-label [innerText]="t('image')"></mat-label>
-            <input formControlName="image" matInput/>
-          </mat-form-field>
-          <!-- Capacity -->
-          <mat-form-field>
-            <mat-label [innerText]="t('capacity')"></mat-label>
-            <input formControlName="capacity" matInput type="number"/>
-          </mat-form-field>
-        </div>
-        <div class="flex justify-end">
-          <button [innerText]="t('back')" color="accent" mat-flat-button matStepperPrevious></button>
-          <button [innerText]="t('next')" color="primary" mat-flat-button matStepperNext></button>
-        </div>
-      </mat-step>
+                </div>
 
-      <!-- Step 3: Organizer -->
-      <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step3')" formGroupName="step3">
-        <ng-template matStepLabel> {{ t("step3Title") }}</ng-template>
-        <!-- Step 3: Details -->
-        <h2 class="text-lg text-secondary">{{ t("step3Details") }}</h2>
-        <mat-divider class="pb-4 mt-4"></mat-divider>
-        <!-- Organizer Name -->
-        <div class="flex flex-col gap-2 mt-2" formGroupName="organizer">
-          <mat-form-field>
-            <mat-label [innerText]="t('organizer.name')"></mat-label>
-            <input formControlName="name" matInput/>
-          </mat-form-field>
-          <!-- Organizer Email -->
-          <mat-form-field>
-            <mat-label [innerText]="t('organizer.email')"></mat-label>
-            <input formControlName="email" matInput type="email"/>
-          </mat-form-field>
-          <!-- Organizer Phone -->
-          <div formGroupName="phone">
-            <mat-form-field class="w-full flex-auto">
-              <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
-              <input [placeholder]="'Prefijo'" formControlName="number" matInput/>
-              <mat-select formControlName="countryCode" matPrefix>
-                <mat-option value="+56">Chile +56</mat-option>
-                <mat-option value="+1">US +1</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <!-- Type -->
-        <div class="flex gap-x-4 mt-2">
-          <mat-form-field class="basis-[48%] md:basis-auto w-full">
-            <mat-label>{{ t("type") }}</mat-label>
-            <mat-select formControlName="type">
-              @for (type of eventTypeOptions; track trackByFn($index, type)) {
-                <mat-option [value]="type">{{ t("eventTypes." + type) }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <!-- Status -->
-          <mat-form-field class="basis-[48%] md:basis-auto w-full">
-            <mat-label>{{ t("status") }}</mat-label>
-            <mat-select formControlName="status">
-              @for (status of eventStatusOptions; track trackByFn($index, status)) {
-                <mat-option [value]="status">{{ t("eventStatuses." + status) }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-        </div>
+                <!-- Is All Day -->
+                <mat-checkbox class="-ml-2 mb-3" formControlName="isAllDay">{{ t("isAllDay") }}</mat-checkbox>
+                <div class="flex justify-end">
+                    <button [innerText]="t('next')" color="primary" mat-flat-button matStepperNext></button>
+                </div>
+            </mat-step>
 
-        <div class="flex justify-end">
-          <button [innerText]="t('back')" color="accent" mat-flat-button matStepperPrevious></button>
-          <button (click)="save()" [disabled]="eventForm.disabled || !eventForm.valid" class="w-full md:w-30" color="primary" mat-flat-button>
-            <span>{{ t("save") }}</span>
-            @if (eventForm.disabled) {
-              <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-            }
-          </button>
-        </div>
-      </mat-step>
-    </mat-vertical-stepper>
-  </form>
+            <!-- Step 2: Details Additional -->
+            <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step2')" formGroupName="step2">
+                <ng-template matStepLabel>{{ t("step2Title") }}</ng-template>
+
+                <!-- Step 2: Details -->
+                <h2 class="text-lg text-secondary">{{ t("step2Details") }}</h2>
+                <mat-divider class="pb-4 mt-4"></mat-divider>
+                <!-- Location -->
+                <div class="flex flex-col gap-2 mt-2">
+                    <mat-form-field>
+                        <mat-label [innerText]="t('location')"></mat-label>
+                        <input formControlName="location" matInput/>
+                        <mat-error *ngIf="eventForm.get('step2.location').hasError('required')">
+                            {{ 'errors.form.required' | transloco }}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- URL -->
+                    <div class="space-y-4" formArrayName="url">
+                        @if (urlArray.controls && urlArray.controls.length) {
+                            <mat-accordion>
+                                @for (url of urlArray.controls; track trackByFn($index, url)) {
+                                    <mat-expansion-panel hideToggle [expanded]="$last">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <h2>URL de evento {{ $index + 1 }}</h2>
+                                                <span class="ml-2 text-hint text-md">{{ url.value?.platform ? '(' + url.value.platform + ')' : '' }}</span>
+                                            </mat-panel-title>
+                                            <button (click)="removeUrl($index)" mat-icon-button>
+                                                <mat-icon svgIcon="heroicons_outline:trash" color="warn" class="icon-size-5"></mat-icon>
+                                            </button>
+                                        </mat-expansion-panel-header>
+                                        <!-- Content -->
+                                        <div [formGroupName]="$index" class="flex flex-col gap-2">
+                                            <mat-form-field>
+                                                <mat-label>{{ t("url.platform") }}</mat-label>
+                                                <mat-select formControlName="platform" (selectionChange)="onPlatformSelected($index, $event)">
+                                                    @for (platform of getAvailablePlatforms($index); track trackByFn($index, platform)) {
+                                                        <mat-option [value]="platform">
+                                                            {{ t("platforms." + platform) }}
+                                                        </mat-option>
+                                                    }
+                                                </mat-select>
+                                                <mat-error *ngIf="urlArray.get($index + '.platform').hasError('required')">
+                                                    {{ 'errors.form.required' | transloco }}
+                                                </mat-error>
+                                            </mat-form-field>
+
+                                            @if (eventForm.value['step2'].url[$index]?.platform) {
+                                                <div class="flex gap-x-4">
+                                                    <mat-form-field class="w-full">
+                                                        <mat-label>{{ t("url.label") }}</mat-label>
+                                                        <input formControlName="label" matInput/>
+                                                    </mat-form-field>
+
+                                                    @if (eventForm.value['step2'].url[$index]?.platform !== "maps") {
+                                                        <mat-form-field class="w-full">
+                                                            <mat-label>{{ t("url.url") }}</mat-label>
+                                                            <input formControlName="url" matInput/>
+                                                        </mat-form-field>
+                                                    }
+                                                </div>
+
+                                                @if (eventForm.value['step2'].url[$index]?.platform === "maps") {
+                                                    @defer (on viewport) {
+                                                        <app-open-street-map
+                                                            mapContainer="w-full h-64"
+                                                            searchBar="true"
+                                                            (locationSelected)="onLocationSelected($index, $event)"
+                                                            [latitude]="eventForm.value['step2'].url[$index]?.latitude || -33.437862717498135"
+                                                            [longitude]="eventForm.value['step2'].url[$index]?.longitude || -70.65009359000236"
+                                                            [marker]="{ lat: eventForm.value['step2'].url[$index]?.latitude, lng: eventForm.value['step2'].url[$index]?.longitude }"
+                                                        >
+                                                        </app-open-street-map>
+                                                    } @placeholder {
+                                                        <div>cargando</div>
+                                                    }
+
+                                                    <div class="flex gap-x-4">
+                                                        <mat-form-field class="basis-[48%] md:basis-auto w-full">
+                                                            <mat-label [innerText]="t('url.latitude')"></mat-label>
+                                                            <input formControlName="latitude" matInput readonly/>
+                                                        </mat-form-field>
+
+                                                        <mat-form-field class="basis-[48%] md:basis-auto w-full">
+                                                            <mat-label [innerText]="t('url.longitude')"></mat-label>
+                                                            <input formControlName="longitude" matInput readonly/>
+                                                        </mat-form-field>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </mat-expansion-panel>
+                                }
+                            </mat-accordion>
+                        }
+                        <button (click)="addUrl()" mat-stroked-button>
+                            <mat-icon>add</mat-icon>
+                            <span>{{ t("addUrl") }}</span>
+                        </button>
+                    </div>
+                    <!-- Image -->
+                    <mat-form-field>
+                        <mat-label [innerText]="t('image')"></mat-label>
+                        <input formControlName="image" matInput/>
+                    </mat-form-field>
+                    <!-- Capacity -->
+                    <mat-form-field>
+                        <mat-label [innerText]="t('capacity')"></mat-label>
+                        <input formControlName="capacity" matInput type="number"/>
+                    </mat-form-field>
+                </div>
+                <div class="flex justify-end">
+                    <button [innerText]="t('back')" color="accent" mat-flat-button matStepperPrevious></button>
+                    <button [innerText]="t('next')" color="primary" mat-flat-button matStepperNext></button>
+                </div>
+            </mat-step>
+
+            <!-- Step 3: Organizer -->
+            <mat-step (keydown.enter)="false" [stepControl]="eventForm.get('step3')" formGroupName="step3">
+                <ng-template matStepLabel> {{ t("step3Title") }}</ng-template>
+                <!-- Step 3: Details -->
+                <h2 class="text-lg text-secondary">{{ t("step3Details") }}</h2>
+                <mat-divider class="pb-4 mt-4"></mat-divider>
+                <!-- Organizer Name -->
+                <div class="flex flex-col gap-2 mt-2" formGroupName="organizer">
+                    <mat-form-field>
+                        <mat-label [innerText]="t('organizer.name')"></mat-label>
+                        <input formControlName="name" matInput/>
+                    </mat-form-field>
+                    <!-- Organizer Email -->
+                    <mat-form-field>
+                        <mat-label [innerText]="t('organizer.email')"></mat-label>
+                        <input formControlName="email" matInput type="email"/>
+                    </mat-form-field>
+                    <!-- Organizer Phone -->
+                    <div formGroupName="phone">
+                        <mat-form-field class="w-full flex-auto">
+                            <mat-label [innerText]="t('organizer.phone.countryCode')"></mat-label>
+                            <input [placeholder]="'Prefijo'" formControlName="number" matInput/>
+                            <mat-select formControlName="countryCode" matPrefix>
+                                <mat-option value="+56">Chile +56</mat-option>
+                                <mat-option value="+1">US +1</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Type -->
+                <div class="flex gap-x-4 mt-2">
+                    <mat-form-field class="basis-[48%] md:basis-auto w-full">
+                        <mat-label>{{ t("type") }}</mat-label>
+                        <mat-select formControlName="type">
+                            @for (type of eventTypeOptions; track trackByFn($index, type)) {
+                                <mat-option [value]="type">{{ t("eventTypes." + type) }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Status -->
+                    <mat-form-field class="basis-[48%] md:basis-auto w-full">
+                        <mat-label>{{ t("status") }}</mat-label>
+                        <mat-select formControlName="status">
+                            @for (status of eventStatusOptions; track trackByFn($index, status)) {
+                                <mat-option [value]="status">{{ t("eventStatuses." + status) }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex justify-end">
+                    <button [innerText]="t('back')" color="accent" mat-flat-button matStepperPrevious></button>
+                    <button (click)="save()" [disabled]="eventForm.disabled || !eventForm.valid" class="w-full md:w-30" color="primary" mat-flat-button>
+                        <span>{{ t("save") }}</span>
+                        @if (eventForm.disabled) {
+                            <mat-progress-spinner [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+                        }
+                    </button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </form>
 </div>

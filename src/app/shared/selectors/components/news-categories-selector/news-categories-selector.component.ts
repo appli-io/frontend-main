@@ -12,76 +12,76 @@ import { Selector }            from '../../model/selector';
 import { TranslocoPipe }       from '@ngneat/transloco';
 
 @Component({
-  selector   : 'news-categories-selector',
-  templateUrl: './news-categories-selector.component.html',
-  standalone : true,
-  imports    : [
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatLabel,
-    JsonPipe,
-    TranslocoPipe
-  ],
-  providers  : [
-    {
-      provide    : NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NewsCategoriesSelectorComponent),
-      multi      : true
-    }
-  ]
+    selector   : 'news-categories-selector',
+    templateUrl: './news-categories-selector.component.html',
+    standalone : true,
+    imports    : [
+        MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatLabel,
+        JsonPipe,
+        TranslocoPipe
+    ],
+    providers  : [
+        {
+            provide    : NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => NewsCategoriesSelectorComponent),
+            multi      : true
+        }
+    ]
 })
 export class NewsCategoriesSelectorComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  categories: Selector[];
-  selectedCategory: any;
+    categories: Selector[];
+    selectedCategory: any;
 
-  private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private newsCategoryService: NewsCategoryService) { }
+    constructor(private newsCategoryService: NewsCategoryService) { }
 
-  ngOnInit() {
-    this.newsCategoryService.selector$
-      .subscribe(data => {
-        console.log('data', data);
-        this.categories = data;
-      });
-  }
-
-  ngOnDestroy() {
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  // ControlValueAccessor interface methods
-  writeValue(obj: any): void {
-    this.selectedCategory = obj;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    // Implement if needed
-  }
-
-  onChange: any = () => {};
-  onTouched: any = () => {};
-
-  onCategoryChange(event: any) {
-    if (!event) {
-      this.selectedCategory = undefined;
-      this.onChange(undefined);
-    } else {
-      const selected = event.value;
-      this.selectedCategory = selected;
-      this.onChange(selected);
+    ngOnInit() {
+        this.newsCategoryService.selector$
+            .subscribe(data => {
+                console.log('data', data);
+                this.categories = data;
+            });
     }
 
-    this.onTouched();
-  }
+    ngOnDestroy() {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    // ControlValueAccessor interface methods
+    writeValue(obj: any): void {
+        this.selectedCategory = obj;
+    }
+
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: any): void {
+        this.onTouched = fn;
+    }
+
+    setDisabledState?(isDisabled: boolean): void {
+        // Implement if needed
+    }
+
+    onChange: any = () => {};
+    onTouched: any = () => {};
+
+    onCategoryChange(event: any) {
+        if (!event) {
+            this.selectedCategory = undefined;
+            this.onChange(undefined);
+        } else {
+            const selected = event.value;
+            this.selectedCategory = selected;
+            this.onChange(selected);
+        }
+
+        this.onTouched();
+    }
 }

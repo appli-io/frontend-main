@@ -1,12 +1,12 @@
 export interface INewsCategory {
-  id?: string;
-  name?: string;
-  description?: string;
-  image?: string;
-  color?: string;
-  slug?: string;
-  // createdBy?: IUser;
-  // createdAt?: Date;
-  // updatedBy?: IUser;
-  // updatedAt?: Date;
+    id?: string;
+    name?: string;
+    description?: string;
+    image?: string;
+    color?: string;
+    slug?: string;
+    // createdBy?: IUser;
+    // createdAt?: Date;
+    // updatedBy?: IUser;
+    // updatedAt?: Date;
 }

@@ -1,359 +1,347 @@
-import { Injectable } from '@angular/core';
-import {
-  FuseMockApiService,
-  FuseMockApiUtils
-}                     from '@fuse/lib/mock-api';
-import {
-  filters as filtersData,
-  folders as foldersData,
-  labels as labelsData,
-  mails as mailsData,
-  settings as settingsData
-}                     from 'app/mock-api/apps/mailbox/data';
-import {
-  assign,
-  cloneDeep
-}                     from 'lodash-es';
+import { Injectable }                                                                                                         from '@angular/core';
+import { FuseMockApiService, FuseMockApiUtils }                                                                               from '@fuse/lib/mock-api';
+import { filters as filtersData, folders as foldersData, labels as labelsData, mails as mailsData, settings as settingsData } from 'app/mock-api/apps/mailbox/data';
+import { assign, cloneDeep }                                                                                                  from 'lodash-es';
 
 @Injectable({providedIn: 'root'})
 export class MailboxMockApi {
-  private _filters: any[] = filtersData;
-  private _folders: any[] = foldersData;
-  private _mails: any[] = mailsData;
-  private _labels: any[] = labelsData;
-  private _settings: any = settingsData;
+    private _filters: any[] = filtersData;
+    private _folders: any[] = foldersData;
+    private _mails: any[] = mailsData;
+    private _labels: any[] = labelsData;
+    private _settings: any = settingsData;
 
-  /**
-   * Constructor
-   */
-  constructor(private _fuseMockApiService: FuseMockApiService) {
-    // Register Mock API handlers
-    this.registerHandlers();
-  }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Register Mock API handlers
-   */
-  registerHandlers(): void {
-    // -----------------------------------------------------------------------------------------------------
-    // @ Settings - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/settings')
-      .reply(() => [ 200, cloneDeep(this._settings) ]);
+    /**
+     * Constructor
+     */
+    constructor(private _fuseMockApiService: FuseMockApiService) {
+        // Register Mock API handlers
+        this.registerHandlers();
+    }
 
     // -----------------------------------------------------------------------------------------------------
-    // @ Settings - PATCH
+    // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onPatch('api/apps/mailbox/settings')
-      .reply(({request}) => {
-        // Get the settings
-        const settings = cloneDeep(request.body.settings);
 
-        // Update the settings
-        this._settings = assign({}, this._settings, settings);
+    /**
+     * Register Mock API handlers
+     */
+    registerHandlers(): void {
+        // -----------------------------------------------------------------------------------------------------
+        // @ Settings - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/settings')
+            .reply(() => [ 200, cloneDeep(this._settings) ]);
 
-        // Return the response
-        return [ 200, cloneDeep(this._settings) ];
-      });
+        // -----------------------------------------------------------------------------------------------------
+        // @ Settings - PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/apps/mailbox/settings')
+            .reply(({request}) => {
+                // Get the settings
+                const settings = cloneDeep(request.body.settings);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Folders - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/folders')
-      .reply(() => {
-        let count = 0;
+                // Update the settings
+                this._settings = assign({}, this._settings, settings);
 
-        // Iterate through the folders
-        this._folders.forEach((folder) => {
-          // Get the mails of this folder
-          const mails = this._mails.filter(mail => mail.folder === folder.id);
-
-          // If we are counting the 'sent' or the 'trash' folder...
-          if (folder.slug === 'sent' || folder.slug === 'trash') {
-            // Always set the count to 0
-            count = 0;
-          }
-          // If we are counting the 'drafts' or the 'spam' folder...
-          else if (folder.slug === 'drafts' || folder.slug === 'trash' || folder.slug === 'spam') {
-            // Set the count to the count of all mails
-            count = mails.length;
-          }
-          // Otherwise ('inbox')...
-          else {
-            // Go through the mails and count the unread ones
-            mails.forEach((mail) => {
-              if (mail.unread) {
-                count++;
-              }
+                // Return the response
+                return [ 200, cloneDeep(this._settings) ];
             });
-          }
 
-          // Append the count to the folder mock-api
-          folder.count = count;
+        // -----------------------------------------------------------------------------------------------------
+        // @ Folders - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/folders')
+            .reply(() => {
+                let count = 0;
 
-          // Reset the count
-          count = 0;
-        });
+                // Iterate through the folders
+                this._folders.forEach((folder) => {
+                    // Get the mails of this folder
+                    const mails = this._mails.filter(mail => mail.folder === folder.id);
 
-        // Return the response
-        return [ 200, cloneDeep(this._folders) ];
-      });
+                    // If we are counting the 'sent' or the 'trash' folder...
+                    if (folder.slug === 'sent' || folder.slug === 'trash') {
+                        // Always set the count to 0
+                        count = 0;
+                    }
+                    // If we are counting the 'drafts' or the 'spam' folder...
+                    else if (folder.slug === 'drafts' || folder.slug === 'trash' || folder.slug === 'spam') {
+                        // Set the count to the count of all mails
+                        count = mails.length;
+                    }
+                    // Otherwise ('inbox')...
+                    else {
+                        // Go through the mails and count the unread ones
+                        mails.forEach((mail) => {
+                            if (mail.unread) {
+                                count++;
+                            }
+                        });
+                    }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Filters - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/filters')
-      .reply(() => [ 200, cloneDeep(this._filters) ]);
+                    // Append the count to the folder mock-api
+                    folder.count = count;
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Labels - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/labels')
-      .reply(() => [ 200, cloneDeep(this._labels) ]);
+                    // Reset the count
+                    count = 0;
+                });
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Labels - POST
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onPost('api/apps/mailbox/label')
-      .reply(({request}) => {
-        // Get the label
-        const label = cloneDeep(request.body.label);
+                // Return the response
+                return [ 200, cloneDeep(this._folders) ];
+            });
 
-        // Generate an id
-        label.id = FuseMockApiUtils.guid();
+        // -----------------------------------------------------------------------------------------------------
+        // @ Filters - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/filters')
+            .reply(() => [ 200, cloneDeep(this._filters) ]);
 
-        // Generate a slug
-        label.slug = label.title.toLowerCase()
-          .replace(/ /g, '-')
-          .replace(/[-]+/g, '-')
-          .replace(/[^\w-]+/g, '');
+        // -----------------------------------------------------------------------------------------------------
+        // @ Labels - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/labels')
+            .reply(() => [ 200, cloneDeep(this._labels) ]);
 
-        // Check if the slug is being used and update it if necessary
-        const originalSlug = label.slug;
+        // -----------------------------------------------------------------------------------------------------
+        // @ Labels - POST
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPost('api/apps/mailbox/label')
+            .reply(({request}) => {
+                // Get the label
+                const label = cloneDeep(request.body.label);
 
-        let sameSlug;
-        let slugSuffix = 1;
+                // Generate an id
+                label.id = FuseMockApiUtils.guid();
 
-        do {
-          sameSlug = this._labels.filter(item => item.slug === label.slug);
+                // Generate a slug
+                label.slug = label.title.toLowerCase()
+                    .replace(/ /g, '-')
+                    .replace(/[-]+/g, '-')
+                    .replace(/[^\w-]+/g, '');
 
-          if (sameSlug.length > 0) {
-            label.slug = originalSlug + '-' + slugSuffix;
-            slugSuffix++;
-          }
-        }
-        while (sameSlug.length > 0);
+                // Check if the slug is being used and update it if necessary
+                const originalSlug = label.slug;
 
-        // Add the label
-        this._labels.push(label);
+                let sameSlug;
+                let slugSuffix = 1;
 
-        // Return the response
-        return [ 200, label ];
-      });
+                do {
+                    sameSlug = this._labels.filter(item => item.slug === label.slug);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Labels - PATCH
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onPatch('api/apps/mailbox/label')
-      .reply(({request}) => {
-        // Get the id and label
-        const id = request.body.id;
-        const label = cloneDeep(request.body.label);
+                    if (sameSlug.length > 0) {
+                        label.slug = originalSlug + '-' + slugSuffix;
+                        slugSuffix++;
+                    }
+                }
+                while (sameSlug.length > 0);
 
-        // Prepare the updated label
-        let updatedLabel = null;
+                // Add the label
+                this._labels.push(label);
 
-        // Find the label and update it
-        this._labels.forEach((item, index, labels) => {
-          if (item.id === id) {
-            // Update the slug
-            label.slug = label.title.toLowerCase()
-              .replace(/ /g, '-')
-              .replace(/[-]+/g, '-')
-              .replace(/[^\w-]+/g, '');
+                // Return the response
+                return [ 200, label ];
+            });
 
-            // Update the label
-            labels[index] = assign({}, labels[index], label);
+        // -----------------------------------------------------------------------------------------------------
+        // @ Labels - PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/apps/mailbox/label')
+            .reply(({request}) => {
+                // Get the id and label
+                const id = request.body.id;
+                const label = cloneDeep(request.body.label);
 
-            // Store the updated label
-            updatedLabel = labels[index];
-          }
-        });
+                // Prepare the updated label
+                let updatedLabel = null;
 
-        // Return the response
-        return [ 200, updatedLabel ];
-      });
+                // Find the label and update it
+                this._labels.forEach((item, index, labels) => {
+                    if (item.id === id) {
+                        // Update the slug
+                        label.slug = label.title.toLowerCase()
+                            .replace(/ /g, '-')
+                            .replace(/[-]+/g, '-')
+                            .replace(/[^\w-]+/g, '');
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Labels - DELETE
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onDelete('api/apps/mailbox/label')
-      .reply(({request}) => {
-        // Get the id
-        const id = request.params.get('id');
+                        // Update the label
+                        labels[index] = assign({}, labels[index], label);
 
-        // Find the label and delete it
-        const index = this._labels.findIndex(item => item.id === id);
-        this._labels.splice(index, 1);
+                        // Store the updated label
+                        updatedLabel = labels[index];
+                    }
+                });
 
-        // Get all the mails that have the label
-        const mailsWithLabel = this._mails.filter(mail => mail.labels.indexOf(id) > -1);
+                // Return the response
+                return [ 200, updatedLabel ];
+            });
 
-        // Iterate through them and remove the label
-        mailsWithLabel.forEach((mail) => {
-          mail.labels.splice(mail.labels.indexOf(id), 1);
-        });
+        // -----------------------------------------------------------------------------------------------------
+        // @ Labels - DELETE
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onDelete('api/apps/mailbox/label')
+            .reply(({request}) => {
+                // Get the id
+                const id = request.params.get('id');
 
-        // Return the response
-        return [ 200, true ];
-      });
+                // Find the label and delete it
+                const index = this._labels.findIndex(item => item.id === id);
+                this._labels.splice(index, 1);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Mails - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/mails', 625)
-      .reply(({request}) => {
-        // First, decide if mails are requested by folder, filter or label
-        const byFolder = request.params.get('folder');
-        const byFilter = request.params.get('filter');
-        const byLabel = request.params.get('label');
+                // Get all the mails that have the label
+                const mailsWithLabel = this._mails.filter(mail => mail.labels.indexOf(id) > -1);
 
-        // Clone the mails mock-api to prevent accidental mock-api updates
-        let mails: any[] | null = cloneDeep(this._mails);
+                // Iterate through them and remove the label
+                mailsWithLabel.forEach((mail) => {
+                    mail.labels.splice(mail.labels.indexOf(id), 1);
+                });
 
-        // Filter the mails depending on the requested by type
-        mails = mails.filter((mail) => {
-          if (byFolder) {
-            return mail.folder === this._folders.find(folder => folder.slug === byFolder).id;
-          }
+                // Return the response
+                return [ 200, true ];
+            });
 
-          if (byFilter) {
-            return mail[byFilter] === true;
-          }
+        // -----------------------------------------------------------------------------------------------------
+        // @ Mails - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/mails', 625)
+            .reply(({request}) => {
+                // First, decide if mails are requested by folder, filter or label
+                const byFolder = request.params.get('folder');
+                const byFilter = request.params.get('filter');
+                const byLabel = request.params.get('label');
 
-          if (byLabel) {
-            return mail.labels.includes(this._labels.find(label => label.slug === byLabel).id);
-          }
-        });
+                // Clone the mails mock-api to prevent accidental mock-api updates
+                let mails: any[] | null = cloneDeep(this._mails);
 
-        // Sort by date - descending
-        mails.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+                // Filter the mails depending on the requested by type
+                mails = mails.filter((mail) => {
+                    if (byFolder) {
+                        return mail.folder === this._folders.find(folder => folder.slug === byFolder).id;
+                    }
 
-        // Figure out the cc and bcc counts
-        mails.forEach((mail) => {
-          mail.ccCount = mail.cc ? mail.cc.length : 0;
-          mail.bccCount = mail.bcc ? mail.bcc.length : 0;
-        });
+                    if (byFilter) {
+                        return mail[byFilter] === true;
+                    }
 
-        // Paginate - Start
-        const mailsLength = mails.length;
-        const resultsPerPage = 10;
+                    if (byLabel) {
+                        return mail.labels.includes(this._labels.find(label => label.slug === byLabel).id);
+                    }
+                });
 
-        // Get the requested page number
-        const page = parseInt(request.params.get('page') ?? '1', 10);
+                // Sort by date - descending
+                mails.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-        // Calculate pagination details
-        const begin = (page - 1) * resultsPerPage;
-        const end = Math.min((resultsPerPage * page), mailsLength);
-        const lastPage = Math.max(Math.ceil(mailsLength / resultsPerPage), 1);
+                // Figure out the cc and bcc counts
+                mails.forEach((mail) => {
+                    mail.ccCount = mail.cc ? mail.cc.length : 0;
+                    mail.bccCount = mail.bcc ? mail.bcc.length : 0;
+                });
 
-        // Prepare the pagination object
-        let pagination = {};
+                // Paginate - Start
+                const mailsLength = mails.length;
+                const resultsPerPage = 10;
 
-        // If the requested page number is bigger than
-        // the last possible page number, return null for
-        // mails but also send the last possible page so
-        // the app can navigate to there
-        if (page > lastPage) {
-          mails = null;
-          pagination = {
-            lastPage,
-          };
-        } else {
-          // Paginate the results by 10
-          mails = mails.slice(begin, end);
+                // Get the requested page number
+                const page = parseInt(request.params.get('page') ?? '1', 10);
 
-          // Prepare the pagination mock-api
-          pagination = {
-            totalResults: mailsLength,
-            resultsPerPage: resultsPerPage,
-            currentPage: page,
-            lastPage: lastPage,
-            startIndex: begin,
-            endIndex: end - 1,
-          };
-        }
+                // Calculate pagination details
+                const begin = (page - 1) * resultsPerPage;
+                const end = Math.min((resultsPerPage * page), mailsLength);
+                const lastPage = Math.max(Math.ceil(mailsLength / resultsPerPage), 1);
 
-        // Return the response
-        return [
-          200,
-          {
-            mails,
-            pagination,
-          },
-        ];
-      });
+                // Prepare the pagination object
+                let pagination = {};
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Mail - GET
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onGet('api/apps/mailbox/mail')
-      .reply(({request}) => {
-        // Get the id from the params
-        const id = request.params.get('id');
+                // If the requested page number is bigger than
+                // the last possible page number, return null for
+                // mails but also send the last possible page so
+                // the app can navigate to there
+                if (page > lastPage) {
+                    mails = null;
+                    pagination = {
+                        lastPage,
+                    };
+                } else {
+                    // Paginate the results by 10
+                    mails = mails.slice(begin, end);
 
-        // Clone the mails mock-api to prevent accidental mock-api updates
-        const mails = cloneDeep(this._mails);
+                    // Prepare the pagination mock-api
+                    pagination = {
+                        totalResults  : mailsLength,
+                        resultsPerPage: resultsPerPage,
+                        currentPage   : page,
+                        lastPage      : lastPage,
+                        startIndex    : begin,
+                        endIndex      : end - 1,
+                    };
+                }
 
-        // Find the mail
-        const mail = mails.find(item => item.id === id);
+                // Return the response
+                return [
+                    200,
+                    {
+                        mails,
+                        pagination,
+                    },
+                ];
+            });
 
-        return [
-          200,
-          mail,
-        ];
-      });
+        // -----------------------------------------------------------------------------------------------------
+        // @ Mail - GET
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onGet('api/apps/mailbox/mail')
+            .reply(({request}) => {
+                // Get the id from the params
+                const id = request.params.get('id');
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Mail - PATCH
-    // -----------------------------------------------------------------------------------------------------
-    this._fuseMockApiService
-      .onPatch('api/apps/mailbox/mail')
-      .reply(({request}) => {
-        // Get the id and mail
-        const id = request.body.id;
-        const mail = cloneDeep(request.body.mail);
+                // Clone the mails mock-api to prevent accidental mock-api updates
+                const mails = cloneDeep(this._mails);
 
-        // Prepare the updated mail
-        let updatedMail = null;
+                // Find the mail
+                const mail = mails.find(item => item.id === id);
 
-        // Find the mail and update it
-        this._mails.forEach((item, index, mails) => {
-          if (item.id === id) {
-            // Update the mail
-            mails[index] = assign({}, mails[index], mail);
+                return [
+                    200,
+                    mail,
+                ];
+            });
 
-            // Store the updated mail
-            updatedMail = mails[index];
-          }
-        });
+        // -----------------------------------------------------------------------------------------------------
+        // @ Mail - PATCH
+        // -----------------------------------------------------------------------------------------------------
+        this._fuseMockApiService
+            .onPatch('api/apps/mailbox/mail')
+            .reply(({request}) => {
+                // Get the id and mail
+                const id = request.body.id;
+                const mail = cloneDeep(request.body.mail);
 
-        // Return the response
-        return [ 200, updatedMail ];
-      });
-  }
+                // Prepare the updated mail
+                let updatedMail = null;
+
+                // Find the mail and update it
+                this._mails.forEach((item, index, mails) => {
+                    if (item.id === id) {
+                        // Update the mail
+                        mails[index] = assign({}, mails[index], mail);
+
+                        // Store the updated mail
+                        updatedMail = mails[index];
+                    }
+                });
+
+                // Return the response
+                return [ 200, updatedMail ];
+            });
+    }
 }

@@ -4,9 +4,9 @@ import { inject }                                                 from '@angular
 import { BenefitsService } from '../services/benefits.service';
 
 export const benefitResolver: ResolveFn<any> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot,
-  service: BenefitsService = inject(BenefitsService)
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+    service: BenefitsService = inject(BenefitsService)
 ) => {
-  return service.findOne(route.params.id);
+    return service.findOne(route.params.id);
 };

@@ -14,87 +14,87 @@ import { ContactsListComponent } from '@modules/admin/apps/contacts/pages/list/l
 import { ContactsService }       from '@modules/admin/apps/contacts/contacts.service';
 
 @Component({
-  selector       : 'contacts-details',
-  templateUrl    : './details.component.html',
-  encapsulation  : ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone     : true,
-  imports        : [ NgIf, MatButtonModule, RouterLink, MatIconModule, NgFor, NgClass, FuseFindByKeyPipe, DatePipe, MatTooltip ],
+    selector       : 'contacts-details',
+    templateUrl    : './details.component.html',
+    encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone     : true,
+    imports        : [ NgIf, MatButtonModule, RouterLink, MatIconModule, NgFor, NgClass, FuseFindByKeyPipe, DatePipe, MatTooltip ],
 })
 export class ContactsDetailsComponent implements OnInit, OnDestroy {
-  contact: Contact;
-  countries: Country[];
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+    contact: Contact;
+    countries: Country[];
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _contactsListComponent: ContactsListComponent,
-    private _contactsService: ContactsService
-  ) {
-  }
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _contactsListComponent: ContactsListComponent,
+        private _contactsService: ContactsService
+    ) {
+    }
 
-  ngOnInit(): void {
-    // Open the drawer
-    this._contactsListComponent.matDrawer.open();
-
-    // Get the contact
-    this._contactsService.contact$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((contact: Contact) => {
-        // Open the drawer in case it is closed
+    ngOnInit(): void {
+        // Open the drawer
         this._contactsListComponent.matDrawer.open();
 
         // Get the contact
-        this.contact = contact;
+        this._contactsService.contact$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((contact: Contact) => {
+                // Open the drawer in case it is closed
+                this._contactsListComponent.matDrawer.open();
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-      });
+                // Get the contact
+                this.contact = contact;
 
-    // Get the country telephone codes
-    this._contactsService.countries$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((codes: Country[]) => {
-        this.countries = codes;
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-      });
-  }
+        // Get the country telephone codes
+        this._contactsService.countries$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((codes: Country[]) => {
+                this.countries = codes;
 
-  ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  closeDrawer(): Promise<MatDrawerToggleResult> {
-    return this._contactsListComponent.matDrawer.close();
-  }
-
-  uploadAvatar(fileList: FileList): void {
-    // Return if canceled
-    if (!fileList.length) {
-      return;
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
-    const allowedTypes = [ 'image/jpeg', 'image/png' ];
-    const file = fileList[0];
-
-    // Return if the file is not allowed
-    if (!allowedTypes.includes(file.type)) {
-      return;
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
     }
 
-    // Upload the avatar
-    this._contactsService.uploadAvatar(this.contact.id, file).subscribe();
-  }
+    closeDrawer(): Promise<MatDrawerToggleResult> {
+        return this._contactsListComponent.matDrawer.close();
+    }
 
-  getCountryByIso(iso: string): Country {
-    return this.countries.find(country => country.iso === iso);
-  }
+    uploadAvatar(fileList: FileList): void {
+        // Return if canceled
+        if (!fileList.length) {
+            return;
+        }
 
-  trackByFn(index: number, item: any): any {
-    return item.id || index;
-  }
+        const allowedTypes = [ 'image/jpeg', 'image/png' ];
+        const file = fileList[0];
+
+        // Return if the file is not allowed
+        if (!allowedTypes.includes(file.type)) {
+            return;
+        }
+
+        // Upload the avatar
+        this._contactsService.uploadAvatar(this.contact.id, file).subscribe();
+    }
+
+    getCountryByIso(iso: string): Country {
+        return this.countries.find(country => country.iso === iso);
+    }
+
+    trackByFn(index: number, item: any): any {
+        return item.id || index;
+    }
 }

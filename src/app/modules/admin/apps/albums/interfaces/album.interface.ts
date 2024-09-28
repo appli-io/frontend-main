@@ -3,14 +3,14 @@ import { IUser }       from '@modules/admin/user/profile/interfaces/user.interfa
 import { IAlbumImage } from '@modules/admin/apps/albums/interfaces/album-image.interface';
 
 export interface IAlbum {
-  id: string;
-  name: string;
-  description: string;
-  cover: IFile;
-  coverThumbnail: IFile;
-  images: IAlbumImage[];
-  imagesCount: number;
-  createdBy: IUser;
-  createdAt: Date;
-  updatedAt: Date;
+    id: string;
+    name: string;
+    description: string;
+    cover: IFile;
+    coverThumbnail: IFile;
+    images: IAlbumImage[];
+    imagesCount: number;
+    createdBy: IUser;
+    createdAt: Date;
+    updatedAt: Date;
 }

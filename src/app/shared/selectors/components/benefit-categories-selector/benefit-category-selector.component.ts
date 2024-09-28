@@ -20,117 +20,118 @@ import { MatProgressSpinner }                      from '@angular/material/progr
 import { BenefitCategoryMapper }                   from '@modules/admin/admin/benefits/models/benefit-category';
 
 @Component({
-  selector   : 'benefit-category-selector',
-  templateUrl: './benefit-category-selector.component.html',
-  standalone : true,
-  imports    : [
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatLabel,
-    TranslocoPipe,
-    MatAutocomplete,
-    NgForOf,
-    MatAutocompleteTrigger,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    ReactiveFormsModule,
-    MatProgressSpinner,
-    TranslocoDirective,
-    AsyncPipe
-  ],
-  providers  : [
-    {
-      provide    : NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => BenefitCategorySelector),
-      multi      : true
-    }
-  ]
+    selector   : 'benefit-category-selector',
+    templateUrl: './benefit-category-selector.component.html',
+    standalone : true,
+    imports    : [
+        MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatLabel,
+        TranslocoPipe,
+        MatAutocomplete,
+        NgForOf,
+        MatAutocompleteTrigger,
+        MatIcon,
+        MatIconButton,
+        MatInput,
+        ReactiveFormsModule,
+        MatProgressSpinner,
+        TranslocoDirective,
+        AsyncPipe
+    ],
+    providers  : [
+        {
+            provide    : NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => BenefitCategorySelector),
+            multi      : true
+        }
+    ]
 })
 export class BenefitCategorySelector implements ControlValueAccessor, OnInit, OnDestroy {
-  @Input() formControl: UntypedFormControl;
-  @Input() filterParent: boolean = false;
-  categories: Selector[];
-  loading: boolean = true;
-  error: any;
-  selectedCategory: any;
-  private _categoriesFiltered$: BehaviorSubject<Selector[]> = new BehaviorSubject<Selector[]>([]);
-  private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  protected readonly displayCategoryWithFn = displayWithFn<Selector>;
+    @Input() formControl: UntypedFormControl;
+    @Input() filterParent: boolean = false;
+    categories: Selector[];
+    loading: boolean = true;
+    error: any;
+    selectedCategory: any;
+    protected readonly displayCategoryWithFn = displayWithFn<Selector>;
+    private _unsubscribeAll: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(private readonly _benefitCategoryService: BenefitCategoryService) {
-    firstValueFrom(this._benefitCategoryService.findAll(LayoutEnum.SELECTOR))
-      .then()
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-        this.loading = false;
-        this.error = error;
-      });
-  }
-
-  get categoriesFiltered$() {
-    return this._categoriesFiltered$.asObservable();
-  }
-
-  ngOnInit() {
-    this._benefitCategoryService.findAll(LayoutEnum.SELECTOR)
-      .subscribe(categories => {
-        // remove categories that have parent
-        const categoriesFiltered = this.filterParent ? categories.filter(category => !category.parent) : categories;
-
-        this.loading = false;
-        this.categories = categoriesFiltered.map(BenefitCategoryMapper.toSelector);
-        this._categoriesFiltered$.next(this.categories);
-      });
-  }
-
-  ngOnDestroy() {
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  filter(target: any) {
-    const filterValue = target.value;
-    if (!filterValue) {
-      this._categoriesFiltered$.next(this.categories);
-      return;
+    constructor(private readonly _benefitCategoryService: BenefitCategoryService) {
+        firstValueFrom(this._benefitCategoryService.findAll(LayoutEnum.SELECTOR))
+            .then()
+            .catch(error => {
+                console.error('Error fetching categories:', error);
+                this.loading = false;
+                this.error = error;
+            });
     }
 
-    const filtered = filterByValue(this.categories, filterValue, 'label');
-    this._categoriesFiltered$.next(filtered);
-  }
+    private _categoriesFiltered$: BehaviorSubject<Selector[]> = new BehaviorSubject<Selector[]>([]);
 
-  // ControlValueAccessor interface methods
-  writeValue(obj: any): void {
-    this.selectedCategory = obj;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    // Implement if needed
-  }
-
-  onChange: any = () => {};
-  onTouched: any = () => {};
-
-  onCategoryChange(event: any) {
-    if (!event) {
-      this.selectedCategory = undefined;
-      this.onChange(undefined);
-    } else {
-      const selected = event.value;
-      this.selectedCategory = selected;
-      this.onChange(selected);
+    get categoriesFiltered$() {
+        return this._categoriesFiltered$.asObservable();
     }
 
-    this.onTouched();
-  }
+    ngOnInit() {
+        this._benefitCategoryService.findAll(LayoutEnum.SELECTOR)
+            .subscribe(categories => {
+                // remove categories that have parent
+                const categoriesFiltered = this.filterParent ? categories.filter(category => !category.parent) : categories;
+
+                this.loading = false;
+                this.categories = categoriesFiltered.map(BenefitCategoryMapper.toSelector);
+                this._categoriesFiltered$.next(this.categories);
+            });
+    }
+
+    ngOnDestroy() {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    filter(target: any) {
+        const filterValue = target.value;
+        if (!filterValue) {
+            this._categoriesFiltered$.next(this.categories);
+            return;
+        }
+
+        const filtered = filterByValue(this.categories, filterValue, 'label');
+        this._categoriesFiltered$.next(filtered);
+    }
+
+    // ControlValueAccessor interface methods
+    writeValue(obj: any): void {
+        this.selectedCategory = obj;
+    }
+
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: any): void {
+        this.onTouched = fn;
+    }
+
+    setDisabledState?(isDisabled: boolean): void {
+        // Implement if needed
+    }
+
+    onChange: any = () => {};
+    onTouched: any = () => {};
+
+    onCategoryChange(event: any) {
+        if (!event) {
+            this.selectedCategory = undefined;
+            this.onChange(undefined);
+        } else {
+            const selected = event.value;
+            this.selectedCategory = selected;
+            this.onChange(selected);
+        }
+
+        this.onTouched();
+    }
 }

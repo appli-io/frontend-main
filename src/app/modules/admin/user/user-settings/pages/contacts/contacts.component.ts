@@ -20,6 +20,10 @@ import { MatOption, MatSelectModule } from '@angular/material/select';
 import { IUser }                      from '@modules/admin/user/profile/interfaces/user.interface';
 import { takeUntilDestroyed }         from '@angular/core/rxjs-interop';
 import { MatProgressSpinner }         from '@angular/material/progress-spinner';
+import { AuthService }                from '@core/auth/auth.service';
+import { Contact }                    from '@modules/admin/apps/contacts/models/contact.type';
+import { ContactTypeEnum }            from '@modules/admin/apps/contacts/enums/contact-type.enum';
+import { Notyf }                      from 'notyf';
 
 @Component({
     selector       : 'app-contacts',
@@ -48,12 +52,15 @@ export class ContactsComponent extends SubComponent {
     public countries: Country[];
     public user: IUser;
 
+    private _notyf = new Notyf({position: {x: 'right', y: 'top'}});
+
     protected readonly trackByFn = trackByFn;
 
     constructor(
         private readonly _changeDetectorRef: ChangeDetectorRef,
         private readonly _fb: UntypedFormBuilder,
         private readonly _ts: TranslocoService,
+        private readonly _authService: AuthService,
         private readonly _userService: UserService,
         private readonly _contactsService: ContactsService,
     ) {
@@ -71,14 +78,23 @@ export class ContactsComponent extends SubComponent {
                 next: (user: IUser) => {
                     this.user = user;
 
-                    const emails = user.contacts.filter((contact) => contact.type === 'email');
-                    const numbers = user.contacts.filter((contact) => contact.type === 'number');
-                    const socials = user.contacts.filter((contact) => contact.type === 'social');
+                    const currentCompanyId = this._authService.activeCompany.id;
+                    const contacts = user.contacts.filter((contact) => contact.companyId === currentCompanyId);
 
-                    if (emails.length === 0 && this.form.get('emails')['controls'].length === 0) this.addEmailField(true, {
-                        value: user.email,
-                        label: 'Work'
+                    const emails = contacts.filter((contact) => contact.type === ContactTypeEnum.EMAIL);
+                    const numbers = contacts.filter((contact) => contact.type === ContactTypeEnum.PHONE);
+                    const socials = contacts.filter((contact) => contact.type === ContactTypeEnum.SOCIAL);
+
+                    if (emails.length === 0 && this.form.get('emails')['controls'].length === 0)
+                        this.addEmailField({value: user.email, label: 'Work'}, true);
+
+                    emails.forEach((contact) => this.addEmailField(contact));
+                    numbers.forEach((contact) => {
+                        const {country, phoneNumber} = JSON.parse(contact.value);
+
+                        this.addPhoneNumberField({id: contact.id, label: contact.label, country, phoneNumber});
                     });
+                    socials.forEach((contact) => this.addSocialField(contact));
                 }
             });
 
@@ -95,17 +111,78 @@ export class ContactsComponent extends SubComponent {
     }
 
     public submit() {
+        const currentCompanyId = this._authService.activeCompany.id;
+
+        this.form.disable();
+
+        const form = this.form.getRawValue();
+        const contactToPost: Contact[] = [];
+
+        // Concat emails
+        form.emails.map((email: { id: string, value: string, label: string }) => {
+            contactToPost.push({
+                id       : email.id,
+                value    : email.value,
+                label    : email.label,
+                type     : ContactTypeEnum.EMAIL,
+                companyId: currentCompanyId
+            });
+        });
+
+        // Concat phoneNumbers
+        form.numbers.map((number: { id: string, country: string, phoneNumber: string, label: string }) => {
+            contactToPost.push({
+                id       : number.id,
+                value    : JSON.stringify({country: number.country, phoneNumber: number.phoneNumber}),
+                label    : number.label,
+                type     : ContactTypeEnum.PHONE,
+                companyId: currentCompanyId
+            });
+        });
+
+        // Concat socials
+        form.socials.map((social: { id: string, value: string, label: string }) => {
+            contactToPost.push({
+                id       : social.id,
+                value    : social.value,
+                label    : social.label,
+                type     : ContactTypeEnum.SOCIAL,
+                companyId: currentCompanyId
+            });
+        });
+
+        this._userService.updateContacts(contactToPost.map(contact => {
+            if (!contact.id) delete contact.id;
+            return contact;
+        }))
+            .subscribe({
+                next : (user: IUser) => {
+                    console.log(user);
+                    this._notyf.success('Contacts updated successfully');
+                    this.form.markAsPristine();
+                    this.form.enable();
+                },
+                error: (err: any) => {
+                    this._notyf.error('Error updating contacts: ' + err.message);
+                    this.form.enable();
+                }
+            });
     }
 
-    public addEmailField(disabled: boolean = false, data: { value: string, label: string } = undefined): void {
+    public addEmailField(data: Contact = undefined, disabled: boolean = false): void {
         // Create an empty email form group
         const emailFormGroup = this._fb.group({
+            id: [ data?.id ],
             value: [ {value: data?.value, disabled}, Validators.required ],
             label: [ data?.label, Validators.required ],
         });
 
+
         // Add the email form group to the emails form array
         (this.form.get('emails') as UntypedFormArray).push(emailFormGroup);
+
+        // Mark as pristine to avoid red borders bcs of required field
+        emailFormGroup.markAsPristine();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -123,16 +200,19 @@ export class ContactsComponent extends SubComponent {
 
     }
 
-    public addPhoneNumberField(): void {
+    public addPhoneNumberField(phone?: { id: string, label: string, country: string, phoneNumber: string }): void {
         // Create an empty phone number form group
         const phoneNumberFormGroup = this._fb.group({
-            country    : [ 'cl', Validators.required ],
-            phoneNumber: [ undefined, Validators.required ],
-            label      : [ undefined, Validators.required ],
+            id         : [ phone?.id ],
+            country    : [ phone?.country || 'cl', Validators.required ],
+            phoneNumber: [ phone?.phoneNumber, Validators.required ],
+            label      : [ phone?.label, Validators.required ],
         });
 
         // Add the phone number form group to the phoneNumbers form array
         (this.form.get('numbers') as UntypedFormArray).push(phoneNumberFormGroup);
+
+        phoneNumberFormGroup.markAsPristine();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
@@ -149,15 +229,18 @@ export class ContactsComponent extends SubComponent {
         this._changeDetectorRef.markForCheck();
     }
 
-    public addSocialField(): void {
+    public addSocialField(contact?: Contact): void {
         // Create an empty email form group
         const socialFormGroup = this._fb.group({
-            value: [ undefined, Validators.required ],
-            label: [ undefined, Validators.required ],
+            id   : [ contact?.id ],
+            value: [ contact?.value, Validators.required ],
+            label: [ contact?.label, Validators.required ],
         });
 
         // Add the email form group to the emails form array
         (this.form.get('socials') as UntypedFormArray).push(socialFormGroup);
+
+        socialFormGroup.markAsPristine();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();

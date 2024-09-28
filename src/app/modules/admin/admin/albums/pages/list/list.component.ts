@@ -17,79 +17,79 @@ import { mergeMap }                from 'rxjs';
 import { Notyf }                   from 'notyf';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports: [
-    PageHeaderComponent,
-    TranslocoDirective,
-    AlbumsTableComponent,
-    MatAnchor,
-    RouterLink,
-    MatButton,
-    MatIconAnchor,
-    MatIcon,
-    MatTooltip,
-    TranslocoPipe
-  ],
-  templateUrl: './list.component.html'
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        PageHeaderComponent,
+        TranslocoDirective,
+        AlbumsTableComponent,
+        MatAnchor,
+        RouterLink,
+        MatButton,
+        MatIconAnchor,
+        MatIcon,
+        MatTooltip,
+        TranslocoPipe
+    ],
+    templateUrl: './list.component.html'
 })
 export class ListComponent {
-  public albums$ = this._albumsService.albums$;
-  private _notyf = new Notyf();
+    public albums$ = this._albumsService.albums$;
+    private _notyf = new Notyf();
 
-  constructor(
-    private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _albumsService: AlbumsService,
-    private readonly _matDialog: MatDialog
-  ) {}
+    constructor(
+        private readonly _fuseConfirmationService: FuseConfirmationService,
+        private readonly _albumsService: AlbumsService,
+        private readonly _matDialog: MatDialog
+    ) {}
 
-  openNewAlbumDialog() {
-    this._matDialog.open(NewOrEditComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-    });
-  }
+    openNewAlbumDialog() {
+        this._matDialog.open(NewOrEditComponent, {
+            panelClass: 'dialog-mobile-fullscreen',
+        });
+    }
 
-  editAlbum(album: IAlbum) {
-    console.log('Edit album', album);
-  }
+    editAlbum(album: IAlbum) {
+        console.log('Edit album', album);
+    }
 
-  deleteAlbum(album: IAlbum) {
-    console.log('Delete album', album);
-    const confirmation = this._fuseConfirmationService.open({
-      title  : 'Delete album',
-      message:
-        'Are you sure you want to delete the album? This action cannot be undone.',
-      actions: {
-        confirm: {
-          label: 'Delete',
-        },
-      },
-    });
+    deleteAlbum(album: IAlbum) {
+        console.log('Delete album', album);
+        const confirmation = this._fuseConfirmationService.open({
+            title  : 'Delete album',
+            message:
+                'Are you sure you want to delete the album? This action cannot be undone.',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
 
-    // Subscribe to the confirmation dialog closed action
-    confirmation.afterClosed()
-      .pipe(
-        mergeMap((result) => {
-          // If the confirm button pressed...
-          if (result === 'confirmed') {
-            // Delete the album
-            return this._albumsService.deleteAlbum(album.id);
-          }
-          return [];
-        })
-      )
-      .subscribe({
-        next : () => {
-          this._notyf.success('Album deleted');
-        },
-        error: (error) => {
-          console.error('Delete album error', error);
-          this._notyf.error('Error deleting album');
-        }
-      });
-  }
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed()
+            .pipe(
+                mergeMap((result) => {
+                    // If the confirm button pressed...
+                    if (result === 'confirmed') {
+                        // Delete the album
+                        return this._albumsService.deleteAlbum(album.id);
+                    }
+                    return [];
+                })
+            )
+            .subscribe({
+                next : () => {
+                    this._notyf.success('Album deleted');
+                },
+                error: (error) => {
+                    console.error('Delete album error', error);
+                    this._notyf.error('Error deleting album');
+                }
+            });
+    }
 
-  pageChange(event: any) {
-    console.log('Page change', event);
-  }
+    pageChange(event: any) {
+        console.log('Page change', event);
+    }
 }

@@ -8,11 +8,11 @@ import { environment } from '../../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class ProfileService {
-  private _backendUrl = environment.BACKEND_URL;
+    private _backendUrl = environment.BACKEND_URL;
 
-  constructor(private readonly _httpClient: HttpClient) {}
+    constructor(private readonly _httpClient: HttpClient) {}
 
-  getProfile(userId: string): Observable<IUser> {
-    return this._httpClient.get<IUser>(`api/users/${ userId }`);
-  }
+    getProfile(userId: string): Observable<IUser> {
+        return this._httpClient.get<IUser>(`api/users/${ userId }`);
+    }
 }

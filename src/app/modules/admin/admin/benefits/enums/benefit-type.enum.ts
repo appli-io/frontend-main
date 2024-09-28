@@ -1,5 +1,5 @@
 export enum BenefitTypeEnum {
-  PRESENTIAL = 'presential',
-  VIRTUAL = 'virtual',
-  HYBRID = 'hybrid',
+    PRESENTIAL = 'presential',
+    VIRTUAL = 'virtual',
+    HYBRID = 'hybrid',
 }

@@ -24,69 +24,69 @@ import { UsersService } from '@modules/admin/admin/users/users.service';
 
 
 @Component({
-  selector: 'app-member-new',
-  standalone: true,
-  imports: [
-    CdkTextareaAutosize,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
-    FormsModule,
-    MatButton,
-    MatCard,
-    MatChipRemove,
-    MatChipRow,
-    MatFormField,
-    MatIcon,
-    MatIconButton,
-    MatInput,
-    MatLabel,
-    MatProgressSpinner,
-    MatSuffix,
-    NgIf,
-    ReactiveFormsModule,
-    TranslocoDirective,
-    MatOption,
-    MatSelect,
-    MatSelectTrigger,
-    TitleCasePipe,
-    JsonPipe
-  ],
-  templateUrl: './member-new.component.html'
+    selector   : 'app-member-new',
+    standalone : true,
+    imports    : [
+        CdkTextareaAutosize,
+        DropzoneCdkModule,
+        DropzoneMaterialModule,
+        FormsModule,
+        MatButton,
+        MatCard,
+        MatChipRemove,
+        MatChipRow,
+        MatFormField,
+        MatIcon,
+        MatIconButton,
+        MatInput,
+        MatLabel,
+        MatProgressSpinner,
+        MatSuffix,
+        NgIf,
+        ReactiveFormsModule,
+        TranslocoDirective,
+        MatOption,
+        MatSelect,
+        MatSelectTrigger,
+        TitleCasePipe,
+        JsonPipe
+    ],
+    templateUrl: './member-new.component.html'
 })
 export class MemberNewComponent implements OnInit {
-  memberForm: UntypedFormGroup;
-  roles: any[];
-  private _notyf = new Notyf();
+    memberForm: UntypedFormGroup;
+    roles: any[];
+    private _notyf = new Notyf();
 
-  constructor(
-    public readonly _matDialogRef: MatDialogRef<MemberNewComponent>,
-    private readonly _formBuilder: UntypedFormBuilder,
-    private readonly _translateService: TranslocoService,
-    private readonly _usersService: UsersService,
-  ) { }
+    constructor(
+        public readonly _matDialogRef: MatDialogRef<MemberNewComponent>,
+        private readonly _formBuilder: UntypedFormBuilder,
+        private readonly _translateService: TranslocoService,
+        private readonly _usersService: UsersService,
+    ) { }
 
-  ngOnInit(): void {
-    this.roles = rolesList;
-    this.memberForm = this._formBuilder.group({
-      email   : [ undefined, [ Validators.required, Validators.email ] ],
-      message : [ undefined, [ Validators.required, Validators.minLength(1) ] ],
-      position: [ undefined, [ Validators.required ] ],
-      role: [rolesList.find((role) => role.value === 'admin').value, [Validators.required]],
-    });
-  }
+    ngOnInit(): void {
+        this.roles = rolesList;
+        this.memberForm = this._formBuilder.group({
+            email   : [ undefined, [ Validators.required, Validators.email ] ],
+            message : [ undefined, [ Validators.required, Validators.minLength(1) ] ],
+            position: [ undefined, [ Validators.required ] ],
+            role    : [ rolesList.find((role) => role.value === 'admin').value, [ Validators.required ] ],
+        });
+    }
 
-  save() {
-    if (this.memberForm.invalid) return;
-    
-    this._usersService.sendMemberInvitation(this.memberForm.getRawValue()).pipe(take(1)).subscribe({
-      next: () => {
-        this._notyf.success(this._translateService.translate('admin.users.new.success'));
-        this._matDialogRef.close();
-      },
-      error: (error) => {
-        console.log(error);
-        this._notyf.error(error.message);
-      }
-    });
-  }
+    save() {
+        if (this.memberForm.invalid) return;
+
+        this._usersService.sendMemberInvitation(this.memberForm.getRawValue()).pipe(take(1)).subscribe({
+            next : () => {
+                this._notyf.success(this._translateService.translate('admin.users.new.success'));
+                this._matDialogRef.close();
+            },
+            error: (error) => {
+                console.log(error);
+                this._notyf.error(error.message);
+            }
+        });
+    }
 }

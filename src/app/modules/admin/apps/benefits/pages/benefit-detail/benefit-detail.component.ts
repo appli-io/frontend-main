@@ -16,43 +16,43 @@ import { BenefitsService }      from '@modules/admin/admin/benefits/services/ben
 import { BenefitCardComponent } from '@modules/admin/apps/benefits/components/benefit-card/benefit-card.component';
 
 @Component({
-  selector   : 'app-benefit-detail',
-  standalone : true,
-  imports: [
-    TranslocoDirective,
-    RouterLink,
-    TranslocoPipe,
-    MatIcon,
-    DeltaToHtmlPipe,
-    MatIconButton,
-    MatButton,
-    MatIconAnchor,
-    MatDivider,
-    RouterLinkActive,
-    NgTemplateOutlet,
-    AsyncPipe,
-    BenefitCardComponent,
-    MatProgressSpinner
-  ],
-  templateUrl: './benefit-detail.component.html'
+    selector   : 'app-benefit-detail',
+    standalone : true,
+    imports    : [
+        TranslocoDirective,
+        RouterLink,
+        TranslocoPipe,
+        MatIcon,
+        DeltaToHtmlPipe,
+        MatIconButton,
+        MatButton,
+        MatIconAnchor,
+        MatDivider,
+        RouterLinkActive,
+        NgTemplateOutlet,
+        AsyncPipe,
+        BenefitCardComponent,
+        MatProgressSpinner
+    ],
+    templateUrl: './benefit-detail.component.html'
 })
 export class BenefitDetailComponent extends SubComponent implements OnInit {
-  @Input() tab: string;
-  private readonly _route: ActivatedRoute = inject(ActivatedRoute);
-  public benefit: Observable<Benefit> = this._route.data.pipe(map((data) => data.benefit));
-  private readonly _benefitsService: BenefitsService = inject(BenefitsService);
+    @Input() tab: string;
+    private readonly _route: ActivatedRoute = inject(ActivatedRoute);
+    public benefit: Observable<Benefit> = this._route.data.pipe(map((data) => data.benefit));
+    private readonly _benefitsService: BenefitsService = inject(BenefitsService);
 
-  private _mostViewedBenefits: BehaviorSubject<Benefit[]> = new BehaviorSubject<Benefit[]>(undefined);
+    private _mostViewedBenefits: BehaviorSubject<Benefit[]> = new BehaviorSubject<Benefit[]>(undefined);
 
-  get mostViewedBenefits() {
-    return this._mostViewedBenefits.asObservable();
-  }
+    get mostViewedBenefits() {
+        return this._mostViewedBenefits.asObservable();
+    }
 
-  ngOnInit() {
-    this._benefitsService.findMostViewed()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (value) => this._mostViewedBenefits.next(value)
-      });
-  }
+    ngOnInit() {
+        this._benefitsService.findMostViewed()
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe({
+                next: (value) => this._mostViewedBenefits.next(value)
+            });
+    }
 }

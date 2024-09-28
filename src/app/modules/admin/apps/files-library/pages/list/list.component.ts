@@ -19,124 +19,126 @@ import { ImgFallbackDirective }    from '@core/directives/imgFallback.directive'
 
 
 @Component({
-  selector       : 'app-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone     : true,
-  imports: [
-    BenefitsTableComponent,
-    PageHeaderComponent,
-    TranslocoDirective,
-    AsyncPipe,
-    FormsModule,
-    I18nPluralPipe,
-    MatDrawer,
-    MatDrawerContainer,
-    MatDrawerContent,
-    MatFormField,
-    MatIcon,
-    MatInput,
-    MatPrefix,
-    NgForOf,
-    NgIf,
-    RouterOutlet,
-    NgClass,
-    RouterLink,
-    ReactiveFormsModule,
-    ImgFallbackDirective
-  ],
-  templateUrl    : './list.component.html',
+    selector       : 'app-list',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone     : true,
+    imports        : [
+        BenefitsTableComponent,
+        PageHeaderComponent,
+        TranslocoDirective,
+        AsyncPipe,
+        FormsModule,
+        I18nPluralPipe,
+        MatDrawer,
+        MatDrawerContainer,
+        MatDrawerContent,
+        MatFormField,
+        MatIcon,
+        MatInput,
+        MatPrefix,
+        NgForOf,
+        NgIf,
+        RouterOutlet,
+        NgClass,
+        RouterLink,
+        ReactiveFormsModule,
+        ImgFallbackDirective
+    ],
+    templateUrl    : './list.component.html',
 })
 export class ListComponent implements OnInit, OnDestroy {
-  @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
+    @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
-  drawerMode: 'side' | 'over';
-  searchInputControl: UntypedFormControl = new UntypedFormControl();
-  private _files$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this._loadFakeFiles().sort((a, b) => a.mimetype.localeCompare(b.mimetype)));
-  private _selectedFile: any;
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
-  protected readonly trackByFn = trackByFn;
+    drawerMode: 'side' | 'over';
+    searchInputControl: UntypedFormControl = new UntypedFormControl();
+    protected readonly trackByFn = trackByFn;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(
-    @Inject(DOCUMENT) private _document: any,
-    private _activatedRoute: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _router: Router,
-    private _fuseMediaWatcherService: FuseMediaWatcherService,
-  ) {}
+    constructor(
+        @Inject(DOCUMENT) private _document: any,
+        private _activatedRoute: ActivatedRoute,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+    ) {}
 
-  get selectedFile(): any {
-    return this._selectedFile;
-  }
+    private _files$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this._loadFakeFiles().sort((a, b) => a.mimetype.localeCompare(b.mimetype)));
 
-  set selectedFile(value: any) {
-    this._selectedFile = value;
+    get files$(): Observable<any[]> {
+        return this._files$.asObservable();
+    }
 
-    setTimeout(() => {
-      this._changeDetectorRef.markForCheck();
-    });
-  }
+    private _selectedFile: any;
 
-  get files$(): Observable<any[]> {
-    return this._files$.asObservable();
-  }
+    get selectedFile(): any {
+        return this._selectedFile;
+    }
 
-  ngOnInit() {
-    // Subscribe to media changes
-    this._fuseMediaWatcherService.onMediaChange$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({matchingAliases}) => {
-        // Set the drawerMode if the given breakpoint is active
-        if (matchingAliases.includes('lg')) {
-          this.drawerMode = 'side';
-        } else {
-          this.drawerMode = 'over';
-        }
+    set selectedFile(value: any) {
+        this._selectedFile = value;
+
+        setTimeout(() => {
+            this._changeDetectorRef.markForCheck();
+        });
+    }
+
+    ngOnInit() {
+        // Subscribe to media changes
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({matchingAliases}) => {
+                // Set the drawerMode if the given breakpoint is active
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                } else {
+                    this.drawerMode = 'over';
+                }
+
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
+    }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    onBackdropClicked(): void {
+        // Go back to the list
+        this._router.navigate([ './' ], {relativeTo: this._activatedRoute});
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
-      });
-  }
-
-  ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  onBackdropClicked(): void {
-    // Go back to the list
-    this._router.navigate([ './' ], {relativeTo: this._activatedRoute});
-
-    // Mark for check
-    this._changeDetectorRef.markForCheck();
-  }
-
-  selectFile(file: any) {
-    if (this.selectedFile && this.selectedFile.id === file.id) {
-      return;
     }
 
-    if (this.selectedFile) {
-      this._router.navigate([ 'apps/files-library' ]).then(() => this._router.navigate([ file.id ], {relativeTo: this._activatedRoute}));
-    } else {
-      this._router.navigate([ file.id ], {relativeTo: this._activatedRoute});
+    selectFile(file: any) {
+        if (this.selectedFile && this.selectedFile.id === file.id) {
+            return;
+        }
+
+        if (this.selectedFile) {
+            this._router.navigate([ 'apps/files-library' ]).then(() => this._router.navigate([ file.id ], {relativeTo: this._activatedRoute}));
+        } else {
+            this._router.navigate([ file.id ], {relativeTo: this._activatedRoute});
+        }
+
+
     }
 
+    private _loadFakeFiles() {
+        const files = [];
+        Array.from({length: 100}).forEach(() => {
+            files.push({
+                id      : fakerES.string.uuid(),
+                fileUrl : fakerES.internet.url(),
+                fileName: fakerES.system.fileName(),
+                size    : fakerES.number.int({min: 100, max: 100000}),
+                mimetype: fakerES.system.commonFileExt(),
+            });
+        });
 
-  }
-
-  private _loadFakeFiles() {
-    const files = [];
-    Array.from({length: 100}).forEach(() => {
-      files.push({
-        id      : fakerES.string.uuid(),
-        fileUrl : fakerES.internet.url(),
-        fileName: fakerES.system.fileName(),
-        size    : fakerES.number.int({min: 100, max: 100000}),
-        mimetype: fakerES.system.commonFileExt(),
-      });
-    });
-
-    return files;
-  }
+        return files;
+    }
 }

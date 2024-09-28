@@ -1,63 +1,63 @@
 <div *transloco="let t; read: 'admin.albums.details.table'" class="relative">
-  <table
-    (matSortChange)="sortChange.emit($event)"
-    [dataSource]="albumsDataSource"
-    [trackBy]="trackByFn"
-    class="w-full bg-transparent"
-    mat-table
-    matSort
-  >
+    <table
+        (matSortChange)="sortChange.emit($event)"
+        [dataSource]="albumsDataSource"
+        [trackBy]="trackByFn"
+        class="w-full bg-transparent"
+        mat-table
+        matSort
+    >
 
-    <!-- Image -->
-    <ng-container matColumnDef="image">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        {{ t('image') }}
-      </th>
-      <td *matCellDef="let image" mat-cell>
-        <img
-          [alt]="image.thumbnail.name"
-          [src]="image.thumbnail.fileUrl"
-          class="h-26 w-36 my-2 object-cover drop-shadow hover:drop-shadow-lg"
-        />
-      </td>
-    </ng-container>
+        <!-- Image -->
+        <ng-container matColumnDef="image">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                {{ t('image') }}
+            </th>
+            <td *matCellDef="let image" mat-cell>
+                <img
+                    [alt]="image.thumbnail.name"
+                    [src]="image.thumbnail.fileUrl"
+                    class="h-26 w-36 my-2 object-cover drop-shadow hover:drop-shadow-lg"
+                />
+            </td>
+        </ng-container>
 
-    <!-- Format -->
-    <ng-container matColumnDef="format">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">{{ t('format') }}</span>
-      </th>
-      <td *matCellDef="let image" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ image.original.contentType }}</span>
-      </td>
-    </ng-container>
+        <!-- Format -->
+        <ng-container matColumnDef="format">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                <span class="text-left select-none">{{ t('format') }}</span>
+            </th>
+            <td *matCellDef="let image" mat-cell>
+                <span class="whitespace-nowrap pr-6">{{ image.original.contentType }}</span>
+            </td>
+        </ng-container>
 
-    <!-- Size -->
-    <ng-container matColumnDef="size">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">{{ t('size') }}</span>
-      </th>
-      <td *matCellDef="let image" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ byteToKb(image.size) }}</span>
-      </td>
-    </ng-container>
+        <!-- Size -->
+        <ng-container matColumnDef="size">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                <span class="text-left select-none">{{ t('size') }}</span>
+            </th>
+            <td *matCellDef="let image" mat-cell>
+                <span class="whitespace-nowrap pr-6">{{ byteToKb(image.size) }}</span>
+            </td>
+        </ng-container>
 
-    <!-- Created At -->
-    <ng-container matColumnDef="createdAt">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">{{ t('created-at') }}</span>
-      </th>
-      <td *matCellDef="let image" mat-cell>
-        <span class="whitespace-nowrap pr-6">{{ image.createdAt | date: 'MMM dd, y HH:mm' }}</span>
-      </td>
-    </ng-container>
+        <!-- Created At -->
+        <ng-container matColumnDef="createdAt">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                <span class="text-left select-none">{{ t('created-at') }}</span>
+            </th>
+            <td *matCellDef="let image" mat-cell>
+                <span class="whitespace-nowrap pr-6">{{ image.createdAt | date: 'MMM dd, y HH:mm' }}</span>
+            </td>
+        </ng-container>
 
-    <!-- Views -->
-    <ng-container matColumnDef="views">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>
-        <span class="text-left select-none">{{ t('views') }}</span>
-      </th>
-      <td *matCellDef="let image" mat-cell>
+        <!-- Views -->
+        <ng-container matColumnDef="views">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>
+                <span class="text-left select-none">{{ t('views') }}</span>
+            </th>
+            <td *matCellDef="let image" mat-cell>
         <span [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': image.status === 'pending',
               'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50': image.status === 'completed', }"
               class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide">
@@ -65,41 +65,41 @@
               {{ image.status }}
             </span>
         </span>
-      </td>
-    </ng-container>
+            </td>
+        </ng-container>
 
-    <!-- Actions -->
-    <ng-container matColumnDef="actions">
-      <th *matHeaderCellDef mat-header-cell>
-        <span class="text-left select-none">{{ t('actions') }}</span>
-      </th>
-      <td *matCellDef="let image" mat-cell>
-        <div class="flex items-center">
-          <button (click)="deleteImage.emit(image)" [matTooltip]="t('delete')" color="warn" mat-icon-button>
-            <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
-          </button>
-        </div>
-      </td>
-    </ng-container>
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef mat-header-cell>
+                <span class="text-left select-none">{{ t('actions') }}</span>
+            </th>
+            <td *matCellDef="let image" mat-cell>
+                <div class="flex items-center">
+                    <button (click)="deleteImage.emit(image)" [matTooltip]="t('delete')" color="warn" mat-icon-button>
+                        <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
 
-    <!-- Footer -->
-    <ng-container matColumnDef="recentOrdersTableFooter">
-      <td *matFooterCellDef class="border-0 px-0 py-6" colspan="6" mat-footer-cell>
-        <button mat-stroked-button>See all transactions</button>
-      </td>
-    </ng-container>
+        <!-- Footer -->
+        <ng-container matColumnDef="recentOrdersTableFooter">
+            <td *matFooterCellDef class="border-0 px-0 py-6" colspan="6" mat-footer-cell>
+                <button mat-stroked-button>See all transactions</button>
+            </td>
+        </ng-container>
 
-    <tr *matHeaderRowDef="albumsTableColumns" class="scale-95" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row py-8 mt-4 scale-95 hover:scale-100 hover:shadow transition-all duration-300 ease-in-out" mat-row></tr>
-    <tr *matFooterRowDef="['recentOrdersTableFooter']" class="h-16 border-0" mat-footer-row></tr>
+        <tr *matHeaderRowDef="albumsTableColumns" class="scale-95" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: albumsTableColumns" class="order-row py-8 mt-4 scale-95 hover:scale-100 hover:shadow transition-all duration-300 ease-in-out" mat-row></tr>
+        <tr *matFooterRowDef="['recentOrdersTableFooter']" class="h-16 border-0" mat-footer-row></tr>
 
-    <!-- No data -->
-    <tr *matNoDataRow class="mat-row">
-      <td [attr.colspan]="albumsTableColumns.length" class="mat-cell">
-        <div class="flex items-center justify-center py-8">
-          <span class="italic">{{ t('no-content') }}</span>
-        </div>
-      </td>
-    </tr>
-  </table>
+        <!-- No data -->
+        <tr *matNoDataRow class="mat-row">
+            <td [attr.colspan]="albumsTableColumns.length" class="mat-cell">
+                <div class="flex items-center justify-center py-8">
+                    <span class="italic">{{ t('no-content') }}</span>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>

@@ -16,81 +16,81 @@ import { ScrumboardService }                                                    
 import { Subject, take, takeUntil }                                              from 'rxjs';
 
 @Component({
-  selector   : 'app-new-board',
-  standalone : true,
-  imports: [
-    CdkTextareaAutosize,
-    MatLabel,
-    MatFormField,
-    ReactiveFormsModule,
-    MatInput,
-    MatIcon,
-    MatIconButton,
-    TranslocoDirective,
-    MatButton,
-    MatProgressSpinner,
-    NgIf,
-    MatError,
-    MatAutocompleteTrigger,
-    MatAutocomplete,
-    MatOption,
-    MatSelectAutocompleteComponent,
-    JsonPipe,
-    MatDialogClose
-  ],
-  templateUrl: './new-board.component.html'
+    selector   : 'app-new-board',
+    standalone : true,
+    imports    : [
+        CdkTextareaAutosize,
+        MatLabel,
+        MatFormField,
+        ReactiveFormsModule,
+        MatInput,
+        MatIcon,
+        MatIconButton,
+        TranslocoDirective,
+        MatButton,
+        MatProgressSpinner,
+        NgIf,
+        MatError,
+        MatAutocompleteTrigger,
+        MatAutocomplete,
+        MatOption,
+        MatSelectAutocompleteComponent,
+        JsonPipe,
+        MatDialogClose
+    ],
+    templateUrl: './new-board.component.html'
 })
 export class NewBoardComponent implements OnInit, OnDestroy {
-  boardForm: UntypedFormGroup;
-  notyf = new Notyf();
+    boardForm: UntypedFormGroup;
+    notyf = new Notyf();
 
-  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
+    private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(
-    public readonly _matDialogRef: MatDialogRef<NewBoardComponent>,
-    private readonly _translocoService: TranslocoService,
-    private readonly _formBuilder: UntypedFormBuilder,
-    private readonly _scrumboardService: ScrumboardService
-  ) {}
+    constructor(
+        public readonly _matDialogRef: MatDialogRef<NewBoardComponent>,
+        private readonly _translocoService: TranslocoService,
+        private readonly _formBuilder: UntypedFormBuilder,
+        private readonly _scrumboardService: ScrumboardService
+    ) {}
 
-  ngOnInit() {
-    this.boardForm = this._formBuilder.group({
-      title: [ '', Validators.required ],
-      description: [ '', Validators.required ],
-      members    : [ [] ]
-    });
-  }
-
-  ngOnDestroy() {
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  save() {
-    if (this.boardForm.invalid) {
-      this.notyf.error('Please fill all required fields');
-      return;
+    ngOnInit() {
+        this.boardForm = this._formBuilder.group({
+            title      : [ '', Validators.required ],
+            description: [ '', Validators.required ],
+            members    : [ [] ]
+        });
     }
 
-    this.boardForm.disable();
+    ngOnDestroy() {
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
 
-    this._scrumboardService.createBoard({
-      ...this.boardForm.getRawValue(),
-      icon: 'heroicons_outline:building-office-2'
-    })
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        take(1)
-      )
-      .subscribe({
-        next : (result) => {
-          this.notyf.success('Board created successfully');
-          this._matDialogRef.close();
-        },
-        error: (error) => {
-          this.notyf.error('Error creating board');
-          this.boardForm.enable();
+    save() {
+        if (this.boardForm.invalid) {
+            this.notyf.error('Please fill all required fields');
+            return;
         }
-      });
-  }
+
+        this.boardForm.disable();
+
+        this._scrumboardService.createBoard({
+            ...this.boardForm.getRawValue(),
+            icon: 'heroicons_outline:building-office-2'
+        })
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                take(1)
+            )
+            .subscribe({
+                next : (result) => {
+                    this.notyf.success('Board created successfully');
+                    this._matDialogRef.close();
+                },
+                error: (error) => {
+                    this.notyf.error('Error creating board');
+                    this.boardForm.enable();
+                }
+            });
+    }
 }

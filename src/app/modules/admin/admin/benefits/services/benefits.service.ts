@@ -10,47 +10,47 @@ import { formDataFromObject } from '@core/utils';
 
 @Injectable({providedIn: 'root'})
 export class BenefitsService implements BaseService<Benefit> {
-  private readonly _benefits$ = new BehaviorSubject<Benefit[]>(null);
+    private readonly _benefits$ = new BehaviorSubject<Benefit[]>(null);
 
-  constructor(private readonly _httpClient: HttpClient) {}
+    constructor(private readonly _httpClient: HttpClient) {}
 
-  get benefits$(): Observable<Benefit[]> {
-    return this._benefits$.asObservable();
-  }
+    get benefits$(): Observable<Benefit[]> {
+        return this._benefits$.asObservable();
+    }
 
-  set benefits$(value: Benefit[]) {
-    this._benefits$.next(value);
-  }
+    set benefits$(value: Benefit[]) {
+        this._benefits$.next(value);
+    }
 
-  findAll(layout: LayoutEnum = LayoutEnum.FULL, query: any = undefined): Observable<Benefit[]> {
-    const params = {layout};
+    findAll(layout: LayoutEnum = LayoutEnum.FULL, query: any = undefined): Observable<Benefit[]> {
+        const params = {layout};
 
-    if (query) Object.assign(params, query);
+        if (query) Object.assign(params, query);
 
-    return this._httpClient.get<Benefit[]>('/api/benefits/benefit', {params: params})
-      .pipe(tap((benefits) => this._benefits$.next(benefits)));
-  }
+        return this._httpClient.get<Benefit[]>('/api/benefits/benefit', {params: params})
+            .pipe(tap((benefits) => this._benefits$.next(benefits)));
+    }
 
-  findOne(id: string): Observable<Benefit> {
-    return this._httpClient.get<Benefit>(`/api/benefits/benefit/${ id }`);
-  }
+    findOne(id: string): Observable<Benefit> {
+        return this._httpClient.get<Benefit>(`/api/benefits/benefit/${ id }`);
+    }
 
-  create(data: Benefit): Observable<Benefit> {
-    const formData: FormData = formDataFromObject<Benefit>(data);
+    create(data: Benefit): Observable<Benefit> {
+        const formData: FormData = formDataFromObject<Benefit>(data);
 
-    return this._httpClient.post<Benefit>('/api/benefits/benefit', formData);
-  }
+        return this._httpClient.post<Benefit>('/api/benefits/benefit', formData);
+    }
 
-  update(data: Benefit): Observable<Benefit> {
-    return this._httpClient.put<Benefit>(`/api/benefits/benefit/${ data.id }`, data);
-  }
+    update(data: Benefit): Observable<Benefit> {
+        return this._httpClient.put<Benefit>(`/api/benefits/benefit/${ data.id }`, data);
+    }
 
-  delete(id: string): Observable<void> {
-    return this._httpClient.delete<void>(`/api/benefits/benefit/${ id }`);
-  }
+    delete(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`/api/benefits/benefit/${ id }`);
+    }
 
-  // Custom methods
-  findMostViewed() {
-    return this._httpClient.get<Benefit[]>('/api/benefits/benefit/most-viewed', {params: {limit: 3}});
-  }
+    // Custom methods
+    findMostViewed() {
+        return this._httpClient.get<Benefit[]>('/api/benefits/benefit/most-viewed', {params: {limit: 3}});
+    }
 }

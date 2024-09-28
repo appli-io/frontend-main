@@ -5,19 +5,19 @@ import { Selector }                                from '../../model/selector';
 
 @Injectable({providedIn: 'root'})
 export class NewsCategoryService {
-  constructor(private readonly _httpClient: HttpClient) { }
+    constructor(private readonly _httpClient: HttpClient) { }
 
-  private _selector$: BehaviorSubject<Selector[]> = new BehaviorSubject<Selector[]>([]);
+    private _selector$: BehaviorSubject<Selector[]> = new BehaviorSubject<Selector[]>([]);
 
-  get selector$() {
-    return this._selector$.asObservable();
-  }
+    get selector$() {
+        return this._selector$.asObservable();
+    }
 
-  getSelector(): Observable<Selector[]> {
-    return this._httpClient.get<Selector>('api/news-category/selector')
-      .pipe(
-        retry({count: 3, delay: 1000, resetOnSuccess: true}),
-        tap((data: any) => this._selector$.next(data))
-      );
-  }
+    getSelector(): Observable<Selector[]> {
+        return this._httpClient.get<Selector>('api/news-category/selector')
+            .pipe(
+                retry({count: 3, delay: 1000, resetOnSuccess: true}),
+                tap((data: any) => this._selector$.next(data))
+            );
+    }
 }

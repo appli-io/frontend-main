@@ -14,21 +14,21 @@ import { IUser }                                                 from '@modules/
 import { TranslocoDirective }                                    from '@ngneat/transloco';
 
 @Component({
-  selector: 'profile',
-  templateUrl: './profile.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [ RouterLink, FuseCardComponent, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, TextFieldModule, MatDividerModule, MatTooltipModule, NgClass, TranslocoDirective, RouterLinkActive, NgIf ],
+    selector       : 'profile',
+    templateUrl    : './profile.component.html',
+    encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone     : true,
+    imports        : [ RouterLink, FuseCardComponent, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule, TextFieldModule, MatDividerModule, MatTooltipModule, NgClass, TranslocoDirective, RouterLinkActive, NgIf ],
 })
 export class ProfileComponent {
-  private readonly _user: IUser;
+    private readonly _user: IUser;
 
-  constructor(private _route: ActivatedRoute) {
-    this._user = this._route.snapshot.data.resolvedUser;
-  }
+    constructor(private _route: ActivatedRoute) {
+        this._user = this._route.snapshot.data.resolvedUser;
+    }
 
-  get user(): IUser {
-    return this._user;
-  }
+    get user(): IUser {
+        return this._user;
+    }
 }

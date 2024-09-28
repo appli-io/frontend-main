@@ -5,7 +5,7 @@
     ></page-header>
     <!-- Content -->
     <div class="flex flex-col justify-center w-full sm:max-w-5xl mx-auto py-6 gap-y-4 px-4">
-        <form [formGroup]="form" class="flex flex-col space-y-8">
+        <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col space-y-8">
             <!-- Emails -->
             <div class="space-y-4">
                 <div class="">
@@ -67,28 +67,29 @@
                                     <input matInput [formControl]="phoneNumber.get('phoneNumber')" [placeholder]="'Phone'"/>
                                     <mat-select class="mr-1.5" [formControl]="phoneNumber.get('country')" matPrefix>
                                         <mat-select-trigger>
-                      <span class="flex items-center">
-                        <span
-                            class="mr-1 hidden h-4 w-6 overflow-hidden sm:flex"
-                            [style.background]=" 'url(\'/images/apps/contacts/flags.png\') no-repeat 0 0'"
-                            [style.backgroundSize]=" '24px 3876px'"
-                            [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"
-                        ></span>
-                        <span class="text-default font-medium sm:mx-0.5">{{ getCountryByIso(phoneNumber.get('country').value).code }}</span>
-                      </span>
+                                            <span class="flex items-center">
+                                                <span
+                                                    class="mr-1 hidden h-4 w-6 overflow-hidden sm:flex"
+                                                    [style.background]=" 'url(\'/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                                    [style.backgroundSize]=" '24px 3876px'"
+                                                    [style.backgroundPosition]="getCountryByIso(phoneNumber.get('country').value).flagImagePos"
+                                                ></span>
+                                                <span class="text-default font-medium sm:mx-0.5">{{ getCountryByIso(phoneNumber.get('country').value).code }}</span>
+                                            </span>
                                         </mat-select-trigger>
                                         @for (country of countries; track trackByFn($index, country)) {
                                             <mat-option [value]="country.iso">
-                        <span class="flex items-center">
-                        <span
-                            class="h-4 w-6 overflow-hidden"
-                            [style.background]=" 'url(\'/images/apps/contacts/flags.png\') no-repeat 0 0'"
-                            [style.backgroundSize]=" '24px 3876px'"
-                            [style.backgroundPosition]="country.flagImagePos"
-                        ></span>
-                        <span class="ml-2">{{ country.name }}</span>
-                        <span class="ml-2 font-medium">{{ country.code }}</span>
-                        </span></mat-option>
+                                                <div class="flex items-center">
+                                                    <span
+                                                        class="h-4 w-6 overflow-hidden"
+                                                        [style.background]=" 'url(\'/images/apps/contacts/flags.png\') no-repeat 0 0'"
+                                                        [style.backgroundSize]=" '24px 3876px'"
+                                                        [style.backgroundPosition]="country.flagImagePos"
+                                                    ></span>
+                                                    <span class="ml-2">{{ country.name }}</span>
+                                                    <span class="ml-2 font-medium">{{ country.code }}</span>
+                                                </div>
+                                            </mat-option>
                                         }
                                     </mat-select>
                                 </mat-form-field>
@@ -106,7 +107,7 @@
                             </div>
                         }
                     </div>
-                    <button (click)="addPhoneNumberField()" class="group inline-flex items-center rounded px-4 py-2 gap-x-2 -ml-4" color="primary" mat-button>
+                    <button (click)="addPhoneNumberField()" class="group inline-flex items-center rounded px-4 py-2 gap-x-2 -ml-4" color="primary" mat-button type="button">
                         <mat-icon [svgIcon]="'heroicons_solid:plus-circle'" class="icon-size-5"></mat-icon>
                         <span class="font-medium">Add a phone number</span>
                     </button>
@@ -159,18 +160,18 @@
                 </div>
             </div>
             <button
-                [disabled]="form.invalid || form.pending || form.disabled"
+                [disabled]="form.invalid || form.pending || form.disabled || !form.dirty"
                 class="md:place-self-end"
                 color="primary"
                 mat-raised-button
                 type="submit"
             >
-        <span class="inline-flex items-center gap-x-4">
-          {{ 'actions.save-changes' | transloco }}
-            @if (form.disabled) {
-                <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
-            }
-          </span>
+                <span class="inline-flex items-center gap-x-4">
+                    {{ 'actions.save-changes' | transloco }}
+                    @if (form.disabled) {
+                        <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
+                    }
+                </span>
             </button>
         </form>
     </div>

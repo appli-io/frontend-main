@@ -1,55 +1,55 @@
 <div *transloco="let t; read: 'news.all-news'" class="flex flex-col min-w-0 w-full">
-  <!-- Header -->
-  <news-list-header
-    [description]="t('description')"
-    [subtitle]="t('subtitle')"
-    [title]="t('title')"
-  ></news-list-header>
+    <!-- Header -->
+    <news-list-header
+        [description]="t('description')"
+        [subtitle]="t('subtitle')"
+        [title]="t('title')"
+    ></news-list-header>
 
-  <div class="flex flex-col flex-auto min-w-0">
-    <!-- Categories -->
-    @if (categories && categories.length > 1) {
-      <div class="flex flex-col items-center justify-center w-full p-6 sm:p-10 pb-0 sm:pb-0">
-        <div class="text-2xl font-semibold tracking-tight text-secondary flex items-center" (click)="categoriesExpanded = !categoriesExpanded">
-          {{ t('categories') }}
-          <mat-icon [svgIcon]="categoriesExpanded ? 'mat_outline:expand_less' : 'mat_outline:expand_more'"></mat-icon>
-        </div>
-        <div class="animated-box" @fadeIn @fadeOut *ngIf="categoriesExpanded">
-          <div class="animated-box-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
-            @for (category of categories; track category.id) {
-              <news-category-card [category]="category" [index]="$index" (onClick)="categoriesExpanded = false"></news-category-card>
-            }
-          </div>
-        </div>
-      </div>
-    }
-
-    <ng-container *ngIf="(newsList$ | async) as pageNews; else loading">
-      <!-- Main -->
-      <div class="flex-auto p-6 sm:p-10">
-        <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
-          <ng-container *ngIf="pageNews.content.length; else noContent">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
-              @for (single_news of pageNews.content; track single_news.id) {
-                <news-card [news]="single_news" [index]="$index" [actionText]="t('read-more')"></news-card>
-              }
+    <div class="flex flex-col flex-auto min-w-0">
+        <!-- Categories -->
+        @if (categories && categories.length > 1) {
+            <div class="flex flex-col items-center justify-center w-full p-6 sm:p-10 pb-0 sm:pb-0">
+                <div class="text-2xl font-semibold tracking-tight text-secondary flex items-center" (click)="categoriesExpanded = !categoriesExpanded">
+                    {{ t('categories') }}
+                    <mat-icon [svgIcon]="categoriesExpanded ? 'mat_outline:expand_less' : 'mat_outline:expand_more'"></mat-icon>
+                </div>
+                <div class="animated-box" @fadeIn @fadeOut *ngIf="categoriesExpanded">
+                    <div class="animated-box-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+                        @for (category of categories; track category.id) {
+                            <news-category-card [category]="category" [index]="$index" (onClick)="categoriesExpanded = false"></news-category-card>
+                        }
+                    </div>
+                </div>
             </div>
-          </ng-container>
+        }
 
-          <!-- No news -->
-          <ng-template #noContent>
-            <div class="flex flex-auto flex-col items-center justify-center">
-              <mat-icon
-                [svgIcon]="'mat_outline:search_off'"
-                class="icon-size-24"></mat-icon>
-              <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+        <ng-container *ngIf="(newsList$ | async) as pageNews; else loading">
+            <!-- Main -->
+            <div class="flex-auto p-6 sm:p-10">
+                <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
+                    <ng-container *ngIf="pageNews.content.length; else noContent">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+                            @for (single_news of pageNews.content; track single_news.id) {
+                                <news-card [news]="single_news" [index]="$index" [actionText]="t('read-more')"></news-card>
+                            }
+                        </div>
+                    </ng-container>
+
+                    <!-- No news -->
+                    <ng-template #noContent>
+                        <div class="flex flex-auto flex-col items-center justify-center">
+                            <mat-icon
+                                [svgIcon]="'mat_outline:search_off'"
+                                class="icon-size-24"></mat-icon>
+                            <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+                        </div>
+                    </ng-template>
+                </div>
             </div>
-          </ng-template>
-        </div>
-      </div>
-    </ng-container>
-    <ng-template #loading>
-      Loading...
-    </ng-template>
-  </div>
+        </ng-container>
+        <ng-template #loading>
+            Loading...
+        </ng-template>
+    </div>
 </div>

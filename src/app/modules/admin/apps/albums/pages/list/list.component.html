@@ -1,61 +1,61 @@
 <div *transloco="let t; read: 'albums'" class="flex flex-col min-w-0 w-full">
-  <page-header
-    [description]="t('description')"
-    [subtitle]="t('subtitle')"
-    [title]="t('title')"
-  ></page-header>
-  <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
-    @if (albums$ | async; as albums) {
-      @if (albums?.length > 0) {
-        <fuse-masonry
-          [items]="$any(albums)"
-          [columns]="columns"
-          [columnsTemplate]="albumColumnTemplate"
-        ></fuse-masonry>
-      } @else {
-        <div class="flex flex-auto flex-col items-center justify-center">
-          <mat-icon
-            [svgIcon]="'mat_outline:search_off'"
-            class="icon-size-24"></mat-icon>
-          <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
-        </div>
-      }
-
-      <ng-template #albumColumnTemplate let-columns>
-        @for (column of columns; track trackByFn($index, column)) {
-          <div class="flex-1 mx-2 p-2 rounded space-y-2">
-            @for (album of $any(column.items); track trackByFn($index, album)) {
-              <a [routerLink]="[album.id]">
-                <album-card [album]="album" [index]="$index"></album-card>
-              </a>
+    <page-header
+        [description]="t('description')"
+        [subtitle]="t('subtitle')"
+        [title]="t('title')"
+    ></page-header>
+    <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
+        @if (albums$ | async; as albums) {
+            @if (albums?.length > 0) {
+                <fuse-masonry
+                    [items]="$any(albums)"
+                    [columns]="columns"
+                    [columnsTemplate]="albumColumnTemplate"
+                ></fuse-masonry>
+            } @else {
+                <div class="flex flex-auto flex-col items-center justify-center">
+                    <mat-icon
+                        [svgIcon]="'mat_outline:search_off'"
+                        class="icon-size-24"></mat-icon>
+                    <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+                </div>
             }
-          </div>
+
+            <ng-template #albumColumnTemplate let-columns>
+                @for (column of columns; track trackByFn($index, column)) {
+                    <div class="flex-1 mx-2 p-2 rounded space-y-2">
+                        @for (album of $any(column.items); track trackByFn($index, album)) {
+                            <a [routerLink]="[album.id]">
+                                <album-card [album]="album" [index]="$index"></album-card>
+                            </a>
+                        }
+                    </div>
+                }
+            </ng-template>
+        } @else {
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+                <div class="flex flex-col gap-y-2">
+                    <skeleton class="h-44 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-6 w-40 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                </div>
+                <div class="flex flex-col gap-y-2">
+                    <skeleton class="h-80 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-6 w-40 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                </div>
+                <div class="flex flex-col gap-y-2">
+                    <skeleton class="h-44 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-6 w-40 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                    <skeleton class="h-4 w-72 max-w-xs bg-card"/>
+                </div>
+            </div>
         }
-      </ng-template>
-    } @else {
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
-        <div class="flex flex-col gap-y-2">
-          <skeleton class="h-44 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-6 w-40 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-        </div>
-        <div class="flex flex-col gap-y-2">
-          <skeleton class="h-80 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-6 w-40 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-        </div>
-        <div class="flex flex-col gap-y-2">
-          <skeleton class="h-44 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-6 w-40 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-          <skeleton class="h-4 w-72 max-w-xs bg-card"/>
-        </div>
-      </div>
-    }
-  </div>
+    </div>
 </div>

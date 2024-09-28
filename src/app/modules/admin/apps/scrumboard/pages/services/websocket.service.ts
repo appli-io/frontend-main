@@ -4,38 +4,38 @@ import { BoardSocket } from '@modules/admin/apps/scrumboard/pages/services/board
 
 @Injectable({providedIn: 'root'})
 export class WebsocketService {
-  boardJoined = this.socket.fromEvent<string>('joinedBoard');
-  // boardUpdated = this.socket.fromEvent<Board>('boardUpdated');
-  cardUpdated = this.socket.fromEvent<Card>('cardUpdated');
+    boardJoined = this.socket.fromEvent<string>('joinedBoard');
+    // boardUpdated = this.socket.fromEvent<Board>('boardUpdated');
+    cardUpdated = this.socket.fromEvent<Card>('cardUpdated');
 
-  constructor(private socket: BoardSocket) {}
+    constructor(private socket: BoardSocket) {}
 
-  connect() {
-    this.socket.connect();
-  }
+    connect() {
+        this.socket.connect();
+    }
 
-  disconnect() {
-    this.socket.disconnect({close: true});
-  }
+    disconnect() {
+        this.socket.disconnect({close: true});
+    }
 
-  joinBoard(boardId: string) {
-    console.log('joinBoard', boardId);
-    this.socket.emit('joinBoard', boardId);
-  }
+    joinBoard(boardId: string) {
+        console.log('joinBoard', boardId);
+        this.socket.emit('joinBoard', boardId);
+    }
 
-  leaveBoard(boardId: string) {
-    this.socket.emit('leaveBoard', boardId);
-  }
+    leaveBoard(boardId: string) {
+        this.socket.emit('leaveBoard', boardId);
+    }
 
-  createBoard(board: Board) {
-    this.socket.emit('createBoard', board);
-  }
+    createBoard(board: Board) {
+        this.socket.emit('createBoard', board);
+    }
 
-  updateBoard(board: Board) {
-    this.socket.emit('updateBoard', board);
-  }
+    updateBoard(board: Board) {
+        this.socket.emit('updateBoard', board);
+    }
 
-  updateCard(card: Card) {
-    this.socket.emit('updateCard', card);
-  }
+    updateCard(card: Card) {
+        this.socket.emit('updateCard', card);
+    }
 }

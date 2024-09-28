@@ -16,69 +16,69 @@ import { FuseConfirmationService }              from '../../../../../../../@fuse
 import { BenefitsService }                      from '@modules/admin/admin/benefits/services/benefits.service';
 
 @Component({
-  selector       : 'benefit-table',
-  standalone     : true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports        : [
-    Table,
-    TranslocoDirective,
-    MatColumnDef,
-    MatSort,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
-    MatSortHeader,
-    MatIcon,
-    MatIconButton,
-    MatTooltip,
-    MatMenuTrigger,
-    MatMenu,
-    MatMenuItem
-  ],
-  templateUrl    : './benefits-table.component.html',
-  styles         : [ `:host {
+    selector       : 'benefit-table',
+    standalone     : true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports        : [
+        Table,
+        TranslocoDirective,
+        MatColumnDef,
+        MatSort,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatSortHeader,
+        MatIcon,
+        MatIconButton,
+        MatTooltip,
+        MatMenuTrigger,
+        MatMenu,
+        MatMenuItem
+    ],
+    templateUrl    : './benefits-table.component.html',
+    styles         : [ `:host {
     width: 100%;
   }` ]
 })
 export class BenefitsTableComponent {
-  @Input('benefits') benefits$!: Observable<Benefit[]>;
-  @Input() loading: boolean = false;
-  @Output() readonly pageChange = new EventEmitter();
-  @Output() readonly sortChange = new EventEmitter<Sort>();
-  @ViewChild(MatMenuTrigger, {static: true}) matMenuTrigger: MatMenuTrigger;
+    @Input('benefits') benefits$!: Observable<Benefit[]>;
+    @Input() loading: boolean = false;
+    @Output() readonly pageChange = new EventEmitter();
+    @Output() readonly sortChange = new EventEmitter<Sort>();
+    @ViewChild(MatMenuTrigger, {static: true}) matMenuTrigger: MatMenuTrigger;
 
-  columns: string[] = [ 'title', 'type', 'category', 'company', 'discountsCount', 'actions' ];
+    columns: string[] = [ 'title', 'type', 'category', 'company', 'discountsCount', 'actions' ];
 
-  protected readonly trackByFn = trackByFn;
+    protected readonly trackByFn = trackByFn;
 
-  constructor(
-    private readonly _confirmationService: FuseConfirmationService,
-    private readonly _translateService: TranslocoService,
-    private readonly _benefitService: BenefitsService
-  ) {}
+    constructor(
+        private readonly _confirmationService: FuseConfirmationService,
+        private readonly _translateService: TranslocoService,
+        private readonly _benefitService: BenefitsService
+    ) {}
 
-  openActions({$event, row}: { $event: MouseEvent, row: Benefit }) {
-    $event.preventDefault();
-    console.log('Action', row);
-  }
+    openActions({$event, row}: { $event: MouseEvent, row: Benefit }) {
+        $event.preventDefault();
+        console.log('Action', row);
+    }
 
-  delete(benefit: Benefit) {
-    const confirmation = this._confirmationService.open({
-      title  : this._translateService.translate('admin.benefits.delete.title'),
-      message: this._translateService.translate('admin.benefits.delete.message'),
-      actions: {
-        confirm: {
-          label: this._translateService.translate('admin.benefits.delete.delete'),
-        },
-      },
-    });
+    delete(benefit: Benefit) {
+        const confirmation = this._confirmationService.open({
+            title  : this._translateService.translate('admin.benefits.delete.title'),
+            message: this._translateService.translate('admin.benefits.delete.message'),
+            actions: {
+                confirm: {
+                    label: this._translateService.translate('admin.benefits.delete.delete'),
+                },
+            },
+        });
 
-    confirmation.afterClosed().subscribe((result) => {
-      console.log('Result', result);
-      if (result === 'confirmed') {
-        lastValueFrom(this._benefitService.delete(benefit.id));
-      }
-    });
-  }
+        confirmation.afterClosed().subscribe((result) => {
+            console.log('Result', result);
+            if (result === 'confirmed') {
+                lastValueFrom(this._benefitService.delete(benefit.id));
+            }
+        });
+    }
 }

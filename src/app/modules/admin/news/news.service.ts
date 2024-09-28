@@ -8,92 +8,92 @@ import { INewsCategory }                    from '@modules/admin/news/domain/int
 import { INews } from './domain/interfaces/news.interface';
 
 const DEFAULT_PAGEABLE = {
-  page: 1,
-  size: 10,
+    page: 1,
+    size: 10,
 };
 
 @Injectable({providedIn: 'root'})
 export class NewsService {
-  // private _backendUrl = environment.BACKEND_URL;
-  private _newsQueryParams: string;
+    // private _backendUrl = environment.BACKEND_URL;
+    private _newsQueryParams: string;
 
-  constructor(private readonly _httpClient: HttpClient) { }
+    constructor(private readonly _httpClient: HttpClient) { }
 
-  private _news: BehaviorSubject<Page<INews>> = new BehaviorSubject(null);
+    private _news: BehaviorSubject<Page<INews>> = new BehaviorSubject(null);
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Accessors
-  // -----------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------
+    // @ Accessors
+    // -----------------------------------------------------------------------------------------------------
 
-  get news(): Observable<Page<INews>> {
-    return this._news.asObservable();
-  }
+    get news(): Observable<Page<INews>> {
+        return this._news.asObservable();
+    }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
 
-  getNews({query = {}, pageable = DEFAULT_PAGEABLE}): Observable<Page<any>> {
-    let params = new HttpParams();
-    const queryKey = JSON.stringify({query, pageable});
+    getNews({query = {}, pageable = DEFAULT_PAGEABLE}): Observable<Page<any>> {
+        let params = new HttpParams();
+        const queryKey = JSON.stringify({query, pageable});
 
-    if (this._newsQueryParams === queryKey) return;
+        if (this._newsQueryParams === queryKey) return;
 
-    this._newsQueryParams = queryKey;
+        this._newsQueryParams = queryKey;
 
-    Object.keys(query).forEach(key => {
-      params = params.append(key, query[key]);
-    });
-    params = params.append('page', pageable.page).append('size', pageable.size);
+        Object.keys(query).forEach(key => {
+            params = params.append(key, query[key]);
+        });
+        params = params.append('page', pageable.page).append('size', pageable.size);
 
-    return this._httpClient.get<Page<any>>('api/news', {params}).pipe(
-      map((content) => {
-        const pageNews: Page<INews> = {
-          ...content,
-          content: content.content.map(({publishedAt, updatedAt, ...news}) => ({
-            ...news,
-            publishedAt: new Date(publishedAt),
-            updatedAt  : new Date(updatedAt),
-          })),
-        };
-        this._news.next(pageNews);
-        return pageNews;
-      })
-    );
-  }
+        return this._httpClient.get<Page<any>>('api/news', {params}).pipe(
+            map((content) => {
+                const pageNews: Page<INews> = {
+                    ...content,
+                    content: content.content.map(({publishedAt, updatedAt, ...news}) => ({
+                        ...news,
+                        publishedAt: new Date(publishedAt),
+                        updatedAt  : new Date(updatedAt),
+                    })),
+                };
+                this._news.next(pageNews);
+                return pageNews;
+            })
+        );
+    }
 
-  getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
-    const headers = {};
+    getNewsByIdOrSlug(idOrSlug: string): Observable<INews> {
+        const headers = {};
 
-    return this._httpClient.get<INews>(`api/news/${ idOrSlug }`, {headers}).pipe(
-      map((content) => {
-        const {publishedAt, updatedAt, ...news} = content;
-        return {
-          ...news,
-          publishedAt: new Date(publishedAt),
-          updatedAt  : new Date(updatedAt),
-        };
-      })
-    );
-  }
+        return this._httpClient.get<INews>(`api/news/${ idOrSlug }`, {headers}).pipe(
+            map((content) => {
+                const {publishedAt, updatedAt, ...news} = content;
+                return {
+                    ...news,
+                    publishedAt: new Date(publishedAt),
+                    updatedAt  : new Date(updatedAt),
+                };
+            })
+        );
+    }
 
-  getCategories(): Observable<any> {
-    const headers = {};
+    getCategories(): Observable<any> {
+        const headers = {};
 
-    return this._httpClient.get<INewsCategory[]>(`api/news-category`, {headers});
-  }
+        return this._httpClient.get<INewsCategory[]>(`api/news-category`, {headers});
+    }
 
-  getHighlightedNews(): Observable<INews[]> {
-    const headers = {};
+    getHighlightedNews(): Observable<INews[]> {
+        const headers = {};
 
-    return this._httpClient.get<INews[]>(`api/news/highlighted`, {headers}).pipe(
-      map((newsList) => {
-        return newsList.map(({publishedAt, updatedAt, ...news}) => ({
-          ...news,
-          publishedAt: new Date(publishedAt),
-          updatedAt  : new Date(updatedAt),
-        }));
-      })
-    );
-  }
+        return this._httpClient.get<INews[]>(`api/news/highlighted`, {headers}).pipe(
+            map((newsList) => {
+                return newsList.map(({publishedAt, updatedAt, ...news}) => ({
+                    ...news,
+                    publishedAt: new Date(publishedAt),
+                    updatedAt  : new Date(updatedAt),
+                }));
+            })
+        );
+    }
 }

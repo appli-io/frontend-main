@@ -18,89 +18,89 @@ import { NewOrEditComponent }      from '../../dialogs/new-or-edit/new-or-edit.c
 import { MatDivider }              from '@angular/material/divider';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports: [
-    EventsTableComponent,
-    MatAnchor,
-    MatButton,
-    MatIcon,
-    MatIconAnchor,
-    MatTooltip,
-    PageHeaderComponent,
-    RouterLink,
-    TranslocoDirective,
-    TranslocoPipe,
-    MatDivider,
-  ],
-  templateUrl: './list.component.html',
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        EventsTableComponent,
+        MatAnchor,
+        MatButton,
+        MatIcon,
+        MatIconAnchor,
+        MatTooltip,
+        PageHeaderComponent,
+        RouterLink,
+        TranslocoDirective,
+        TranslocoPipe,
+        MatDivider,
+    ],
+    templateUrl: './list.component.html',
 })
 export class ListComponent {
-  public events$ = this._eventsService.events$;
-  private _notyf = new Notyf();
+    public events$ = this._eventsService.events$;
+    private _notyf = new Notyf();
 
-  constructor(
-    private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _eventsService: EventsService,
-    private readonly _matDialog: MatDialog
-  ) {}
+    constructor(
+        private readonly _fuseConfirmationService: FuseConfirmationService,
+        private readonly _eventsService: EventsService,
+        private readonly _matDialog: MatDialog
+    ) {}
 
-  openNewEventDialog() {
-    this._matDialog.open(NewOrEditComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-    });
-  }
-
-  editEvent(event: IEvent) {
-    console.log('Edit event', event);
-    this._eventsService
-      .getEvent(event.id)
-      .pipe(take(1))
-      .subscribe((eventData) => {
+    openNewEventDialog() {
         this._matDialog.open(NewOrEditComponent, {
-          panelClass: 'dialog-mobile-fullscreen',
-          data      : {event: eventData},
+            panelClass: 'dialog-mobile-fullscreen',
         });
-      });
-  }
+    }
 
-  deleteEvent(event: IEvent) {
-    console.log('Delete event', event);
-    const confirmation = this._fuseConfirmationService.open({
-      title  : 'Delete event',
-      message: 'Are you sure you want to delete the event? This action cannot be undone.',
-      actions: {
-        confirm: {
-          label: 'Delete',
-        },
-      },
-    });
+    editEvent(event: IEvent) {
+        console.log('Edit event', event);
+        this._eventsService
+            .getEvent(event.id)
+            .pipe(take(1))
+            .subscribe((eventData) => {
+                this._matDialog.open(NewOrEditComponent, {
+                    panelClass: 'dialog-mobile-fullscreen',
+                    data      : {event: eventData},
+                });
+            });
+    }
 
-    // Subscribe to the confirmation dialog closed action
-    confirmation
-      .afterClosed()
-      .pipe(
-        mergeMap((result) => {
-          // If the confirm button pressed...
-          if (result === 'confirmed') {
-            // Delete the event
-            return this._eventsService.deleteEvent(event.id);
-          }
-          return [];
-        })
-      )
-      .subscribe({
-        next : () => {
-          this._notyf.success('Event deleted');
-        },
-        error: (error) => {
-          console.error('Delete event error', error);
-          this._notyf.error('Error deleting event');
-        },
-      });
-  }
+    deleteEvent(event: IEvent) {
+        console.log('Delete event', event);
+        const confirmation = this._fuseConfirmationService.open({
+            title  : 'Delete event',
+            message: 'Are you sure you want to delete the event? This action cannot be undone.',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
 
-  pageChange(event: any) {
-    console.log('Page change', event);
-  }
+        // Subscribe to the confirmation dialog closed action
+        confirmation
+            .afterClosed()
+            .pipe(
+                mergeMap((result) => {
+                    // If the confirm button pressed...
+                    if (result === 'confirmed') {
+                        // Delete the event
+                        return this._eventsService.deleteEvent(event.id);
+                    }
+                    return [];
+                })
+            )
+            .subscribe({
+                next : () => {
+                    this._notyf.success('Event deleted');
+                },
+                error: (error) => {
+                    console.error('Delete event error', error);
+                    this._notyf.error('Error deleting event');
+                },
+            });
+    }
+
+    pageChange(event: any) {
+        console.log('Page change', event);
+    }
 }

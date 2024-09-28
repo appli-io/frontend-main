@@ -1,5 +1,5 @@
 export enum LayoutEnum {
-  FULL = 'full',
-  COMPACT = 'compact',
-  SELECTOR = 'selector'
+    FULL = 'full',
+    COMPACT = 'compact',
+    SELECTOR = 'selector'
 }

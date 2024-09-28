@@ -25,107 +25,107 @@ import { MatSort, MatSortHeader }                                               
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators }                    from '@angular/forms';
 
 @Component({
-  selector   : 'app-list',
-  standalone : true,
-  imports: [
-    PageHeaderComponent,
-    TranslocoDirective,
-    MatIcon,
-    MatIconAnchor,
-    MatTooltip,
-    MatFormFieldModule,
-    MatIconButton,
-    MatInputModule,
-    MatTableModule,
-    MatDivider,
-    Table,
-    AsyncPipe,
-    JsonPipe,
-    DatePipe,
-    MatSortHeader,
-    MatSort,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './list.component.html'
+    selector   : 'app-list',
+    standalone : true,
+    imports    : [
+        PageHeaderComponent,
+        TranslocoDirective,
+        MatIcon,
+        MatIconAnchor,
+        MatTooltip,
+        MatFormFieldModule,
+        MatIconButton,
+        MatInputModule,
+        MatTableModule,
+        MatDivider,
+        Table,
+        AsyncPipe,
+        JsonPipe,
+        DatePipe,
+        MatSortHeader,
+        MatSort,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './list.component.html'
 })
 export class ListComponent implements OnInit {
-  public news$: BehaviorSubject<INews[]> = new BehaviorSubject<INews[]>(null);
-  public pageable$: BehaviorSubject<Pageable> = new BehaviorSubject<Pageable>(null);
-  public readonly displayedColumns: string[] = [ 'title', 'cover', 'publishedAt', 'actions' ];
-  public searchControl = new FormControl(undefined, [ Validators.minLength(3), Validators.maxLength(100) ]);
-  private _notyf = new Notyf();
+    public news$: BehaviorSubject<INews[]> = new BehaviorSubject<INews[]>(null);
+    public pageable$: BehaviorSubject<Pageable> = new BehaviorSubject<Pageable>(null);
+    public readonly displayedColumns: string[] = [ 'title', 'cover', 'publishedAt', 'actions' ];
+    public searchControl = new FormControl(undefined, [ Validators.minLength(3), Validators.maxLength(100) ]);
+    private _notyf = new Notyf();
 
-  constructor(
-    private readonly _formBuilder: FormBuilder,
-    private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _newsService: NewsService,
-    private readonly _translationService: TranslocoService,
-    private readonly _matDialog: MatDialog,
-  ) {
-    this._subscribeToSearchControl();
-    this._newsService.newsPage
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: (page) => {
-          if (page) {
-            this.news$.next(page.content);
-            this.pageable$.next(page.pageable);
-          }
-        }
-      });
-  }
+    constructor(
+        private readonly _formBuilder: FormBuilder,
+        private readonly _fuseConfirmationService: FuseConfirmationService,
+        private readonly _newsService: NewsService,
+        private readonly _translationService: TranslocoService,
+        private readonly _matDialog: MatDialog,
+    ) {
+        this._subscribeToSearchControl();
+        this._newsService.newsPage
+            .pipe(takeUntilDestroyed())
+            .subscribe({
+                next: (page) => {
+                    if (page) {
+                        this.news$.next(page.content);
+                        this.pageable$.next(page.pageable);
+                    }
+                }
+            });
+    }
 
-  ngOnInit() {}
+    ngOnInit() {}
 
-  openNewDialog(): void {
-    this._matDialog.open(NewNewsComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-      autoFocus   : false,
-      disableClose: true,
-    });
-  }
+    openNewDialog(): void {
+        this._matDialog.open(NewNewsComponent, {
+            panelClass  : 'dialog-mobile-fullscreen',
+            autoFocus   : false,
+            disableClose: true,
+        });
+    }
 
-  openDeleteDialog(news: INews): void {
-    const confirmation = this._fuseConfirmationService.open({
-      title  : this._translationService.translate('admin.news.delete.title'),
-      message: this._translationService.translate('admin.news.delete.message'),
-      actions: {
-        confirm: {
-          label: this._translationService.translate('admin.news.delete.delete'),
-        },
-        cancel : {
-          label: this._translationService.translate('admin.news.delete.cancel'),
-        }
-      },
-    });
+    openDeleteDialog(news: INews): void {
+        const confirmation = this._fuseConfirmationService.open({
+            title  : this._translationService.translate('admin.news.delete.title'),
+            message: this._translationService.translate('admin.news.delete.message'),
+            actions: {
+                confirm: {
+                    label: this._translationService.translate('admin.news.delete.delete'),
+                },
+                cancel : {
+                    label: this._translationService.translate('admin.news.delete.cancel'),
+                }
+            },
+        });
 
-    confirmation.afterClosed()
-      .pipe(
-        mergeMap((result) => {
-          // If the confirm button pressed...
-          if (result === 'confirmed') {
-            // Delete the news
-            return this._newsService.delete(news.id);
-          }
-          return [];
-        })
-      )
-      .subscribe();
-  }
+        confirmation.afterClosed()
+            .pipe(
+                mergeMap((result) => {
+                    // If the confirm button pressed...
+                    if (result === 'confirmed') {
+                        // Delete the news
+                        return this._newsService.delete(news.id);
+                    }
+                    return [];
+                })
+            )
+            .subscribe();
+    }
 
-  private _subscribeToSearchControl() {
-    this.searchControl.valueChanges
-      .pipe(
-        takeUntilDestroyed(),
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((value) => {
-          value = value.trim();
-          if (!value) return this._newsService.getNews({});
-          else if (value.length >= 3 && value.length < 100) return this._newsService.getNews({query: {headline: value}});
-          else return of('invalid');
-        })
-      )
-      .subscribe();
-  }
+    private _subscribeToSearchControl() {
+        this.searchControl.valueChanges
+            .pipe(
+                takeUntilDestroyed(),
+                debounceTime(1000),
+                distinctUntilChanged(),
+                switchMap((value) => {
+                    value = value.trim();
+                    if (!value) return this._newsService.getNews({});
+                    else if (value.length >= 3 && value.length < 100) return this._newsService.getNews({query: {headline: value}});
+                    else return of('invalid');
+                })
+            )
+            .subscribe();
+    }
 }

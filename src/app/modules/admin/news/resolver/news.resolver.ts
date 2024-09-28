@@ -3,9 +3,9 @@ import { inject }                                                 from '@angular
 import { NewsService }                                            from '@modules/admin/news/news.service';
 
 export const newsResolver: ResolveFn<any> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot,
-  newsService: NewsService = inject(NewsService)
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+    newsService: NewsService = inject(NewsService)
 ) => {
-  return newsService.getNewsByIdOrSlug(route.params.idOrSlug);
+    return newsService.getNewsByIdOrSlug(route.params.idOrSlug);
 };

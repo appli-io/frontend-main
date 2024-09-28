@@ -1,37 +1,37 @@
 <!--<div class="flex flex-row flex-wrap justify-between gap-8 w-full">-->
 <div class="w-full flex gap-8 overflow-x-auto p-2 py-4">
-  @for (category of categories$ | async; track category.id) {
-    @if (!category.parent) {
-      <a
-        (click)="selectedCategory = category"
-        [routerLink]="['/apps/benefits/category', category.id]"
-        [routerLinkActive]="'border-primary text-primary border-2'"
-        class="shrink-0 w-28 h-28 p-2 bg-card shadow rounded-lg flex flex-col justify-around items-center border">
-        <img [src]="category.icon.fileUrl" class="aspect-square object-contain w-10 drop-shadow">
-        <span [innerText]="category.name" class="font-extrabold mt-2 uppercase"></span>
-      </a>
+    @for (category of categories$ | async; track category.id) {
+        @if (!category.parent) {
+            <a
+                (click)="selectedCategory = category"
+                [routerLink]="['/apps/benefits/category', category.id]"
+                [routerLinkActive]="'border-primary text-primary border-2'"
+                class="shrink-0 w-28 h-28 p-2 bg-card shadow rounded-lg flex flex-col justify-around items-center border">
+                <img [src]="category.icon.fileUrl" class="aspect-square object-contain w-10 drop-shadow">
+                <span [innerText]="category.name" class="font-extrabold mt-2 uppercase"></span>
+            </a>
+        }
     }
-  }
 </div>
 <div class="w-full flex gap-4 overflow-x-auto p-2">
-  @if (categoryId) {
-    @if (selectedCategory$ | async; as selectedCategory) {
-      @for (category of selectedCategory?.subCategories; track category.id) {
-        <ng-container *ngTemplateOutlet="subCategoryTemplate; context: {$implicit: category}"></ng-container>
-      }
+    @if (categoryId) {
+        @if (selectedCategory$ | async; as selectedCategory) {
+            @for (category of selectedCategory?.subCategories; track category.id) {
+                <ng-container *ngTemplateOutlet="subCategoryTemplate; context: {$implicit: category}"></ng-container>
+            }
+        }
     }
-  }
 </div>
 <ng-template #subCategoryTemplate let-category>
-  <!-- Redirect to the same page, adding subcategory to query params -->
-  <a
-    (click)="selectSubCategory(category)"
-    [queryParams]="{category: category.id}"
-    [routerLinkActiveOptions]="{exact: true}"
-    [routerLinkActive]="'border-primary text-primary border-2'"
-    [routerLink]="['.']"
-    class="shrink-0 px-4 py-1 bg-card shadow rounded-lg flex flex-col justify-center items-center border"
-  >
-    <span [innerText]="category.name" class="font-semibold uppercase"></span>
-  </a>
+    <!-- Redirect to the same page, adding subcategory to query params -->
+    <a
+        (click)="selectSubCategory(category)"
+        [queryParams]="{category: category.id}"
+        [routerLinkActiveOptions]="{exact: true}"
+        [routerLinkActive]="'border-primary text-primary border-2'"
+        [routerLink]="['.']"
+        class="shrink-0 px-4 py-1 bg-card shadow rounded-lg flex flex-col justify-center items-center border"
+    >
+        <span [innerText]="category.name" class="font-semibold uppercase"></span>
+    </a>
 </ng-template>

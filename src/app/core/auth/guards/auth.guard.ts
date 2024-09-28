@@ -4,22 +4,22 @@ import { AuthService }                                                from 'app/
 import { of, switchMap }                                              from 'rxjs';
 
 export const AuthGuard: CanActivateFn | CanActivateChildFn = (route, state) => {
-  const router: Router = inject(Router);
+    const router: Router = inject(Router);
 
-  // Check the authentication status
-  return inject(AuthService).check().pipe(
-    switchMap((authenticated) => {
-      // If the user is not authenticated...
-      if (!authenticated) {
-        // Redirect to the sign-in page with a redirectUrl param
-        const redirectURL = state.url === '/sign-out' ? '' : `redirectURL=${ state.url }`;
-        const urlTree = router.parseUrl(`sign-in?${ redirectURL }`);
+    // Check the authentication status
+    return inject(AuthService).check().pipe(
+        switchMap((authenticated) => {
+            // If the user is not authenticated...
+            if (!authenticated) {
+                // Redirect to the sign-in page with a redirectUrl param
+                const redirectURL = state.url === '/sign-out' ? '' : `redirectURL=${ state.url }`;
+                const urlTree = router.parseUrl(`sign-in?${ redirectURL }`);
 
-        return of(new RedirectCommand(urlTree));
-      }
+                return of(new RedirectCommand(urlTree));
+            }
 
-      // Allow the access
-      return of(true);
-    }),
-  );
+            // Allow the access
+            return of(true);
+        }),
+    );
 };

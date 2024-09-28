@@ -1,98 +1,98 @@
 <div class="flex flex-col min-w-0 w-full">
-  <page-header
-    *transloco="let t; read: 'files-library'"
-    [subtitle]="t('title')"
-  ></page-header>
-  <!-- Content -->
-  <div class="flex flex-1 flex-col items-center justify-center w-full max-w-xs sm:max-w-7xl mx-auto pt-10 pb-2 gap-y-4 sm:px-4">
-    <!-- Title -->
-    <h2 *transloco="let t; read: 'files-library'" class="flex-0 font-bold text-secondary text-xl self-start">{{ t('list.title') }}</h2>
+    <page-header
+        *transloco="let t; read: 'files-library'"
+        [subtitle]="t('title')"
+    ></page-header>
+    <!-- Content -->
+    <div class="flex flex-1 flex-col items-center justify-center w-full max-w-xs sm:max-w-7xl mx-auto pt-10 pb-2 gap-y-4 sm:px-4">
+        <!-- Title -->
+        <h2 *transloco="let t; read: 'files-library'" class="flex-0 font-bold text-secondary text-xl self-start">{{ t('list.title') }}</h2>
 
-    <!-- Main actions -->
-    <div *transloco="let t; read: 'files-library'" class="flex items-center w-full">
-      <!-- Search -->
-      <div class="flex-auto">
-        <mat-form-field
-          class="fuse-mat-dense fuse-mat-rounded w-full min-w-50"
-          subscriptSizing="dynamic">
-          <mat-icon
-            [svgIcon]="'heroicons_solid:magnifying-glass'"
-            class="icon-size-5"
-            matPrefix></mat-icon>
-          <input
-            [autocomplete]="'off'"
-            [formControl]="searchInputControl"
-            [placeholder]="t('list.search-placeholder')"
-            matInput>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="flex-1 relative h-full w-full min-h-128">
-      <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
-        <mat-drawer-container
-          (backdropClick)="onBackdropClicked()"
-          class="flex-auto h-full bg-card dark:bg-transparent w-full">
-
-          <!-- Drawer -->
-          <mat-drawer
-            #matDrawer
-            [disableClose]="true"
-            [mode]="drawerMode"
-            [opened]="false"
-            [position]="'end'"
-            class="w-full md:w-160 dark:bg-gray-900">
-            <router-outlet></router-outlet>
-          </mat-drawer>
-
-          <mat-drawer-content *transloco="let t; read: 'files-library'" class="flex flex-col">
-            <!-- Main -->
+        <!-- Main actions -->
+        <div *transloco="let t; read: 'files-library'" class="flex items-center w-full">
+            <!-- Search -->
             <div class="flex-auto">
-              <!-- Contacts list -->
-              <div class="relative mt-4">
-                <ng-container *ngIf="files$ | async as files">
-                  <ng-container *ngIf="files.length; else noFiles">
-                    <ng-container *ngFor="let file of files; let i = index; trackBy: trackByFn">
-                      <!-- Group -->
-                      <ng-container *ngIf="i === 0 || file.mimetype !== files[i - 1].mimetype">
-                        <div class="first-of-type:rounded-t-2xl z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-b font-medium text-secondary bg-gray-50 dark:bg-gray-900">
-                          {{ 'Archivos' }} .{{ file.mimetype.toUpperCase() }}
-                        </div>
-                      </ng-container>
-                      <!-- Contact -->
-                      <a
-                        (click)="selectFile(file)"
-                        [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedFile || selectedFile.id !== file.id,
-                                'bg-primary-50 dark:bg-hover': selectedFile && selectedFile.id === file.id}"
-                        class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b">
-                        <div class="flex flex-0 items-center justify-center h-10 overflow-hidden">
-                          <ng-container *ngIf="file.fileUrl">
-                            <img
-                              [src]="'images/file-types/' + file.mimetype.toLowerCase() + '.svg'"
-                              [imgFallback]="'images/file-types/unknown.svg'"
-                              [imgFallbackDefault]="'images/mimetypes/txt.svg'"
-                              alt="Contact avatar"
-                              class="object-cover w-full h-full"/>
-                          </ng-container>
-                        </div>
-                        <div class="min-w-0 ml-4">
-                          <div class="font-medium leading-5 truncate">{{ file.fileName }}</div>
-                          <div class="leading-5 truncate text-secondary">{{ file.size }}</div>
-                        </div>
-                      </a>
-                    </ng-container>
-                  </ng-container>
-                </ng-container>
-
-                <!-- No contacts -->
-                <ng-template #noFiles>
-                  <div [innerText]="t('list.no-content')" class="p-8 sm:p-16 text-lg italic font-medium tracking-tight text-center text-secondary"></div>
-                </ng-template>
-              </div>
+                <mat-form-field
+                    class="fuse-mat-dense fuse-mat-rounded w-full min-w-50"
+                    subscriptSizing="dynamic">
+                    <mat-icon
+                        [svgIcon]="'heroicons_solid:magnifying-glass'"
+                        class="icon-size-5"
+                        matPrefix></mat-icon>
+                    <input
+                        [autocomplete]="'off'"
+                        [formControl]="searchInputControl"
+                        [placeholder]="t('list.search-placeholder')"
+                        matInput>
+                </mat-form-field>
             </div>
-          </mat-drawer-content>
-        </mat-drawer-container>
-      </div>
+        </div>
+
+        <div class="flex-1 relative h-full w-full min-h-128">
+            <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+                <mat-drawer-container
+                    (backdropClick)="onBackdropClicked()"
+                    class="flex-auto h-full bg-card dark:bg-transparent w-full">
+
+                    <!-- Drawer -->
+                    <mat-drawer
+                        #matDrawer
+                        [disableClose]="true"
+                        [mode]="drawerMode"
+                        [opened]="false"
+                        [position]="'end'"
+                        class="w-full md:w-160 dark:bg-gray-900">
+                        <router-outlet></router-outlet>
+                    </mat-drawer>
+
+                    <mat-drawer-content *transloco="let t; read: 'files-library'" class="flex flex-col">
+                        <!-- Main -->
+                        <div class="flex-auto">
+                            <!-- Contacts list -->
+                            <div class="relative mt-4">
+                                <ng-container *ngIf="files$ | async as files">
+                                    <ng-container *ngIf="files.length; else noFiles">
+                                        <ng-container *ngFor="let file of files; let i = index; trackBy: trackByFn">
+                                            <!-- Group -->
+                                            <ng-container *ngIf="i === 0 || file.mimetype !== files[i - 1].mimetype">
+                                                <div class="first-of-type:rounded-t-2xl z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-b font-medium text-secondary bg-gray-50 dark:bg-gray-900">
+                                                    {{ 'Archivos' }} .{{ file.mimetype.toUpperCase() }}
+                                                </div>
+                                            </ng-container>
+                                            <!-- Contact -->
+                                            <a
+                                                (click)="selectFile(file)"
+                                                [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedFile || selectedFile.id !== file.id,
+                                'bg-primary-50 dark:bg-hover': selectedFile && selectedFile.id === file.id}"
+                                                class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b">
+                                                <div class="flex flex-0 items-center justify-center h-10 overflow-hidden">
+                                                    <ng-container *ngIf="file.fileUrl">
+                                                        <img
+                                                            [imgFallbackDefault]="'images/mimetypes/txt.svg'"
+                                                            [imgFallback]="'images/file-types/unknown.svg'"
+                                                            [src]="'images/file-types/' + file.mimetype.toLowerCase() + '.svg'"
+                                                            alt="Contact avatar"
+                                                            class="object-cover w-full h-full"/>
+                                                    </ng-container>
+                                                </div>
+                                                <div class="min-w-0 ml-4">
+                                                    <div class="font-medium leading-5 truncate">{{ file.fileName }}</div>
+                                                    <div class="leading-5 truncate text-secondary">{{ file.size }}</div>
+                                                </div>
+                                            </a>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+
+                                <!-- No contacts -->
+                                <ng-template #noFiles>
+                                    <div [innerText]="t('list.no-content')" class="p-8 sm:p-16 text-lg italic font-medium tracking-tight text-center text-secondary"></div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </mat-drawer-content>
+                </mat-drawer-container>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

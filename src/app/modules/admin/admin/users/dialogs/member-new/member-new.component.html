@@ -1,77 +1,77 @@
 <div *transloco="let t; read: 'admin.users.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
-  <!-- Header -->
-  <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
-    <div [innerText]="t('title')" class="text-lg font-medium"></div>
-    <button (click)="_matDialogRef.close()" mat-icon-button>
-      <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
-    </button>
-  </div>
+    <!-- Header -->
+    <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+        <div [innerText]="t('title')" class="text-lg font-medium"></div>
+        <button (click)="_matDialogRef.close()" mat-icon-button>
+            <mat-icon [svgIcon]="'heroicons_outline:x-mark'" class="text-current"></mat-icon>
+        </button>
+    </div>
 
-  <!-- Content -->
-  <form [formGroup]="memberForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
-    <!-- Email -->
-    <mat-form-field>
-      <mat-label [innerText]="t('email')"></mat-label>
-      <input formControlName="email" matInput type="email"/>
-    </mat-form-field>
+    <!-- Content -->
+    <form [formGroup]="memberForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full">
+        <!-- Email -->
+        <mat-form-field>
+            <mat-label [innerText]="t('email')"></mat-label>
+            <input formControlName="email" matInput type="email"/>
+        </mat-form-field>
 
-    <!-- Position -->
-    <mat-form-field>
-      <mat-label [innerText]="t('position')"></mat-label>
-      <input formControlName="position" matInput type="text"/>
-    </mat-form-field>
+        <!-- Position -->
+        <mat-form-field>
+            <mat-label [innerText]="t('position')"></mat-label>
+            <input formControlName="position" matInput type="text"/>
+        </mat-form-field>
 
-    <!-- Description -->
-    <mat-form-field>
-      <mat-label [innerText]="t('invitationMessage')">Description</mat-label>
-      <textarea cdkTextareaAutosize formControlName="message" matInput></textarea>
-    </mat-form-field>
+        <!-- Description -->
+        <mat-form-field>
+            <mat-label [innerText]="t('invitationMessage')">Description</mat-label>
+            <textarea cdkTextareaAutosize formControlName="message" matInput></textarea>
+        </mat-form-field>
 
-    <mat-form-field [subscriptSizing]="'dynamic'" class="">
-      <mat-select
-        #roleSelect="matSelect"
-        [panelClass]="'w-80 min-w-72 max-w-72 h-auto max-h-none'"
-        disableOptionCentering
-        formControlName="role"
-      >
-        <mat-select-trigger class="text-md">
-          <span>Role:</span>
-          <span class="ml-1 font-medium">{{ roleSelect.value | titlecase }}</span>
-        </mat-select-trigger>
-        @for (role of roles; track role) {
-          <mat-option class="h-auto py-4 leading-none" [value]="role.value">
-            <div class="font-medium">
-              {{ role.label }}
-            </div>
-            <div class="text-secondary mt-1.5 whitespace-normal text-sm leading-normal">
-              {{ role.description }}
-            </div>
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </form>
+        <mat-form-field [subscriptSizing]="'dynamic'" class="">
+            <mat-select
+                #roleSelect="matSelect"
+                [panelClass]="'w-80 min-w-72 max-w-72 h-auto max-h-none'"
+                disableOptionCentering
+                formControlName="role"
+            >
+                <mat-select-trigger class="text-md">
+                    <span>Role:</span>
+                    <span class="ml-1 font-medium">{{ roleSelect.value | titlecase }}</span>
+                </mat-select-trigger>
+                @for (role of roles; track role) {
+                    <mat-option class="h-auto py-4 leading-none" [value]="role.value">
+                        <div class="font-medium">
+                            {{ role.label }}
+                        </div>
+                        <div class="text-secondary mt-1.5 whitespace-normal text-sm leading-normal">
+                            {{ role.description }}
+                        </div>
+                    </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </form>
 
-  <!-- Actions -->
-  <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
-    <!-- Discard -->
-    <button
-      (click)="_matDialogRef.close()"
-      class="w-full md:w-30 "
-      mat-stroked-button
-    >
-      Discard
-    </button>
-    <!-- Save as draft -->
-    <button
-      (click)="save()"
-      [disabled]="memberForm.disabled"
-      class="w-full md:w-30"
-      color="primary"
-      mat-flat-button
-    >
-      <span *ngIf="!memberForm.disabled">{{ t('send') }}</span>
-      <mat-progress-spinner *ngIf="memberForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-    </button>
-  </div>
+    <!-- Actions -->
+    <div class="mt-4 pb-6 sm:pb-8 flex flex-col justify-between sm:mt-6 sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
+        <!-- Discard -->
+        <button
+            (click)="_matDialogRef.close()"
+            class="w-full md:w-30 "
+            mat-stroked-button
+        >
+            Discard
+        </button>
+        <!-- Save as draft -->
+        <button
+            (click)="save()"
+            [disabled]="memberForm.disabled"
+            class="w-full md:w-30"
+            color="primary"
+            mat-flat-button
+        >
+            <span *ngIf="!memberForm.disabled">{{ t('send') }}</span>
+            <mat-progress-spinner *ngIf="memberForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+        </button>
+    </div>
 </div>

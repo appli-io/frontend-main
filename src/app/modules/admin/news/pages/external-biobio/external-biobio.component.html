@@ -1,33 +1,33 @@
 <div *transloco="let t; read: 'news.bio-bio'" class="flex flex-col min-w-0 w-full">
-  <!-- Header -->
-  <news-list-header
-    [description]="t('description')"
-    [subtitle]="t('subtitle')"
-    [title]="t('title')"
-  ></news-list-header>
+    <!-- Header -->
+    <news-list-header
+        [description]="t('description')"
+        [subtitle]="t('subtitle')"
+        [title]="t('title')"
+    ></news-list-header>
 
-  @defer (prefetch on immediate) {
-    <!-- Main -->
-    <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
-      <ng-container *ngIf="newsList; else noContent">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
-          @for (single_news of newsList; track single_news.id) {
-            <news-card [news]="single_news" [index]="$index" [useRouter]="false" [actionText]="t('read-more')" [externalLogo]="'radio_bio_bio'"></news-card>
-          }
-        </div>
-      </ng-container>
+    @defer (prefetch on immediate) {
+        <!-- Main -->
+        <div class="flex flex-col items-center justify-center w-full max-w-xs sm:max-w-5xl mx-auto py-10 gap-y-4 sm:px-4">
+            <ng-container *ngIf="newsList; else noContent">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8 mt-8 sm:mt-10">
+                    @for (single_news of newsList; track single_news.id) {
+                        <news-card [news]="single_news" [index]="$index" [useRouter]="false" [actionText]="t('read-more')" [externalLogo]="'radio_bio_bio'"></news-card>
+                    }
+                </div>
+            </ng-container>
 
-      <!-- No news -->
-      <ng-template #noContent>
-        <div class="flex flex-auto flex-col items-center justify-center">
-          <mat-icon
-            [svgIcon]="'mat_outline:search_off'"
-            class="icon-size-24"></mat-icon>
-          <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+            <!-- No news -->
+            <ng-template #noContent>
+                <div class="flex flex-auto flex-col items-center justify-center">
+                    <mat-icon
+                        [svgIcon]="'mat_outline:search_off'"
+                        class="icon-size-24"></mat-icon>
+                    <div class="mt-6 text-2xl font-semibold tracking-tight text-secondary">{{ t('no-content') }}</div>
+                </div>
+            </ng-template>
         </div>
-      </ng-template>
-    </div>
-  } @placeholder {
-    Loading...
-  }
+    } @placeholder {
+        Loading...
+    }
 </div>

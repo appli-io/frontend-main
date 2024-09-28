@@ -4,9 +4,9 @@ import { inject }                                                 from '@angular
 import { AlbumsService } from '../albums.service';
 
 export const albumResolver: ResolveFn<any> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot,
-  albumService: AlbumsService = inject(AlbumsService)
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+    albumService: AlbumsService = inject(AlbumsService)
 ) => {
-  return albumService.getAlbum(route.params.id);
+    return albumService.getAlbum(route.params.id);
 };

@@ -25,85 +25,85 @@ import { Page }                    from '@core/interfaces/page';
 import { MatDivider }              from '@angular/material/divider';
 
 @Component({
-  selector  : 'app-users',
-  standalone: true,
-  imports   : [
-    PageHeaderComponent,
-    TranslocoDirective,
-    MatFormFieldModule,
-    MatIcon,
-    MatInput,
-    MatIconButton,
-    MatSelect,
-    MatSelectTrigger,
-    MatOption,
-    TitleCasePipe,
-    MatIconAnchor,
-    MatTooltip,
-    ReactiveFormsModule,
-    AsyncPipe,
-    MatDivider,
-    MatHint
-  ],
-  templateUrl: './users.component.html'
+    selector   : 'app-users',
+    standalone : true,
+    imports    : [
+        PageHeaderComponent,
+        TranslocoDirective,
+        MatFormFieldModule,
+        MatIcon,
+        MatInput,
+        MatIconButton,
+        MatSelect,
+        MatSelectTrigger,
+        MatOption,
+        TitleCasePipe,
+        MatIconAnchor,
+        MatTooltip,
+        ReactiveFormsModule,
+        AsyncPipe,
+        MatDivider,
+        MatHint
+    ],
+    templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
-  roles: any[];
-  public searchControl = new FormControl('');
-  public members$ = new BehaviorSubject<Page<CompanyUser>>(null);
+    roles: any[];
+    public searchControl = new FormControl('');
+    public members$ = new BehaviorSubject<Page<CompanyUser>>(null);
 
-  protected readonly trackByFn = trackByFn;
+    protected readonly trackByFn = trackByFn;
 
-  constructor(
-    private readonly _fuseConfirmationService: FuseConfirmationService,
-    private readonly _matDialog: MatDialog,
-    private readonly _usersService: UsersService
-  ) {
-    this._subscribeToSearchControl();
-    this._usersService.membersPage$.pipe(takeUntilDestroyed()).subscribe((members) => {
-      this.members$.next(members);
-    });
-  }
+    constructor(
+        private readonly _fuseConfirmationService: FuseConfirmationService,
+        private readonly _matDialog: MatDialog,
+        private readonly _usersService: UsersService
+    ) {
+        this._subscribeToSearchControl();
+        this._usersService.membersPage$.pipe(takeUntilDestroyed()).subscribe((members) => {
+            this.members$.next(members);
+        });
+    }
 
-  ngOnInit(): void {
-    this.roles = rolesList;
-  }
+    ngOnInit(): void {
+        this.roles = rolesList;
+    }
 
-  deleteMember(id): void {
-    const confirmation = this._fuseConfirmationService.open({
-      title  : 'Remove member',
-      message: 'Are you sure you want to remove this member from the company? This action cannot be undone.',
-      actions: {
-        confirm: {label: 'Remove'},
-      },
-    });
+    deleteMember(id): void {
+        const confirmation = this._fuseConfirmationService.open({
+            title  : 'Remove member',
+            message: 'Are you sure you want to remove this member from the company? This action cannot be undone.',
+            actions: {
+                confirm: {label: 'Remove'},
+            },
+        });
 
-    confirmation.afterClosed().subscribe((result) => {
-      if (result === 'confirmed') {
-        console.log('Delete member', id);
-        // this._scrumboardService.deleteList(id).subscribe();
-      }
-    });
-  }
+        confirmation.afterClosed().subscribe((result) => {
+            if (result === 'confirmed') {
+                console.log('Delete member', id);
+                // this._scrumboardService.deleteList(id).subscribe();
+            }
+        });
+    }
 
-  openNewMemberDialog() {
-    this._matDialog.open(MemberNewComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-    });
-  }
+    openNewMemberDialog() {
+        this._matDialog.open(MemberNewComponent, {
+            panelClass: 'dialog-mobile-fullscreen',
+        });
+    }
 
-  openInvitationsDialog() {
-    this._matDialog.open(GetInvitationsComponent, {
-      panelClass: 'dialog-mobile-fullscreen',
-    });
-  }
+    openInvitationsDialog() {
+        this._matDialog.open(GetInvitationsComponent, {
+            panelClass: 'dialog-mobile-fullscreen',
+        });
+    }
 
-  private _subscribeToSearchControl() {
-    this.searchControl.valueChanges.pipe(
-      takeUntilDestroyed(),
-      debounceTime(1000),
-      distinctUntilChanged(),
-      switchMap((value) => this._usersService.getMembers({query: {name: value}}))
-    ).subscribe();
-  }
+    private _subscribeToSearchControl() {
+        this.searchControl.valueChanges.pipe(
+            takeUntilDestroyed(),
+            debounceTime(1000),
+            distinctUntilChanged(),
+            switchMap((value) => this._usersService.getMembers({query: {name: value}}))
+        ).subscribe();
+    }
 }

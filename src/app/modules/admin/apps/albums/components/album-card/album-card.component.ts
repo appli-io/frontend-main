@@ -7,19 +7,19 @@ import { IAlbum }             from '@modules/admin/apps/albums/interfaces/album.
 import { ImgLoaderDirective } from '@layout/directives/img-loader.directive';
 
 @Component({
-  selector   : 'album-card',
-  standalone : true,
-  imports: [
-    NgIf,
-    MatIcon,
-    MatBadge,
-    DatePipe,
-    ImgLoaderDirective
-  ],
-  templateUrl: './album-card.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector       : 'album-card',
+    standalone     : true,
+    imports        : [
+        NgIf,
+        MatIcon,
+        MatBadge,
+        DatePipe,
+        ImgLoaderDirective
+    ],
+    templateUrl    : './album-card.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumCardComponent {
-  @Input() album: IAlbum;
-  @Input() index: number;
+    @Input() album: IAlbum;
+    @Input() index: number;
 }

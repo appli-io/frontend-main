@@ -21,37 +21,37 @@ import { DeltaToHtmlPipe }                from '@core/pipe/delta-to-html.pipe';
 import { BenefitCategoryService }         from '@modules/admin/admin/benefits/services/benefit-category.service';
 
 @Component({
-  selector   : 'app-category-detail',
-  standalone : true,
-  imports: [
-    TranslocoDirective,
-    RouterLink,
-    TranslocoPipe,
-    MatDivider,
-    MatIcon,
-    MatButton,
-    MatTooltip,
-    BenefitCategoryCardComponent,
-    NgxSkeletonLoaderModule,
-    MatIconAnchor,
-    FuseCardComponent,
-    MatAnchor,
-    AsyncPipe,
-    BenefitCardComponent,
-    MatProgressSpinner,
-    BenefitCategoriesListComponent,
-    DeltaToHtmlPipe
-  ],
-  templateUrl: './category-detail.component.html'
+    selector   : 'app-category-detail',
+    standalone : true,
+    imports    : [
+        TranslocoDirective,
+        RouterLink,
+        TranslocoPipe,
+        MatDivider,
+        MatIcon,
+        MatButton,
+        MatTooltip,
+        BenefitCategoryCardComponent,
+        NgxSkeletonLoaderModule,
+        MatIconAnchor,
+        FuseCardComponent,
+        MatAnchor,
+        AsyncPipe,
+        BenefitCardComponent,
+        MatProgressSpinner,
+        BenefitCategoriesListComponent,
+        DeltaToHtmlPipe
+    ],
+    templateUrl: './category-detail.component.html'
 })
 export class CategoryDetailComponent implements OnDestroy {
-  @Input('categoryId') categoryId: string;
-  private readonly _benefitCategoryService: BenefitCategoryService = inject(BenefitCategoryService);
-  public category$: Observable<BenefitCategory> = this._benefitCategoryService.selectedCategory$;
-  public benefits$: Observable<Benefit[]> = this._benefitCategoryService.selectedCategoryBenefits$;
+    @Input('categoryId') categoryId: string;
+    private readonly _benefitCategoryService: BenefitCategoryService = inject(BenefitCategoryService);
+    public category$: Observable<BenefitCategory> = this._benefitCategoryService.selectedCategory$;
+    public benefits$: Observable<Benefit[]> = this._benefitCategoryService.selectedCategoryBenefits$;
 
-  ngOnDestroy() {
-    console.log('ngOnDestroy');
-    this._benefitCategoryService.removeSelectedCategory();
-  }
+    ngOnDestroy() {
+        console.log('ngOnDestroy');
+        this._benefitCategoryService.removeSelectedCategory();
+    }
 }

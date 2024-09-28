@@ -17,6 +17,10 @@ export class UserService {
         return this._httpClient.patch('api/users/me', data);
     }
 
+    public updateContacts(data: any) {
+        return this._httpClient.patch('api/users/contacts', data);
+    }
+
     public updateAvatar(data: FormData) {
         return this._httpClient.patch('api/users/avatar', data);
     }

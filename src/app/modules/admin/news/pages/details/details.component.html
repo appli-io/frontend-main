@@ -1,152 +1,152 @@
 <div *transloco="let t; read: 'news'" class="flex flex-col flex-auto min-w-0 min-h-full">
 
-  <!-- Header -->
-  <page-detail-header
-    [breadcrumbs]="[{ label: 'Noticias', url: '/news' }, { label: news.headline, url: '', last: true }]"
-    [createdBy]="news.createdBy"
-    [date]="news.publishedAt"
-    [portraitImage]="news.portraitImage"
-    [subtitle]="news.abstract"
-    [title]="news.headline"
-  ></page-detail-header>
+    <!-- Header -->
+    <page-detail-header
+        [breadcrumbs]="[{ label: 'Noticias', url: '/news' }, { label: news.headline, url: '', last: true }]"
+        [createdBy]="news.createdBy"
+        [date]="news.publishedAt"
+        [portraitImage]="news.portraitImage"
+        [subtitle]="news.abstract"
+        [title]="news.headline"
+    ></page-detail-header>
 
-  <!-- Main -->
-  <div class="bg-card dark:bg-transparent flex flex-col justify-center w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
-    <lightgallery #lightGallery [settings]="settings">
-    </lightgallery>
+    <!-- Main -->
+    <div class="bg-card dark:bg-transparent flex flex-col justify-center w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
+        <lightgallery #lightGallery [settings]="settings">
+        </lightgallery>
 
-    <swiper-container [config]="config" class="w-full mb-4" fmSwiper>
-      @if (news.portraitImage?.fileUrl) {
-        <swiper-slide>
-          <img
-            (click)="openGallery(0)"
-            [src]="news.portraitImage.fileUrl"
-            alt="Card cover image"
-            class="object-contain max-h-90 max-w-3/4">
-        </swiper-slide>
-      }
-      @for (image of news.images; track image.name) {
-        <swiper-slide class="pb-6 self-center">
-          <img
-            (click)="openGallery(news.portraitImage?.fileUrl ? $index + 1 : $index)"
-            [src]="image.fileUrl"
-            alt="Card cover image"
-            class="object-contain max-h-90 max-w-3/4">
-          <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
-        </swiper-slide>
-      }
-    </swiper-container>
-    <!-- Content -->
-    <quill-view [content]="news.body" format="object"></quill-view>
-  </div>
+        <swiper-container [config]="config" class="w-full mb-4" fmSwiper>
+            @if (news.portraitImage?.fileUrl) {
+                <swiper-slide>
+                    <img
+                        (click)="openGallery(0)"
+                        [src]="news.portraitImage.fileUrl"
+                        alt="Card cover image"
+                        class="object-contain max-h-90 max-w-3/4">
+                </swiper-slide>
+            }
+            @for (image of news.images; track image.name) {
+                <swiper-slide class="pb-6 self-center">
+                    <img
+                        (click)="openGallery(news.portraitImage?.fileUrl ? $index + 1 : $index)"
+                        [src]="image.fileUrl"
+                        alt="Card cover image"
+                        class="object-contain max-h-90 max-w-3/4">
+                    <!--              <div class="gradient-overlay default hover:opacity-0 transition-all"></div>-->
+                </swiper-slide>
+            }
+        </swiper-container>
+        <!-- Content -->
+        <quill-view [content]="news.body" format="object"></quill-view>
+    </div>
 
-  <!--    Additional section -->
-  <div class="flex flex-col justify-center w-full h-full sm:max-w-5xl mx-auto py-6 sm:py-8 mt-6">
-    <h4 class="text-2xl font-bold mt-4">{{ t('single-news.published-by') }}:</h4>
-    <fuse-card class="flex items-center w-full p-6 filter-info mt-2 gap-x-4">
-      @if (news.createdBy?.avatar) {
-        <img
-          [src]="news.createdBy?.avatar?.fileUrl"
-          alt="Card cover image"
-          class="w-16 h-16 rounded-full">
-      } @else {
-        <div class="ring-bg-card flex h-16 w-16 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium">
-          {{ news.createdBy?.name.charAt(0) }}
-        </div>
-      }
-      <div class="flex flex-col">
-        <div [innerText]="news.createdBy.name" class="text-2xl font-semibold leading-tight"></div>
-      </div>
-    </fuse-card>
-
-    <!-- Comment section -->
-    <h4 class="text-2xl font-bold mt-4">{{ t('single-news.comments') }}:</h4>
-    <fuse-card class="flex flex-col max-h-192 w-full mt-2">
-      <!-- User comment -->
-      <div *ngIf="(userService.user$ | async) as user" class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
-        <div class="flex items-start">
-          @if (user?.avatar) {
-            <img
-              [src]="user?.avatar?.fileUrl"
-              [title]="user?.name"
-              alt="Card cover image"
-              class="w-12 h-12 rounded-full mr-5">
-          } @else {
-            <div class="ring-bg-card flex h-12 w-12 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium mr-5">
-              {{ user?.name.charAt(0) }}
+    <!--    Additional section -->
+    <div class="flex flex-col justify-center w-full h-full sm:max-w-5xl mx-auto py-6 sm:py-8 mt-6">
+        <h4 class="text-2xl font-bold mt-4">{{ t('single-news.published-by') }}:</h4>
+        <fuse-card class="flex items-center w-full p-6 filter-info mt-2 gap-x-4">
+            @if (news.createdBy?.avatar) {
+                <img
+                    [src]="news.createdBy?.avatar?.fileUrl"
+                    alt="Card cover image"
+                    class="w-16 h-16 rounded-full">
+            } @else {
+                <div class="ring-bg-card flex h-16 w-16 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium">
+                    {{ news.createdBy?.name.charAt(0) }}
+                </div>
+            }
+            <div class="flex flex-col">
+                <div [innerText]="news.createdBy.name" class="text-2xl font-semibold leading-tight"></div>
             </div>
-          }
-          <mat-form-field
-            [subscriptSizing]="'dynamic'"
-            class="w-full">
+        </fuse-card>
+
+        <!-- Comment section -->
+        <h4 class="text-2xl font-bold mt-4">{{ t('single-news.comments') }}:</h4>
+        <fuse-card class="flex flex-col max-h-192 w-full mt-2">
+            <!-- User comment -->
+            <div *ngIf="(userService.user$ | async) as user" class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
+                <div class="flex items-start">
+                    @if (user?.avatar) {
+                        <img
+                            [src]="user?.avatar?.fileUrl"
+                            [title]="user?.name"
+                            alt="Card cover image"
+                            class="w-12 h-12 rounded-full mr-5">
+                    } @else {
+                        <div class="ring-bg-card flex h-12 w-12 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium mr-5">
+                            {{ user?.name.charAt(0) }}
+                        </div>
+                    }
+                    <mat-form-field
+                        [subscriptSizing]="'dynamic'"
+                        class="w-full">
                             <textarea
-                              [placeholder]="t('single-news.write-comment')"
-                              [rows]="3"
-                              cdkTextareaAutosize
-                              class="leading-normal my-2"
-                              matInput></textarea>
-          </mat-form-field>
-        </div>
-        <div class="flex items-center mt-3 ml-auto -mr-3">
-          <button mat-icon-button>
-            <mat-icon
-              [svgIcon]="'heroicons_solid:sparkles'"
-              class="icon-size-5"></mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon
-              [svgIcon]="'heroicons_solid:face-smile'"
-              class="icon-size-5"></mat-icon>
-          </button>
-          <button mat-icon-button>
-            <mat-icon
-              [svgIcon]="'heroicons_solid:photo'"
-              class="icon-size-5"></mat-icon>
-          </button>
-        </div>
-      </div>
-      <hr class="border-b mx-4 sm:mx-8 my-0">
-      <!-- Other comments -->
-      <div class="overflow-y-auto">
-        <div class="relative flex flex-col mx-4 sm:mx-8 my-6">
-          <!-- TODO: Use ngFor or @for to display each message -->
-          <div class="flex items-start">
-            <img
-              alt="Card cover image"
-              class="w-8 h-8 rounded-full mr-4"
-              src="images/avatars/male-05.jpg">
-            <div class="flex flex-col mt-0.5">
+                                [placeholder]="t('single-news.write-comment')"
+                                [rows]="3"
+                                cdkTextareaAutosize
+                                class="leading-normal my-2"
+                                matInput></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="flex items-center mt-3 ml-auto -mr-3">
+                    <button mat-icon-button>
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:sparkles'"
+                            class="icon-size-5"></mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:face-smile'"
+                            class="icon-size-5"></mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:photo'"
+                            class="icon-size-5"></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr class="border-b mx-4 sm:mx-8 my-0">
+            <!-- Other comments -->
+            <div class="overflow-y-auto">
+                <div class="relative flex flex-col mx-4 sm:mx-8 my-6">
+                    <!-- TODO: Use ngFor or @for to display each message -->
+                    <div class="flex items-start">
+                        <img
+                            alt="Card cover image"
+                            class="w-8 h-8 rounded-full mr-4"
+                            src="images/avatars/male-05.jpg">
+                        <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Rutherford Brannan</b> Oh, I’m in.. Let’s arrange a trip for the next weekend if you want!
                                 </span>
-              <div class="flex items-center text-sm text-secondary mt-2">
-                <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
-                <span class="mr-2">&bull;</span>
-                <span>17 min</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex items-start mt-8 ml-12">
-            <img
-              alt="Card cover image"
-              class="w-8 h-8 rounded-full mr-4"
-              src="images/avatars/female-01.jpg">
-            <div class="flex flex-col mt-0.5">
+                            <div class="flex items-center text-sm text-secondary mt-2">
+                                <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                                <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                                <span class="mr-2 cursor-pointer hover:underline">Hide replies</span>
+                                <span class="mr-2">&bull;</span>
+                                <span>17 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-start mt-8 ml-12">
+                        <img
+                            alt="Card cover image"
+                            class="w-8 h-8 rounded-full mr-4"
+                            src="images/avatars/female-01.jpg">
+                        <div class="flex flex-col mt-0.5">
                                 <span>
                                     <b>Caroline Lundu</b> Yes!! Let's talk about it on lunch!
                                 </span>
-              <div class="flex items-center text-sm text-secondary mt-2">
-                <span class="mr-2 cursor-pointer hover:underline">Like</span>
-                <span class="mr-2 cursor-pointer hover:underline">Reply</span>
-                <span class="mr-2">&bull;</span>
-                <span>15 min</span>
-              </div>
+                            <div class="flex items-center text-sm text-secondary mt-2">
+                                <span class="mr-2 cursor-pointer hover:underline">Like</span>
+                                <span class="mr-2 cursor-pointer hover:underline">Reply</span>
+                                <span class="mr-2">&bull;</span>
+                                <span>15 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </fuse-card>
-  </div>
+        </fuse-card>
+    </div>
 </div>

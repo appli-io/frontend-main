@@ -19,43 +19,43 @@ import { AlbumCardComponent }      from '@modules/admin/apps/albums/components/a
 import { AlbumService }            from '@modules/admin/apps/albums/album.service';
 
 @Component({
-  selector   : 'app-albums-list',
-  standalone : true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports        : [ TranslocoDirective, PageHeaderComponent, FuseCardComponent, MatIconButton, MatIcon, MatAnchor, RouterLink, AlbumCardComponent, AsyncPipe, JsonPipe, FuseMasonryComponent, HlmSkeletonComponent ],
-  templateUrl: './list.component.html'
+    selector       : 'app-albums-list',
+    standalone     : true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports        : [ TranslocoDirective, PageHeaderComponent, FuseCardComponent, MatIconButton, MatIcon, MatAnchor, RouterLink, AlbumCardComponent, AsyncPipe, JsonPipe, FuseMasonryComponent, HlmSkeletonComponent ],
+    templateUrl    : './list.component.html'
 })
 export class ListComponent extends SubComponent implements OnInit {
-  albums$: BehaviorSubject<IAlbum[]>;
-  columns: number = 4;
-  protected readonly trackByFn = trackByFn;
+    albums$: BehaviorSubject<IAlbum[]>;
+    columns: number = 4;
+    protected readonly trackByFn = trackByFn;
 
-  constructor(
-    private readonly _cdr: ChangeDetectorRef,
-    private readonly _albumService: AlbumService,
-    private readonly _fuseMediaWatcherService: FuseMediaWatcherService
-  ) {
-    super();
-    this.albums$ = this._albumService.albums$;
-  }
+    constructor(
+        private readonly _cdr: ChangeDetectorRef,
+        private readonly _albumService: AlbumService,
+        private readonly _fuseMediaWatcherService: FuseMediaWatcherService
+    ) {
+        super();
+        this.albums$ = this._albumService.albums$;
+    }
 
-  ngOnInit() {
-    this._fuseMediaWatcherService.onMediaChange$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({matchingAliases}) => {
-        if (matchingAliases.includes('xl')) {
-          this.columns = 3;
-        } else if (matchingAliases.includes('lg')) {
-          this.columns = 3;
-        } else if (matchingAliases.includes('md')) {
-          this.columns = 3;
-        } else if (matchingAliases.includes('sm')) {
-          this.columns = 2;
-        } else {
-          this.columns = 1;
-        }
+    ngOnInit() {
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({matchingAliases}) => {
+                if (matchingAliases.includes('xl')) {
+                    this.columns = 3;
+                } else if (matchingAliases.includes('lg')) {
+                    this.columns = 3;
+                } else if (matchingAliases.includes('md')) {
+                    this.columns = 3;
+                } else if (matchingAliases.includes('sm')) {
+                    this.columns = 2;
+                } else {
+                    this.columns = 1;
+                }
 
-        this._cdr.detectChanges();
-      });
-  }
+                this._cdr.detectChanges();
+            });
+    }
 }

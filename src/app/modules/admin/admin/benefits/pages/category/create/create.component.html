@@ -1,148 +1,148 @@
 <div *transloco="let t; read: 'admin.benefits.category.create'" class="flex flex-col min-w-0 w-full">
-  <page-detail-header
-    [breadcrumbs]="[ { label: ('admin.benefits.title' | transloco), url: '/admin/benefits' }, { label: ('admin.benefits.create.title' | transloco), url: undefined } ]"
-    [subtitle]="t('description')"
-    [title]="t('title')"
-    class="shadow"
-  ></page-detail-header>
-  <!-- Content -->
-  <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
-    <div class="flex-1 flex flex-col sm:flex-row">
-      <!-- Form -->
-      <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
-        <form [formGroup]="form" class="w-full">
-          <div class="flex flex-col w-full space-y-4">
-            <div>
-              <h2 [innerHtml]="t('field-groups.information')" class="text-lg font-medium"></h2>
-              <span [innerHtml]="t('field-groups.information-description')" class="text-hint"></span>
-            </div>
+    <page-detail-header
+        [breadcrumbs]="[ { label: ('admin.benefits.title' | transloco), url: '/admin/benefits' }, { label: ('admin.benefits.create.title' | transloco), url: undefined } ]"
+        [subtitle]="t('description')"
+        [title]="t('title')"
+        class="shadow"
+    ></page-detail-header>
+    <!-- Content -->
+    <div class="flex-auto flex flex-col w-full max-w-xs sm:max-w-5xl mx-auto py-6 gap-y-4 sm:px-4">
+        <div class="flex-1 flex flex-col sm:flex-row">
+            <!-- Form -->
+            <div class="flex-auto md:flex flex-col md:items-center md:justify-start w-full sm:w-auto md:h-full md:w-1/2 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none md:pr-4">
+                <form [formGroup]="form" class="w-full">
+                    <div class="flex flex-col w-full space-y-4">
+                        <div>
+                            <h2 [innerHtml]="t('field-groups.information')" class="text-lg font-medium"></h2>
+                            <span [innerHtml]="t('field-groups.information-description')" class="text-hint"></span>
+                        </div>
 
-            <!-- Name -->
-            <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">
-              <mat-label [innerText]="t('fields.name')"></mat-label>
-              <input [placeholder]="t('fields.name-placeholder')" formControlName="name" matInput/>
-              @if (form.get('name').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </mat-form-field>
+                        <!-- Name -->
+                        <mat-form-field class="w-full fuse-mat-dense" subscriptSizing="dynamic">
+                            <mat-label [innerText]="t('fields.name')"></mat-label>
+                            <input [placeholder]="t('fields.name-placeholder')" formControlName="name" matInput/>
+                            @if (form.get('name').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </mat-form-field>
 
-            <!-- Description -->
-            <div class="flex flex-col">
-              <mat-label class="font-medium text-default dark:text-white">{{ t('fields.description') }}*</mat-label>
-              @defer {
-                <quill-editor
-                  class="mt-2"
-                  [placeholder]="t('fields.description-placeholder')"
-                  [modules]="quillModules"
-                  format="json"
-                  bounds="self"
-                  formControlName="description"
-                ></quill-editor>
-                @if (form.get('description').hasError('required') && form.get('description').touched) {
-                  <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
-                }
-              } @placeholder {
-                <span>cargando editor...</span>
-              }
-            </div>
+                        <!-- Description -->
+                        <div class="flex flex-col">
+                            <mat-label class="font-medium text-default dark:text-white">{{ t('fields.description') }}*</mat-label>
+                            @defer {
+                                <quill-editor
+                                    class="mt-2"
+                                    [placeholder]="t('fields.description-placeholder')"
+                                    [modules]="quillModules"
+                                    format="json"
+                                    bounds="self"
+                                    formControlName="description"
+                                ></quill-editor>
+                                @if (form.get('description').hasError('required') && form.get('description').touched) {
+                                    <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
+                                }
+                            } @placeholder {
+                                <span>cargando editor...</span>
+                            }
+                        </div>
 
-            <div class="w-full flex flex-col">
-              <label class="mat-label" for="file-icon">{{ t('fields.icon') }}*</label>
-              <span [innerText]="t('fields.icon-hint')" class="mat-hint"></span>
-              <input
-                (change)="onFileChange($event, 'icon')"
-                accept=".jpeg,.jpg,.png"
-                class="file-input"
-                id="file-icon"
-                type="file"
-              />
-              <mat-hint class="mat-hint">JPEG / JPG / PNG.</mat-hint>
-            </div>
+                        <div class="w-full flex flex-col">
+                            <label class="mat-label" for="file-icon">{{ t('fields.icon') }}*</label>
+                            <span [innerText]="t('fields.icon-hint')" class="mat-hint"></span>
+                            <input
+                                (change)="onFileChange($event, 'icon')"
+                                accept=".jpeg,.jpg,.png"
+                                class="file-input"
+                                id="file-icon"
+                                type="file"
+                            />
+                            <mat-hint class="mat-hint">JPEG / JPG / PNG.</mat-hint>
+                        </div>
 
-            <div class="w-full flex flex-col">
-              <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
-              <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
-              <input
-                (change)="onFileChange($event, 'image')"
-                accept=".jpeg,.jpg,.png"
-                class="file-input"
-                id="file-image"
-                type="file"
-              />
-              <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
-            </div>
+                        <div class="w-full flex flex-col">
+                            <label class="mat-label" for="file-image">{{ t('fields.image') }}*</label>
+                            <span [innerText]="t('fields.image-hint')" class="mat-hint"></span>
+                            <input
+                                (change)="onFileChange($event, 'image')"
+                                accept=".jpeg,.jpg,.png"
+                                class="file-input"
+                                id="file-image"
+                                type="file"
+                            />
+                            <mat-hint class="mat-hint">JPEG / JPG / PNG</mat-hint>
+                        </div>
 
-            <div>
-              <benefit-category-selector
-                [formControl]="$any(form.get('parent'))"
-                filterParent="true"
-                formControlName="parent">
-              </benefit-category-selector>
-              <mat-hint class="mat-hint">{{ 'selectors.benefit-category.hint-parent' | transloco }}</mat-hint>
-              @if (form.get('parent').hasError('required')) {
-                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
-              }
-            </div>
-          </div>
+                        <div>
+                            <benefit-category-selector
+                                [formControl]="$any(form.get('parent'))"
+                                filterParent="true"
+                                formControlName="parent">
+                            </benefit-category-selector>
+                            <mat-hint class="mat-hint">{{ 'selectors.benefit-category.hint-parent' | transloco }}</mat-hint>
+                            @if (form.get('parent').hasError('required')) {
+                                <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
+                            }
+                        </div>
+                    </div>
 
 
-          <!-- Actions -->
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
-            <!-- Reset -->
-            <button
-              (click)="form.reset()"
-              type="reset"
-              class="w-full md:w-30 shadow-none"
-              color="default"
-              mat-raised-button
-            >
-              {{ 'actions.reset' | transloco }}
-            </button>
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-end space-y-4 md:space-y-0 md:space-x-4 mt-4">
+                        <!-- Reset -->
+                        <button
+                            (click)="form.reset()"
+                            class="w-full md:w-30 shadow-none"
+                            color="default"
+                            mat-raised-button
+                            type="reset"
+                        >
+                            {{ 'actions.reset' | transloco }}
+                        </button>
 
-            <!-- Save -->
-            <button
-              (click)="submit()"
-              [disabled]="form.invalid || form.pending || form.disabled"
-              class="w-full md:w-30 shadow-none"
-              color="primary"
-              mat-raised-button
-            >
+                        <!-- Save -->
+                        <button
+                            (click)="submit()"
+                            [disabled]="form.invalid || form.pending || form.disabled"
+                            class="w-full md:w-30 shadow-none"
+                            color="primary"
+                            mat-raised-button
+                        >
               <span class="flex items-center">
               {{ 'actions.save' | transloco }}
-                @if (form.disabled) {
-                  <mat-spinner @slideInLeft @slideOutLeft diameter="20" class="ml-2"></mat-spinner>
-                }
+                  @if (form.disabled) {
+                      <mat-spinner @slideInLeft @slideOutLeft diameter="20" class="ml-2"></mat-spinner>
+                  }
               </span>
-            </button>
-          </div>
-        </form>
-      </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-      <!-- Preview -->
-      <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
-        <div class="flex flex-col items-center justify-center w-full h-full">
-          <mat-icon class="text-6xl" svgIcon="heroicons_outline:camera"></mat-icon>
-          <span class="text-lg font-medium mt-4">{{ t('preview.title') }}</span>
-          <span class="text-hint">{{ t('preview.description') }}</span>
+            <!-- Preview -->
+            <div class="relative hidden md:flex flex-auto flex-row items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden dark:border-l">
+                <div class="flex flex-col items-center justify-center w-full h-full">
+                    <mat-icon class="text-6xl" svgIcon="heroicons_outline:camera"></mat-icon>
+                    <span class="text-lg font-medium mt-4">{{ t('preview.title') }}</span>
+                    <span class="text-hint">{{ t('preview.description') }}</span>
 
-          <div class="flex flex-col mt-4">
-            <span class="text-sm font-medium">{{ t('fields.name') }}</span>
-            <span class="text-hint">{{ form.get('name').value || 'Sin definir' }}</span>
+                    <div class="flex flex-col mt-4">
+                        <span class="text-sm font-medium">{{ t('fields.name') }}</span>
+                        <span class="text-hint">{{ form.get('name').value || 'Sin definir' }}</span>
 
-            <span class="text-sm font-medium mt-2">{{ t('fields.description') }}</span>
-            <span class="text-hint">{{ form.get('description').value || 'Sin definir' }}</span>
+                        <span class="text-sm font-medium mt-2">{{ t('fields.description') }}</span>
+                        <span class="text-hint">{{ form.get('description').value || 'Sin definir' }}</span>
 
-            <span class="text-sm font-medium mt-2">{{ t('fields.icon') }}</span>
-            <span class="text-hint">{{ form.get('icon').value || 'Sin definir' }}</span>
+                        <span class="text-sm font-medium mt-2">{{ t('fields.icon') }}</span>
+                        <span class="text-hint">{{ form.get('icon').value || 'Sin definir' }}</span>
 
-            <span class="text-sm font-medium mt-2">{{ t('fields.image') }}</span>
-            <span class="text-hint">{{ form.get('image').value || 'Sin definir' }}</span>
+                        <span class="text-sm font-medium mt-2">{{ t('fields.image') }}</span>
+                        <span class="text-hint">{{ form.get('image').value || 'Sin definir' }}</span>
 
-            <span class="text-sm font-medium mt-2">{{ t('fields.parent') }}</span>
-            <span class="text-hint">{{ form.get('parent').value || 'Sin definir' }}</span>
-          </div>
+                        <span class="text-sm font-medium mt-2">{{ t('fields.parent') }}</span>
+                        <span class="text-hint">{{ form.get('parent').value || 'Sin definir' }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

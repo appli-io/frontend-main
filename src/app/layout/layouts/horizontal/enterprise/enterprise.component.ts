@@ -19,109 +19,109 @@ import { Subject, takeUntil }                                                   
 import { CompanySelectorComponent }                                                                   from '@layout/components/company-selector/company-selector.component';
 
 @Component({
-  selector   : 'enterprise-layout',
-  templateUrl: './enterprise.component.html',
-  encapsulation: ViewEncapsulation.None,
-  standalone : true,
-  imports: [
-    FuseLoadingBarComponent,
-    FuseVerticalNavigationComponent,
-    MatButtonModule,
-    MatIconModule,
-    LanguagesComponent,
-    FuseFullscreenComponent,
-    SearchComponent,
-    ShortcutsComponent,
-    MessagesComponent,
-    NotificationsComponent,
-    UserComponent,
-    FuseHorizontalNavigationComponent,
-    RouterOutlet,
-    QuickChatComponent,
-    CompanySelectorComponent,
-  ],
+    selector     : 'enterprise-layout',
+    templateUrl  : './enterprise.component.html',
+    encapsulation: ViewEncapsulation.None,
+    standalone   : true,
+    imports      : [
+        FuseLoadingBarComponent,
+        FuseVerticalNavigationComponent,
+        MatButtonModule,
+        MatIconModule,
+        LanguagesComponent,
+        FuseFullscreenComponent,
+        SearchComponent,
+        ShortcutsComponent,
+        MessagesComponent,
+        NotificationsComponent,
+        UserComponent,
+        FuseHorizontalNavigationComponent,
+        RouterOutlet,
+        QuickChatComponent,
+        CompanySelectorComponent,
+    ],
 })
 export class EnterpriseLayoutComponent implements OnInit, OnDestroy {
-  isScreenSmall: boolean;
-  navigation: Navigation;
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+    isScreenSmall: boolean;
+    navigation: Navigation;
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  /**
-   * Constructor
-   */
-  constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router,
-    private _navigationService: NavigationService,
-    private _fuseMediaWatcherService: FuseMediaWatcherService,
-    private _fuseNavigationService: FuseNavigationService
-  ) {}
+    /**
+     * Constructor
+     */
+    constructor(
+        private _activatedRoute: ActivatedRoute,
+        private _router: Router,
+        private _navigationService: NavigationService,
+        private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _fuseNavigationService: FuseNavigationService
+    ) {}
 
-  /**
-   * Getter for current year
-   */
-  get currentYear(): number {
-    return new Date().getFullYear();
-  }
-
-  /**
-   * On init
-   */
-  ngOnInit(): void {
-    // Subscribe to navigation data
-    this._navigationService.navigation$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((navigation: Navigation) => {
-        this.navigation = navigation;
-      });
-
-    // Subscribe to media changes
-    this._fuseMediaWatcherService.onMediaChange$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({matchingAliases}) => {
-        // Check if the screen is small
-        this.isScreenSmall = !matchingAliases.includes('md');
-      });
-  }
-
-  /**
-   * On destroy
-   */
-  ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  @HostListener('window:scroll', [ '$event' ])
-  onWindowScroll(e: Event): void {
-    // Get the scroll position
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-    // Toggle the class based on the scroll position
-    if (scrollPosition > 100) {
-      document.body.classList.add('scroll-top');
-      document.body.classList.add('group/body');
-    } else {
-      document.body.classList.remove('scroll-top');
+    /**
+     * Getter for current year
+     */
+    get currentYear(): number {
+        return new Date().getFullYear();
     }
-  }
 
-  /**
-   * Toggle navigation
-   *
-   * @param name
-   */
-  toggleNavigation(name: string): void {
-    // Get the navigation
-    const navigation =
-      this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
-        name
-      );
+    /**
+     * On init
+     */
+    ngOnInit(): void {
+        // Subscribe to navigation data
+        this._navigationService.navigation$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((navigation: Navigation) => {
+                this.navigation = navigation;
+            });
 
-    if (navigation) {
-      // Toggle the opened status
-      navigation.toggle();
+        // Subscribe to media changes
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({matchingAliases}) => {
+                // Check if the screen is small
+                this.isScreenSmall = !matchingAliases.includes('md');
+            });
     }
-  }
+
+    /**
+     * On destroy
+     */
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    @HostListener('window:scroll', [ '$event' ])
+    onWindowScroll(e: Event): void {
+        // Get the scroll position
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+        // Toggle the class based on the scroll position
+        if (scrollPosition > 100) {
+            document.body.classList.add('scroll-top');
+            document.body.classList.add('group/body');
+        } else {
+            document.body.classList.remove('scroll-top');
+        }
+    }
+
+    /**
+     * Toggle navigation
+     *
+     * @param name
+     */
+    toggleNavigation(name: string): void {
+        // Get the navigation
+        const navigation =
+            this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
+                name
+            );
+
+        if (navigation) {
+            // Toggle the opened status
+            navigation.toggle();
+        }
+    }
 }

@@ -1,6 +1,6 @@
 export interface Selector {
-  value: string;
-  label: string;
+    value: string;
+    label: string;
 
-  [key: string]: any;
+    [key: string]: any;
 }

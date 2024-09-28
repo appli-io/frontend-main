@@ -12,87 +12,87 @@ import { IUser }                                                                
 import { TranslocoDirective }                                                                                 from '@ngneat/transloco';
 
 @Component({
-  selector     : 'user',
-  templateUrl  : './user.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs     : 'user',
-  standalone   : true,
-  imports      : [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink, TranslocoDirective ],
+    selector       : 'user',
+    templateUrl    : './user.component.html',
+    encapsulation  : ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    exportAs       : 'user',
+    standalone     : true,
+    imports        : [ MatButtonModule, MatMenuModule, NgIf, MatIconModule, NgClass, MatDividerModule, RouterLink, TranslocoDirective ],
 })
 export class UserComponent implements OnInit, OnDestroy {
-  /* eslint-disable @typescript-eslint/naming-convention */
-  static ngAcceptInputType_showAvatar: BooleanInput;
-  /* eslint-enable @typescript-eslint/naming-convention */
+    /* eslint-disable @typescript-eslint/naming-convention */
+    static ngAcceptInputType_showAvatar: BooleanInput;
+    /* eslint-enable @typescript-eslint/naming-convention */
 
-  @Input() showAvatar: boolean = true;
-  user: IUser;
+    @Input() showAvatar: boolean = true;
+    user: IUser;
 
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  /**
-   * Constructor
-   */
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _router: Router,
-    private _userService: UserService
-  ) {}
+    /**
+     * Constructor
+     */
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+        private _userService: UserService
+    ) {}
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------
+    // @ Lifecycle hooks
+    // -----------------------------------------------------------------------------------------------------
 
-  /**
-   * On init
-   */
-  ngOnInit(): void {
-    // Subscribe to user changes
-    this._userService.user$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((user: IUser) => {
-        this.user = user;
+    /**
+     * On init
+     */
+    ngOnInit(): void {
+        // Subscribe to user changes
+        this._userService.user$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((user: IUser) => {
+                this.user = user;
 
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-      });
-  }
-
-  /**
-   * On destroy
-   */
-  ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next(null);
-    this._unsubscribeAll.complete();
-  }
-
-  // -----------------------------------------------------------------------------------------------------
-  // @ Public methods
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * Update the user status
-   *
-   * @param status
-   */
-  updateUserStatus(status: string): void {
-    // Return if user is not available
-    if (!this.user) {
-      return;
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
-    // Update the user
-    this._userService.update({
-      ...this.user,
-      status,
-    } as IUser).subscribe();
-  }
+    /**
+     * On destroy
+     */
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
 
-  /**
-   * Sign out
-   */
-  signOut(): void {
-    this._router.navigate([ '/sign-out' ]);
-  }
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Update the user status
+     *
+     * @param status
+     */
+    updateUserStatus(status: string): void {
+        // Return if user is not available
+        if (!this.user) {
+            return;
+        }
+
+        // Update the user
+        this._userService.update({
+            ...this.user,
+            status,
+        } as IUser).subscribe();
+    }
+
+    /**
+     * Sign out
+     */
+    signOut(): void {
+        this._router.navigate([ '/sign-out' ]);
+    }
 }
