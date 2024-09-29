@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MatIconModule }                                                                                from '@angular/material/icon';
 import { RouterLink }                                                                                   from '@angular/router';
 import { Board }                                                                                        from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { ScrumboardService }                                                                            from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
+import { ScrumboardService }                                                                            from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 import { DateTime }                                                                                     from 'luxon';
 import { Subject, takeUntil }                                                                           from 'rxjs';
 import { MatTooltip }                                                                                   from '@angular/material/tooltip';

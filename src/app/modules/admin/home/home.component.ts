@@ -58,7 +58,7 @@ export class HomeComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            if (this.highlightedNews) {
+            if (this.highlightedNews?.length > 0) {
                 new Splide('.splide', {
                     type        : 'loop',
                     gap         : '5rem',

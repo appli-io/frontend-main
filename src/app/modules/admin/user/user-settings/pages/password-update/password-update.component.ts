@@ -2,7 +2,7 @@ import { Component }                                                            
 import { PageHeaderComponent }                                                   from '@layout/components/page-header/page-header.component';
 import { TranslocoDirective, TranslocoPipe, TranslocoService }                   from '@ngneat/transloco';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { UserService }                                                           from '@modules/admin/user/user.service';
+import { MemberService }                                                         from '@modules/admin/user/member.service';
 import { FuseValidators }                                                        from '../../../../../../../@fuse/validators';
 import { MatFormFieldModule }                                                    from '@angular/material/form-field';
 import { MatInput }                                                              from '@angular/material/input';
@@ -32,7 +32,7 @@ export class PasswordUpdateComponent {
 
     constructor(
         private readonly _fb: UntypedFormBuilder,
-        private readonly _userService: UserService,
+        private readonly _userService: MemberService,
         private readonly _ts: TranslocoService,
     ) {
         this.form = this._buildForm();

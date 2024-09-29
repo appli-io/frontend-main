@@ -7,7 +7,7 @@ import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/tra
 
 import { PageHeaderComponent }        from '@layout/components/page-header/page-header.component';
 import { trackByFn }                  from '@libs/ui/utils/utils';
-import { UserService }                from '@modules/admin/user/user.service';
+import { MemberService }              from '@modules/admin/user/member.service';
 import { MatInput }                   from '@angular/material/input';
 import { NgClass }                    from '@angular/common';
 import { MatButton, MatIconButton }   from '@angular/material/button';
@@ -61,7 +61,7 @@ export class ContactsComponent extends SubComponent {
         private readonly _fb: UntypedFormBuilder,
         private readonly _ts: TranslocoService,
         private readonly _authService: AuthService,
-        private readonly _userService: UserService,
+        private readonly _userService: MemberService,
         private readonly _contactsService: ContactsService,
     ) {
         super();

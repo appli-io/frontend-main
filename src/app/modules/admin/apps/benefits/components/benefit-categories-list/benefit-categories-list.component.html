@@ -3,7 +3,7 @@
     @for (category of categories$ | async; track category.id) {
         @if (!category.parent) {
             <a
-                (click)="selectedCategory = category"
+                (click)="selectedCategory = {category}"
                 [routerLink]="['/apps/benefits/category', category.id]"
                 [routerLinkActive]="'border-primary text-primary border-2'"
                 class="shrink-0 w-28 h-28 p-2 bg-card shadow rounded-lg flex flex-col justify-around items-center border">

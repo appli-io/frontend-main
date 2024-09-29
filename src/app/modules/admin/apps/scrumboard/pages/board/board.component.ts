@@ -9,12 +9,12 @@ import { MatMenuModule }                                                        
 import { ActivatedRoute, RouterLink, RouterOutlet }                                                                from '@angular/router';
 import { FuseConfirmationService }                                                                                 from '../../../../../../../@fuse/services/confirmation';
 import { Board, Card, List, }                                                                                      from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { ScrumboardService }                                                                                       from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
+import { ScrumboardService }                                                                                       from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 import { DateTime }                                                                                                from 'luxon';
 import { Subject, takeUntil }                                                                                      from 'rxjs';
 import { ScrumboardBoardAddCardComponent }                                                                         from './add-card/add-card.component';
 import { ScrumboardBoardAddListComponent }                                                                         from './add-list/add-list.component';
-import { WebsocketService }                                                                                        from '@modules/admin/apps/scrumboard/pages/services/websocket.service';
+import { WebsocketService }                                                                                        from '@modules/admin/apps/scrumboard/services/websocket.service';
 import { takeUntilDestroyed }                                                                                      from '@angular/core/rxjs-interop';
 
 @Component({

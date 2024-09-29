@@ -17,7 +17,7 @@ import { ActivatedRoute }                                                       
 import { DateTime }                                                              from 'luxon';
 import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { Notyf }                                                                 from 'notyf';
-import { UserService }                                                           from '@modules/admin/user/user.service';
+import { MemberService }                                                         from '@modules/admin/user/member.service';
 import { fuseAnimations }                                                        from '../../../../../../../@fuse/animations';
 import { MatDivider }                                                            from '@angular/material/divider';
 import { CdkTextareaAutosize }                                                   from '@angular/cdk/text-field';
@@ -65,7 +65,7 @@ export class PersonalInformationComponent {
         private readonly _fb: UntypedFormBuilder,
         private readonly _route: ActivatedRoute,
         private readonly _ts: TranslocoService,
-        private readonly _userService: UserService
+        private readonly _userService: MemberService
     ) {
         const user = this._route.snapshot.data.user;
         this._user$.next(user);

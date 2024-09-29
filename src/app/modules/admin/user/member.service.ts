@@ -2,9 +2,10 @@ import { inject, Injectable }               from '@angular/core';
 import { HttpClient }                       from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IUser }                            from '@modules/admin/user/profile/interfaces/user.interface';
+import { Page }                             from '@core/interfaces/page';
 
 @Injectable({providedIn: 'root'})
-export class UserService {
+export class MemberService {
     private readonly _httpClient: HttpClient = inject(HttpClient);
 
     private _user$: BehaviorSubject<IUser> = new BehaviorSubject(undefined);
@@ -28,5 +29,9 @@ export class UserService {
     public getCurrentUser() {
         return this._httpClient.get('api/auth/me')
             .pipe(tap((user: IUser) => this._user$.next(user)));
+    }
+
+    public getCompanyUsers(layout: 'contact' | 'member' | 'compact') {
+        return this._httpClient.get<Page<IUser>>(`api/company/members`, {params: {layout}});
     }
 }

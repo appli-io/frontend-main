@@ -1,6 +1,6 @@
 import { Injectable }  from '@angular/core';
 import { Board, Card } from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { BoardSocket } from '@modules/admin/apps/scrumboard/pages/services/board.socket';
+import { BoardSocket } from '@modules/admin/apps/scrumboard/services/board.socket';
 
 @Injectable({providedIn: 'root'})
 export class WebsocketService {

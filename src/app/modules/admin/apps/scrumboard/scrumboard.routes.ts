@@ -7,7 +7,7 @@ import { ScrumboardCardComponent }   from '@modules/admin/apps/scrumboard/compon
 import { ScrumboardBoardComponent }  from '@modules/admin/apps/scrumboard/pages/board/board.component';
 import { ScrumboardBoardsComponent } from '@modules/admin/apps/scrumboard/pages/boards/boards.component';
 import { Board }                     from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { ScrumboardService }         from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
+import { ScrumboardService }         from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 
 /**
  * Board resolver

@@ -28,10 +28,10 @@ export class BenefitCategoriesListComponent {
             if (this._route.snapshot.queryParams.category) {
                 const selectedCategory = categories.find((category: BenefitCategory) => category.subCategories.some((subCategory: BenefitCategory) => subCategory.id === this._route.snapshot.queryParams.category));
 
-                this.selectedCategory = selectedCategory;
-                this.selectSubCategory(selectedCategory);
-            } else {
-                this.selectedCategory = this._route.snapshot.params.id ? categories.find((category: BenefitCategory) => category.id === this._route.snapshot.params.id) : categories[0];
+                this.selectedCategory = {category: selectedCategory, emitEvent: false};
+                this.selectSubCategory(selectedCategory.subCategories.find((subCategory: BenefitCategory) => subCategory.id === this._route.snapshot.queryParams.subCategory));
+            } else if (this.categoryId) {
+                this.selectedCategory = {category: categories.find((category: BenefitCategory) => category.id === this.categoryId)};
             }
         });
     }
@@ -42,8 +42,8 @@ export class BenefitCategoriesListComponent {
         return this._selectedCategory$.asObservable();
     }
 
-    set selectedCategory(category: BenefitCategory) {
-        if (category.id === this.categoryId) {
+    set selectedCategory({category, emitEvent = true}: { category: BenefitCategory, emitEvent?: boolean }) {
+        if (emitEvent) {
             firstValueFrom(this._benefitCategoryService.findOne(category.id)).then();
             firstValueFrom(this._benefitCategoryService.findOneBenefits(category.id)).then();
         }

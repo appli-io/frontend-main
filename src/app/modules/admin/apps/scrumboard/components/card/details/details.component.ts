@@ -10,7 +10,7 @@ import { MatFormFieldModule }                                                   
 import { MatIconModule }                                                                                                       from '@angular/material/icon';
 import { MatInputModule }                                                                                                      from '@angular/material/input';
 import { Board, Card, Label, }                                                                                                 from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { ScrumboardService }                                                                                                   from '@modules/admin/apps/scrumboard/pages/services/scrumboard.service';
+import { ScrumboardService }                                                                                                   from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 import { assign }                                                                                                              from 'lodash-es';
 import { DateTime }                                                                                                            from 'luxon';
 import { debounceTime, Subject, takeUntil, tap }                                                                               from 'rxjs';

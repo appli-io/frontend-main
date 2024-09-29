@@ -1,60 +1,81 @@
-<div *transloco="let t; read: 'scrumboard.boards.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
-    <!-- Header -->
-    <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
-        <div [innerText]="t('title')" class="text-lg font-medium"></div>
-        <button mat-dialog-close mat-icon-button>
-            <mat-icon
-                [svgIcon]="'heroicons_outline:x-mark'"
-                class="text-current"
-            ></mat-icon>
-        </button>
+<form (ngSubmit)="submit()" [formGroup]="form">
+    <div *transloco="let t; read: 'scrumboard.boards.new'" class="flex max-h-screen max-w-240 flex-col md:min-w-160 h-full">
+        <!-- Header -->
+        <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
+            <div [innerText]="t('title')" class="text-lg font-medium"></div>
+            <button mat-dialog-close mat-icon-button>
+                <mat-icon
+                    [svgIcon]="'heroicons_outline:x-mark'"
+                    class="text-current"
+                ></mat-icon>
+            </button>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full space-y-2">
+            <!-- Name -->
+            <mat-form-field floatLabel="always">
+                <mat-label [innerText]="t('fields.name')"></mat-label>
+                <input [placeholder]="t('fields.name-placeholder')" autocapitalize="sentences" formControlName="title" matInput/>
+                <mat-error *ngIf="form.get('title').hasError('required')" [innerText]="t('fields.name-required')"></mat-error>
+            </mat-form-field>
+
+            <!-- Description -->
+            <mat-form-field floatLabel="always">
+                <mat-label [innerText]="t('fields.description')">Description</mat-label>
+                <textarea autocapitalize="sentences" cdkTextareaAutosize formControlName="description" matInput></textarea>
+                <mat-error *ngIf="form.get('description').hasError('required')" [innerText]="t('fields.description-required')"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="always">
+                <mat-label [innerText]="t('fields.members')"></mat-label>
+                <mat-select #memberSelect="matSelect" [placeholder]="t('fields.members-placeholder')" disableOptionCentering formControlName="members" multiple="true">
+                    <mat-select-trigger>
+                        {{ memberSelect.value ? memberSelect.value[0].name : '' }}
+                        <span *ngIf="memberSelect.value?.length > 1" class="text-hint">
+                        (+{{ memberSelect.value.length - 1 }} {{ 'adjective.more' | transloco }})
+                    </span>
+                    </mat-select-trigger>
+
+                    @for (member of members$ | async; track member.id) {
+                        <mat-option [value]="member">
+                            <div class="flex flex-col py-2">
+                                <span class="font-medium" [innerText]="member.name"></span>
+                                <span class="text-hint" [innerText]="member.position"></span>
+                            </div>
+                        </mat-option>
+                    }
+                </mat-select>
+
+                @if (form.get('members').hasError('required')) {
+                    <mat-error [innerText]="t('fields.members-required')"></mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <!-- Actions -->
+        <div class="pb-6 sm:pb-8 flex flex-col justify-between sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
+            <!-- Discard -->
+            <button
+                (click)="_matDialogRef.close()"
+                [innerText]="t('discard')"
+                class="w-full md:w-30 "
+                mat-stroked-button
+                type="button"
+            ></button>
+
+            <!-- Save -->
+            <button
+                [disabled]="form.invalid || form.disabled"
+                class="md:min-w-30"
+                color="primary"
+                mat-raised-button
+                type="submit"
+            >
+                <span *ngIf="!form.disabled" [innerText]="t('create')"></span>
+                <mat-progress-spinner *ngIf="form.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
     </div>
+</form>
 
-    <!-- Content -->
-    <form [formGroup]="boardForm" class="flex-1 flex flex-col overflow-y-auto p-6 sm:p-8 h-full space-y-2" id="boardForm">
-        <!-- Name -->
-        <mat-form-field>
-            <mat-label [innerText]="t('name')"></mat-label>
-            <input [placeholder]="t('name-placeholder')" autocapitalize="sentences" formControlName="title" matInput/>
-            <mat-error *ngIf="boardForm.get('title').hasError('required')" [innerText]="t('name-required')"></mat-error>
-        </mat-form-field>
-
-        <!-- Description -->
-        <mat-form-field>
-            <mat-label [innerText]="t('description')">Description</mat-label>
-            <textarea autocapitalize="sentences" cdkTextareaAutosize formControlName="description" matInput></textarea>
-            <mat-error *ngIf="boardForm.get('description').hasError('required')" [innerText]="t('description-required')"></mat-error>
-        </mat-form-field>
-
-        <mat-select-autocomplete
-            [formControl]="$any(boardForm).controls['members']"
-            [label]="t('members')"
-            [options]="[{display: 'John Doe', value: 1}, {display: 'Jane Doe', value: 2}, {display: 'John Smith', value: 3}]"
-            class="w-full"
-            multiple="true"
-        ></mat-select-autocomplete>
-    </form>
-
-    <!-- Actions -->
-    <div class="pb-6 sm:pb-8 flex flex-col justify-between sm:flex-row sm:items-center space-y-4 md:space-y-0 px-6 sm:px-8">
-        <!-- Discard -->
-        <button
-            (click)="_matDialogRef.close()"
-            [innerText]="t('discard')"
-            class="w-full md:w-30 "
-            mat-stroked-button
-        ></button>
-
-        <!-- Save -->
-        <button
-            (click)="save()"
-            [disabled]="boardForm.disabled"
-            class="w-full md:w-30"
-            color="primary"
-            mat-flat-button
-        >
-            <span *ngIf="!boardForm.disabled" [innerText]="t('create')"></span>
-            <mat-progress-spinner *ngIf="boardForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
-        </button>
-    </div>
-</div>

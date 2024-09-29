@@ -1,6 +1,6 @@
 import { Routes }          from '@angular/router';
 import { inject }          from '@angular/core';
-import { UserService }     from '@modules/admin/user/user.service';
+import { MemberService }   from '@modules/admin/user/member.service';
 import { ContactsService } from '@modules/admin/apps/contacts/contacts.service';
 
 export default [
@@ -11,7 +11,7 @@ export default [
             {
                 path         : 'personal-information',
                 resolve      : {
-                    user: () => inject(UserService).getCurrentUser()
+                    user: () => inject(MemberService).getCurrentUser()
                 },
                 loadComponent: () => import('./pages/personal-information/personal-information.component').then(m => m.PersonalInformationComponent),
             },
@@ -22,7 +22,7 @@ export default [
             {
                 path         : 'contacts',
                 resolve      : {
-                    user    : () => inject(UserService).getCurrentUser(),
+                    user: () => inject(MemberService).getCurrentUser(),
                     contacts: () => inject(ContactsService).getCountries()
                 },
                 loadComponent: () => import('./pages/contacts/contacts.component').then(m => m.ContactsComponent),

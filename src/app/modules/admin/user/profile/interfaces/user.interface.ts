@@ -23,6 +23,8 @@ export interface IUser {
     contacts?: Contact[];
     bio?: string;
 
+    createdAt: Date;
+
     // Application state (not from the API)
     status?: string;
 }
