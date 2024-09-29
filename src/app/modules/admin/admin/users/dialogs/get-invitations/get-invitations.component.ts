@@ -6,12 +6,12 @@ import { MatButtonModule }                      from '@angular/material/button';
 import { Table }                                from '../../../../../../shared/components/table/table.component';
 import { MatTableModule }                       from '@angular/material/table';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
-import { CompanyUser, InvitationsResponse }     from '../../model/company-user.model';
 import { MatIconModule }                        from '@angular/material/icon';
 
 import { Notyf }                    from 'notyf';
 import { takeUntil }                from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { CompanyUserInvite }        from '@modules/admin/admin/users/model/company-user-invite.model';
 
 @Component({
     selector   : 'app-get-invitations',
@@ -30,7 +30,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
     templateUrl: './get-invitations.component.html'
 })
 export class GetInvitationsComponent implements OnInit, OnDestroy {
-    public invitations$: BehaviorSubject<CompanyUser[]> = new BehaviorSubject<CompanyUser[]>([]);
+    private _invitations$: BehaviorSubject<CompanyUserInvite[]> = new BehaviorSubject<CompanyUserInvite[]>([]);
     public readonly displayedColumns: string[] = [
         'email',
         'joined',
@@ -45,15 +45,20 @@ export class GetInvitationsComponent implements OnInit, OnDestroy {
         public dialogRef: MatDialogRef<GetInvitationsComponent>
     ) { }
 
+    get invitations$() {
+        return this._invitations$.asObservable();
+    }
+
     ngOnInit(): void {
         this._usersService.getInvitations()
             .pipe(takeUntil(this._destroyed$))
-            .subscribe((response: InvitationsResponse) => {
-                const invitations = response.content;
-                this.invitations$.next(invitations);
-                console.log('Invitations:', invitations);
-            }, error => {
-                console.error('Error fetching invitations:', error);
+            .subscribe({
+                next : (value: CompanyUserInvite[]) => {
+                    this._invitations$.next(value);
+                },
+                error: (error: any) => {
+                    console.error('Error fetching invitations:', error);
+                }
             });
     }
 

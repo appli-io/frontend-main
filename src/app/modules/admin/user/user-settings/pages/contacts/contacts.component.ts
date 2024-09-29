@@ -21,7 +21,7 @@ import { IUser }                      from '@modules/admin/user/profile/interfac
 import { takeUntilDestroyed }         from '@angular/core/rxjs-interop';
 import { MatProgressSpinner }         from '@angular/material/progress-spinner';
 import { AuthService }                from '@core/auth/auth.service';
-import { Contact }                    from '@modules/admin/apps/contacts/models/contact.type';
+import { Contact }                    from '@modules/admin/apps/contacts/models/contact.types';
 import { ContactTypeEnum }            from '@modules/admin/apps/contacts/enums/contact-type.enum';
 import { Notyf }                      from 'notyf';
 

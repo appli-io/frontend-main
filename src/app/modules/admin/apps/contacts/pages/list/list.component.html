@@ -81,7 +81,7 @@
                                     <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
                                         <ng-container *ngIf="contact.avatar">
                                             <img
-                                                [src]="contact.avatar"
+                                                [src]="contact.avatar?.fileUrl"
                                                 alt="Contact avatar"
                                                 class="object-cover w-full h-full"/>
                                         </ng-container>

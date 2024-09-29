@@ -60,17 +60,17 @@
             class="w-full md:w-30 "
             mat-stroked-button
         >
-            Discard
+            {{ 'actions.discard' | transloco }}
         </button>
         <!-- Save as draft -->
         <button
             (click)="save()"
             [disabled]="memberForm.disabled"
-            class="w-full md:w-30"
+            class="min-w-30"
             color="primary"
             mat-flat-button
         >
-            <span *ngIf="!memberForm.disabled">{{ t('send') }}</span>
+            <span *ngIf="!memberForm.disabled">{{ 'actions.send' | transloco }}</span>
             <mat-progress-spinner *ngIf="memberForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
         </button>
     </div>

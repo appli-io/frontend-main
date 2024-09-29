@@ -85,14 +85,7 @@ export class AuthSignUpComponent implements OnInit {
         // Do nothing if the form is invalid
         if (this.signUpForm.invalid) {
             this.alert = {type: 'error', message: 'Please fill in all the required fields.'};
-
-            Object.keys(this.signUpForm.controls).forEach((key) => {
-                if (this.signUpForm.get(key).invalid) {
-                    this.signUpForm.get(key).markAsTouched();
-                    this.signUpForm.get(key).updateValueAndValidity();
-                    console.log(this.signUpForm.controls[key].errors);
-                }
-            });
+            this.signUpForm.markAllAsTouched();
         }
 
 
@@ -149,7 +142,8 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     private _loadForm = (token?: string): UntypedFormGroup => this._formBuilder.group({
-        name      : [ 'David Misael Villegas Sandoval', Validators.required ],
+        firstname: [ 'David Misael', Validators.required ],
+        lastname : [ 'Villegas Sandoval', Validators.required ],
         email     : [ 'david.misa002@gmail.com', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
         password  : [ 'G00d1sG00d!', Validators.required ],
         hasToken  : [ !!token ],

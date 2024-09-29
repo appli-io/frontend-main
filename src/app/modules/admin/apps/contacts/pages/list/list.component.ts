@@ -9,7 +9,7 @@ import { MatDrawer, MatSidenavModule }                                          
 import { ActivatedRoute, Router, RouterLink, RouterOutlet }                                                               from '@angular/router';
 import { FuseMediaWatcherService }                                                                                        from '../../../../../../../@fuse/services/media-watcher';
 import { ContactsService }                                                                                                from '../../contacts.service';
-import { Contact, Country }                                                                                               from '../../contacts.types';
+import { Country, UserContact }                                                                                           from '../../contacts.types';
 import { Observable, Subject, switchMap, takeUntil }                                                                      from 'rxjs';
 
 @Component({
@@ -23,13 +23,13 @@ import { Observable, Subject, switchMap, takeUntil }                            
 export class ContactsListComponent implements OnInit, OnDestroy {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
-    contacts$: Observable<Contact[]>;
+    contacts$: Observable<UserContact[]>;
 
     contactsCount: number = 0;
     countries: Country[];
     drawerMode: 'side' | 'over';
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-    selectedContact: Contact;
+    selectedContact: UserContact;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -57,7 +57,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         this.contacts$ = this._contactsService.contacts$;
         this._contactsService.contacts$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contacts: Contact[]) => {
+            .subscribe((contacts: UserContact[]) => {
                 // Update the counts
                 this.contactsCount = contacts.length;
 
@@ -68,7 +68,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
         // Get the contact
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contact: Contact) => {
+            .subscribe((contact: UserContact) => {
                 // Update the selected contact
                 this.selectedContact = contact;
 

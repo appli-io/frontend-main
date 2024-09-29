@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, filter, map, Observable, of, switchMap, take, tap, throwError } from 'rxjs';
 
-import { Contact, Country } from './contacts.types';
+import { Country, UserContact, UserContactMapper } from './contacts.types';
+import { Page }                                    from '@core/interfaces/page';
+import { IUser }                                   from '@modules/admin/user/profile/interfaces/user.interface';
 
 @Injectable({providedIn: 'root'})
 export class ContactsService {
     // Private
-    private _contact: BehaviorSubject<Contact | null> = new BehaviorSubject(null);
-    private _contacts: BehaviorSubject<Contact[] | null> = new BehaviorSubject(null);
+    private _contact: BehaviorSubject<UserContact | null> = new BehaviorSubject(null);
+    private _contacts: BehaviorSubject<UserContact[] | null> = new BehaviorSubject(null);
     private _countries: BehaviorSubject<Country[] | null> = new BehaviorSubject(null);
 
     /**
@@ -25,14 +27,14 @@ export class ContactsService {
     /**
      * Getter for contact
      */
-    get contact$(): Observable<Contact> {
+    get contact$(): Observable<UserContact> {
         return this._contact.asObservable();
     }
 
     /**
      * Getter for contacts
      */
-    get contacts$(): Observable<Contact[]> {
+    get contacts$(): Observable<UserContact[]> {
         return this._contacts.asObservable();
     }
 
@@ -50,10 +52,13 @@ export class ContactsService {
     /**
      * Get contacts
      */
-    getContacts(): Observable<Contact[]> {
-        return this._httpClient.get<Contact[]>('api/apps/contacts/all').pipe(
+    getContacts(): Observable<UserContact[]> {
+        return this._httpClient.get<Page<IUser>>('api/company/members', {params: {layout: 'contact'}}).pipe(
+            map((page) => page.content),
+            map(UserContactMapper.fromUsers),
             tap((contacts) => {
                 this._contacts.next(contacts);
+                console.log(contacts);
             }),
         );
     }
@@ -63,8 +68,8 @@ export class ContactsService {
      *
      * @param query
      */
-    searchContacts(query: string): Observable<Contact[]> {
-        return this._httpClient.get<Contact[]>('api/apps/contacts/search', {
+    searchContacts(query: string): Observable<UserContact[]> {
+        return this._httpClient.get<UserContact[]>('api/apps/contacts/search', {
             params: {query},
         }).pipe(
             tap((contacts) => {
@@ -76,13 +81,14 @@ export class ContactsService {
     /**
      * Get contact by id
      */
-    getContactById(id: string): Observable<Contact> {
+    getContactById(id: string): Observable<UserContact> {
         return this._contacts.pipe(
             take(1),
             map((contacts) => {
                 // Find the contact
                 const contact = contacts.find(item => item.id === id) || null;
 
+                console.log(contact);
                 // Update the contact
                 this._contact.next(contact);
 
@@ -102,10 +108,10 @@ export class ContactsService {
     /**
      * Create contact
      */
-    createContact(): Observable<Contact> {
+    createContact(): Observable<UserContact> {
         return this.contacts$.pipe(
             take(1),
-            switchMap(contacts => this._httpClient.post<Contact>('api/apps/contacts/contact', {}).pipe(
+            switchMap(contacts => this._httpClient.post<UserContact>('api/apps/contacts/contact', {}).pipe(
                 map((newContact) => {
                     // Update the contacts with the new contact
                     this._contacts.next([ newContact, ...contacts ]);
@@ -123,10 +129,10 @@ export class ContactsService {
      * @param id
      * @param contact
      */
-    updateContact(id: string, contact: Contact): Observable<Contact> {
+    updateContact(id: string, contact: UserContact): Observable<UserContact> {
         return this.contacts$.pipe(
             take(1),
-            switchMap(contacts => this._httpClient.patch<Contact>('api/apps/contacts/contact', {
+            switchMap(contacts => this._httpClient.patch<UserContact>('api/apps/contacts/contact', {
                 id,
                 contact,
             }).pipe(
@@ -175,10 +181,10 @@ export class ContactsService {
      * @param id
      * @param avatar
      */
-    uploadAvatar(id: string, avatar: File): Observable<Contact> {
+    uploadAvatar(id: string, avatar: File): Observable<UserContact> {
         return this.contacts$.pipe(
             take(1),
-            switchMap(contacts => this._httpClient.post<Contact>('api/apps/contacts/avatar', {
+            switchMap(contacts => this._httpClient.post<UserContact>('api/apps/contacts/avatar', {
                 id,
                 avatar
             }, {headers: {'Content-Type': avatar.type}})

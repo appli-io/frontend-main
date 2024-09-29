@@ -90,14 +90,26 @@
                 <h2 class="text-lg font-medium text-gray-600">Create your account</h2>
                 <span class="text-sm text-gray-400">Fill in the form with your personal information</span>
 
-                <!-- Name field -->
+                <!-- Firstname field -->
                 <mat-form-field class="w-full" subscriptSizing="dynamic">
                     <mat-label>Full name</mat-label>
                     <input
-                        [formControlName]="'name'"
-                        id="name"
+                        formControlName="firstname"
+                        id="firstname"
                         matInput>
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
+                    <mat-error *ngIf="signUpForm.get('firstname').hasError('required')">
+                        Full name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Lastname field -->
+                <mat-form-field class="w-full" subscriptSizing="dynamic">
+                    <mat-label>Full name</mat-label>
+                    <input
+                        formControlName="lastname"
+                        id="lastname"
+                        matInput>
+                    <mat-error *ngIf="signUpForm.get('lastname').hasError('required')">
                         Full name is required
                     </mat-error>
                 </mat-form-field>

@@ -2,9 +2,9 @@
     <!-- Header -->
     <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
         <!-- Background -->
-        <ng-container *ngIf="contact.background">
+        <ng-container *ngIf="contact.portrait">
             <img
-                [src]="contact.background"
+                [src]="contact.portrait"
                 class="absolute inset-0 object-cover w-full h-full">
         </ng-container>
         <!-- Close button -->
@@ -30,7 +30,8 @@
                 <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
                     <img
                         *ngIf="contact.avatar"
-                        [src]="contact.avatar"
+                        [alt]="contact.name"
+                        [src]="contact.avatar?.fileUrl"
                         class="object-cover w-full h-full">
                     <div
                         *ngIf="!contact.avatar"

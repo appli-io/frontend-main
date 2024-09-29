@@ -7,15 +7,11 @@ export interface CompanyUser {
     username: string;
     email: string;
     role: RoleEnum;
-
+    position: string;
     avatar: IFile;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date | null;
     createdBy: string;
     joined: boolean;
-}
-
-export interface InvitationsResponse {
-    content: CompanyUser[];
 }

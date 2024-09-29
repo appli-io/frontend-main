@@ -2,8 +2,9 @@ import { Injectable }                            from '@angular/core';
 import { HttpClient, HttpParams }                from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Page }                                  from '@core/interfaces/page';
-import { CompanyUser, InvitationsResponse }      from '@modules/admin/admin/users/model/company-user.model';
+import { CompanyUser }                           from '@modules/admin/admin/users/model/company-user.model';
 import { DEFAULT_PAGEABLE }                      from '@core/constants';
+import { CompanyUserInvite }                     from '@modules/admin/admin/users/model/company-user-invite.model';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
@@ -35,12 +36,12 @@ export class UsersService {
         );
     }
 
-    getInvitations(): Observable<InvitationsResponse> {
-        return this._httpClient.get<InvitationsResponse>('/api/company-user/invitations');
+    getInvitations(): Observable<CompanyUserInvite[]> {
+        return this._httpClient.get<CompanyUserInvite[]>('/api/company-user/invitations');
     }
 
-    sendMemberInvitation(invitation: any): Observable<any> {
-        return this._httpClient.post(`api/company-user/invite`, invitation)
-            .pipe(tap((value) => console.log(value.content)));
+    sendMemberInvitation(invitation: any): Observable<CompanyUserInvite> {
+        return this._httpClient.post<CompanyUserInvite>(`api/company-user/invite`, invitation)
+            .pipe(tap((value) => console.log(value)));
     }
 }

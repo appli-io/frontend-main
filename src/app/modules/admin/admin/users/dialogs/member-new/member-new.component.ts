@@ -13,11 +13,11 @@ import { MatInput }                                                             
 import { MatProgressSpinner }                                                                 from '@angular/material/progress-spinner';
 import { MatSelect, MatSelectTrigger }                                                        from '@angular/material/select';
 
-import { DropzoneCdkModule }                    from '@ngx-dropzone/cdk';
-import { DropzoneMaterialModule }               from '@ngx-dropzone/material';
-import { Notyf }                                from 'notyf';
-import { take }                                 from 'rxjs';
-import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
+import { DropzoneCdkModule }                                   from '@ngx-dropzone/cdk';
+import { DropzoneMaterialModule }                              from '@ngx-dropzone/material';
+import { Notyf }                                               from 'notyf';
+import { take }                                                from 'rxjs';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 
 import { rolesList }    from '@core/constants';
 import { UsersService } from '@modules/admin/admin/users/users.service';
@@ -26,7 +26,7 @@ import { UsersService } from '@modules/admin/admin/users/users.service';
 @Component({
     selector   : 'app-member-new',
     standalone : true,
-    imports    : [
+    imports: [
         CdkTextareaAutosize,
         DropzoneCdkModule,
         DropzoneMaterialModule,
@@ -49,7 +49,8 @@ import { UsersService } from '@modules/admin/admin/users/users.service';
         MatSelect,
         MatSelectTrigger,
         TitleCasePipe,
-        JsonPipe
+        JsonPipe,
+        TranslocoPipe
     ],
     templateUrl: './member-new.component.html'
 })

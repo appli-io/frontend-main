@@ -1,6 +1,6 @@
 import { ICompany } from '@core/domain/interfaces/company.interface';
 import { IFile }    from '@modules/admin/news/domain/interfaces/news.interface';
-import { Contact }  from '@modules/admin/apps/contacts/models/contact.type';
+import { Contact }  from '@modules/admin/apps/contacts/models/contact.types';
 
 export interface IUser {
     id?: string;
@@ -15,10 +15,11 @@ export interface IUser {
     city?: string;
     country?: string;
     gender?: 'M' | 'F';
+    position?: string;
     positions?: { position: string, companyId: string };
     assignedCompanies?: Partial<ICompany>[];
     settings?: Record<string, any>;
-    portrait?: string;
+    portrait?: IFile;
     contacts?: Contact[];
     bio?: string;
 

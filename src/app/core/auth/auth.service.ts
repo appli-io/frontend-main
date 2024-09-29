@@ -154,8 +154,6 @@ export class AuthService {
     signUp(user: CreateUserDto): Observable<any> {
         const post = {
             ...user,
-            name     : user.name,
-            email    : user.email,
             password1: user.password,
             password2: user.password,
         };

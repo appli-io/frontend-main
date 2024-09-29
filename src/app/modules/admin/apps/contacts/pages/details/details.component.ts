@@ -9,7 +9,7 @@ import { RouterLink }                                                           
 import { Subject, takeUntil } from 'rxjs';
 
 import { FuseFindByKeyPipe }     from '@fuse/pipes/find-by-key/find-by-key.pipe';
-import { Contact, Country }      from '@modules/admin/apps/contacts/contacts.types';
+import { Country, UserContact }  from '@modules/admin/apps/contacts/contacts.types';
 import { ContactsListComponent } from '@modules/admin/apps/contacts/pages/list/list.component';
 import { ContactsService }       from '@modules/admin/apps/contacts/contacts.service';
 
@@ -22,7 +22,7 @@ import { ContactsService }       from '@modules/admin/apps/contacts/contacts.ser
     imports        : [ NgIf, MatButtonModule, RouterLink, MatIconModule, NgFor, NgClass, FuseFindByKeyPipe, DatePipe, MatTooltip ],
 })
 export class ContactsDetailsComponent implements OnInit, OnDestroy {
-    contact: Contact;
+    contact: UserContact;
     countries: Country[];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -40,7 +40,7 @@ export class ContactsDetailsComponent implements OnInit, OnDestroy {
         // Get the contact
         this._contactsService.contact$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contact: Contact) => {
+            .subscribe((contact: UserContact) => {
                 // Open the drawer in case it is closed
                 this._contactsListComponent.matDrawer.open();
 
