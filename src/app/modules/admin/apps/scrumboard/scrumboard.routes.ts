@@ -92,7 +92,15 @@ export default [
                 resolve  : {
                     card: cardResolver,
                 },
-            },
+            }
         ],
     },
+    {
+        path         : ':boardId/settings',
+        loadComponent: () => import('./pages/board-config/board-config.component').then(m => m.BoardConfigComponent),
+        loadChildren : () => import('./pages/board-config/board-config.routes').then(c => c.default),
+        resolve      : {
+            board: boardResolver
+        }
+    }
 ] as Routes;

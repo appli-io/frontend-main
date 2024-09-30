@@ -2,7 +2,13 @@
     <div *transloco="let t; read: 'benefits.benefit-detail'" class="flex flex-col flex-auto min-w-0 min-h-full">
         <!-- Header -->
         <div class="bg-card border-b">
-            <div class="flex flex-wrap w-full h-full max-w-xs sm:max-w-5xl mx-auto p-6 sm:p-8">
+            <div class="flex flex-col w-full h-full max-w-sm sm:max-w-5xl mx-auto p-4 sm:p-8 gap-y-4">
+                <div class="flex sm:hidden">
+                    <a [routerLink]="'./../..'" class="inline-flex items-center -ml-1.5 text-secondary font-medium">
+                        <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="icon-size-5 text-secondary"></mat-icon>
+                        <span class="ml-1">Back</span>
+                    </a>
+                </div>
                 <!-- Breadcrumbs -->
                 <div class="hidden sm:flex flex-wrap items-center font-medium basis-full">
                     <div>
@@ -21,32 +27,29 @@
                         <span [innerHtml]="benefit.name" class="ml-1 text-secondary"></span>
                     </div>
                 </div>
-                <div class="basis-1/2 p-4">
-                    @if (benefit.image) {
-                        <img [src]="benefit.image.fileUrl" alt="BannerImage" class="h-full w-full object-cover rounded-lg"/>
-                    }
-                </div>
-                <div class="basis-1/2 px-4 space-y-4">
-                    <div class="flex sm:hidden">
-                        <a [routerLink]="'./../..'" class="inline-flex items-center -ml-1.5 text-secondary font-medium">
-                            <mat-icon [svgIcon]="'heroicons_solid:chevron-left'" class="icon-size-5 text-secondary"></mat-icon>
-                            <span class="ml-1">Back</span>
-                        </a>
+
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="order-1 md:order-0 flex-1 flex flex-col">
+                        @if (benefit.image) {
+                            <img [src]="benefit.image.fileUrl" alt="BannerImage" class="h-auto w-full rounded-lg"/>
+                        }
                     </div>
-                    <!-- Company information -->
-                    <div class="flex flex-col">
-                        <img [src]="benefit.benefitCompany?.image?.fileUrl" alt="CompanyLogo" class="h-14 object-contain object-left rounded-full drop-shadow"/>
-                        <h2 [innerHtml]="benefit.benefitCompany?.name" class="text-md font-light"></h2>
-                    </div>
-                    <div>
-                        <h1 [innerHtml]="benefit.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h1>
-                        <p [innerHtml]="benefit.description | deltaToHtml" class="mt-4 text-justify"></p>
-                    </div>
-                    <div class="inline-flex gap-x-4">
-                        <button mat-icon-button>
-                            <mat-icon svgIcon="heroicons_outline:share"></mat-icon>
-                        </button>
-                        <button color="primary" mat-flat-button>Obtener beneficio</button>
+                    <div class="order-0 md:order-1 flex-1 flex flex-col gap-y-4">
+                        <!-- Company information -->
+                        <div class="flex flex-col">
+                            <img [src]="benefit.benefitCompany?.image?.fileUrl" alt="CompanyLogo" class="h-14 object-contain object-left rounded-full drop-shadow"/>
+                            <h2 [innerHtml]="benefit.benefitCompany?.name" class="text-md font-light"></h2>
+                        </div>
+                        <div>
+                            <h1 [innerHtml]="benefit.name" class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10"></h1>
+                            <p [innerHtml]="benefit.description | deltaToHtml" class="mt-4 text-justify"></p>
+                        </div>
+                        <div class="inline-flex gap-x-4">
+                            <button mat-icon-button>
+                                <mat-icon svgIcon="heroicons_outline:share"></mat-icon>
+                            </button>
+                            <button color="primary" mat-flat-button>Obtener beneficio</button>
+                        </div>
                     </div>
                 </div>
             </div>

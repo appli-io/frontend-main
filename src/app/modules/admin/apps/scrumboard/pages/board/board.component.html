@@ -12,20 +12,20 @@
         </div>
         <!-- Actions -->
         <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
-            <a [routerLink]="['..']" mat-stroked-button>
+            <a [routerLink]="['./..']" mat-stroked-button>
                 <mat-icon
                     [svgIcon]="'heroicons_solid:view-columns'"
                     class="icon-size-5"
                 ></mat-icon>
                 <span class="ml-2">Boards</span>
             </a>
-            <button class="ml-3" mat-stroked-button>
+            <a [routerLink]="['./settings']" class="ml-3" mat-stroked-button>
                 <mat-icon
                     [svgIcon]="'heroicons_solid:cog-8-tooth'"
                     class="icon-size-5"
                 ></mat-icon>
                 <span class="ml-2">Settings</span>
-            </button>
+            </a>
         </div>
     </div>
 

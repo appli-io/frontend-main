@@ -9,20 +9,22 @@
             class="dark:bg-gray-900 sm:w-96"
         >
             <!-- Header -->
-            <div class="flex flex-0 p-8 pr-6 items-center justify-between sm:py-10 bg-hover">
-                <!-- Title -->
-                <h2 [innerText]="title" class="text-3xl font-extrabold leading-none tracking-tight"></h2>
-                <!-- Close button -->
-                <div class="lg:hidden">
-                    <button (click)="drawer.close()" mat-icon-button>
-                        <mat-icon
-                            [svgIcon]="'heroicons_outline:x-mark'"
-                        ></mat-icon>
-                    </button>
+            @if (title) {
+                <div class="flex flex-0 p-8 pr-6 items-center justify-between sm:py-10 bg-hover border-b">
+                    <!-- Title -->
+                    <h2 [innerText]="title" class="text-3xl font-extrabold leading-none tracking-tight"></h2>
+                    <!-- Close button -->
+                    <div class="lg:hidden">
+                        <button (click)="drawer.close()" mat-icon-button>
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:x-mark'"
+                            ></mat-icon>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            }
             <!-- Panel links -->
-            <div class="flex flex-col divide-y border-b border-t">
+            <div class="flex flex-col divide-y border-b">
                 @for (panel of panels; track trackByFn($index, panel)) {
                     @if (panel.children && panel.children.length) {
                         <div class="py-5 px-8 flex">
@@ -40,7 +42,7 @@
                                 [routerLink]="child.link"
                                 [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
                                 [routerLinkActiveOptions]="{ exact: true }"
-                                (click)="goToPanel(panel.id)"
+                                (click)="goToPanel(panel)"
                                 [disabled]="child.disabled"
                             >
                                 <mat-icon
@@ -69,7 +71,7 @@
                             [routerLink]="panel.link"
                             [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
                             [routerLinkActiveOptions]="{ exact: true }"
-                            (click)="goToPanel(panel.id)"
+                            (click)="goToPanel(panel)"
                             [disabled]="panel.disabled"
                         >
                             <mat-icon

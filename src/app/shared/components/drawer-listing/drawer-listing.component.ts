@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive }                                                                             from '@angular/router';
-import { MatDrawer, MatSidenavModule }                                                                              from '@angular/material/sidenav';
-import { MatButtonModule }                                                                                          from '@angular/material/button';
-import { MatIconModule }                                                                                            from '@angular/material/icon';
-import { NgClass, NgComponentOutlet, NgTemplateOutlet }                                                             from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { RouterLink, RouterLinkActive }                                                                                                   from '@angular/router';
+import { MatDrawer, MatSidenavModule }                                                                                                    from '@angular/material/sidenav';
+import { MatButtonModule }                                                                                                                from '@angular/material/button';
+import { MatIconModule }                                                                                                                  from '@angular/material/icon';
+import { NgClass, NgComponentOutlet, NgTemplateOutlet }                                                                                   from '@angular/common';
 
 import { Subject, takeUntil } from 'rxjs';
 
@@ -38,7 +38,7 @@ import { CdkScrollable }           from '@angular/cdk/overlay';
 export class DrawerListingComponent implements OnInit, OnDestroy {
     @ContentChild(DrawerHeaderComponent) headerComponent: DrawerHeaderComponent;
     @ContentChild(DrawerContentComponent) contentComponent: DrawerContentComponent;
-    @Input() title: string = '';
+    @Input() title: string;
     @Input() panels: Array<PanelType> = [ {
         id         : 'panel1',
         icon       : 'heroicons_outline:exclamation-triangle',
@@ -48,6 +48,8 @@ export class DrawerListingComponent implements OnInit, OnDestroy {
         disabled   : true
     } ];
     @Input() selectedPanel: string = this.panels[0].id;
+    @Output() panelSelected: EventEmitter<PanelType> = new EventEmitter<PanelType>();
+    @Output() drawerOpenedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
     @ViewChild('drawer') drawer: MatDrawer;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -84,13 +86,15 @@ export class DrawerListingComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    goToPanel(panel: string): void {
-        this.selectedPanel = panel;
+    goToPanel(panel: PanelType): void {
+        this.selectedPanel = panel.id;
 
         // Close the drawer on 'over' mode
         if (this.drawerMode === 'over') {
             this.drawer.close();
         }
+
+        this.panelSelected.emit(panel);
     }
 
     getPanelInfo(id: string): any {

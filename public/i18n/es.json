@@ -156,6 +156,12 @@
                 "create" : "Crear",
                 "discard" : "Descartar"
             }
+        },
+        "settings" : {
+            "board-info" : {
+                "title" : "Información del tablero",
+                "description" : "Actualiza la información de tu tablero"
+            }
         }
     },
     "benefits" : {
