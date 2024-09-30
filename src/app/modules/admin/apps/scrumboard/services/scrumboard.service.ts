@@ -313,9 +313,7 @@ export class ScrumboardService {
             }),
             switchMap((card) => {
                 if (!card) {
-                    return throwError(
-                        'Could not found the card with id of ' + id + '!'
-                    );
+                    return throwError(() => new Error('Could not found the card with id of ' + id + '!'));
                 }
 
                 return of(card);

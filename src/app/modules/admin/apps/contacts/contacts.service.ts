@@ -97,7 +97,7 @@ export class ContactsService {
             }),
             switchMap((contact) => {
                 if (!contact) {
-                    return throwError('Could not found contact with id of ' + id + '!');
+                    return throwError(() => new Error('Could not found contact with id of ' + id + '!'));
                 }
 
                 return of(contact);

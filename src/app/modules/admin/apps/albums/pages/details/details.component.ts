@@ -57,7 +57,7 @@ export class DetailsComponent implements AfterViewInit {
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntilDestroyed())
             .subscribe(({matchingAliases}) => {
-                let tempColumns = this.columns;
+                let tempColumns;
 
                 if (matchingAliases.includes('xl')) {
                     tempColumns = 4;

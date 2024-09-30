@@ -92,8 +92,8 @@ export class AuthUnlockSessionComponent implements OnInit {
         this._authService.unlockSession({
             email   : this._email ?? '',
             password: this.unlockSessionForm.get('password').value,
-        }).subscribe(
-            () => {
+        }).subscribe({
+            next : () => {
                 // Set the redirect url.
                 // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
                 // to the correct page after a successful sign in. This way, that url can be set via
@@ -104,7 +104,7 @@ export class AuthUnlockSessionComponent implements OnInit {
                 this._router.navigateByUrl(redirectURL);
 
             },
-            (response) => {
+            error: () => {
                 // Re-enable the form
                 this.unlockSessionForm.enable();
 
@@ -125,6 +125,6 @@ export class AuthUnlockSessionComponent implements OnInit {
                 // Show the alert
                 this.showAlert = true;
             },
-        );
+        });
     }
 }
