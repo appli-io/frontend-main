@@ -296,3 +296,9 @@ quill-view {
     @apply bg-warn-400 bg-opacity-5
   }
 }
+
+
+// Tailwind styles
+.flex-center {
+    @apply flex justify-center items-center;
+}
