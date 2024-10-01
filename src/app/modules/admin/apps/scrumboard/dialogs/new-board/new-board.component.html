@@ -31,9 +31,9 @@
                 <mat-label [innerText]="t('fields.members')"></mat-label>
                 <mat-select #memberSelect="matSelect" [placeholder]="t('fields.members-placeholder')" disableOptionCentering formControlName="members" multiple="true">
                     <mat-select-trigger>
-                        {{ memberSelect.value ? memberSelect.value[0].name : '' }}
-                        <span *ngIf="memberSelect.value?.length > 1" class="text-hint">
-                        (+{{ memberSelect.value.length - 1 }} {{ 'adjective.more' | transloco }})
+                        {{ memberSelect?.value ? memberSelect.value[0]?.name : '' }}
+                        <span *ngIf="memberSelect?.value?.length > 1" class="text-hint">
+                        (+{{ memberSelect?.value?.length - 1 }} {{ 'adjective.more' | transloco }})
                     </span>
                     </mat-select-trigger>
 

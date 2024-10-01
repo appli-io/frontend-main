@@ -142,11 +142,11 @@ swiper-slide {
     transition: transform 0.5s, opacity 0.5s;
   }
 
-  &.is-active > fuse-card {
+    &.is-active > :first-child {
     transform: scale(1);
   }
 
-  &:not(.is-active) > fuse-card {
+    &:not(.is-active) > :first-child {
     opacity: .7;
     transform: scale(0.8);
 
