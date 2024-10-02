@@ -18,6 +18,7 @@ import { IEconomicIndicator }   from '@modules/admin/home/interface/economic-ind
 import { ShortcutsComponent }   from '@modules/admin/home/components/shortcuts/shortcuts.component';
 import { CalendarComponent }    from '@modules/admin/home/components/calendar/calendar.component';
 import { BgPatternsComponent }  from '../../../shared/components/bg-patterns/bg-patterns.component';
+import { MatDivider }           from '@angular/material/divider';
 
 @Component({
     selector     : 'home',
@@ -25,7 +26,7 @@ import { BgPatternsComponent }  from '../../../shared/components/bg-patterns/bg-
     templateUrl  : './home.component.html',
     schemas      : [ CUSTOM_ELEMENTS_SCHEMA ],
     encapsulation: ViewEncapsulation.None,
-    imports      : [
+    imports: [
         TranslocoDirective,
         MatIcon,
         MatButton,
@@ -41,7 +42,8 @@ import { BgPatternsComponent }  from '../../../shared/components/bg-patterns/bg-
         CalendarComponent,
         UpperCasePipe,
         HlmSkeletonComponent,
-        BgPatternsComponent
+        BgPatternsComponent,
+        MatDivider
     ],
 })
 export class HomeComponent implements AfterViewInit {
