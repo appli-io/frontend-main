@@ -17,8 +17,9 @@ import { IUser }                from '@modules/admin/user/profile/interfaces/use
 import { IEconomicIndicator }   from '@modules/admin/home/interface/economic-indicator.interface';
 import { ShortcutsComponent }   from '@modules/admin/home/components/shortcuts/shortcuts.component';
 import { CalendarComponent }    from '@modules/admin/home/components/calendar/calendar.component';
-import { BgPatternsComponent }  from '../../../shared/components/bg-patterns/bg-patterns.component';
+import { BgPatternsComponent }  from '@shared/components/bg-patterns/bg-patterns.component';
 import { MatDivider }           from '@angular/material/divider';
+import { NoticesComponent }     from '@modules/admin/home/components/notices/notices.component';
 
 @Component({
     selector     : 'home',
@@ -43,7 +44,8 @@ import { MatDivider }           from '@angular/material/divider';
         UpperCasePipe,
         HlmSkeletonComponent,
         BgPatternsComponent,
-        MatDivider
+        MatDivider,
+        NoticesComponent
     ],
 })
 export class HomeComponent implements AfterViewInit {
@@ -61,7 +63,7 @@ export class HomeComponent implements AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => {
             if (this.highlightedNews?.length > 0) {
-                new Splide('.splide', {
+                new Splide('#highlighted_news', {
                     type        : 'loop',
                     gap         : '5rem',
                     focus       : 'center',

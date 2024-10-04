@@ -5,7 +5,7 @@
                 [src]="category.image?.fileUrl || 'https://picsum.photos/500/300?random=' + 1"
                 alt="Card cover image"
                 class="h-64 object-cover select-none">
-            <div class="gradient-overlay"></div>
+            <div class="gradient-overlay to-b w-full h-1/2 -bottom-px left-0"></div>
         </div>
         <div class="flex-1 px-4 py-6 -mt-8 z-10 flex flex-col">
             <h2 [title]="category.name" class="text-4xl font-extrabold leading-tight line-clamp-2">{{ category.name }}</h2>

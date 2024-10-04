@@ -1,4 +1,4 @@
-<div *transloco="let t" class="flex flex-col flex-auto min-w-0 gap-y-5">
+<div *transloco="let t" class="flex flex-col flex-auto min-w-0 gap-y-8">
     <!-- Header -->
     <div class="bg-card border-b relative overflow-hidden">
         <bg-patterns class="-z-1" pattern="circles-v2"></bg-patterns>
@@ -38,65 +38,70 @@
 
     <!-- Avisos -->
     <section class="flex-auto pt-4 sm:pt-6">
-
-        <mat-divider></mat-divider>
+        <home-notices></home-notices>
     </section>
 
+    <mat-divider class="mt-8"></mat-divider>
 
-    <!-- Content -->
+    <!-- Highlighted news -->
     <section class="flex-auto pt-4 sm:pt-6">
-        <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
-            <!-- News slider -->
-            @if (highlightedNews?.length > 0) {
-                <section class="splide pb-4 mb-4">
-                    <div class="splide__track">
-                        <ul class="splide__list pb-4">
-                            @for (news of highlightedNews; track news.id) {
-                                <li class="splide__slide flex justify-center">
-                                    <a [routerLink]="['/news', 'read', news.slug]">
-                                        <fuse-card class="flex flex-col max-w-120 w-full relative">
-                                            <div class="relative">
-                                                <img
-                                                    alt="Card cover image"
-                                                    class="h-50 object-cover"
-                                                    src="https://picsum.photos/500/300?random={{$index}}">
-                                                <div class="gradient-overlay"></div>
-                                            </div>
-                                            <div class="m-8 -mt-8 z-10">
-                                                <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ news.category.name | uppercase }}</div>
-                                                <div [title]="news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
-                                                <div class="mt-2 text-secondary line-clamp-2">{{ news.abstract }}</div>
-                                                <div class="w-12 h-1 my-6 border-t-2"></div>
-                                                <!-- Publisher info -->
-                                                <div class="flex items-center mt-6">
-                                                    @if (news.createdBy?.avatar?.fileUrl) {
-                                                        <img
-                                                            alt="Card cover image"
-                                                            class="w-10 h-10 rounded-full"
-                                                            [src]="news.createdBy?.avatar?.fileUrl">
-                                                    } @else {
-                                                        <div class="ring-bg-card flex h-10 w-10 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 ring ring-offset-1 ring-offset-transparent font-medium">
-                                                            {{ news.createdBy.name.charAt(0) }}
-                                                        </div>
-                                                    }
-                                                    <div class="flex flex-col ml-3">
-                                                        <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
-                                                        <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
+        <!-- News slider -->
+        @if (highlightedNews?.length > 0) {
+            <section id="highlighted_news" class="splide pb-4 mb-4">
+                <div class="splide__track">
+                    <ul class="splide__list pb-4">
+                        @for (news of highlightedNews; track news.id) {
+                            <li class="splide__slide flex justify-center">
+                                <a [routerLink]="['/news', 'read', news.slug]">
+                                    <fuse-card class="flex flex-col max-w-120 w-full relative">
+                                        <div class="relative">
+                                            <img
+                                                alt="Card cover image"
+                                                class="h-50 object-cover"
+                                                src="https://picsum.photos/500/300?random={{$index}}">
+                                            <div class="gradient-overlay to-b w-full h-1/2 -bottom-px left-0"></div>
+                                        </div>
+                                        <div class="m-8 -mt-8 z-10">
+                                            <div class="text-md font-semibold leading-none tracking-wide text-primary mb-2">{{ news.category.name | uppercase }}</div>
+                                            <div [title]="news.headline" class="text-2xl font-semibold leading-tight line-clamp-2">{{ news.headline }}</div>
+                                            <div class="mt-2 text-secondary line-clamp-2">{{ news.abstract }}</div>
+                                            <div class="w-12 h-1 my-6 border-t-2"></div>
+                                            <!-- Publisher info -->
+                                            <div class="flex items-center mt-6">
+                                                @if (news.createdBy?.avatar?.fileUrl) {
+                                                    <img
+                                                        alt="Card cover image"
+                                                        class="w-10 h-10 rounded-full"
+                                                        [src]="news.createdBy?.avatar?.fileUrl">
+                                                } @else {
+                                                    <div class="ring-bg-card flex h-10 w-10 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 ring ring-offset-1 ring-offset-transparent font-medium">
+                                                        {{ news.createdBy.name.charAt(0) }}
                                                     </div>
+                                                }
+                                                <div class="flex flex-col ml-3">
+                                                    <span [innerText]="news.createdBy.name" class="font-medium leading-none"></span>
+                                                    <span [innerText]="relativeTime(news.publishedAt.getTime())" class="text-sm text-secondary leading-none mt-1"></span>
                                                 </div>
                                             </div>
-                                        </fuse-card>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </section>
-            }
+                                        </div>
+                                    </fuse-card>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </section>
+        }
+    </section>
 
-            <!-- Economic indicators -->
-            @defer {
-                @if (economicIndicators; as ei) {
+    <mat-divider class="mx-8"></mat-divider>
+
+    <!-- Economic indicators -->
+    @defer {
+        @if (economicIndicators; as ei) {
+            <section class="flex-auto pt-4 sm:pt-6">
+                <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+                    <!-- Economic indicators -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0 py-4">
                         <!-- IPC -->
                         <div *ngIf="ei.ipc as ipc" class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden justify-around">
@@ -177,11 +182,15 @@
                         <!--        </div>-->
 
                     </div>
-                }
-            }
+                </div>
+            </section>
+        }
+    }
 
-            <!-- Shortcuts | TODO: Make it dynamic, loading from backend -->
-            <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+    <!-- Shortcuts | TODO: Make it dynamic, loading from backend -->
+    <section class="flex-auto">
+        <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex-auto">
                 <div class="mb-6">
                     <h2 class="text-3xl font-bold text-secondary mb-2">{{ t('home.shortcuts.title') }}</h2>
                     <p class="text-lg text-secondary">{{ t('home.shortcuts.description') }}</p>
@@ -201,8 +210,10 @@
         </div>
     </section>
 
+    <mat-divider class="mx-8"></mat-divider>
+
     <!-- Calendar -->
-    <section class="bg-card border-t flex-auto -mt-px pt-4 sm:pt-6">
+    <section class="flex-auto">
         <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <h2 class="text-3xl font-bold dark:text-on-accent mb-2">{{ t('home.calendar.title') }}</h2>
 
