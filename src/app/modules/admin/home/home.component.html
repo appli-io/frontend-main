@@ -58,7 +58,7 @@
                                             <img
                                                 alt="Card cover image"
                                                 class="h-50 object-cover"
-                                                src="https://picsum.photos/500/300?random={{$index}}">
+                                                [src]="news.portraitImage?.fileUrl || 'https://picsum.photos/500/300?random={{$index}}'">
                                             <div class="gradient-overlay to-b w-full h-1/2 -bottom-px left-0"></div>
                                         </div>
                                         <div class="m-8 -mt-8 z-10">

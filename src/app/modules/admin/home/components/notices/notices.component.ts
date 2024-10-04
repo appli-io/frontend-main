@@ -22,7 +22,7 @@ export class NoticesComponent implements AfterViewInit {
                 type       : 'loop',
                 height     : '20rem',
                 autoplay   : false,
-                interval   : 2000,
+                interval   : 4 * 1_000,
                 pagination : false,
                 arrows     : false,
                 breakpoints: {
@@ -30,7 +30,7 @@ export class NoticesComponent implements AfterViewInit {
                         height: '16rem'
                     },
                     480: {
-                        height: '6rem'
+                        height: '7rem'
                     }
                 }
             }).mount();
