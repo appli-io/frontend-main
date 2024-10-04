@@ -1,4 +1,4 @@
-<div *transloco="let t" class="flex flex-col flex-auto min-w-0 gap-y-8">
+<div *transloco="let t" class="flex flex-col flex-auto min-w-0 gap-y-4 md:gap-y-8">
     <!-- Header -->
     <div class="bg-card border-b relative overflow-hidden">
         <bg-patterns class="-z-1" pattern="circles-v2"></bg-patterns>
@@ -37,14 +37,14 @@
     </div>
 
     <!-- Avisos -->
-    <section class="flex-auto pt-4 sm:pt-6">
+    <section class="flex-auto">
         <home-notices></home-notices>
     </section>
 
-    <mat-divider class="mt-8"></mat-divider>
+    <mat-divider class="mx-6 md:mx-8"></mat-divider>
 
     <!-- Highlighted news -->
-    <section class="flex-auto pt-4 sm:pt-6">
+    <section class="flex-auto">
         <!-- News slider -->
         @if (highlightedNews?.length > 0) {
             <section id="highlighted_news" class="splide pb-4 mb-4">
@@ -53,7 +53,7 @@
                         @for (news of highlightedNews; track news.id) {
                             <li class="splide__slide flex justify-center">
                                 <a [routerLink]="['/news', 'read', news.slug]">
-                                    <fuse-card class="flex flex-col max-w-120 w-full relative">
+                                    <fuse-card class="flex flex-col mx-6 max-w-120 relative">
                                         <div class="relative">
                                             <img
                                                 alt="Card cover image"
@@ -94,12 +94,12 @@
         }
     </section>
 
-    <mat-divider class="mx-8"></mat-divider>
+    <mat-divider class="mx-6 md:mx-8"></mat-divider>
 
     <!-- Economic indicators -->
     @defer {
         @if (economicIndicators; as ei) {
-            <section class="flex-auto pt-4 sm:pt-6">
+            <section class="flex-auto">
                 <div class="w-full max-w-screen-xl mx-auto px-6 sm:px-8">
                     <!-- Economic indicators -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0 py-4">
@@ -210,7 +210,7 @@
         </div>
     </section>
 
-    <mat-divider class="mx-8"></mat-divider>
+    <mat-divider class="mx-6 md:mx-8"></mat-divider>
 
     <!-- Calendar -->
     <section class="flex-auto">

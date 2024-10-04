@@ -20,17 +20,17 @@ export class NoticesComponent implements AfterViewInit {
             new Splide('#notices-slider', {
                 direction  : 'ttb',
                 type       : 'loop',
-                height     : '18rem',
+                height     : '20rem',
                 autoplay   : false,
                 interval   : 2000,
                 pagination : false,
                 arrows     : false,
                 breakpoints: {
                     640: {
-                        height: '12rem'
+                        height: '16rem'
                     },
                     480: {
-                        height: '8rem'
+                        height: '6rem'
                     }
                 }
             }).mount();
