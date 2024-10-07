@@ -307,6 +307,7 @@ export class ScrumboardService {
 
                 // Update the card
                 this._card.next(card);
+                0;
 
                 // Return the card
                 return card;

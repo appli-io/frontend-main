@@ -39,9 +39,9 @@
                 }
                 @for (resultSet of resultSets; track trackByFn($index, resultSet)) {
                     <mat-optgroup class="mt-2 flex items-center px-2">
-      <span
-          class="text-secondary text-sm font-semibold tracking-wider"
-      > {{ resultSet.label.toUpperCase() }}</span>
+                        <span class="text-secondary text-sm font-semibold tracking-wider">
+                            {{ resultSet.label.toUpperCase() }}
+                        </span>
                     </mat-optgroup>
                     @for (result of resultSet.results; track trackByFn($index, result)) {
                         <mat-option

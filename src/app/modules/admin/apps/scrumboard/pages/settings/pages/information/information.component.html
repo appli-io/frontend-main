@@ -1,0 +1,40 @@
+<div *transloco="let t; read: 'scrumboard.settings.board-information'" class="flex flex-col min-w-0 w-full">
+    <page-header
+        [description]="t('subtitle')"
+        [subtitle]="t('title')"
+    ></page-header>
+    <!-- Content -->
+    <div class="flex flex-col justify-center w-full sm:max-w-5xl mx-auto py-6 gap-y-4 px-4">
+        <div class="flex flex-col space-y-4">
+            <div class="">
+                <h2 [innerText]="t('form.title')" class="font-semibold text-xl"></h2>
+                <p [innerText]="t('form.description')" class="text-hint"></p>
+            </div>
+
+            <form [formGroup]="boardInfoForm" class="bg-card flex flex-col overflow-hidden rounded p-8 pb-4 shadow w-full">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <mat-form-field class="w-full" floatLabel="always">
+                        <mat-label [innerText]="t('form.fields.name')"></mat-label>
+                        <input formControlName="name" matInput/>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full" floatLabel="always">
+                        <mat-label [innerText]="t('form.fields.icon')"></mat-label>
+                        <input formControlName="icon" matInput/>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field floatLabel="always">
+                    <mat-label [innerText]="t('form.fields.description')"></mat-label>
+                    <textarea cdkTextareaAutosize formControlName="description" matInput rows="2"></textarea>
+                </mat-form-field>
+
+                <!--                    <mat-form-field floatLabel="always">-->
+                <!--                        <mat-label [innerText]="t('form.color')"></mat-label>-->
+                <!--                        <input formControlName="color" type="color" matPrefix class="pr-4"/>-->
+                <!--                        <input matInput>-->
+                <!--                    </mat-form-field>-->
+            </form>
+        </div>
+    </div>
+</div>

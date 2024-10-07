@@ -158,9 +158,35 @@
             }
         },
         "settings" : {
-            "board-info" : {
+            "board-information" : {
                 "title" : "Información del tablero",
-                "description" : "Actualiza la información de tu tablero"
+                "subtitle" : "Completa la información de tu tablero",
+                "description" : "Actualiza la información de tu tablero",
+                "form" : {
+                    "title" : "Información del tablero",
+                    "description" : "Aquí puedes ver y editar la información de tu tablero.",
+                    "fields" : {
+                        "name" : "Nombre",
+                        "description" : "Descripción",
+                        "icon" : "Icono"
+                    }
+                }
+            },
+            "members" : {
+                "title" : "Miembros",
+                "subtitle" : "Administra los miembros de tu tablero",
+                "description" : "Administra los miembros de tu tablero",
+                "heading" : "Miembros del tablero",
+                "heading-description" : "Aquí puedes ver y administrar los miembros de tu tablero.",
+                "add-member-input" : {
+                    "label" : "Miembros disponibles para agregar",
+                    "placeholder" : "Selecciona un miembro para agregar"
+                }
+            },
+            "labels" : {
+                "title" : "Etiquetas",
+                "subtitle" : "Administra las etiquetas de tu tablero",
+                "description" : "Administra las etiquetas de tu tablero"
             }
         }
     },

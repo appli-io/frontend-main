@@ -8,10 +8,15 @@ import { Page }                             from '@core/interfaces/page';
 export class MemberService {
     private readonly _httpClient: HttpClient = inject(HttpClient);
 
+    private _members$: BehaviorSubject<IUser[]> = new BehaviorSubject([]);
     private _user$: BehaviorSubject<IUser> = new BehaviorSubject(undefined);
 
     get user$(): Observable<IUser> {
         return this._user$.asObservable();
+    }
+
+    get members$(): Observable<IUser[]> {
+        return this._members$.asObservable();
     }
 
     public update(data: any) {
@@ -32,6 +37,7 @@ export class MemberService {
     }
 
     public getCompanyUsers(layout: 'contact' | 'member' | 'compact') {
-        return this._httpClient.get<Page<IUser>>(`api/company/members`, {params: {layout}});
+        return this._httpClient.get<Page<IUser>>(`api/company/members`, {params: {layout}})
+            .pipe(tap(({content}) => this._members$.next(content)));
     }
 }

@@ -30,14 +30,30 @@ export class BoardConfigComponent {
     panels: PanelType[] = [];
     selectedPanel: PanelType;
 
-    constructor(private readonly _ts: TranslocoService) {
+    constructor(
+        private readonly _ts: TranslocoService
+    ) {
         this.panels = [
             {
                 id         : 'board-info',
                 icon       : 'heroicons_outline:information-circle',
-                title      : this._ts.translate('scrumboard.settings.board-info.title'),
-                description: this._ts.translate('scrumboard.settings.board-info.description'),
-                link       : [ './board-info' ]
+                title      : this._ts.translate('scrumboard.settings.board-information.title'),
+                description: this._ts.translate('scrumboard.settings.board-information.description'),
+                link       : [ './' ]
+            },
+            {
+                id         : 'members',
+                icon       : 'heroicons_outline:user-group',
+                title      : this._ts.translate('scrumboard.settings.members.title'),
+                description: this._ts.translate('scrumboard.settings.members.description'),
+                link       : [ './members' ]
+            },
+            {
+                id         : 'labels',
+                icon       : 'heroicons_outline:tag',
+                title      : this._ts.translate('scrumboard.settings.labels.title'),
+                description: this._ts.translate('scrumboard.settings.labels.description'),
+                link       : [ './labels' ]
             }
         ];
 

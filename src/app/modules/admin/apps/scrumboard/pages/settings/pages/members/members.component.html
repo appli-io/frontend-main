@@ -1,0 +1,45 @@
+<div *transloco="let t; read: 'scrumboard.settings.members'" class="flex flex-col min-w-0 w-full">
+    <page-header
+        [description]="t('subtitle')"
+        [subtitle]="t('title')"
+    ></page-header>
+    <!-- Content -->
+    <div class="flex flex-col justify-center w-full sm:max-w-5xl mx-auto py-6 gap-y-4 px-4">
+        <div class="flex flex-col space-y-4">
+            <div class="">
+                <h2 [innerText]="t('heading')" class="font-semibold text-xl"></h2>
+                <p [innerText]="t('heading-description')" class="text-hint"></p>
+            </div>
+
+            <div class="bg-card flex flex-col rounded p-8 pb-4 shadow w-full">
+                <!-- Search and add member to board -->
+                <form (ngSubmit)="addMember()" [formGroup]="memberForm" class="w-full">
+                    <!-- Members autocomplete -->
+                    <mat-form-field class="w-full" floatLabel="always">
+                        <mat-label>{{ t('add-member-input.label') }}</mat-label>
+                        <input
+                            (input)="filter($event.target)"
+                            [matAutocomplete]="auto"
+                            formControlName="member"
+                            matInput
+                            placeholder="{{ t('add-member-input.placeholder') }}"
+                            type="text"
+                        />
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayWithFn('name')"
+    requireSelection="true"
+>
+    @for (member of filteredMembers$ | async; track trackByFn($index, member)) {
+        <mat-option [value]="member">
+            <span>{{ member.name }}</span>
+        </mat-option>
+    }
+</mat-autocomplete>
