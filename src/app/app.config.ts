@@ -1,5 +1,5 @@
 import { provideHttpClient }                                                                                                               from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject }                                                   from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, importProvidersFrom, inject, provideZoneChangeDetection }                       from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS }                                                                                                   from '@angular/material/core';
 import { LuxonDateAdapter }                                                                                                                from '@angular/material-luxon-adapter';
 import { provideAnimations }                                                                                                               from '@angular/platform-browser/animations';
@@ -51,6 +51,9 @@ export const appConfig: ApplicationConfig = {
             deps      : [ Sentry.TraceService ],
             multi     : true,
         },
+        provideZoneChangeDetection({
+            eventCoalescing: true
+        }),
         provideAnimations(),
         provideHttpClient(),
         provideRouter(appRoutes,

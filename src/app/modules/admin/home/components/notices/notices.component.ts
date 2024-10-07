@@ -21,7 +21,7 @@ export class NoticesComponent implements AfterViewInit {
                 direction  : 'ttb',
                 type       : 'loop',
                 height     : '20rem',
-                autoplay   : false,
+                autoplay: true,
                 interval   : 4 * 1_000,
                 pagination : false,
                 arrows     : false,
