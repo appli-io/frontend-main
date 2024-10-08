@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit }                                 from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule }                                                    from '@angular/material/form-field';
-import { TranslocoDirective }                                                    from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe }                                     from '@ngneat/transloco';
 import { PageHeaderComponent }                                                   from '@layout/components/page-header/page-header.component';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
 import { trackByFn }                                                             from '@libs/ui/utils/utils';
@@ -18,11 +18,12 @@ import { Notyf }                                                                
 import { displayWithFn, filterByValue }                                          from '@core/utils';
 import { MatIcon }                                                               from '@angular/material/icon';
 import { MatButton, MatIconButton }                                              from '@angular/material/button';
+import { MatTooltip }                                                            from '@angular/material/tooltip';
 
 @Component({
     selector   : 'app-members',
     standalone : true,
-    imports    : [
+    imports: [
         ReactiveFormsModule,
         MatFormFieldModule,
         TranslocoDirective,
@@ -35,7 +36,9 @@ import { MatButton, MatIconButton }                                             
         JsonPipe,
         MatIcon,
         MatButton,
-        MatIconButton
+        MatIconButton,
+        MatTooltip,
+        TranslocoPipe
     ],
     templateUrl: './members.component.html',
 
