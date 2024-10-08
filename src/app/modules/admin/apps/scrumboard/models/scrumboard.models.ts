@@ -148,6 +148,7 @@ export class Member implements IMember {
         this.id = member.id;
         this.name = member.name;
         this.avatar = member.avatar || null;
+        this.position = member.position || null;
     }
 }
 

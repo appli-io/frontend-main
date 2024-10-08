@@ -3,10 +3,10 @@ import { MatAnchor, MatIconAnchor }                            from '@angular/ma
 import { MatIcon }                                             from '@angular/material/icon';
 import { RouterLink, RouterOutlet }                            from '@angular/router';
 import { Board }                                               from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { DrawerContentComponent }                              from '../../../../../../shared/components/drawer-listing/components/drawer-content.component';
-import { DrawerListingComponent }                              from '../../../../../../shared/components/drawer-listing/drawer-listing.component';
+import { DrawerContentComponent }                              from '@shared/components/drawer-listing/components/drawer-content.component';
+import { DrawerListingComponent }                              from '@shared/components/drawer-listing/drawer-listing.component';
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { PanelType }                                           from '../../../../../../shared/components/drawer-listing/panel.type';
+import { PanelType }                                           from '@shared/components/drawer-listing/panel.type';
 
 @Component({
     selector   : 'app-board-config',

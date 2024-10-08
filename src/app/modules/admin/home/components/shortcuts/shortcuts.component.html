@@ -1,5 +1,5 @@
 <!-- Horizontal 4 column grid -->
-<div *transloco="let t" class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div *transloco="let t" class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
     @for (shortcut of shortcuts; track shortcut.id) {
         <a *ngIf="shortcut.useRouter" [routerLink]="shortcut.link">
             <ng-container *ngTemplateOutlet="shortcutContentTemplate"></ng-container>
@@ -33,7 +33,7 @@
                     <mat-icon [svgIcon]="shortcut.svgIcon" color="accent" class="text-primary icon-size-4"></mat-icon>
                 </div>
                 <div class="p-2 text-center flex flex-col">
-                    <h3 class="text-xs font-semibold leading-tight" [innerText]="t('home.shortcuts.apps.' + shortcut.id)"></h3>
+                    <h3 class="text-sm font-semibold leading-tight" [innerText]="t('home.shortcuts.apps.' + shortcut.id)"></h3>
                 </div>
             </div>
         </ng-template>

@@ -34,6 +34,7 @@ export interface IMember {
     id?: string;
     name: string;
     avatar?: IFile;
+    position?: string;
 }
 
 export interface ILabel {

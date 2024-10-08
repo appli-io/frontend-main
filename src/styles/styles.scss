@@ -170,9 +170,9 @@ swiper-slide {
 // mat-dialog
 .dialog-mobile-fullscreen {
     @media (max-width: 959px) {
-        overflow: hidden;
-        width: 91vw !important;
+        //overflow: hidden;
         //height: 95vh !important;
+        width: 91vw !important;
         max-width: 91vw !important;
         max-height: 95vh !important;
 

@@ -180,7 +180,14 @@
                 "heading-description" : "Aquí puedes ver y administrar los miembros de tu tablero.",
                 "add-member-input" : {
                     "label" : "Miembros disponibles para agregar",
-                    "placeholder" : "Selecciona un miembro para agregar"
+                    "placeholder" : "Selecciona un miembro para agregar",
+                    "no-results" : "No hay miembros nuevos disponibles para agregar",
+                    "add" : "Agregar"
+                },
+                "list" : {
+                    "title" : "Miembros del tablero",
+                    "no-content" : "No hay miembros en este tablero",
+                    "no-content-description" : "No hay miembros disponibles para mostrar en este tablero en este momento."
                 }
             },
             "labels" : {

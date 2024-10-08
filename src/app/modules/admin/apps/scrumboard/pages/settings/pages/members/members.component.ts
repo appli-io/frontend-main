@@ -1,21 +1,23 @@
-import { Component, DestroyRef, inject, OnInit }                     from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatFormFieldModule }                                        from '@angular/material/form-field';
-import { TranslocoDirective }                                        from '@ngneat/transloco';
-import { PageHeaderComponent }                                       from '@layout/components/page-header/page-header.component';
-import { MatAutocomplete, MatAutocompleteTrigger, MatOption }        from '@angular/material/autocomplete';
-import { trackByFn }                                                 from '@libs/ui/utils/utils';
-import { AsyncPipe }                                                 from '@angular/common';
-import { MatInput }                                                  from '@angular/material/input';
-import { MemberService }                                             from '@modules/admin/user/member.service';
-import { BehaviorSubject, map, tap, withLatestFrom }                 from 'rxjs';
-import { IUser }                                                     from '@modules/admin/user/profile/interfaces/user.interface';
-import { takeUntilDestroyed }                                        from '@angular/core/rxjs-interop';
-import { UserService }                                               from '@core/user/user.service';
-import { ScrumboardService }                                         from '@modules/admin/apps/scrumboard/services/scrumboard.service';
-import { Board, Member }                                             from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { Notyf }                                                     from 'notyf';
-import { displayWithFn, filterByValue }                              from '@core/utils';
+import { Component, DestroyRef, inject, OnInit }                                 from '@angular/core';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatFormFieldModule }                                                    from '@angular/material/form-field';
+import { TranslocoDirective }                                                    from '@ngneat/transloco';
+import { PageHeaderComponent }                                                   from '@layout/components/page-header/page-header.component';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
+import { trackByFn }                                                             from '@libs/ui/utils/utils';
+import { AsyncPipe, JsonPipe }                                                   from '@angular/common';
+import { MatInput }                                                              from '@angular/material/input';
+import { MemberService }                                                         from '@modules/admin/user/member.service';
+import { BehaviorSubject, map, tap, withLatestFrom }                             from 'rxjs';
+import { IUser }                                                                 from '@modules/admin/user/profile/interfaces/user.interface';
+import { takeUntilDestroyed }                                                    from '@angular/core/rxjs-interop';
+import { UserService }                                                           from '@core/user/user.service';
+import { ScrumboardService }                                                     from '@modules/admin/apps/scrumboard/services/scrumboard.service';
+import { Board, Member }                                                         from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { Notyf }                                                                 from 'notyf';
+import { displayWithFn, filterByValue }                                          from '@core/utils';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatButton, MatIconButton }                                              from '@angular/material/button';
 
 @Component({
     selector   : 'app-members',
@@ -29,9 +31,14 @@ import { displayWithFn, filterByValue }                              from '@core
         MatAutocomplete,
         MatOption,
         AsyncPipe,
-        MatInput
+        MatInput,
+        JsonPipe,
+        MatIcon,
+        MatButton,
+        MatIconButton
     ],
-    templateUrl: './members.component.html'
+    templateUrl: './members.component.html',
+
 })
 export class MembersComponent implements OnInit {
     public memberForm: UntypedFormGroup;
@@ -48,7 +55,7 @@ export class MembersComponent implements OnInit {
         private readonly _boardService: ScrumboardService
     ) {
         this.memberForm = this._fb.group({
-            member: [ '' ]
+            member: [ '', Validators.required ]
         });
     }
 
