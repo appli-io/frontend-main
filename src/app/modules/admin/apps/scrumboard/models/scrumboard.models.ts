@@ -144,6 +144,9 @@ export class Member implements IMember {
     avatar?: IFile;
     position?: string;
 
+    // internal use only
+    deletable?: boolean;
+
     constructor(member: IMember) {
         this.id = member.id;
         this.name = member.name;
@@ -159,6 +162,9 @@ export class Label implements Required<ILabel> {
     id: string | null;
     boardId: string;
     title: string;
+
+    // internal use only
+    deletable?: boolean;
 
     /**
      * Constructor

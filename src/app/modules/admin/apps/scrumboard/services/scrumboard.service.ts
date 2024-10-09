@@ -110,24 +110,8 @@ export class ScrumboardService {
             take(1),
             switchMap((boards) =>
                 this._httpClient
-                    .patch<Board>('api/scrumboard/board', {id, board})
-                    .pipe(
-                        map((updatedBoard) => {
-                            // Find the index of the updated board
-                            const index = boards.findIndex(
-                                (item) => item.id === id
-                            );
-
-                            // Update the board
-                            boards[index] = updatedBoard;
-
-                            // Update the boards
-                            this._boards.next(boards);
-
-                            // Return the updated board
-                            return updatedBoard;
-                        })
-                    )
+                    .patch<Board>('api/scrumboard/board/' + id, board)
+                    .pipe(tap((updatedBoard) => this._board.next(updatedBoard)))
             )
         );
     }
@@ -359,6 +343,8 @@ export class ScrumboardService {
      * @param card
      */
     updateCard(id: string, card: Card): Observable<Card> {
+        if (card.labels) card.labels = card.labels.map((label) => label.id) as any;
+
         return this.board$.pipe(
             take(1),
             switchMap((board) =>
@@ -583,6 +569,63 @@ export class ScrumboardService {
                     )
             )
         );
+    }
+
+    addMember(boardId: string, memberId: string): Observable<Board> {
+        return this._httpClient
+            .patch<Board>('api/scrumboard/board/' + boardId + '/members', {memberId})
+            .pipe(
+                map((response) => new Board(response)),
+                tap((board) => this._board.next(board))
+            );
+    }
+
+    removeMember(boardId: string, memberId: string): Observable<Board> {
+        return this._httpClient
+            .delete<Board>('api/scrumboard/board/' + boardId + '/members/' + memberId)
+            .pipe(
+                map((response) => new Board(response)),
+                tap((board) => this._board.next(board))
+            );
+    }
+
+    addLabel(boardId: string, label: Label): Observable<Label> {
+        return this._httpClient
+            .post<Label>('api/scrumboard/board/' + boardId + '/labels', label)
+            .pipe(
+                tap((label) => {
+                    // Get the board value
+                    const board = this._board.value;
+
+                    // Update the board labels with the new label
+                    board.labels = [ ...board.labels, label ];
+
+                    // Update the board
+                    this._board.next(board);
+                })
+            );
+    }
+
+    removeLabel(boardId: string, labelId: string): Observable<boolean> {
+        return this._httpClient
+            .delete<boolean>('api/scrumboard/board/' + boardId + '/labels/' + labelId)
+            .pipe(
+                tap((isDeleted) => {
+                    // Get the board value
+                    const board = this._board.value;
+
+                    // Find the index of the deleted label
+                    const index = board.labels.findIndex(
+                        (item) => item.id === labelId
+                    );
+
+                    // Delete the label
+                    board.labels.splice(index, 1);
+
+                    // Update the board
+                    this._board.next(board);
+                })
+            );
     }
 
     /**

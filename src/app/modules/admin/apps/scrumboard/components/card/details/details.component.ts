@@ -13,7 +13,7 @@ import { Board, Card, Label, }                                                  
 import { ScrumboardService }                                                                                                   from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 import { assign }                                                                                                              from 'lodash-es';
 import { DateTime }                                                                                                            from 'luxon';
-import { debounceTime, Subject, takeUntil, tap }                                                                               from 'rxjs';
+import { debounceTime, lastValueFrom, Subject, takeUntil, tap }                                                                from 'rxjs';
 
 @Component({
     selector       : 'scrumboard-card-details',
@@ -107,15 +107,14 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
                     // Update the card object
                     this.card = assign(this.card, value);
                 }),
-                debounceTime(300),
+                debounceTime(500),
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value) => {
-                // Update the card on the server
-                this._scrumboardService.updateCard(value.id, value).subscribe();
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
+                lastValueFrom(this._scrumboardService.updateCard(value.id, value)).then(() => {
+                    // Mark for check
+                    this._changeDetectorRef.markForCheck();
+                });
             });
     }
 

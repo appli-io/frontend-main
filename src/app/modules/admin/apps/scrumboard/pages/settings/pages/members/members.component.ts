@@ -1,29 +1,33 @@
-import { Component, DestroyRef, inject, OnInit }                                 from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatFormFieldModule }                                                    from '@angular/material/form-field';
-import { TranslocoDirective, TranslocoPipe }                                     from '@ngneat/transloco';
-import { PageHeaderComponent }                                                   from '@layout/components/page-header/page-header.component';
-import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
-import { trackByFn }                                                             from '@libs/ui/utils/utils';
 import { AsyncPipe, JsonPipe }                                                   from '@angular/common';
-import { MatInput }                                                              from '@angular/material/input';
-import { MemberService }                                                         from '@modules/admin/user/member.service';
-import { BehaviorSubject, map, tap, withLatestFrom }                             from 'rxjs';
-import { IUser }                                                                 from '@modules/admin/user/profile/interfaces/user.interface';
+import { Component, DestroyRef, inject, OnInit }                                 from '@angular/core';
 import { takeUntilDestroyed }                                                    from '@angular/core/rxjs-interop';
-import { UserService }                                                           from '@core/user/user.service';
-import { ScrumboardService }                                                     from '@modules/admin/apps/scrumboard/services/scrumboard.service';
-import { Board, Member }                                                         from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { Notyf }                                                                 from 'notyf';
-import { displayWithFn, filterByValue }                                          from '@core/utils';
-import { MatIcon }                                                               from '@angular/material/icon';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption }                    from '@angular/material/autocomplete';
 import { MatButton, MatIconButton }                                              from '@angular/material/button';
+import { MatFormFieldModule }                                                    from '@angular/material/form-field';
+import { MatIcon }                                                               from '@angular/material/icon';
+import { MatInput }                                                              from '@angular/material/input';
+import { MatProgressSpinner }                                                    from '@angular/material/progress-spinner';
 import { MatTooltip }                                                            from '@angular/material/tooltip';
+
+import { TranslocoDirective, TranslocoPipe }             from '@ngneat/transloco';
+import { Notyf }                                         from 'notyf';
+import { BehaviorSubject, combineLatestWith, map, take } from 'rxjs';
+
+import { UserService }                  from '@core/user/user.service';
+import { displayWithFn, filterByValue } from '@core/utils';
+import { fuseAnimations }               from '@fuse/animations';
+import { PageHeaderComponent }          from '@layout/components/page-header/page-header.component';
+import { trackByFn }                    from '@libs/ui/utils/utils';
+import { Board, Member }                from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }            from '@modules/admin/apps/scrumboard/services/scrumboard.service';
+import { MemberService }                from '@modules/admin/user/member.service';
+import { IUser }                        from '@modules/admin/user/profile/interfaces/user.interface';
 
 @Component({
     selector   : 'app-members',
     standalone : true,
-    imports: [
+    imports   : [
         ReactiveFormsModule,
         MatFormFieldModule,
         TranslocoDirective,
@@ -38,14 +42,17 @@ import { MatTooltip }                                                           
         MatButton,
         MatIconButton,
         MatTooltip,
-        TranslocoPipe
+        TranslocoPipe,
+        MatProgressSpinner
     ],
+    animations: fuseAnimations,
     templateUrl: './members.component.html',
-
 })
 export class MembersComponent implements OnInit {
-    public memberForm: UntypedFormGroup;
-    public board: Board;
+    board: Board;
+    deleting$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    form: UntypedFormGroup;
+
     protected readonly trackByFn = trackByFn;
     protected readonly displayWithFn = displayWithFn<Member>;
     private readonly _destroy: DestroyRef = inject(DestroyRef);
@@ -57,16 +64,12 @@ export class MembersComponent implements OnInit {
         private readonly _companyMemberService: MemberService,
         private readonly _boardService: ScrumboardService
     ) {
-        this.memberForm = this._fb.group({
+        this.form = this._fb.group({
             member: [ '', Validators.required ]
         });
     }
 
     private _availableMembers$: BehaviorSubject<IUser[]> = new BehaviorSubject([]);
-
-    get availableMembers$() {
-        return this._availableMembers$.asObservable();
-    }
 
     private _filteredMembers$: BehaviorSubject<IUser[]> = new BehaviorSubject([]);
 
@@ -78,22 +81,68 @@ export class MembersComponent implements OnInit {
         this._companyMemberService.members$
             .pipe(
                 takeUntilDestroyed(this._destroy),
-                withLatestFrom(this._userService.user$),
+                combineLatestWith(this._userService.user$, this._boardService.board$),
                 // remove me from the list by the id
-                map(([ members, me ]) => members.filter((member) => member.id !== me.id)),
-                withLatestFrom(this._boardService.board$),
-                tap(([ , board ]) => this.board = board),
-                // remove members that are already in the board
-                map(([ members, board ]) => members.filter((member) => !board.members.some((m) => m.id === member.id)))
+                map(([ members, me, board ]) => {
+                    this.board = board;
+
+                    // Find the current user in the board members, and set it as disabled to delete it
+                    const currentUser = board.members.find((member) => member.id === me.id);
+                    if (currentUser) {
+                        currentUser.deletable = true;
+                    }
+
+                    return members
+                        // filter out members that are already in the board
+                        .filter((member) => !board.members.some((m) => m.id === member.id))
+                        // filter out the current user
+                        .filter((member) => member.id !== me.id);
+                }),
             )
-            .subscribe((object) => {
-                this._availableMembers$.next(object);
-                this._filteredMembers$.next(object);
+            .subscribe((availableMembers) => {
+                this._availableMembers$.next(availableMembers);
+                this._filteredMembers$.next(availableMembers);
             });
     }
 
     public addMember() {
+        if (this.form.invalid)
+            return;
 
+        this.form.disable();
+        const member = this.form.value.member;
+
+        this._boardService.addMember(this.board.id, member.id)
+            .pipe(takeUntilDestroyed(this._destroy), take(1))
+            .subscribe({
+                next : () => {
+                    this._notyf.success(`Member added successfully`);
+                    this.form.reset();
+                    this.form.markAsPristine();
+                    this.form.enable();
+                },
+                error: (error) => {
+                    this._notyf.error(`Error adding member: ${ error }`);
+                    this.form.enable();
+                }
+            });
+    }
+
+    public deleteMember(memberId: string) {
+        this.deleting$.next(true);
+
+        this._boardService.removeMember(this.board.id, memberId)
+            .pipe(takeUntilDestroyed(this._destroy), take(1))
+            .subscribe({
+                next : () => {
+                    this._notyf.success(`Member removed successfully`);
+                    this.deleting$.next(false);
+                },
+                error: (error) => {
+                    this._notyf.error(`Error removing member: ${ error }`);
+                    this.deleting$.next(false);
+                }
+            });
     }
 
     public filter(target: any) {
@@ -103,7 +152,7 @@ export class MembersComponent implements OnInit {
             return;
         }
 
-        const filtered = filterByValue(this._availableMembers$.value, filterValue, 'name');
+        const filtered = filterByValue<IUser>(this._availableMembers$.value, filterValue, 'name');
         this._filteredMembers$.next(filtered);
     }
 }

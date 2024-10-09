@@ -174,7 +174,6 @@
             },
             "members" : {
                 "title" : "Miembros",
-                "subtitle" : "Administra los miembros de tu tablero",
                 "description" : "Administra los miembros de tu tablero",
                 "heading" : "Miembros del tablero",
                 "heading-description" : "Aquí puedes ver y administrar los miembros de tu tablero.",
@@ -182,7 +181,8 @@
                     "label" : "Miembros disponibles para agregar",
                     "placeholder" : "Selecciona un miembro para agregar",
                     "no-results" : "No hay miembros nuevos disponibles para agregar",
-                    "add" : "Agregar"
+                    "add" : "Agregar",
+                    "adding" : "Agregando"
                 },
                 "list" : {
                     "title" : "Miembros del tablero",
@@ -192,8 +192,15 @@
             },
             "labels" : {
                 "title" : "Etiquetas",
-                "subtitle" : "Administra las etiquetas de tu tablero",
-                "description" : "Administra las etiquetas de tu tablero"
+                "description" : "Administra las etiquetas de tu tablero",
+                "add-label" : {
+                    "placeholder" : "Nombre de la etiqueta"
+                },
+                "list" : {
+                    "title" : "Lista de etiquetas",
+                    "no-content" : "No hay etiquetas en este tablero",
+                    "no-content-description" : "No hay etiquetas disponibles para mostrar en este tablero en este momento."
+                }
             }
         }
     },
