@@ -216,25 +216,20 @@ export class ScrumboardService {
      *
      * @param lists
      */
-    updateLists(lists: List[]): Observable<List[]> {
+    updateLists(lists: List[]): Observable<List> {
         return this._httpClient
-            .patch<List[]>('api/scrumboard/list/' + lists[0].id, lists[0])
+            .patch<List>('api/scrumboard/list/' + lists[0].id, lists[0])
             .pipe(
-                map((response) => response.map((item) => new List(item))),
-                tap((updatedLists) => {
+                map((response) => new List(response)),
+                tap((updatedList) => {
                     // Get the board value
                     const board = this._board.value;
+                    const index = board.lists.findIndex(
+                        (item) => item.id === updatedList.id
+                    );
 
-                    // Go through the updated lists
-                    updatedLists.forEach((updatedList) => {
-                        // Find the index of the updated list
-                        const index = board.lists.findIndex(
-                            (item) => item.id === updatedList.id
-                        );
-
-                        // Update the list
-                        board.lists[index] = updatedList;
-                    });
+                    // Update the list
+                    board.lists[index] = updatedList;
 
                     // Sort the board lists
                     board.lists.sort((a, b) => a.position - b.position);
