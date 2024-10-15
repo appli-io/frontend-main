@@ -25,8 +25,11 @@ export class NewsService {
         return this._newsPage$.asObservable();
     }
 
+    get categories$() {
+        return this._categories$.asObservable();
+    }
+
     getNews({query = {}, pageable = DEFAULT_PAGEABLE}): Observable<Page<INews>> {
-        console.log('getNews', query, pageable);
         let params = new HttpParams();
 
         Object.keys(query).forEach(key => {

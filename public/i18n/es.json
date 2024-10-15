@@ -338,8 +338,6 @@
         },
         "news" : {
             "title" : "Noticias",
-            "subtitle" : "Administra las Noticias de la Plataforma",
-            "description" : "Administra las noticias de la plataforma, crea y actualiza noticias, y mantén informados a los usuarios sobre los logros, eventos y anuncios importantes. Asegúrate de que cada miembro de la organización esté al tanto de las novedades y pueda participar activamente en la vida de la empresa.",
             "table" : {
                 "id" : "ID",
                 "title" : "Título",
@@ -362,8 +360,14 @@
                 "success" : "La noticia ha sido eliminada con éxito",
                 "error" : "Se ha producido un error al eliminar la noticia"
             },
-            "new" : {
+            "list" : {
+                "title" : "Lista de Noticias",
+                "subtitle" : "Administra las noticias de la plataforma, crea y actualiza noticias, y mantén informados a los usuarios sobre los logros, eventos y anuncios importantes. Asegúrate de que cada miembro de la organización esté al tanto de las novedades y pueda participar activamente en la vida de la empresa.",
+                "description" : "Administra las Noticias de la Plataforma"
+            },
+            "create" : {
                 "title" : "Nueva Noticia",
+                "description" : "Crea una nueva noticia para compartir con los miembros de la organización",
                 "headline" : "Titular",
                 "headline-placeholder" : "Ejemplo: Celebración del Día de la Independencia",
                 "headline-required" : "El titular es obligatorio",
@@ -385,6 +389,22 @@
                 "content" : "Contenido",
                 "cover" : "Portada",
                 "update" : "Actualizar"
+            },
+            "categories" : {
+                "title" : "Categorías",
+                "list" : {
+                    "title" : "Lista de Categorías",
+                    "subtitle" : "Administra las categorías de noticias disponibles en la plataforma, crea y actualiza categorías para organizar las noticias. Asegúrate de que cada noticia esté asociada a una categoría relevante y sea fácilmente accesible para los usuarios.",
+                    "description" : "Administra las categorías de noticias",
+                    "no-content" : "No hay categorías disponibles para mostrar"
+                },
+                "create" : {
+                    "title" : "Nueva Categoría",
+                    "description" : "Crea una nueva categoría para organizar las noticias",
+                    "name" : "Nombre",
+                    "name-placeholder" : "Escribe el nombre de la categoría",
+                    "create" : "Crear"
+                }
             }
         },
         "albums" : {

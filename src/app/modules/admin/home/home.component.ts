@@ -74,9 +74,17 @@ export class HomeComponent implements AfterViewInit {
                     perPage     : 3,
                     perMove     : 1,
                     breakpoints : {
-                        640 : {perPage: 1, arrows: false},
-                        768 : {perPage: 3},
-                        1024: {perPage: 3}
+                        640 : {
+                            perPage: 1, arrows: false
+                        },
+                        768 : {
+                            perPage: 2,
+                            gap    : '0rem'
+                        },
+                        1024: {
+                            perPage: 2,
+                            gap    : '0rem'
+                        }
                     }
                 }).mount();
             }

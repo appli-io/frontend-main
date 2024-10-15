@@ -118,13 +118,7 @@
                         {{ title }}
                     </h3>
                 </div>
-
-                <!-- Load settings panel -->
-                <div>
-                    @if (contentComponent) {
-                        <ng-content select="drawer-content"></ng-content>
-                    }
-                </div>
+                <ng-content select="drawer-content"></ng-content>
             </div>
         </mat-drawer-content>
     </mat-drawer-container>

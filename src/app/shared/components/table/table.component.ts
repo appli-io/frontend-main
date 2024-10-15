@@ -33,6 +33,7 @@ export class Table<T> implements OnInit, AfterContentInit {
     @Input() displayedColumns!: Array<keyof T | string>;
     @Input() messageNoData: string = 'No hay resultados que mostrar';
     @Input() loading: Observable<boolean> = new Observable<boolean>();
+    @Input() pageable: any;
     @Output() rowClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() sortChange: EventEmitter<Sort> = new EventEmitter<Sort>();
     @Output() contextMenu: EventEmitter<any> = new EventEmitter<any>();

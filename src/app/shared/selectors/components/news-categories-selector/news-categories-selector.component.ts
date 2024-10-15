@@ -40,11 +40,7 @@ export class NewsCategoriesSelectorComponent implements ControlValueAccessor, On
     constructor(private newsCategoryService: NewsCategoryService) { }
 
     ngOnInit() {
-        this.newsCategoryService.selector$
-            .subscribe(data => {
-                console.log('data', data);
-                this.categories = data;
-            });
+        this.newsCategoryService.selector$.subscribe(data => this.categories = data);
     }
 
     ngOnDestroy() {

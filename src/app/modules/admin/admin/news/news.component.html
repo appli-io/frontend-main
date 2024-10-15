@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<drawer-listing
+    *transloco="let t; read: 'admin.benefits'"
+    [panels]="panels"
+    [selectedPanel]="'list'"
+    [title]="'user.settings.title' | transloco"
+>
+    <drawer-content>
+        <router-outlet></router-outlet>
+    </drawer-content>
+</drawer-listing>

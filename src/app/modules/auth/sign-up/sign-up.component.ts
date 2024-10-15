@@ -142,10 +142,10 @@ export class AuthSignUpComponent implements OnInit {
     }
 
     private _loadForm = (token?: string): UntypedFormGroup => this._formBuilder.group({
-        firstname: [ 'David Misael', Validators.required ],
-        lastname : [ 'Villegas Sandoval', Validators.required ],
-        email     : [ 'david.misa002@gmail.com', [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
-        password  : [ 'G00d1sG00d!', Validators.required ],
+        firstname: [ undefined, Validators.required ],
+        lastname : [ undefined, Validators.required ],
+        email    : [ undefined, [ Validators.required, Validators.email ], [ emailAsyncValidator(this._authService) ] ],
+        password : [ undefined, Validators.required ],
         hasToken  : [ !!token ],
         token     : [ token || undefined, token ? [ Validators.required ] : null ],
         agreements: [ true, Validators.requiredTrue ]
