@@ -27,18 +27,20 @@ export class NewsComponent {
 
                 children: [
                     {
-                        id         : 'news.list',
-                        icon       : 'heroicons_outline:newspaper',
-                        title      : this._translateService.translate('admin.news.list.title'),
-                        description: this._translateService.translate('admin.news.list.description'),
-                        link       : [ '/admin', 'news' ]
+                        id          : 'news.list',
+                        icon        : 'heroicons_outline:newspaper',
+                        selectedIcon: 'heroicons_solid:newspaper',
+                        title       : this._translateService.translate('admin.news.list.title'),
+                        description : this._translateService.translate('admin.news.list.description'),
+                        link        : [ '/admin', 'news' ]
                     },
                     {
-                        id         : 'news.create',
-                        icon       : 'heroicons_outline:plus-circle',
-                        title      : this._translateService.translate('admin.news.create.title'),
-                        description: this._translateService.translate('admin.news.create.description'),
-                        link       : [ '/admin', 'news', 'create' ]
+                        id          : 'news.create',
+                        icon        : 'heroicons_outline:plus-circle',
+                        selectedIcon: 'heroicons_solid:plus-circle',
+                        title       : this._translateService.translate('admin.news.create.title'),
+                        description : this._translateService.translate('admin.news.create.description'),
+                        link        : [ '/admin', 'news', 'create' ]
                     },
                 ]
             },
@@ -48,18 +50,20 @@ export class NewsComponent {
                 description: this._translateService.translate('admin.news.categories.description'),
                 children   : [
                     {
-                        id         : 'categories.list',
-                        icon       : 'heroicons_outline:tag',
-                        title      : this._translateService.translate('admin.news.categories.list.title'),
-                        description: this._translateService.translate('admin.news.categories.list.description'),
-                        link       : [ '/admin', 'news', 'categories' ]
+                        id          : 'categories.list',
+                        icon        : 'heroicons_outline:tag',
+                        selectedIcon: 'heroicons_solid:tag',
+                        title       : this._translateService.translate('admin.news.categories.list.title'),
+                        description : this._translateService.translate('admin.news.categories.list.description'),
+                        link        : [ '/admin', 'news', 'categories' ]
                     },
                     {
-                        id         : 'categories.create',
-                        icon       : 'heroicons_outline:plus-circle',
-                        title      : this._translateService.translate('admin.news.categories.create.title'),
-                        description: this._translateService.translate('admin.news.categories.create.description'),
-                        link       : [ '/admin', 'news', 'categories', 'create' ]
+                        id          : 'categories.create',
+                        icon        : 'heroicons_outline:plus-circle',
+                        selectedIcon: 'heroicons_solid:plus-circle',
+                        title       : this._translateService.translate('admin.news.categories.create.title'),
+                        description : this._translateService.translate('admin.news.categories.create.description'),
+                        link        : [ '/admin', 'news', 'categories', 'create' ]
                     }
                 ]
             }

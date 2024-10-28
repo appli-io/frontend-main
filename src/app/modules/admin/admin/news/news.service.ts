@@ -29,6 +29,8 @@ export class NewsService {
         return this._categories$.asObservable();
     }
 
+    // News
+
     getNews({query = {}, pageable = DEFAULT_PAGEABLE}): Observable<Page<INews>> {
         let params = new HttpParams();
 
@@ -50,13 +52,6 @@ export class NewsService {
                 this._newsPage$.next(pageNews);
                 return pageNews;
             })
-        );
-    }
-
-    getCategories(): Observable<INewsCategory[]> {
-        return this._httpClient.get<INewsCategory[]>('api/news-category').pipe(
-            retry({count: 3, delay: 1000, resetOnSuccess: true}),
-            tap(categories => this._categories$.next(categories))
         );
     }
 
@@ -90,6 +85,31 @@ export class NewsService {
                 return throwError(() => new Error('admin.news.delete.error'));
             }),
             mergeMap(() => this.getNews({}))
+        );
+    }
+
+    // Categories
+
+    getCategories(): Observable<INewsCategory[]> {
+        return this._httpClient.get<INewsCategory[]>('api/news-category').pipe(
+            retry({count: 3, delay: 1000, resetOnSuccess: true}),
+            tap(categories => this._categories$.next(categories))
+        );
+    }
+
+    postCategory(category: INewsCategory): Observable<INewsCategory[]> {
+        return this._httpClient.post<INewsCategory>('api/news-category', category).pipe(
+            tap(() => this._notyf.success(this._translateService.translate('admin.news.category.create.success'))),
+            tap(() => this._categories$.next(null)),
+            mergeMap(() => this.getCategories())
+        );
+    }
+
+    deleteCategory(id: string): Observable<INewsCategory[]> {
+        return this._httpClient.delete<void>(`api/news-category/${ id }`).pipe(
+            tap(() => this._notyf.success(this._translateService.translate('admin.news.category.delete.success'))),
+            tap(() => this._categories$.next(null)),
+            mergeMap(() => this.getCategories())
         );
     }
 }

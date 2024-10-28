@@ -1,13 +1,15 @@
 import { Component }                                                                          from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButton, MatIconButton }                                                           from '@angular/material/button';
-import { MatFormField, MatLabel, MatPrefix }                                                  from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel, MatPrefix }                                            from '@angular/material/form-field';
 import { MatIcon }                                                                            from '@angular/material/icon';
 import { MatInput }                                                                           from '@angular/material/input';
 import { MatTooltip }                                                                         from '@angular/material/tooltip';
 import { PageHeaderComponent }                                                                from '@layout/components/page-header/page-header.component';
-import { TranslocoDirective }                                                                 from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe }                                                  from '@ngneat/transloco';
 import { trackByFn }                                                                          from '@libs/ui/utils/utils';
+import { CdkTextareaAutosize }                                                                from '@angular/cdk/text-field';
+import { JsonPipe }                                                                           from '@angular/common';
 
 @Component({
     selector   : 'app-create',
@@ -15,7 +17,7 @@ import { trackByFn }                                                            
     imports    : [
         FormsModule,
         MatButton,
-        MatFormField,
+        MatFormFieldModule,
         MatIcon,
         MatIconButton,
         MatInput,
@@ -24,7 +26,10 @@ import { trackByFn }                                                            
         MatTooltip,
         PageHeaderComponent,
         TranslocoDirective,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CdkTextareaAutosize,
+        TranslocoPipe,
+        JsonPipe
     ],
     templateUrl: './create.component.html'
 })
@@ -38,7 +43,11 @@ export class CreateComponent {
     ) {
         this.form = this._fb.group({
             name       : [ undefined, Validators.required ],
-            description: [ undefined ],
+            description: [ undefined, Validators.required, Validators.minLength(10) ],
         });
+    }
+
+    create() {
+        if (this.form.invalid) return;
     }
 }

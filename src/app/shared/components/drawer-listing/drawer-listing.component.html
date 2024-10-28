@@ -38,18 +38,25 @@
 
                         @for (child of panel.children; track trackByFn($index, child)) {
                             <a
-                                class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100"
+                                class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100 group"
                                 [routerLink]="child.link"
                                 [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
                                 [routerLinkActiveOptions]="{ exact: true }"
+                                ariaCurrentWhenActive="page"
                                 (click)="goToPanel(panel)"
                                 [disabled]="child.disabled"
                             >
                                 <mat-icon
-                                    class="text-hint"
+                                    class="text-hint block group-aria-[current]:hidden"
                                     [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
                                     [routerLinkActiveOptions]="{ exact: true }"
                                     [svgIcon]="child.icon"
+                                ></mat-icon>
+                                <mat-icon
+                                    class="text-hint hidden group-aria-[current]:block"
+                                    [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+                                    [routerLinkActiveOptions]="{ exact: true }"
+                                    [svgIcon]="child.selectedIcon || child.icon"
                                 ></mat-icon>
                                 <div class="ml-3">
                                     <div
@@ -67,18 +74,25 @@
                         }
                     } @else {
                         <a
-                            class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100"
+                            class="flex cursor-pointer px-8 py-5 dark:hover:bg-hover hover:bg-gray-100 group"
                             [routerLink]="panel.link"
-                            [routerLinkActive]="['bg-primary-50', 'dark:bg-hover']"
+                            [routerLinkActive]="['bg-primary-50', 'dark:bg-hover', 'active']"
                             [routerLinkActiveOptions]="{ exact: true }"
+                            ariaCurrentWhenActive="page"
                             (click)="goToPanel(panel)"
                             [disabled]="panel.disabled"
                         >
                             <mat-icon
-                                class="text-hint"
+                                class="text-hint block group-aria-[current]:hidden"
                                 [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
                                 [routerLinkActiveOptions]="{ exact: true }"
                                 [svgIcon]="panel.icon"
+                            ></mat-icon>
+                            <mat-icon
+                                class="text-hint hidden group-aria-[current]:block"
+                                [routerLinkActive]="['text-primary', 'dark:text-primary-500']"
+                                [routerLinkActiveOptions]="{ exact: true }"
+                                [svgIcon]="panel.selectedIcon || panel.icon"
                             ></mat-icon>
                             <div class="ml-3">
                                 <div

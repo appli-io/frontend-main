@@ -400,9 +400,18 @@
                 },
                 "create" : {
                     "title" : "Nueva Categoría",
+                    "subtitle" : "Crea una nueva categoría para organizar las noticias",
                     "description" : "Crea una nueva categoría para organizar las noticias",
-                    "name" : "Nombre",
-                    "name-placeholder" : "Escribe el nombre de la categoría",
+                    "first-group" : {
+                        "title" : "Información de la categoría",
+                        "description" : "Los siguientes campos son requeridos para la creación de una categoría.",
+                        "fields" : {
+                            "name" : "Nombre",
+                            "name-placeholder" : "Escribe el nombre de la categoría",
+                            "description" : "Descripción",
+                            "description-placeholder" : "Escribe una descripción para tu categoría"
+                        }
+                    },
                     "create" : "Crear"
                 }
             }
