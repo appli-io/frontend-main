@@ -106,6 +106,7 @@ export class Card implements Required<ICard> {
     title: string;
     description: string | null;
     labels: Label[];
+    assignees: Member[];
     dueDate: string | null;
     coverImage: string | null;
 
@@ -120,6 +121,7 @@ export class Card implements Required<ICard> {
         this.title = card.title;
         this.description = card.description || null;
         this.labels = [];
+        this.assignees = [];
         this.dueDate = card.dueDate || null;
 
         // Labels
@@ -130,6 +132,17 @@ export class Card implements Required<ICard> {
                 }
 
                 return label;
+            });
+        }
+
+        // Assignees
+        if (card.assignees) {
+            this.assignees = card.assignees.map((assignee) => {
+                if (!(assignee instanceof Member)) {
+                    return new Member(assignee);
+                }
+
+                return assignee;
             });
         }
     }

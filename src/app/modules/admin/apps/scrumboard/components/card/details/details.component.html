@@ -1,4 +1,4 @@
-<div class="flex max-h-160 flex-auto flex-col overflow-y-auto md:w-160 md:min-w-160">
+<div class="flex max-h-160 flex-auto flex-col md:w-160 md:min-w-160">
     <!-- Header -->
     <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
         <div class="text-lg font-medium">Card</div>
@@ -13,7 +13,7 @@
     <!-- Card form -->
     <form
         [formGroup]="cardForm"
-        class="flex w-full flex-0 flex-col items-start space-y-6 overflow-y-auto p-6 sm:p-8"
+        class="flex w-full flex-1 flex-col items-start space-y-6 overflow-y-auto p-6 sm:p-8"
     >
         <!-- Title -->
         <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
@@ -93,6 +93,44 @@
                         </mat-datepicker-actions>
                     </mat-datepicker>
                 </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Members -->
+        <div class="w-full">
+            <div class="font-medium">Members</div>
+            <div class="mt-1 overflow-hidden rounded-md border border-gray-300 shadow-sm">
+                <!-- Header -->
+                <div class="mx-3 my-2 flex items-center">
+                    <div class="flex min-w-0 flex-auto items-center">
+                        <mat-icon
+                            [svgIcon]="'heroicons_solid:magnifying-glass'"
+                            class="icon-size-5"
+                        ></mat-icon>
+                        <input
+                            (input)="filterMembers($event)"
+                            (keydown)="filterMembersInputKeyDown($event)"
+                            [maxLength]="50"
+                            class="ml-2 min-w-0 border-0 py-1"
+                            placeholder="Enter member name"
+                            type="text"
+                        />
+                    </div>
+                </div>
+                <!-- Available members -->
+                <div class="max-h-40 overflow-y-auto border-t leading-none">
+                    <!-- Labels -->
+                    @for (member of filteredMembers; track trackByFn($index, member)) {
+                        <mat-checkbox
+                            class="flex h-10 min-h-10 items-center pl-1 pr-4"
+                            [color]="'primary'"
+                            [checked]="hasMember(member)"
+                            (change)="toggleCardAssignee(member, $event)"
+                        >
+                            {{ member.name }}
+                        </mat-checkbox>
+                    }
+                </div>
             </div>
         </div>
 

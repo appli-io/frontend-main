@@ -286,7 +286,6 @@ export class ScrumboardService {
 
                 // Update the card
                 this._card.next(card);
-                0;
 
                 // Return the card
                 return card;
@@ -339,6 +338,7 @@ export class ScrumboardService {
      */
     updateCard(id: string, card: Card): Observable<Card> {
         if (card.labels) card.labels = card.labels.map((label) => label.id) as any;
+        if (card.assignees) card.assignees = card.assignees.map((assignee) => assignee.id) as any;
 
         return this.board$.pipe(
             take(1),

@@ -27,6 +27,7 @@ export interface ICard {
     title: string;
     description?: string | null;
     labels?: ILabel[];
+    assignees?: IMember[];
     dueDate?: string | null;
 }
 

@@ -9,11 +9,11 @@ import { MatDialogRef }                                                         
 import { MatFormFieldModule }                                                                                                  from '@angular/material/form-field';
 import { MatIconModule }                                                                                                       from '@angular/material/icon';
 import { MatInputModule }                                                                                                      from '@angular/material/input';
-import { Board, Card, Label, }                                                                                                 from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { Board, Card, Label, Member, }                                                                                         from '@modules/admin/apps/scrumboard/models/scrumboard.models';
 import { ScrumboardService }                                                                                                   from '@modules/admin/apps/scrumboard/services/scrumboard.service';
 import { assign }                                                                                                              from 'lodash-es';
 import { DateTime }                                                                                                            from 'luxon';
-import { debounceTime, lastValueFrom, Subject, takeUntil, tap }                                                                from 'rxjs';
+import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil, tap }                                          from 'rxjs';
 
 @Component({
     selector       : 'scrumboard-card-details',
@@ -42,6 +42,8 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
     cardForm: UntypedFormGroup;
     labels: Label[];
     filteredLabels: Label[];
+    members: Member[];
+    filteredMembers: Member[];
 
     // Private
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -73,6 +75,9 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
 
                 // Get the labels
                 this.labels = this.filteredLabels = board.labels;
+
+                // Get the members
+                this.members = this.filteredMembers = board.members;
             });
 
         // Get the card details
@@ -80,6 +85,8 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((card) => {
                 this.card = card;
+
+                console.log(card);
             });
 
         // Prepare the card form
@@ -88,6 +95,7 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
             title      : [ '', Validators.required ],
             description: [ '' ],
             labels     : [ [] ],
+            assignees: [ [] ],
             dueDate    : [ null ],
         });
 
@@ -97,6 +105,7 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
             title      : this.card.title,
             description: this.card.description,
             labels     : this.card.labels,
+            assignees: this.card.assignees,
             dueDate    : this.card.dueDate,
         });
 
@@ -108,6 +117,7 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
                     this.card = assign(this.card, value);
                 }),
                 debounceTime(500),
+                distinctUntilChanged(),
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((value) => {
@@ -236,6 +246,120 @@ export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {
 
         // Update the card form data
         this.cardForm.get('labels').patchValue(this.card.labels);
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+    }
+
+    /**
+     * Return whether the card has the given member
+     *
+     * @param assignee
+     */
+    hasMember(assignee: Member): boolean {
+        return !!this.card.assignees?.find(
+            (cardAssignee) => cardAssignee.id === assignee.id
+        );
+    }
+
+    /**
+     * Filter assignees
+     *
+     * @param event
+     */
+    filterMembers(event): void {
+        // Get the value
+        const value = event.target.value.toLowerCase();
+
+        // Filter the members
+        this.filteredMembers = this.members.filter((assignee: Member) =>
+            assignee.name.toLowerCase().includes(value)
+        );
+    }
+
+    /**
+     * Filter assignees input key down event
+     *
+     * @param event
+     */
+    filterMembersInputKeyDown(event): void {
+        // Return if the pressed key is not 'Enter'
+        if (event.key !== 'Enter') {
+            return;
+        }
+
+        // If there is no label available...
+        if (this.filteredLabels.length === 0) {
+            // Return
+            return;
+        }
+
+        // If there is a label...
+        const assignee = this.filteredMembers[0];
+        const isLabelApplied = this.card.assignees.find(
+            (cardAssignee) => cardAssignee.id === assignee.id
+        );
+
+        // If the found label is already applied to the card...
+        if (isLabelApplied) {
+            // Remove the label from the card
+            this.removeAssigneeFromCard(assignee);
+        } else {
+            // Otherwise add the label to the card
+            this.addAssigneeToCard(assignee);
+        }
+    }
+
+    /**
+     * Toggle card assignee
+     *
+     * @param assignee
+     * @param change
+     */
+    toggleCardAssignee(assignee: Member, change: MatCheckboxChange): void {
+        if (change.checked) {
+            this.addAssigneeToCard(assignee);
+        } else {
+            this.removeAssigneeFromCard(assignee);
+        }
+    }
+
+    /**
+     * Add assignee to the card
+     *
+     * @param assignee
+     */
+    addAssigneeToCard(assignee: Member): void {
+        if (!this.card.assignees) {
+            this.card.assignees = [];
+        }
+
+        // Add the label
+        this.card.assignees.unshift(assignee);
+
+        // Update the card form data
+        this.cardForm.get('assignees').patchValue(this.card.assignees);
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+    }
+
+    /**
+     * Remove assignee from the card
+     *
+     * @param assignee
+     */
+    removeAssigneeFromCard(assignee: Member): void {
+        // Remove the label
+        this.card.assignees.splice(
+            this.card.assignees.findIndex(
+                (cardAssignee) => cardAssignee.id === assignee.id
+            ),
+            1
+        );
+
+        // Update the card form data
+        this.cardForm.get('assignees').patchValue(this.card.assignees);
 
         // Mark for check
         this._changeDetectorRef.markForCheck();
