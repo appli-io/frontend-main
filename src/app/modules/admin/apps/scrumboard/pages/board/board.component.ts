@@ -2,20 +2,23 @@ import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, CdkDropListGroup, mov
 import { CdkScrollable }                                                                                           from '@angular/cdk/scrolling';
 import { DatePipe, NgClass }                                                                                       from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation, }            from '@angular/core';
+import { takeUntilDestroyed }                                                                                      from '@angular/core/rxjs-interop';
 import { UntypedFormBuilder, UntypedFormGroup }                                                                    from '@angular/forms';
 import { MatButtonModule }                                                                                         from '@angular/material/button';
 import { MatIconModule }                                                                                           from '@angular/material/icon';
 import { MatMenuModule }                                                                                           from '@angular/material/menu';
+import { MatTooltip }                                                                                              from '@angular/material/tooltip';
 import { ActivatedRoute, RouterLink, RouterOutlet }                                                                from '@angular/router';
-import { FuseConfirmationService }                                                                                 from '../../../../../../../@fuse/services/confirmation';
-import { Board, Card, List, }                                                                                      from '@modules/admin/apps/scrumboard/models/scrumboard.models';
-import { ScrumboardService }                                                                                       from '@modules/admin/apps/scrumboard/services/scrumboard.service';
-import { DateTime }                                                                                                from 'luxon';
-import { Subject, takeUntil }                                                                                      from 'rxjs';
-import { ScrumboardBoardAddCardComponent }                                                                         from './add-card/add-card.component';
-import { ScrumboardBoardAddListComponent }                                                                         from './add-list/add-list.component';
-import { WebsocketService }                                                                                        from '@modules/admin/apps/scrumboard/services/websocket.service';
-import { takeUntilDestroyed }                                                                                      from '@angular/core/rxjs-interop';
+
+import { DateTime }           from 'luxon';
+import { Subject, takeUntil } from 'rxjs';
+
+import { FuseConfirmationService }         from '@fuse/services/confirmation';
+import { Board, Card, List, }              from '@modules/admin/apps/scrumboard/models/scrumboard.models';
+import { ScrumboardService }               from '@modules/admin/apps/scrumboard/services/scrumboard.service';
+import { WebsocketService }                from '@modules/admin/apps/scrumboard/services/websocket.service';
+import { ScrumboardBoardAddCardComponent } from './add-card/add-card.component';
+import { ScrumboardBoardAddListComponent } from './add-list/add-list.component';
 
 @Component({
     selector       : 'scrumboard-board',
@@ -39,6 +42,7 @@ import { takeUntilDestroyed }                                                   
         ScrumboardBoardAddListComponent,
         RouterOutlet,
         DatePipe,
+        MatTooltip,
     ],
 })
 export class ScrumboardBoardComponent implements OnInit, OnDestroy {

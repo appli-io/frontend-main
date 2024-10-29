@@ -337,14 +337,16 @@ export class ScrumboardService {
      * @param card
      */
     updateCard(id: string, card: Card): Observable<Card> {
-        if (card.labels) card.labels = card.labels.map((label) => label.id) as any;
-        if (card.assignees) card.assignees = card.assignees.map((assignee) => assignee.id) as any;
+        const clonedCard = {...card};
+
+        if (clonedCard.labels) clonedCard.labels = clonedCard.labels.map((label) => label.id) as any;
+        if (clonedCard.assignees) clonedCard.assignees = clonedCard.assignees.map((assignee) => assignee.id) as any;
 
         return this.board$.pipe(
             take(1),
             switchMap((board) =>
                 this._httpClient
-                    .patch<Card>('api/scrumboard/card/' + id, card)
+                    .patch<Card>('api/scrumboard/card/' + id, clonedCard)
                     .pipe(
                         map((updatedCard) => {
                             // Find the card and update it

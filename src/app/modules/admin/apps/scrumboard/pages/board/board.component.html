@@ -43,14 +43,8 @@
             <div cdkDropListGroup class="flex items-start space-x-4">
                 <!-- List -->
                 @for (list of board.lists; track trackByFn($index, list)) {
-                    <div
-                        class="bg-default w-72 flex-0 rounded-2xl p-2"
-                        cdkDrag
-                    >
-                        <div
-                            class="flex items-center justify-between"
-                            cdkDragHandle
-                        >
+                    <div class="bg-default w-72 flex-0 rounded-2xl p-2" cdkDrag>
+                        <div class="flex items-center justify-between" cdkDragHandle>
                             <div class="flex w-full cursor-text items-center rounded-md border border-transparent px-3 py-2 focus-within:border-primary focus-within:bg-white focus-within:shadow-sm dark:focus-within:bg-gray-900">
                                 <input
                                     class="w-full bg-transparent font-medium leading-5"
@@ -61,17 +55,11 @@
                                     #listTitleInput
                                 />
                             </div>
-                            <div
-                                class="text-secondary ml-4 flex min-w-6 items-center justify-center rounded-full bg-gray-300 text-sm font-semibold leading-6 dark:bg-gray-700"
-                            >
+                            <div class="text-secondary ml-4 flex min-w-6 items-center justify-center rounded-full bg-gray-300 text-sm font-semibold leading-6 dark:bg-gray-700">
                                 {{ list.cards.length }}
                             </div>
                             <div class="ml-1">
-                                <button
-                                    class="h-8 min-h-8 w-8"
-                                    mat-icon-button
-                                    [matMenuTriggerFor]="listMenu"
-                                >
+                                <button class="h-8 min-h-8 w-8" mat-icon-button [matMenuTriggerFor]="listMenu">
                                     <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:ellipsis-vertical'"></mat-icon>
                                 </button>
                                 <mat-menu #listMenu="matMenu">
@@ -135,6 +123,28 @@
                                                     <div class="ml-1">
                                                         {{ card.dueDate | date: 'longDate' }}
                                                     </div>
+                                                </div>
+                                            }
+                                            <!-- Assignees avatars -->
+                                            @if (card.assignees.length) {
+                                                <div class="flex items-center -space-x-2">
+                                                    @for (assignee of card.assignees; track trackByFn($index, assignee)) {
+                                                        @if (assignee.avatar) {
+                                                            <img
+                                                                class="w-6 h-6 rounded-full border-2 border-white"
+                                                                [src]="assignee.avatar.fileUrl"
+                                                                [alt]="assignee.name"
+                                                                [matTooltip]="assignee.name"
+                                                            />
+                                                        } @else {
+                                                            <div
+                                                                class="w-6 h-6 rounded-full border-2 border-white bg-gray-300 text-sm font-medium leading-6 flex items-center justify-center"
+                                                                [matTooltip]="assignee.name"
+                                                            >
+                                                                {{ assignee?.name?.charAt(0) }}
+                                                            </div>
+                                                        }
+                                                    }
                                                 </div>
                                             }
                                         </a>
