@@ -93,7 +93,7 @@ export class CreateComponent implements OnInit {
         });
     }
 
-    save() {
+    submit() {
         if (this.newsForm.invalid) {
             this.newsForm.markAllAsTouched();
             if (this.newsForm.get('portraitImage').invalid) this._notyf.error({message: this._translateService.translate('errors.validation.image'), ...this.notyfOptions()});

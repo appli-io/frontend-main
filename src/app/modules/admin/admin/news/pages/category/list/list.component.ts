@@ -14,6 +14,7 @@ import { PageHeaderComponent } from '@layout/components/page-header/page-header.
 import { trackByFn }           from '@libs/ui/utils/utils';
 import { NewsService }         from '@modules/admin/admin/news/news.service';
 import { INewsCategory }       from '@modules/admin/news/domain/interfaces/category.interface';
+import { lastValueFrom }       from 'rxjs';
 
 @Component({
     selector   : 'app-list',
@@ -43,7 +44,8 @@ export class ListComponent {
         private readonly _newsService: NewsService
     ) {}
 
-    remove(category: INewsCategory) {
-
+    delete(category: INewsCategory) {
+        console.log('Deleting category:', category);
+        lastValueFrom(this._newsService.deleteCategory(category.id));
     }
 }

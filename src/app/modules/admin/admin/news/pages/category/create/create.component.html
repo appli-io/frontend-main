@@ -5,7 +5,7 @@
     ></page-header>
     <!-- Content -->
     <div class="flex flex-col justify-center w-full sm:max-w-5xl mx-auto py-6 gap-y-4 px-4">
-        <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col space-y-8">
+        <form #formElement (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col space-y-8">
             <!-- Emails -->
             <div class="space-y-4">
                 <div class="">
@@ -20,7 +20,7 @@
                     <div class="space-y-4">
                         <mat-form-field class="w-full" floatLabel="always">
                             <mat-label [innerText]="t('first-group.fields.name')"></mat-label>
-                            <mat-icon [svgIcon]="'heroicons_solid:envelope'" class="hidden icon-size-5 sm:flex" matPrefix></mat-icon>
+                            <mat-icon [svgIcon]="'heroicons_solid:tag'" class="hidden icon-size-5 sm:flex" matPrefix></mat-icon>
                             <input [placeholder]="t('first-group.fields.name-placeholder')" [spellcheck]="false" formControlName="name" matInput/>
                             @if (form.get('name').hasError('required')) {
                                 <mat-error>
@@ -54,8 +54,22 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="flex flex-row justify-end items-center">
-                        <button [disabled]="form.disabled || form.invalid || form.pending" color="primary" mat-flat-button type="submit">{{ 'actions.save-changes' | transloco }}</button>
+                    <div class="flex flex-row justify-end items-center gap-x-4">
+                        <button
+                            [disabled]="form.pristine || form.disabled"
+                            mat-flat-button
+                            type="reset"
+                        >
+                            {{ 'actions.reset' | transloco }}
+                        </button>
+                        <button [disabled]="form.disabled || form.invalid || form.pending" color="primary" mat-flat-button type="submit">
+                            <span class="inline-flex items-center gap-x-4">
+                                {{ 'actions.create' | transloco }}
+                                @if (form.disabled) {
+                                    <mat-spinner @slideInLeft @slideOutRight diameter="20" class="ml-2"></mat-spinner>
+                                }
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
