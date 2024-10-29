@@ -118,11 +118,11 @@
                     </div>
                 </div>
                 <!-- Available members -->
-                <div class="max-h-40 overflow-y-auto border-t leading-none">
+                <div class="max-h-40 overflow-y-auto border-t leading-none py-1">
                     <!-- Labels -->
                     @for (member of filteredMembers; track trackByFn($index, member)) {
                         <mat-checkbox
-                            class="flex h-10 min-h-10 items-center pl-1 pr-4"
+                            class="flex h-10 min-h-10 items-center pl-1 pr-4 hover:bg-hover"
                             [color]="'primary'"
                             [checked]="hasMember(member)"
                             (change)="toggleCardAssignee(member, $event)"
@@ -156,11 +156,11 @@
                     </div>
                 </div>
                 <!-- Available labels -->
-                <div class="max-h-40 overflow-y-auto border-t leading-none">
+                <div class="max-h-40 overflow-y-auto border-t leading-none py-1">
                     <!-- Labels -->
                     @for (label of filteredLabels; track trackByFn($index, label)) {
                         <mat-checkbox
-                            class="flex h-10 min-h-10 items-center pl-1 pr-4"
+                            class="flex h-10 min-h-10 items-center pl-1 pr-4 hover:bg-hover"
                             [color]="'primary'"
                             [checked]="hasLabel(label)"
                             (change)="toggleProductTag(label, $event)"
