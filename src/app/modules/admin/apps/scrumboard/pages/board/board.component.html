@@ -97,22 +97,12 @@
                                                     <img class="w-full object-cover" [src]="card.coverImage"/>
                                                 </div>
                                             }
+
                                             <!-- Title -->
                                             <div class="text-lg font-medium leading-5">
                                                 {{ card.title }}
                                             </div>
-                                            <!-- Labels -->
-                                            @if (card.labels.length) {
-                                                <div>
-                                                    <div class="-mx-1 -mb-2 flex flex-wrap">
-                                                        @for (label of card.labels; track trackByFn($index, label)) {
-                                                            <div class="mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
-                                                                {{ label.title }}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
+
                                             <!-- Due date -->
                                             @if (card.dueDate) {
                                                 <div
@@ -125,6 +115,20 @@
                                                     </div>
                                                 </div>
                                             }
+
+                                            <!-- Labels -->
+                                            @if (card.labels.length) {
+                                                <div>
+                                                    <div class="-mx-1 -mb-2 flex flex-wrap">
+                                                        @for (label of card.labels; track trackByFn($index, label)) {
+                                                            <div class="mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                                                {{ label.title }}
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+
                                             <!-- Assignees avatars -->
                                             @if (card.assignees.length) {
                                                 <div class="flex items-center -space-x-2">
