@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation }                                             from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation }                                      from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators, } from '@angular/forms';
 import { MatButtonModule }                                                                             from '@angular/material/button';
 import { MatFormFieldModule }                                                                          from '@angular/material/form-field';
@@ -32,6 +32,7 @@ import { finalize }                                                             
 })
 export class AuthResetPasswordComponent implements OnInit {
     @ViewChild('resetPasswordNgForm') resetPasswordNgForm: NgForm;
+    @Input('token') token: string;
 
     alert: { type: FuseAlertType; message: string } = {
         type   : 'success',
@@ -92,7 +93,7 @@ export class AuthResetPasswordComponent implements OnInit {
 
         // Send the request to the server
         this._authService
-            .resetPassword(this.resetPasswordForm.get('password').value)
+            .resetPassword(this.resetPasswordForm.get('password').value, this.token)
             .pipe(
                 finalize(() => {
                     // Re-enable the form
