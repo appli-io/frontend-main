@@ -14,6 +14,7 @@ import { ScrumboardService }                                                    
 import { assign }                                                                                                              from 'lodash-es';
 import { DateTime }                                                                                                            from 'luxon';
 import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil, tap }                                          from 'rxjs';
+import { TranslocoDirective, TranslocoPipe }                                                                                   from '@ngneat/transloco';
 
 @Component({
     selector       : 'scrumboard-card-details',
@@ -21,7 +22,7 @@ import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil, 
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [
+    imports: [
         MatButtonModule,
         MatIconModule,
         FormsModule,
@@ -33,6 +34,8 @@ import { debounceTime, distinctUntilChanged, lastValueFrom, Subject, takeUntil, 
         MatDatepickerModule,
         MatCheckboxModule,
         DatePipe,
+        TranslocoDirective,
+        TranslocoPipe,
     ],
 })
 export class ScrumboardCardDetailsComponent implements OnInit, OnDestroy {

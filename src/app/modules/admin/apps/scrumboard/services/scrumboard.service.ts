@@ -247,9 +247,7 @@ export class ScrumboardService {
      */
     deleteList(id: string): Observable<boolean> {
         return this._httpClient
-            .delete<boolean>('api/scrumboard/list', {
-                params: {id},
-            })
+            .delete<boolean>(`api/scrumboard/list/${ id }`)
             .pipe(
                 tap((isDeleted) => {
                     // Get the board value

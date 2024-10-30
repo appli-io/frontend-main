@@ -21,7 +21,6 @@ import {
     MatSortHeader,
     Sort
 }                                                                    from '@angular/material/sort';
-import { trackByFn }                                                 from '@libs/ui/utils/utils';
 import {
     DatePipe,
     NgClass
@@ -31,13 +30,16 @@ import {
     MatIconAnchor,
     MatIconButton
 }                                                                    from '@angular/material/button';
-import { Observable, Subject, takeUntil }                            from 'rxjs';
-import { IEvent }                                                    from '@modules/admin/home/interface/event.interface';
 import { MatIcon }                                                   from '@angular/material/icon';
 import { RouterLink }                                                from '@angular/router';
 import { MatTooltip }                                                from '@angular/material/tooltip';
-import { TranslocoDirective }                                        from '@ngneat/transloco';
-import { DEFAULT_DATETIME_TIME_OPTIONS }                             from '@core/constants';
+
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { TranslocoDirective }             from '@ngneat/transloco';
+
+import { DEFAULT_DATETIME_TIME_OPTIONS } from '@core/constants';
+import { trackByFn }                     from '@libs/ui/utils/utils';
+import { IEvent }                        from '@modules/admin/home/interface/event.interface';
 
 @Component({
     selector   : 'events-table',

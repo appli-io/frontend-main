@@ -19,12 +19,13 @@ import lgZoom                                                                   
 import lgAutoplay                                                                                  from 'lightgallery/plugins/autoplay';
 import { FuseMediaWatcherService }                                                                 from '../../../../../../../@fuse/services/media-watcher';
 import { takeUntilDestroyed }                                                                      from '@angular/core/rxjs-interop';
+import { UserAvatarComponent }                                                                     from '@shared/components/user-avatar/user-avatar.component';
 
 @Component({
     selector       : 'app-albums-detail',
     standalone     : true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports        : [
+    imports: [
         TranslocoDirective,
         RouterLink,
         MatIcon,
@@ -36,7 +37,8 @@ import { takeUntilDestroyed }                                                   
         AlbumCardComponent,
         ImgLoaderDirective,
         LightgalleryModule,
-        TranslocoPipe
+        TranslocoPipe,
+        UserAvatarComponent
     ],
     templateUrl    : './details.component.html'
 })

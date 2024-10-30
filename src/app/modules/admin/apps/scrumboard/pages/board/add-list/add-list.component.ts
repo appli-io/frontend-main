@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Even
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, }                                                               from '@angular/forms';
 import { MatButtonModule }                                                                                                                       from '@angular/material/button';
 import { MatIconModule }                                                                                                                         from '@angular/material/icon';
+import { TranslocoDirective }                                                                                                                    from '@ngneat/transloco';
 
 @Component({
     selector       : 'scrumboard-board-add-list',
@@ -10,12 +11,13 @@ import { MatIconModule }                                                        
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [
+    imports: [
         MatButtonModule,
         NgClass,
         MatIconModule,
         FormsModule,
         ReactiveFormsModule,
+        TranslocoDirective,
     ],
 })
 export class ScrumboardBoardAddListComponent implements OnInit {

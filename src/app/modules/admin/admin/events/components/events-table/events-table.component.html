@@ -43,7 +43,18 @@
                 {{ t('new.schedule') }}
             </th>
             <td *matCellDef="let event" mat-cell>
-                <span class="whitespace-nowrap pr-6">{{ event.startDate ? (event.startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) + ' -') : t('new.noEndDate') }} {{ event.endDate ? event.endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) : t('new.noEndDate') }}</span>
+                <span class="whitespace-nowrap pr-6">
+                    {{
+                        event.startDate
+                            ? (event.startDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS) + ' -')
+                            : t('new.noEndDate')
+                    }}
+                    {{
+                        event.endDate
+                            ? event.endDate.toISOTime(DEFAULT_DATETIME_TIME_OPTIONS)
+                            : t('new.noEndDate')
+                    }}
+                </span>
             </td>
         </ng-container>
 
@@ -54,14 +65,11 @@
             </th>
             <td *matCellDef="let event" mat-cell>
                 <div class="flex items-center">
-                    <a (click)="viewEvent.emit(event)" [matTooltip]="t('new.view')" [routerLink]="[event.id]" mat-icon-button>
-                        <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
-                    </a>
-                    <button (click)="editEvent.emit(event)" [matTooltip]="t('new.edit')" mat-icon-button>
-                        <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                    <button (click)="editEvent.emit(event)" [matTooltip]="t('new.edit')" class="group/action" mat-icon-button>
+                        <mat-icon class="group-hover/action:text-primary" svgIcon="heroicons_outline:pencil"></mat-icon>
                     </button>
-                    <button (click)="deleteEvent.emit(event)" [matTooltip]="t('new.delete')" mat-icon-button>
-                        <mat-icon svgIcon="heroicons_outline:trash"></mat-icon>
+                    <button (click)="deleteEvent.emit(event)" [matTooltip]="t('new.delete')" class="group/action" mat-icon-button>
+                        <mat-icon class="group-hover/action:text-warn-500" svgIcon="heroicons_outline:trash"></mat-icon>
                     </button>
                 </div>
             </td>

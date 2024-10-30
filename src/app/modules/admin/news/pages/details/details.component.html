@@ -65,18 +65,9 @@
             <!-- User comment -->
             <div *ngIf="(userService.user$ | async) as user" class="flex flex-col mx-4 sm:mx-8 mt-6 mb-3">
                 <div class="flex items-start">
-                    @if (user?.avatar) {
-                        <img
-                            [src]="user?.avatar?.fileUrl"
-                            [title]="user?.name"
-                            alt="Card cover image"
-                            class="w-12 h-12 rounded-full mr-5">
-                    } @else {
-                        <div class="ring-bg-card flex h-12 w-12 flex-0 items-center justify-center rounded-full bg-gray-200 text-gray-500 font-medium mr-5">
-                            {{ user?.name.charAt(0) }}
-                        </div>
-                    }
-                    <mat-form-field
+
+
+                <mat-form-field
                         [subscriptSizing]="'dynamic'"
                         class="w-full">
                             <textarea

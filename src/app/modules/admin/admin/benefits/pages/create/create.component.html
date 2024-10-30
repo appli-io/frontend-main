@@ -43,13 +43,14 @@
                             @defer {
                                 <quill-editor
                                     class="mt-2"
+                                    [ngClass]="{'error': form.get('description').touched && (form.get('description').hasError('required') || form.get('description').hasError('deltaEmpty'))}"
                                     [placeholder]="t('fields.description-placeholder')"
                                     [modules]="quillModules"
                                     format="json"
                                     bounds="self"
                                     formControlName="description"
                                 ></quill-editor>
-                                @if (form.get('description').hasError('required') && form.get('description').touched) {
+                                @if (form.get('description').touched && (form.get('description').hasError('required') || form.get('description').hasError('deltaEmpty'))) {
                                     <mat-error class="text-sm">{{ 'errors.form.required' | transloco }}</mat-error>
                                 }
                             } @placeholder {
@@ -68,12 +69,6 @@
                                 matInput
                                 placeholder="Seleccione una categoría"
                             />
-                            <button
-                                (click)="$event.stopPropagation(); $event.preventDefault(); openCategoryDialog($event, categoryInput.value)"
-                                mat-icon-button
-                                matSuffix>
-                                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
-                            </button>
                             <mat-hint>Seleccione una categoría de la lista, si no existe, puede crearla.</mat-hint>
                             @if (form.get('category').hasError('required')) {
                                 <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>
@@ -91,12 +86,6 @@
                                 matInput
                                 placeholder="Seleccione una empresa"
                             />
-                            <button
-                                (click)="$event.stopPropagation(); $event.preventDefault(); openCompanyDialog($event, companyInput.value);"
-                                mat-icon-button
-                                matSuffix>
-                                <mat-icon svgIcon="heroicons_outline:plus"></mat-icon>
-                            </button>
                             <mat-hint>Seleccione una empresa de la lista, si no existe, puede crearla.</mat-hint>
                             @if (form.get('company').hasError('required')) {
                                 <mat-error>{{ 'errors.form.required' | transloco }}</mat-error>

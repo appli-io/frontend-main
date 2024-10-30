@@ -19,6 +19,7 @@ import { ScrumboardService }               from '@modules/admin/apps/scrumboard/
 import { WebsocketService }                from '@modules/admin/apps/scrumboard/services/websocket.service';
 import { ScrumboardBoardAddCardComponent } from './add-card/add-card.component';
 import { ScrumboardBoardAddListComponent } from './add-list/add-list.component';
+import { TranslocoDirective }              from '@ngneat/transloco';
 
 @Component({
     selector       : 'scrumboard-board',
@@ -27,7 +28,7 @@ import { ScrumboardBoardAddListComponent } from './add-list/add-list.component';
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [
+    imports: [
         MatButtonModule,
         RouterLink,
         MatIconModule,
@@ -43,6 +44,7 @@ import { ScrumboardBoardAddListComponent } from './add-list/add-list.component';
         RouterOutlet,
         DatePipe,
         MatTooltip,
+        TranslocoDirective,
     ],
 })
 export class ScrumboardBoardComponent implements OnInit, OnDestroy {

@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgForOf }                                          from '@angular/common';
+import { AsyncPipe, JsonPipe, NgClass, NgForOf }                                 from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild }     from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteModule }                                                 from '@angular/material/autocomplete';
@@ -24,13 +24,14 @@ import { BenefitCompany }               from '@modules/admin/admin/benefits/mode
 import { BenefitsService }              from '@modules/admin/admin/benefits/services/benefits.service';
 import { BenefitCategoryService }       from '@modules/admin/admin/benefits/services/benefit-category.service';
 import { BenefitCompanyService }        from '@modules/admin/admin/benefits/services/benefit-company.service';
-import { PageDetailHeaderComponent }    from '../../../../../../shared/components/page-detail-header/page-detail-header.component';
 import { BenefitMapper }                from '@modules/admin/admin/benefits/models/benefit';
+import { PageDetailHeaderComponent }    from '@shared/components/page-detail-header/page-detail-header.component';
+import { deltaEmptyValidator }          from '@core/validators/delta-empty.validator';
 
 @Component({
     selector       : 'app-create',
     standalone     : true,
-    imports        : [
+    imports: [
         MatIcon,
         MatIconButton,
         TranslocoDirective,
@@ -46,7 +47,8 @@ import { BenefitMapper }                from '@modules/admin/admin/benefits/mode
         QuillEditorComponent,
         MatButton,
         JsonPipe,
-        MatSelectModule
+        MatSelectModule,
+        NgClass
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl    : './create.component.html'
@@ -224,7 +226,7 @@ export class CreateComponent implements OnInit {
     private _loadForm() {
         this.form = this._formBuilder.group({
             name        : [ null, [ Validators.required ] ],
-            description : [ null, [ Validators.required ] ],
+            description: [ null, [ Validators.required, deltaEmptyValidator() ] ],
             type        : [ null, [ Validators.required ] ],
             category    : [ null, [ Validators.required ] ],
             company     : [ null, [ Validators.required ] ],

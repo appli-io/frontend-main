@@ -19,9 +19,8 @@ export class EventsService {
 
     public getEvents() {
         return this._http.get<IEvent[]>('api/event')
-            .pipe(map(response => {
-                    return response.map(this._mapEvent);
-                }),
+            .pipe(
+                map(response => response.map(this._mapEvent)),
                 tap(events => this._events.next(events))
             );
     }
@@ -33,25 +32,18 @@ export class EventsService {
     public createEvent(event: IEvent) {
         return this._http.post<IEvent>('api/event', event)
             .pipe(
+                map(this._mapEvent),
                 tap(newEvent => this._events.next([ newEvent, ...this._events.value ]))
             );
     }
 
     public updateEvent(eventId: string, event: IEvent) {
-        // return this._http.put<Api<IEvent>>(`api/event/${event.id}`, event)
-        //   .pipe
-        //   (map(response => response.content),
-        //   tap(updatedEvent => {
-        //     this._events.next(this._events.value
-        //       .map(event => event.id === updatedEvent.id ? updatedEvent : event));
-        //   }
-        // ))
-
         return this._http.patch<IEvent>(`api/event/${ eventId }`, event)
             .pipe(
+                map(this._mapEvent),
                 tap(updatedEvent => {
-                    this._events.next(this._events.value
-                        .map(event => event.id === updatedEvent.id ? this._mapEvent(updatedEvent) : event));
+                    const events = this._events.value.map(e => e.id === eventId ? updatedEvent : e);
+                    this._events.next(events);
                 })
             );
     }

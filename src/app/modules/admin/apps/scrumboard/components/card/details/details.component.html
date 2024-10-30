@@ -1,4 +1,4 @@
-<div class="flex max-h-160 flex-auto flex-col md:w-160 md:min-w-160">
+<div *transloco="let t; read: 'scrumboard.boards.card'" class="flex max-h-160 flex-auto flex-col md:w-160 md:min-w-160">
     <!-- Header -->
     <div class="flex h-16 flex-0 items-center justify-between bg-primary pl-6 pr-3 text-on-primary sm:pl-8 sm:pr-5">
         <div class="text-lg font-medium">Card</div>
@@ -17,11 +17,12 @@
     >
         <!-- Title -->
         <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
-            <mat-label>Title</mat-label>
+            <mat-label [innerText]="t('fields.title')"></mat-label>
             <textarea
                 [cdkAutosizeMinRows]="1"
                 [formControlName]="'title'"
                 [rows]="1"
+                [placeholder]="t('fields.title-placeholder')"
                 cdkTextareaAutosize
                 matInput
             >
@@ -30,11 +31,12 @@
 
         <!-- Description -->
         <mat-form-field [subscriptSizing]="'dynamic'" class="w-full">
-            <mat-label>Description</mat-label>
+            <mat-label [innerText]="t('fields.description')"></mat-label>
             <textarea
                 [cdkAutosizeMinRows]="1"
                 [formControlName]="'description'"
                 [rows]="1"
+                [placeholder]="t('fields.description-placeholder')"
                 cdkTextareaAutosize
                 matInput
             >
@@ -43,7 +45,7 @@
 
         <!-- Due date -->
         <div>
-            <div class="font-medium">Due date</div>
+            <span [innerText]="t('fields.due-date')" class="font-medium"></span>
             <div
                 (click)="dueDatePicker.open()"
                 [ngClass]="{
@@ -78,17 +80,17 @@
                         <mat-datepicker-actions>
                             <button
                                 (click)="cardForm.get('dueDate').setValue(null)"
+                                [innerText]="'actions.clear' | transloco"
                                 mat-button
                                 matDatepickerCancel
                             >
-                                Clear
                             </button>
                             <button
                                 [color]="'primary'"
+                                [innerText]="'actions.select' | transloco"
                                 mat-flat-button
                                 matDatepickerApply
                             >
-                                Select
                             </button>
                         </mat-datepicker-actions>
                     </mat-datepicker>
@@ -98,7 +100,7 @@
 
         <!-- Members -->
         <div class="w-full">
-            <div class="font-medium">Assignees</div>
+            <span [innerText]="t('fields.assignees')" class="font-medium"></span>
             <div class="mt-1 overflow-hidden rounded-md border border-gray-300 shadow-sm">
                 <!-- Header -->
                 <div class="mx-3 my-2 flex items-center">
@@ -111,8 +113,8 @@
                             (input)="filterMembers($event)"
                             (keydown)="filterMembersInputKeyDown($event)"
                             [maxLength]="50"
+                            [placeholder]="t('fields.assignees-placeholder')"
                             class="ml-2 min-w-0 border-0 py-1"
-                            placeholder="Enter member name"
                             type="text"
                         />
                     </div>
@@ -136,7 +138,7 @@
 
         <!-- Labels -->
         <div class="w-full">
-            <div class="font-medium">Labels</div>
+            <span [innerText]="t('fields.labels')" class="font-medium"></span>
             <div class="mt-1 overflow-hidden rounded-md border border-gray-300 shadow-sm">
                 <!-- Header -->
                 <div class="mx-3 my-2 flex items-center">
@@ -149,8 +151,8 @@
                             (input)="filterLabels($event)"
                             (keydown)="filterLabelsInputKeyDown($event)"
                             [maxLength]="50"
+                            [placeholder]="t('fields.labels-placeholder')"
                             class="ml-2 min-w-0 border-0 py-1"
-                            placeholder="Enter label name"
                             type="text"
                         />
                     </div>

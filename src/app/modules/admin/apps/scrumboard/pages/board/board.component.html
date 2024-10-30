@@ -1,4 +1,4 @@
-<div class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
+<div *transloco="let t; read: 'scrumboard.boards.details'" class="absolute inset-0 flex min-w-0 flex-col overflow-hidden">
     <!-- Header -->
     <div class="bg-card flex flex-0 flex-col border-b p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8">
         <!-- Title -->
@@ -17,14 +17,14 @@
                     [svgIcon]="'heroicons_solid:view-columns'"
                     class="icon-size-5"
                 ></mat-icon>
-                <span class="ml-2">Boards</span>
+                <span [innerText]="t('boards')" class="ml-2"></span>
             </a>
             <a [routerLink]="['./settings']" class="ml-3" mat-stroked-button>
                 <mat-icon
                     [svgIcon]="'heroicons_solid:cog-8-tooth'"
                     class="icon-size-5"
                 ></mat-icon>
-                <span class="ml-2">Settings</span>
+                <span [innerText]="t('settings')" class="ml-2"></span>
             </a>
         </div>
     </div>
@@ -65,11 +65,11 @@
                                 <mat-menu #listMenu="matMenu">
                                     <button mat-menu-item (click)="renameList(listTitleInput)">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-square'"></mat-icon>
-                                        Rename list
+                                        {{ t('rename-list') }}
                                     </button>
                                     <button mat-menu-item color="warn" (click)="deleteList(list.id)">
                                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:trash'"></mat-icon>
-                                        Delete list
+                                        {{ t('delete-list') }}
                                     </button>
                                 </mat-menu>
                             </div>
@@ -155,7 +155,7 @@
                             <!-- New card -->
                             <scrumboard-board-add-card
                                 (saved)="addCard(list, $event)"
-                                [buttonTitle]=" list.cards.length ? 'Add another card' : 'Add a card'"
+                                [buttonTitle]=" list.cards.length ? t('add-another-card') : t('add-a-card')"
                             >
                             </scrumboard-board-add-card>
                         </div>
@@ -165,7 +165,7 @@
                 <!-- New list -->
                 <scrumboard-board-add-list
                     (saved)="addList($event)"
-                    [buttonTitle]=" board.lists.length ? 'Add another list' : 'Add a list'"
+                    [buttonTitle]=" board.lists.length ? t('add-another-list') : t('add-a-list')"
                 >
                 </scrumboard-board-add-list>
             </div>
