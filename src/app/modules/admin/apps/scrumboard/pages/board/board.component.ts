@@ -103,6 +103,10 @@ export class ScrumboardBoardComponent implements OnInit, OnDestroy {
             .subscribe((board: Board) => {
                 this.board = {...board};
 
+                this.board.labels.map(label => {
+
+                });
+
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });

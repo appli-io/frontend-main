@@ -119,10 +119,15 @@
                                             <!-- Labels -->
                                             @if (card.labels.length) {
                                                 <div>
-                                                    <div class="-mx-1 -mb-2 flex flex-wrap">
-                                                        @for (label of card.labels; track trackByFn($index, label)) {
-                                                            <div class="mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                                    <div class="-mx-1 -mb-2 flex max-w-full">
+                                                        @for (label of card.labels.slice(0, 1); track trackByFn($index, label)) {
+                                                            <div class="shrink-0 mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
                                                                 {{ label.title }}
+                                                            </div>
+                                                        }
+                                                        @if (card.labels.length > 2) {
+                                                            <div class="shrink-0 mx-1 mb-2 rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-300">
+                                                                +{{ card.labels.slice(1).length }}
                                                             </div>
                                                         }
                                                     </div>
